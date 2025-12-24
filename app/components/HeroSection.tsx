@@ -25,14 +25,14 @@ export function HeroSection() {
     }, [api]);
 
     return (
-        <section className="relative w-full h-[750px]">
+        <section className="relative w-full h-[780px]">
             <Carousel
                 setApi={setApi}
                 plugins={[Autoplay({ delay: 5000 }), Fade()]}
                 opts={{ loop: true }}
                 className="w-full h-full"
             >
-                <CarouselContent className="h-[750px] ml-0"> {/* ml-0 removes gap between slides */}
+                <CarouselContent className="h-[780px] ml-0"> {/* ml-0 removes gap between slides */}
                     {SLIDES.map((slide, index) => (
                         <CarouselItem key={index} className="relative pl-0 basis-full h-full">
                             <div

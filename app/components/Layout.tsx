@@ -104,7 +104,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 
 
-            <main className="w-full h-[150vh] mx-auto">{children}</main>
+            <main className="w-full flex-1 mx-auto">{children}</main>
 
             <footer className="bg-gray-200 text-center p-4">
                 &copy; {new Date().getFullYear()} My Application
