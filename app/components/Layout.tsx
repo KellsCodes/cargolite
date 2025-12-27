@@ -21,23 +21,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div className="flex items-center justify-between w-[72vw] mx-auto text-[13px]">
                     <div className="flex items-center gap-x-14">
                         <div className="gap-x-2 flex items-center transition-all ease-in-out duration-300 hover:opacity-80 hover:text-chart-5">
-                            <Phone className="text-chart-5 w-4 h-4" />
+                            <Phone className="text-chart-5 fill-chart-5 hover:fill-chart-5 w-4 h-4" />
                             <a href="tel:+1246357" className="">Phone: +01-246-357 (Any time 24/7)</a>
                         </div>
 
                         <div className="gap-x-2 flex items-center transition-all ease-in-out duration-300 hover:opacity-80 hover:text-chart-5">
-                            <Mail className="text-chart-5 w-4 h-4" />
+                            <Mail className="text-chart-5 hover:fill-chart-5 w-4 h-4" />
                             <a href="mailto:contact@cargolite.com">contact@cargolite.com</a>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-x-6">
                         <a href="https://x.com" target="_blank">
-                            <Twitter className="w-4 h-4 hover:text-chart-5 transition-all ease-in-out duration-300" />
+                            <Twitter className="fill-white hover:fill-chart-5 w-4 h-4 hover:text-chart-5 transition-all ease-in-out duration-300" />
                         </a>
 
                         <a href="https://facebook.com" target="_blank">
-                            <Facebook className="w-4 h-4 hover:text-chart-5 transition-all ease-in-out duration-300" />
+                            <Facebook className="fill-white hover:fill-chart-5 w-4 h-4 hover:text-chart-5 transition-all ease-in-out duration-300" />
                         </a>
 
                         <a href="https://instagram.com" target="_blank">
@@ -69,7 +69,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 <div className="flex items-center gap-x-12 text-sm font-medium text-header-top">
                                     <Link href="/" className="hover:opacity-70 transition-all ease-in-out durtion-300">Home</Link>
                                     <Link href="/about" className="hover:opacity-70 transition-all ease-in-out durtion-300">About Us</Link>
-                                    <Link href="/about" className="hover:opacity-70 transition-all ease-in-out durtion-300">Services</Link>
+                                    <Link href="/track-parcel" className="hover:opacity-70 transition-all ease-in-out durtion-300">Track Parcel</Link>
                                     <Link href="/contact-us" className="hover:opacity-70 transition-all ease-in-out durtion-300">Contact Us</Link>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             <div className="flex items-center gap-x-12 text-sm font-medium text-header-top">
                                 <Link href="/" className="hover:opacity-70 transition-all ease-in-out durtion-300">Home</Link>
                                 <Link href="/about" className="hover:opacity-70 transition-all ease-in-out durtion-300">About Us</Link>
-                                <Link href="/about" className="hover:opacity-70 transition-all ease-in-out durtion-300">Services</Link>
+                                <Link href="/track-parcel" className="hover:opacity-70 transition-all ease-in-out durtion-300">Track Parcel</Link>
                                 <Link href="/contact-us" className="hover:opacity-70 transition-all ease-in-out durtion-300">Contact Us</Link>
                             </div>
                         </div>

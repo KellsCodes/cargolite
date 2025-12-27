@@ -52,7 +52,7 @@ export function HeroSection() {
                                 initial={{ opacity: 0, y: 50 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.8, ease: "easeOut" }}
+                                transition={{ duration: .9, ease: "easeOut" }}
                                 className="text-left text-white space-y-6 max-w-4xl"
                             >
                                 <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
@@ -61,7 +61,6 @@ export function HeroSection() {
                                 <p className="text-lg md:text-2xl font-light opacity-90 max-w-xl">
                                     {SLIDES[activeIndex].desc}
                                 </p>
-                                {/* Optional: Add a call to action button since it's now left-aligned */}
                                 <div className="pt-4 pointer-events-auto">
                                     <button className="bg-chart-5 text-white px-8 py-3 rounded-sm font-medium hover:bg-opacity-90 transition-all">
                                         Get Started
