@@ -7,6 +7,7 @@ import { ChartColumn, Check, MoveRight, Star } from "lucide-react";
 import Link from "next/link";
 import { motion } from 'framer-motion';
 import ReviewSlider from "./components/ReviewSlider";
+import ProjectsSlider from "./components/ProjectsSlider";
 
 export default function Home() {
 
@@ -136,7 +137,7 @@ export default function Home() {
 
         {/* Customers Review */}
         <div
-          className="my-40 w-full h-[800px] bg-[#034460] relative"
+          className="mt-40 mb-14 w-full h-[800px] bg-[#034460] relative"
           style={{
 
             backgroundImage: 'url("/ship.png")',
@@ -150,19 +151,19 @@ export default function Home() {
               clipPath: 'polygon(330px 0, 100% 0, 100% 100%, 0 100%)',
             }}
           />
-          <div className="w-[74vw] mx-auto relative z-10 flex flex-col justify-center h-full">
+          <div className="w-[72vw] mx-auto relative z-10 flex flex-col justify-center h-full">
             <div className="flex flex-col gap-y-4">
-              <div className="w-full flex items-center  gap-x-4">
+              <div className="w-full flex items-center gap-x-3">
                 <h3 className="font-bold text-chart-5/90 text-lg">CARGOLITE</h3>
-                <h3 className="font-medium text-white text-2xl">What our customers are saying</h3>
+                <h3 className="font-medium text-white text-lg">What our customers are saying</h3>
               </div>
-                <div className="flex items-center justify-between">
-                  <p className="text-sm text-white w-md">Join the businesses achieving faster delivery times and peak operational efficiency with our reliable, technology-first approach to logistics.</p>
-                  <img src="/quotation.png" alt="." loading="lazy" />
-                </div>
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-white w-lg">Join the businesses achieving faster delivery times and peak operational efficiency with our reliable, technology-first approach to logistics.</p>
+                <img src="/quotation.png" alt="." loading="lazy" />
+              </div>
             </div>
-              <div className="w-full">
-              </div>
+            <div className="w-full">
+            </div>
 
             {/* Reviews */}
             <div className="mt-8 w-full overflow-hidden">
@@ -196,12 +197,23 @@ export default function Home() {
                 ))}
               </ReviewSlider>
             </div>
-
-            
           </div>
         </div>
 
-        {/*  */}
+        {/* What we have done  */}
+        <div className="h-[85vh] bg-white w-full relative">
+          <div
+            className="absolute top-[38%] left-0 bottom-0 w-[52%] bg-[#FFE799]"
+            style={{ clipPath: 'polygon(0 0, calc(100% - 250px) 0, 100% 100%, 0 100%)' }}
+          />
+          <div className="w-[72vw] mx-auto h-full relative z-10 flex flex-col justify-center gap-y-6">
+            <h2 className="text-3xl font-bold">What We Have Done</h2>
+            <p className="text-md text-black/50">These are some the projects we've completed with our amazing partners</p>
+            <div>
+              <ProjectsSlider />
+            </div>
+          </div>
+        </div>
 
 
       </Layout>
