@@ -23,7 +23,7 @@ const CounterCard = ({ initial, target, label, imgSrc }: CounterProps) => {
                         start={initial}
                         end={target}
                         duration={1.5}
-                        separator=","
+                        separator=""
                         prefix="+"
                         enableScrollSpy={true}
                     >

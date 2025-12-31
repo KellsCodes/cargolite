@@ -106,8 +106,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             <main className="w-full flex-1 mx-auto">{children}</main>
 
-            <footer className="bg-gray-200 text-center p-4">
-                &copy; {new Date().getFullYear()} My Application
+            <footer className="bg-header-top text-center h-20">
+                <div className="w-[72vw] h-full mx-auto text-white/40 flex items-center justify-between">
+                    <p>
+                        {new Date().getFullYear()} © Cargolite. All rights reserved.
+                    </p>
+
+                    <ul className="flex items-center gap-x-6 text-sm">
+                        <li><Link href={"#"}>Privacy Policy</Link></li>
+                        <li><Link href={"#"}>Cookies</Link></li>
+                        <li><Link href={"#"}>Refund Policy</Link></li>
+                    </ul>
+                </div>
             </footer>
         </div>
     );
