@@ -2,12 +2,14 @@
 import Image from "next/image";
 import Layout from "./components/Layout";
 import { HeroSection } from "./components/HeroSection";
-import { OFFERS } from "@/lib/offer";
-import { ChartColumn, Check, MoveRight, MoveUpRight } from "lucide-react";
+import { OFFERS, USER_REVIEWS } from "@/lib/offer";
+import { ChartColumn, Check, MoveRight, Star } from "lucide-react";
 import Link from "next/link";
 import { motion } from 'framer-motion';
+import ReviewSlider from "./components/ReviewSlider";
 
 export default function Home() {
+
   return (
     <div className="p-0">
       <Layout>
@@ -103,36 +105,103 @@ export default function Home() {
             </div>
 
             <div className="mt-6 flex items-center gap-x-10">
-              <Link href="/contact-us" className="bg-[#034460] hover:bg-[#FEC201] transition-all duration-500 ease-in-out text-white text-sm p-4 w-[100px]">Contact us</Link>
-              <motion.button
-                initial="initial"
-                whileHover="hover"
-                className="flex items-center gap-x-2 outline-none group"
-              >
-                <Link href="/about" className="text-sm font-medium flex items-center gap-x-1">
-                  <button>
-                    <span>Learn more</span>
-                    <motion.span
-                      style={{ originX: 0, originY: 1 }}
-                      variants={{
-                        initial: { rotate: 0 },
-                        hover: { rotate: -30 }
-                      }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 100,
-                        damping: 10
-                      }}
-                      className="w-full h-full flex items-center justify-center"
-                    >
-                      <MoveRight className="w-4 h-4" />
-                    </motion.span>
-                  </button>
-                </Link>
-              </motion.button>
+              <Link href="/contact-us" className="bg-[#034460] hover:bg-[#FEC201] transition-all duration-500 ease-in-out text-white text-sm p-4 w-[130px]">Contact us</Link>
+              <Link href="/about" className="text-sm font-medium">
+                <motion.button
+                  initial="initial"
+                  whileHover="hover"
+                  className="flex items-center gap-x-2 outline-none group cursor-pointer"
+                >
+                  Learn more
+                  <motion.span
+                    style={{ originX: 1, originY: 1 }}
+                    variants={{
+                      initial: { rotate: 0 },
+                      hover: { rotate: -20 }
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 100,
+                      damping: 10
+                    }}
+                  >
+                    <MoveRight className="w-4 h-4" />
+                  </motion.span>
+                </motion.button>
+              </Link>
             </div>
           </div>
         </div>
+
+
+        {/* Customers Review */}
+        <div
+          className="my-40 w-full h-[800px] bg-[#034460] relative"
+          style={{
+
+            backgroundImage: 'url("/ship.png")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        >
+          <div
+            className="absolute right-0 bottom-0 top-[7px] w-[55%] bg-[#FFE799]"
+            style={{
+              clipPath: 'polygon(330px 0, 100% 0, 100% 100%, 0 100%)',
+            }}
+          />
+          <div className="w-[74vw] mx-auto relative z-10 flex flex-col justify-center h-full">
+            <div className="flex flex-col gap-y-4">
+              <div className="w-full flex items-center  gap-x-4">
+                <h3 className="font-bold text-chart-5/90 text-lg">CARGOLITE</h3>
+                <h3 className="font-medium text-white text-2xl">What our customers are saying</h3>
+              </div>
+                <div className="flex items-center justify-between">
+                  <p className="text-sm text-white w-md">Join the businesses achieving faster delivery times and peak operational efficiency with our reliable, technology-first approach to logistics.</p>
+                  <img src="/quotation.png" alt="." loading="lazy" />
+                </div>
+            </div>
+              <div className="w-full">
+              </div>
+
+            {/* Reviews */}
+            <div className="mt-8 w-full overflow-hidden">
+              <ReviewSlider>
+                {[...USER_REVIEWS, ...USER_REVIEWS].map((review, i) => (
+                  <div
+                    key={i} className="px-3"
+                  >
+                    <div className="bg-white p-6 pb-4 shadow-[0_-8px_20px_2px_rgba(0,0,0,0.06)] space-y-8 min-h-[300px]">
+                      <div className="flex items-center gap-x-4">
+                        <img src={review.img} alt="." width={50} height={50} className="rounded-full" />
+                        <div>
+                          <h2 className="text-[#034460] text-md font-medium">{review?.name}</h2>
+                          <p className="text-xs text-black/50">{review?.work}</p>
+                        </div>
+                      </div>
+
+                      <p className="text-md text-black/50 leading-6">{review?.desc}</p>
+                      <div className="h-15 bg-[#034460] grid grid-cols-3 px-4">
+                        <div className="col-span-2 flex flex-col gap-y-0 justify-center">
+                          <div className="flex gap-x-1">
+                            {[1, 2, 3, 4, 5].map((_, i) => <Star key={i} className={`w-3 text-chart-5 ${i + 1 <= review?.rating && "fill-chart-5"}`} />)}
+                          </div>
+                          <p className="text-white text-sm">{review?.reviewType}</p>
+                        </div>
+                        <div className="col-span-1 flex items-center justify-end text-white text-sm">Rating: {review?.rating}/5</div>
+                      </div>
+                    </div>
+
+                  </div>
+                ))}
+              </ReviewSlider>
+            </div>
+
+            
+          </div>
+        </div>
+
+        {/*  */}
 
 
       </Layout>
