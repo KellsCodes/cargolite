@@ -8,6 +8,7 @@ import Link from "next/link";
 import { motion } from 'framer-motion';
 import ReviewSlider from "./components/ReviewSlider";
 import ProjectsSlider from "./components/ProjectsSlider";
+import StatsGrid from "./components/CounterCards";
 
 export default function Home() {
 
@@ -76,7 +77,7 @@ export default function Home() {
         </div>
 
 
-        <div className="relative h-[600px] w-full my-12">
+        <div className="relative h-[600px] w-full mt-12">
           <div
             className="absolute left-0 top-0 bottom-0 w-[64%] bg-[#FFE799]"
             style={{ clipPath: 'polygon(0 0, calc(100% - 250px) 0, 100% 100%, 0 100%)' }}
@@ -137,7 +138,7 @@ export default function Home() {
 
         {/* Customers Review */}
         <div
-          className="mt-40 mb-14 w-full h-[800px] bg-[#034460] relative"
+          className="mt-0 mb-14 w-full h-[800px] bg-[#034460] relative"
           style={{
 
             backgroundImage: 'url("/ship.png")',
@@ -148,7 +149,7 @@ export default function Home() {
           <div
             className="absolute right-0 bottom-0 top-[7px] w-[55%] bg-[#FFE799]"
             style={{
-              clipPath: 'polygon(330px 0, 100% 0, 100% 100%, 0 100%)',
+              clipPath: 'polygon(365px 0, 100% 0, 100% 100%, 0 100%)',
             }}
           />
           <div className="w-[72vw] mx-auto relative z-10 flex flex-col justify-center h-full">
@@ -212,6 +213,25 @@ export default function Home() {
             <div>
               <ProjectsSlider />
             </div>
+          </div>
+        </div>
+
+        {/* Delivery Count */}
+        <div
+          className="w-full h-[80vh] bg-[#034460]"
+          style={{
+
+            backgroundImage: 'url("/container.png")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        >
+          <div className="w-[72vw] mx-auto h-full flex flex-col justify-center space-y-10">
+            <h3 className="font-medium text-4xl text-chart-5 w-md mx-auto text-center">World’s Leading Company For Over 10 Years.</h3>
+            <p className="text-white text-md w-2xl mx-auto text-center">A big opportunity for your business growth. Delivering Results for Industry Leaders. We are proud of our work for and have worked hard.</p>
+
+            {/* Items */}
+            <StatsGrid />
           </div>
         </div>
 
