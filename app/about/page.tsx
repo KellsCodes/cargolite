@@ -3,6 +3,7 @@ import Layout from "../components/Layout"
 import { ArrowRight, ChartColumn } from "lucide-react"
 import GetInTouch from "../components/GetInTouch"
 import TeamGrid from "./TeamCard"
+import ReviewSlider from "../components/ReviewSlider"
 
 export default function AboutPage() {
     return (
@@ -97,6 +98,14 @@ export default function AboutPage() {
                     <h3 className="text-5xl font-bold">Meet Our Team</h3>
                     <p className="text-md w-md text-black/50 mb-11">Welcome to our transportation services agency. We are the best at our transportation service ever</p>
                     <TeamGrid />
+                </div>
+                <div className="h-38 bg-[#E0F0F6]" />
+
+                {/* Testimonials */}
+                <div className="w-[72vw] mx-auto space-y-7 my-18">
+                    <h3 className="text-5xl font-bold text-[#034460]">Testimonials</h3>
+                    <p className="text-md w-md text-black/50">See what our clients say about how our data-driven logistics and seamless integration have transformed their supply chains and unlocked consistent growth.</p>
+                    <ReviewSlider />
                 </div>
 
             </Layout>

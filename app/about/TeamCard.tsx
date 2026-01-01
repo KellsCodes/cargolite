@@ -45,7 +45,7 @@ export default function TeamGrid() {
             imgSrc: "/team3.png"
         },
         {
-            name: "Deo Mark",
+            name: "Leo Mark",
             position: "Store keeper",
             imgSrc: "/team4.png"
         },
