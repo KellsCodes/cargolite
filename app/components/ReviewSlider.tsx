@@ -10,7 +10,7 @@ interface Review {
     name: string;
     work: string;
     desc: string;
-    rating?: number;
+    rating: number;
     reviewType: string;
 }
 interface ReviewCardProps {
@@ -67,7 +67,7 @@ export default function ReviewSlider() {
                 }
             },
             {
-                breakpoint: 728,
+                breakpoint: 768,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 1,

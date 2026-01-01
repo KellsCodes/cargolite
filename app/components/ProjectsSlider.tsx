@@ -23,7 +23,7 @@ export default function ProjectsSlider() {
                 }
             },
             {
-                breakpoint: 728,
+                breakpoint: 768,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 1,
