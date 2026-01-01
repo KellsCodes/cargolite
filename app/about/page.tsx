@@ -2,6 +2,7 @@ import Link from "next/link"
 import Layout from "../components/Layout"
 import { ArrowRight, ChartColumn } from "lucide-react"
 import GetInTouch from "../components/GetInTouch"
+import TeamGrid from "./TeamCard"
 
 export default function AboutPage() {
     return (
@@ -15,7 +16,7 @@ export default function AboutPage() {
                         backgroundPosition: 'center',
                     }}
                 >
-                    <button className="h-8 w-28 flex items-center justify-center text-sm bg-chart-5">Who We are</button>
+                    <button className="h-8 w-28 flex items-center justify-center text-sm bg-chart-5">Who We Are</button>
                     <h1 className="text-4xl font-bold text-chart-5">About Us</h1>
                     <p className="w-[40%] text-center text-white text-sm leading-7">
                         We have been pioneering the industry in Europe for 20 years, and delivering value products within given timeframe, every single time.
@@ -90,6 +91,13 @@ export default function AboutPage() {
                 </div>
 
                 <GetInTouch />
+
+                {/* Team */}
+                <div className="w-[72vw] mx-auto my-16 space-y-6 mt-26">
+                    <h3 className="text-5xl font-bold">Meet Our Team</h3>
+                    <p className="text-md w-md text-black/50 mb-11">Welcome to our transportation services agency. We are the best at our transportation service ever</p>
+                    <TeamGrid />
+                </div>
 
             </Layout>
 
