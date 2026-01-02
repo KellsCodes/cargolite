@@ -22,7 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <div className="flex items-center gap-x-14">
                         <div className="gap-x-2 flex items-center transition-all ease-in-out duration-300 hover:opacity-80 hover:text-chart-5">
                             <Phone className="text-chart-5 fill-chart-5 hover:fill-chart-5 w-4 h-4" />
-                            <a href="tel:+1246357" className="">Phone: +01-246-357 (Any time 24/7)</a>
+                            <a href="tel:+442071234567" className="">Phone: +44 20 7123 4567 (Any time 24/7)</a>
                         </div>
 
                         <div className="gap-x-2 flex items-center transition-all ease-in-out duration-300 hover:opacity-80 hover:text-chart-5">
