@@ -1,7 +1,7 @@
 "use client";
 
 import { Clock, Facebook, Instagram, Mail, MapPin, Phone, Twitter, Youtube } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react"
 import Link from "next/link";
 

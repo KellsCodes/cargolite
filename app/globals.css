@@ -38,6 +38,7 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --color-header-top: var(--header-top);
+  --color-main-primary: var(--main-primary);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -81,6 +82,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --header-top: #041C2F;
+  --main-primary: #034460;
 }
 
 .dark {
@@ -116,6 +118,7 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
   --header-top: #041C2F;
+  --main-primary: #034460;
 }
 
 @layer base {
