@@ -9,6 +9,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
+import TrackData from "./TrackDetails";
 
 export default function TrackParcel() {
     const [trackError, setTrackError] = useState(false)
@@ -34,6 +35,10 @@ export default function TrackParcel() {
                         <p className="text-red-300 font-bold text-sm">Tracking ID not recognized. If you just shipped your item, please allow up to 24 hours for the status to update.</p>
                     }
                 </div>
+            </div>
+
+            <div className="w-[72vw] mx-auto mt-20">
+                <TrackData />
             </div>
 
             <div className="w-[72vw] mx-auto grid grid-cols-2 gap-x-20 my-24">
