@@ -1,4 +1,4 @@
-import { ArrowLeft, CircleDot, Flag, MapPin, PackageSearch, Share2, Ship, User } from "lucide-react";
+import { ArrowLeft, CircleDot, Flag, Goal, MapPin, PackageSearch, RotateCcw, Share2, Ship, User } from "lucide-react";
 import Link from "next/link";
 import { MapPoint } from "./ShipmentMap";
 import dynamic from "next/dynamic";
@@ -81,7 +81,7 @@ export default function TrackData() {
             {/* Shipment route */}
             <div className="flex items-start gap-x-5">
                 <div className="w-[65%] space-y-4">
-                    <div className="w-full space-y-0 shadow-md rounded-b-md">
+                    <div className="w-full space-y-0 shadow-md rounded-b-md bg-white">
                         <div className="p-5 bg-black/2">
                             <p className="flex items-center gap-x-1 text-main-primary font-bold"><Ship className="w-5" /> Shipment Route</p>
                         </div>
@@ -94,7 +94,7 @@ export default function TrackData() {
                         </div>
                     </div>
 
-                    <div className="w-full shadow-md rounded-b-md">
+                    <div className="w-full shadow-md rounded-b-md bg-white">
                         <div className="p-5 bg-black/2">
                             <p className="flex items-center gap-x-1 text-main-primary font-bold"><MapPin className="w-5" /> Location Information</p>
                         </div>
@@ -124,10 +124,94 @@ export default function TrackData() {
                         </div>
                     </div>
 
+                    <div className="w-full shadow-md rounded-b-md bg-white">
+                        <div className="p-5 bg-black/[0.02] border-b">
+                            <p className="flex items-center gap-x-1 text-main-primary font-bold">
+                                <RotateCcw className="w-5" /> Shipment Timeline
+                            </p>
+                        </div>
+
+                        {/* The Timeline Container */}
+                        <div className="p-8 space-y-0">
+
+                            {/* Step 1: Origin */}
+                            <div className="flex gap-x-6">
+                                <div className="relative flex flex-col items-center">
+                                    {/* Dot */}
+                                    <div className="z-10 w-6 h-6 bg-white border-2 border-main-primary rounded-full flex items-center justify-center shrink-0">
+                                        <div className="w-3 h-3 rounded-full bg-main-primary" />
+                                    </div>
+                                    {/* Vertical Line Segment */}
+                                    <div className="w-[2px] h-full bg-main-primary/10" />
+                                </div>
+
+                                <div className="pb-10 w-full">
+                                    <div className="p-4 rounded-sm bg-main-primary/5 space-y-1 border border-main-primary/10">
+                                        <div className="flex items-center justify-between">
+                                            <p className="text-main-primary font-bold">Dispatched from Origin</p>
+                                            <p className="text-sm opacity-60">Dec 17, 2026</p>
+                                        </div>
+                                        <p className="py-1 px-3 w-fit text-main-primary text-[10px] bg-main-primary/10 rounded-full font-bold uppercase tracking-wider">Dispatched</p>
+                                        <p className="text-sm opacity-70">1600 Amphitheatre Parkway, Mountain View, CA</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Step 2: Current Location (Dynamic Height) */}
+                            <div className="flex gap-x-6">
+                                <div className="relative flex flex-col items-center">
+                                    {/* Ping Dot */}
+                                    <div className="z-10 flex items-center justify-center shrink-0">
+                                        <div className="absolute w-5 h-5 bg-chart-5 rounded-full animate-ping opacity-75" />
+                                        <div className="relative w-5 h-5 bg-white border-2 border-chart-5 rounded-full flex items-center justify-center">
+                                            <div className="w-2 h-2 rounded-full bg-chart-5" />
+                                        </div>
+                                    </div>
+                                    {/* Vertical Line Segment */}
+                                    <div className="w-[2px] h-full bg-main-primary/10" />
+                                </div>
+
+                                <div className="pb-10 w-full">
+                                    <div className="p-4 rounded-sm bg-chart-5/10 space-y-1 border border-chart-5/20">
+                                        <div className="flex items-center justify-between">
+                                            <p className="text-black font-bold">Current Location</p>
+                                            <p className="text-sm opacity-60">Jan 08, 2026</p>
+                                        </div>
+                                        <p className="py-1 px-3 w-fit text-chart-5 text-[10px] bg-chart-5/20 rounded-full font-bold uppercase tracking-wider">In Transit</p>
+                                        <p className="text-sm opacity-70">42 Willow Crescent, Sheffield S10 3LT</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Step 3: Destination */}
+                            <div className="flex gap-x-6">
+                                <div className="relative flex flex-col items-center">
+                                    {/* Goal Dot */}
+                                    <div className="z-10 w-6 h-6 bg-white border-2 border-green-500 rounded-full flex items-center justify-center shrink-0">
+                                        <Goal className="w-3.5 text-green-500" />
+                                    </div>
+                                    <div className="w-[2px] h-full bg-main-primary/10" />
+                                </div>
+
+                                <div className="w-full">
+                                    <div className="p-4 rounded-sm bg-green-50 space-y-1 border border-green-100">
+                                        <div className="flex items-center justify-between">
+                                            <p className="text-black font-bold">Delivery Destination</p>
+                                            <p className="text-sm opacity-60">Pending</p>
+                                        </div>
+                                        <p className="py-1 px-3 w-fit text-green-600 text-[10px] bg-green-100 rounded-full font-bold uppercase tracking-wider">Upcoming</p>
+                                        <p className="text-sm opacity-70">Great Russell St, London WC1B 3DG</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
                 <div className="w-[35%] space-y-5">
 
-                    <div className="w-full space-y-3 shadow-md rounded-b-md">
+                    <div className="w-full space-y-3 shadow-md rounded-b-md bg-white">
                         <div className="p-5 bg-black/2">
                             <p className="flex items-center gap-x-1 text-main-primary font-bold"><User className="w-5 fill-main-primary" />Receiver Information</p>
                         </div>
@@ -154,7 +238,7 @@ export default function TrackData() {
                         </div>
                     </div>
 
-                    <div className="w-full space-y-3 shadow-md rounded-b-md">
+                    <div className="w-full space-y-3 shadow-md rounded-b-md bg-white">
                         <div className="p-5 bg-black/2">
                             <p className="flex items-center gap-x-1 text-main-primary font-bold"><User className="w-5 fill-main-primary" />Sender Information</p>
                         </div>
