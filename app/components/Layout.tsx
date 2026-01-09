@@ -73,7 +73,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                     <Link href="/contact-us" className="hover:opacity-70 transition-all ease-in-out durtion-300">Contact Us</Link>
                                 </div>
                             </div>
-                            <button className="text-sm bg-[#E8E9ED] h-11 w-22 text-header-top cursor-pointer hover:bg-chart-5 hover:opacity-90 transition-all duration-300 ease-in-out rounded-xs">Login</button>
+                            <Link href="/login">
+                                <button className="text-sm bg-[#E8E9ED] h-11 w-22 text-header-top cursor-pointer hover:bg-chart-5 hover:opacity-90 transition-all duration-300 ease-in-out rounded-xs">Login</button>
+                            </Link>
                         </div>
 
                     </motion.nav>)}
@@ -94,7 +96,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 <Link href="/contact-us" className="hover:opacity-70 transition-all ease-in-out durtion-300">Contact Us</Link>
                             </div>
                         </div>
-                        <button className="text-sm bg-[#E8E9ED] h-11 w-22 text-header-top cursor-pointer hover:bg-chart-5 hover:opacity-90 transition-all duration-300 ease-in-out rounded-xs">Login</button>
+                        <Link href={"/login"}>
+                            <button className="text-sm bg-[#E8E9ED] h-11 w-22 text-header-top cursor-pointer hover:bg-chart-5 hover:opacity-90 transition-all duration-300 ease-in-out rounded-xs">Login</button>
+                        </Link>
                     </div>
                 </nav>
             )
