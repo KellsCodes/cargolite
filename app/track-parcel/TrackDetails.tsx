@@ -1,7 +1,9 @@
-import { ArrowLeft, CircleDot, Flag, Goal, MapPin, PackageSearch, RotateCcw, Share2, Ship, User } from "lucide-react";
+"use client"
+import { ArrowLeft, ChevronDown, ChevronUp, CircleDot, Flag, Goal, History, MapPin, Package2, PackageSearch, Plane, Share2, Ship, User } from "lucide-react";
 import Link from "next/link";
 import { MapPoint } from "./ShipmentMap";
 import dynamic from "next/dynamic";
+import { useState } from "react";
 
 const ShipmentMap = dynamic(() => import('./ShipmentMap'), {
     ssr: false,
@@ -12,6 +14,7 @@ export default function TrackData() {
     const originCoords: MapPoint = [37.422, -122.084];
     const currentCoords: MapPoint = [53.381, -1.470];
     const destinationCoords: MapPoint = [51.519, -0.127];
+    const [showAdditionalDetails, setShowAdditionalDetails] = useState(false)
     return (
         <div className="space-y-20">
             <div className="space-y-3">
@@ -103,21 +106,21 @@ export default function TrackData() {
                                 <p className="text-sm text-main-primary/70 font-medium">Origin</p>
                                 <div className="flex items-center gap-x-2">
                                     <CircleDot className="w-5 text-main-primary" />
-                                    <p className="text-sm text-black/60 font-bold">1600 Amphitheatre Parkway, Mountain View, CA</p>
+                                    <p className="text-sm text-black opacity-60">1600 Amphitheatre Parkway, Mountain View, CA</p>
                                 </div>
                             </div>
                             <div className="col-span-1 space-y-2">
                                 <p className="text-sm text-main-primary/70 font-medium">Current Location</p>
                                 <div className="flex items-center gap-x-2">
                                     <CircleDot className="w-5 text-main-primary" />
-                                    <p className="text-sm text-black/60 font-bold">42 Willow Crescent Shefield S10 3LT</p>
+                                    <p className="text-sm text-black opacity-60">42 Willow Crescent Shefield S10 3LT</p>
                                 </div>
                             </div>
                             <div className="col-span-1 space-y-2">
                                 <p className="text-sm text-main-primary/70 font-medium">Destination</p>
                                 <div className="flex items-center gap-x-2">
                                     <CircleDot className="w-5 text-main-primary" />
-                                    <p className="text-sm text-black/60 font-bold">Great Russell St, London, WC1B 3DG, United Kingdom</p>
+                                    <p className="text-sm text-black opacity-60">Great Russell St, London, WC1B 3DG, United Kingdom</p>
                                 </div>
                             </div>
 
@@ -127,7 +130,7 @@ export default function TrackData() {
                     <div className="w-full shadow-md rounded-b-md bg-white">
                         <div className="p-5 bg-black/[0.02] border-b">
                             <p className="flex items-center gap-x-1 text-main-primary font-bold">
-                                <RotateCcw className="w-5" /> Shipment Timeline
+                                <History className="w-5" /> Shipment Timeline
                             </p>
                         </div>
 
@@ -208,7 +211,86 @@ export default function TrackData() {
                         </div>
                     </div>
 
+                    {/* PACKAGE DETAILS */}
+                    <div className="w-full space-y-3 shadow-md rounded-b-md bg-white">
+                        <div className="p-5 bg-black/[0.02]">
+                            <p className="flex items-center gap-x-1 text-main-primary font-bold"><Package2 className="w-5 stroke-[2.2]" />Package Details</p>
+                        </div>
+                        <div className="grid grid-cols-2 p-5 gap-7">
+                            <div className="col-span-1 space-y-2">
+                                <p className="text-sm opacity-70">Description</p>
+                                <p className="text-sm">Brief description of the item</p>
+                            </div>
+                            <div className="space-y-2">
+                                <p className="text-sm opacity-70">Shipping Mode</p>
+                                <p className="flex items-center gap-x-1 font-bold"><Plane className="w-4 text-main-primary fill-main-primary rotate-12" /> Air</p>
+                            </div>
+                            <div className="col-span-1 space-y-2">
+                                <p className="text-sm opacity-70">Weight</p>
+                                <p className="text-sm font-bold">12</p>
+                            </div>
+                            <div className="col-span-1 space-y-2">
+                                <p className="text-sm opacity-70">Quantity</p>
+                                <p className="text-sm font-bold">1</p>
+                            </div>
+                            <div className="col-span-1 space-y-2">
+                                <p className="text-sm opacity-70">Carrier</p>
+                                <p className="text-sm font-bold">dhl</p>
+                            </div>
+                            <div className="col-span-1 space-y-2">
+                                <p className="text-sm opacity-70">Carrier Reference</p>
+                                <p className="text-sm font-bold">23532523</p>
+                            </div>
+
+                            <div className="col-span-2">
+                                <button
+                                    className="text-sm text-blue-500 font-bold flex items-center gap-x-0 cursor-pointer"
+                                    onClick={() => setShowAdditionalDetails(prev => !prev)}
+                                >
+                                    {showAdditionalDetails ? 'Hide' : 'Show'} Additional Details
+                                    <ChevronDown
+                                        className={`transition-transform duration-200 ease-in-out ${showAdditionalDetails ? '-rotate-180' : 'rotate-0'}`}
+                                    />
+                                </button>
+
+                                <div className={`grid transition-all duration-500 ease-in-out ${showAdditionalDetails
+                                    ? 'grid-rows-[1fr] opacity-100 mt-4'
+                                    : 'grid-rows-[0fr] opacity-0 mt-0'
+                                    }`}>
+                                    <div className="overflow-hidden">
+                                        {/* Your Actual Content */}
+                                        <div className="grid grid-cols-2 gap-5">
+                                            <div className="col-span-1 space-y-2">
+                                                <p className="text-sm opacity-70">Payment Mode</p>
+                                                <p className="text-sm font-bold">Cash</p>
+                                            </div>
+                                            <div className="col-span-1 space-y-2">
+                                                <p className="text-sm opacity-70">Total Freight Cost</p>
+                                                <p className="text-sm font-bold">$100</p>
+                                            </div>
+                                            <div className="col-span-1 space-y-2">
+                                                <p className="text-sm opacity-70">Estimated Timeline</p>
+                                                <p className="text-sm font-bold">Dispatch: Jan, 02 2026</p>
+                                                <p className="text-sm font-bold">Delivery: Feb, 02 2026</p>
+                                            </div>
+                                            <div className="col-span-2 space-y-2">
+                                                <p className="text-sm opacity-70">Package Image</p>
+                                                <div className="">
+                                                    <img src="/package2.png" alt="package image" loading="lazy" className="" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+
+                {/* USER INFO */}
                 <div className="w-[35%] space-y-5">
 
                     <div className="w-full space-y-3 shadow-md rounded-b-md bg-white">
