@@ -41,7 +41,6 @@ export default function Login() {
     return (
         // Changed main background to white
         <div className="relative h-screen w-screen overflow-hidden bg-white flex items-center justify-center selection:bg-[#ffa800]/50">
-
             {/* --- Animated Sparks (Bubbles) --- */}
             {mounted && (
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -92,7 +91,7 @@ export default function Login() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="relative z-20 w-[90%] max-w-[420px] p-10 rounded-3xl border border-black/5 bg-white/70 backdrop-blur-3xl shadow-2xl shadow-black/10"
+                className="relative z-20 w-[95%] md:[90%] max-w-[420px] p-5 md:p-8 rounded-3xl border border-black/5 bg-white/70 backdrop-blur-3xl shadow-2xl shadow-black/10"
             >
                 <div className="flex flex-col items-center space-y-10">
                     {/* Brand Branding */}

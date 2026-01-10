@@ -18,16 +18,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <div className="min-h-screen flex flex-col">
             <header className="bg-header-top text-white py-3 flex items-center">
-                <div className="flex items-center justify-between w-[72vw] mx-auto text-[13px]">
-                    <div className="flex items-center gap-x-14">
-                        <div className="gap-x-2 flex items-center transition-all ease-in-out duration-300 hover:opacity-80 hover:text-chart-5">
-                            <Phone className="text-chart-5 fill-chart-5 hover:fill-chart-5 w-4 h-4" />
-                            <a href="tel:+442071234567" className="">Phone: +44 20 7123 4567 (Any time 24/7)</a>
+                <div className="flex items-center justify-between w-[90vw] 2xl:w-[72vw] mx-auto text-[13px]">
+                    <div className="flex items-center gap-x-4 md:gap-x-6">
+                        <div className="flex items-center transition-all ease-in-out duration-300 hover:opacity-80 hover:text-chart-5">
+                            <a href="tel:+442071234567" className="flex items-center gap-x-2">
+                                <Phone className="text-chart-5 hover:fill-chart-5 w-4 h-4" />
+                                <span className="hidden md:inline-block">
+                                    Phone: +44 20 7123 4567 (Any time 24/7)
+                                </span>
+                            </a>
                         </div>
 
-                        <div className="gap-x-2 flex items-center transition-all ease-in-out duration-300 hover:opacity-80 hover:text-chart-5">
-                            <Mail className="text-chart-5 hover:fill-chart-5 w-4 h-4" />
-                            <a href="mailto:contact@cargolite.com">contact@cargolite.com</a>
+                        <div className="transition-all ease-in-out duration-300 hover:opacity-80 hover:text-chart-5">
+
+                            <a href="mailto:contact@cargolite.com" className="flex items-center gap-x-2">
+                                <Mail className="text-chart-5 hover:fill-chart-5 w-4 h-4" />
+                                <span className="hidden md:inline-block">contact@cargolite.com</span>
+                            </a>
                         </div>
                     </div>
 
@@ -60,13 +67,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         transition={{ duration: 0.5, ease: "easeInOut" }}
                         className="fixed top-0 left-0 right-0 z-50 h-16 bg-white flex items-center justify-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]"
                     >
-                        <div className="h-full w-[72vw] flex items-center justify-between">
+                        <div className="h-full w-[90vw] 2xl:w-[72vw] flex items-center justify-between">
                             <div className="flex items-center gap-x-14">
                                 <a href="/" className="text-chart-5 font-bold text-md">
                                     {/* <img src="logo2.png" alt="logo" loading="lazy" className="w-full h-full rounded-full" /> */}
                                     CARGOLITE
                                 </a>
-                                <div className="flex items-center gap-x-12 text-sm font-medium text-header-top">
+                                <div className="hidden 2xl:flex items-center gap-x-12 text-sm font-medium text-header-top">
                                     <Link href="/" className="hover:opacity-70 transition-all ease-in-out durtion-300">Home</Link>
                                     <Link href="/about" className="hover:opacity-70 transition-all ease-in-out durtion-300">About Us</Link>
                                     <Link href="/track-parcel" className="hover:opacity-70 transition-all ease-in-out durtion-300">Track Parcel</Link>
@@ -83,13 +90,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             {!isSticky && (
                 <nav className={`h-16 bg-white flex items-center justify-center`}>
-                    <div className="h-full w-[72vw] flex items-center justify-between">
+                    <div className="h-full w-[90vw] 2xl:w-[72vw] flex items-center justify-between">
                         <div className="flex items-center gap-x-14">
                             <a href="/" className="text-chart-5 font-bold text-md">
                                 {/* <img src="logo2.png" alt="" className="w-full h-full rounded-full" /> */}
                                 CARGOLITE
                             </a>
-                            <div className="flex items-center gap-x-12 text-sm font-medium text-header-top">
+                            <div className="hidden 2xl:flex items-center gap-x-12 text-sm font-medium text-header-top">
                                 <Link href="/" className="hover:opacity-70 transition-all ease-in-out durtion-300">Home</Link>
                                 <Link href="/about" className="hover:opacity-70 transition-all ease-in-out durtion-300">About Us</Link>
                                 <Link href="/track-parcel" className="hover:opacity-70 transition-all ease-in-out durtion-300">Track Parcel</Link>

@@ -88,7 +88,7 @@ export default function Signup() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="relative z-20 w-[95%] max-w-[480px] p-8 md:p-10 rounded-3xl border border-black/5 bg-white/70 backdrop-blur-3xl shadow-2xl shadow-black/10 my-10 overflow-y-auto max-h-[95vh]"
+                className="relative z-20 w-[95%] md:[90%] max-w-[420px] p-5 md:p-8 rounded-3xl border border-black/5 bg-white/70 backdrop-blur-3xl shadow-2xl shadow-black/10 my-10 overflow-y-auto max-h-[95vh]"
             >
                 <div className="flex flex-col items-center space-y-8">
                     {/* Brand Branding */}
@@ -97,7 +97,7 @@ export default function Signup() {
                             whileHover={{ rotate: 12, scale: 1.1 }}
                             className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-[#034460] border border-black/10 shadow-sm"
                         >
-                            <ShieldCheck size={32} />
+                            <ShieldCheck size={36} />
                         </motion.div>
                         <div className="text-center">
                             <Link href="/">
