@@ -4,6 +4,7 @@ import { Clock, Facebook, Instagram, Mail, MapPin, Phone, TextAlignJustify, Twit
 import { useState } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react"
 import Link from "next/link";
+import LogoText from "./LogoText";
 
 const MotionX = motion(X)
 
@@ -74,7 +75,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             <div className="flex items-center gap-x-14">
                                 <a href="/" className="text-chart-5 font-bold text-md">
                                     {/* <img src="logo2.png" alt="logo" loading="lazy" className="w-full h-full rounded-full" /> */}
-                                    <span className="font-black text-xl text-main-primary">CARGO<span className="text-chart-5">LITE</span></span>
+                                    <LogoText />
                                 </a>
                                 <div className="hidden md:flex items-center gap-x-12 text-sm font-medium text-main-primary">
                                     <Link href="/" className="hover:text-chart-5 transition-all ease-in-out durtion-300">Home</Link>
@@ -101,7 +102,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <div className="h-full w-[90vw] 2xl:w-[72vw] flex items-center justify-between">
                         <div className="flex items-center gap-x-14">
                             <a href="/" className="text-chart-5 font-bold text-md">
-                                <span className="font-black text-xl text-main-primary">CARGO<span className="text-chart-5">LITE</span></span>
+                                <LogoText />
                                 {/* <img src="logo2.png" alt="" className="w-full h-full rounded-full" /> */}
 
                             </a>
@@ -188,10 +189,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             <main className="w-full flex-1 mx-auto">{children}</main>
 
-            <footer className="bg-[#034460]">
-                <div className="w-[72vw] mx-auto grid grid-cols-3 gap-x-5 py-24 text-white">
-                    <div className="col-span-1 space-y-4">
-                        <h3 className="font-medium text-chart-5 text-xl">CARGOLITE</h3>
+            <footer className="bg-main-primary">
+                <div className="w-[90vw] 2xl:w-[72vw] mx-auto grid grid-cols-3 gap-y-5 md:gap-y-0 sm:gap-x-5 py-7 2xl:py-24 text-white text-sm 2xl:text-base">
+                    <div className="col-span-3 md:col-span-1 space-y-4">
+                        <h3 className="font-medium text-chart-5 text-xl">
+                            <span className="text-white uppercase">cargo</span>
+                            <span className="uppercase">lite</span>
+                        </h3>
                         <p className="leading-7">We fuse our global network with our depth of expertise in air freight, ocean freight, railway transportation, trucking, and multimode transportation, also we are providing sourcing, warehousing, E-commercial fulfillment, and value-added service to our customers including kitting, assembly, customized package and business inserts, etc</p>
                         <div className="flex items-center gap-x-6">
                             <a href="https://x.com" target="_blank">
@@ -207,7 +211,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             </a>
                         </div>
                     </div>
-                    <div className="col-span-1 pl-10 space-y-4">
+                    <div className="col-span-3 md:col-span-1 md:pl-10 space-y-4">
                         <h3 className="font-medium text-chart-5 text-xl">Useful Links</h3>
                         <ul className="list-none flex flex-col gap-y-6">
                             <li>
@@ -224,7 +228,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             </li>
                         </ul>
                     </div>
-                    <div className="col-span-1 space-y-4">
+                    <div className="col-span-3 md:col-span-1 space-y-4">
                         <h3 className="font-medium text-chart-5 text-xl">Contact Info</h3>
                         <ul className="list-none flex flex-col gap-y-5 ">
                             <li className="flex items-center gap-x-2 hover:text-chart-5">
@@ -236,7 +240,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 <a href="tel:+44 20 7123 4567">+44 20 7123 4567</a>
                             </li>
                             <li className="flex items-center gap-x-2 hover:text-chart-5">
-                                <MapPin className="w-5" />
+                                <MapPin className="w-5 flex-shrink-0" />
                                 <span>24 Holborn Viaduct, London EC1A 2BN, United Kingdom</span>
                             </li>
                             <li className="flex items-center gap-x-2 hover:text-chart-5">
@@ -247,7 +251,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     </div>
                 </div>
                 <div className="bg-header-top text-center h-20">
-                    <div className="w-[72vw] h-full mx-auto text-white/40 flex items-center justify-between">
+                    <div className="w-[90vw] 2xl:w-[72vw] h-full mx-auto text-white/40 flex flex-col sm:flex-row items-center justify-center sm:justify-between">
                         <p>
                             {new Date().getFullYear()} © Cargolite. All rights reserved.
                         </p>
