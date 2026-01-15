@@ -22,7 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <div className="min-h-screen flex flex-col overflow-x-hidden">
             <header className="bg-header-top text-white py-3 flex items-center">
-                <div className="flex items-center justify-between w-[90vw] 2xl:w-[72vw] mx-auto text-[13px]">
+                <div className="flex items-center justify-between w-[95vw] 2xl:w-[72vw] mx-auto text-[13px]">
                     <div className="flex items-center gap-x-4 md:gap-x-6">
                         <div className="flex items-center transition-all ease-in-out duration-300 hover:opacity-80 hover:text-chart-5">
                             <a href="tel:+442071234567" className="flex items-center gap-x-2">
@@ -71,13 +71,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         transition={{ duration: 0.5, ease: "easeInOut" }}
                         className="fixed top-0 left-0 right-0 z-50 h-16 bg-white flex items-center justify-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]"
                     >
-                        <div className="h-full w-[90vw] 2xl:w-[72vw] flex items-center justify-between">
+                        <div className="h-full w-[95vw] 2xl:w-[72vw] flex items-center justify-between">
                             <div className="flex items-center gap-x-14">
                                 <a href="/" className="text-chart-5 font-bold text-md">
                                     {/* <img src="logo2.png" alt="logo" loading="lazy" className="w-full h-full rounded-full" /> */}
                                     <LogoText />
                                 </a>
-                                <div className="hidden md:flex items-center gap-x-12 text-sm font-medium text-main-primary">
+                                <div className="hidden md:flex items-center gap-x-6 lg:gap-x-12 text-sm font-medium text-main-primary">
                                     <Link href="/" className="hover:text-chart-5 transition-all ease-in-out durtion-300">Home</Link>
                                     <Link href="/about" className="hover:text-chart-5 transition-all ease-in-out durtion-300">About Us</Link>
                                     <Link href="/track-parcel" className="hover:text-chart-5 transition-all ease-in-out durtion-300">Track Parcel</Link>
@@ -99,7 +99,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             {!isSticky && (
                 <nav className={`h-16 bg-white flex items-center justify-center`}>
-                    <div className="h-full w-[90vw] 2xl:w-[72vw] flex items-center justify-between">
+                    <div className="h-full w-[95vw] 2xl:w-[72vw] flex items-center justify-between">
                         <div className="flex items-center gap-x-14">
                             <a href="/" className="text-chart-5 font-bold text-md">
                                 <LogoText />
@@ -190,7 +190,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <main className="w-full flex-1 mx-auto">{children}</main>
 
             <footer className="bg-main-primary">
-                <div className="w-[90vw] 2xl:w-[72vw] mx-auto grid grid-cols-3 gap-y-5 md:gap-y-0 sm:gap-x-5 py-7 2xl:py-24 text-white text-sm 2xl:text-base">
+                <div className="w-[95vw] 2xl:w-[72vw] mx-auto grid grid-cols-3 gap-y-5 md:gap-y-0 sm:gap-x-5 py-7 px-3 2xl:py-24 text-white text-sm 2xl:text-base">
                     <div className="col-span-3 md:col-span-1 space-y-4">
                         <h3 className="font-medium text-chart-5 text-xl">
                             <span className="text-white uppercase">cargo</span>
@@ -230,28 +230,28 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     </div>
                     <div className="col-span-3 md:col-span-1 space-y-4">
                         <h3 className="font-medium text-chart-5 text-xl">Contact Info</h3>
-                        <ul className="list-none flex flex-col gap-y-5 ">
+                        <ul className="list-none flex flex-col gap-y-5">
                             <li className="flex items-center gap-x-2 hover:text-chart-5">
-                                <Mail className="w-5" />
+                                <Mail className="w-4 lg:w-5" />
                                 <a href="mailto:contact@cargolite.com">contact@cargolite.com</a>
                             </li>
                             <li className="flex items-center gap-x-2 hover:text-chart-5">
-                                <Phone className="w-5" />
+                                <Phone className="w-4 lg:w-5" />
                                 <a href="tel:+44 20 7123 4567">+44 20 7123 4567</a>
                             </li>
                             <li className="flex items-center gap-x-2 hover:text-chart-5">
-                                <MapPin className="w-5 flex-shrink-0" />
+                                <MapPin className="w-4 lg:w-5 flex-shrink-0" />
                                 <span>24 Holborn Viaduct, London EC1A 2BN, United Kingdom</span>
                             </li>
                             <li className="flex items-center gap-x-2 hover:text-chart-5">
-                                <Clock className="w-5" />
+                                <Clock className="w-4 lg:w-5" />
                                 <span>8:00 - 17:00, Mon - Sat</span>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div className="bg-header-top text-center h-20">
-                    <div className="w-[90vw] 2xl:w-[72vw] h-full mx-auto text-white/40 flex flex-col sm:flex-row items-center justify-center sm:justify-between">
+                    <div className="w-[95vw] 2xl:w-[72vw] h-full mx-auto text-white/40 flex flex-col sm:flex-row items-center justify-center sm:justify-between">
                         <p>
                             {new Date().getFullYear()} © Cargolite. All rights reserved.
                         </p>

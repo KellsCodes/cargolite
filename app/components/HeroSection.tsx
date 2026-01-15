@@ -8,7 +8,7 @@ import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carouse
 
 const SLIDES = [
     { img: "/banner-min.png", alt: "Banner 1", title: "Digital & Trusted Transport Logistic Company", desc: "We provide reliable and efficient logistics solutions tailored to your needs." },
-    { img: "/banner-2.png", alt: "Banner 2", title: "Real-time Tracking", desc: "Monitor your parcel 24/7" },
+    { img: "/banner-2.png", alt: "Banner 2", title: "Transparent & Accountable Asset Tracking Hub", desc: "Monitor your high-value cargo with absolute precision and 24/7 live updates." },
 ];
 
 export function HeroSection() {
@@ -25,14 +25,14 @@ export function HeroSection() {
     }, [api]);
 
     return (
-        <section className="relative w-full h-[780px]">
+        <section className="relative w-full h-[85vh] 2xl:h-[780px]">
             <Carousel
                 setApi={setApi}
                 plugins={[Autoplay({ delay: 5000 }), Fade()]}
                 opts={{ loop: true }}
                 className="w-full h-full"
             >
-                <CarouselContent className="h-[780px] ml-0"> {/* ml-0 removes gap between slides */}
+                <CarouselContent className="h-[85vh] 2xl:h-[780px] ml-0"> {/* ml-0 removes gap between slides */}
                     {SLIDES.map((slide, index) => (
                         <CarouselItem key={index} className="relative pl-0 basis-full h-full">
                             <div
@@ -45,7 +45,7 @@ export function HeroSection() {
                 </CarouselContent>
 
                 <div className="absolute inset-0 z-10 flex items-center pointer-events-none">
-                    <div className="w-[72vw] mx-auto px-0">
+                    <div className="w-[90vw] 2xl:w-[72vw] mx-auto px-0">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={activeIndex}
@@ -55,14 +55,14 @@ export function HeroSection() {
                                 transition={{ duration: .9, ease: "easeOut" }}
                                 className="text-left text-white space-y-6 max-w-4xl"
                             >
-                                <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+                                <h1 className="text-2xl md:text-4xl 2xl:text-6xl font-bold tracking-tight leading-tight">
                                     {SLIDES[activeIndex].title}
                                 </h1>
                                 <p className="text-lg md:text-2xl font-light opacity-90 max-w-xl">
                                     {SLIDES[activeIndex].desc}
                                 </p>
                                 <div className="pt-4 pointer-events-auto">
-                                    <button className="bg-chart-5 text-white px-8 py-3 rounded-sm font-medium hover:bg-opacity-90 transition-all">
+                                    <button className="bg-chart-5 text-white px-6 2xl:px-8 py-3 rounded-sm font-medium hover:opacity-80 transition-all duration-500 ease-in-out">
                                         Get Started
                                     </button>
                                 </div>
