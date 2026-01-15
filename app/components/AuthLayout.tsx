@@ -1,28 +1,31 @@
+'use client'
 import React, { ReactNode } from "react";
 import LogoText from "./LogoText";
 import Link from "next/link";
 import { BellIcon, Icon, LogOut, Search } from "lucide-react";
 import { authMenu } from "@/lib/authMenu";
+import { usePathname } from "next/navigation";
 
 interface AuthLayoutProps {
     children: ReactNode;
 }
 
 export default function AuthLayout({ children }: AuthLayoutProps) {
+    const pathname = usePathname()
     return (
         <div className="h-screen flex flex-col md:flex-row bg-white">
             <aside className="w-full md:w-64 border-r-3 border-r-black/3">
-                <div className="h-16 border-b-3 border-b-black/3 flex items-center justify-center">
+                <div className="h-16 border-b-3 border-b-black/3 flex items-center pl-7">
                     <Link href="/dashboard">
                         <LogoText />
                     </Link>
                 </div>
                 <div className="h-[90%] flex flex-col justify-between">
-                    <div className="flex flex-col gap-y-0 p-5 pr-0 overflow-y-auto">
+                    <div className="flex flex-col gap-y-0 p-5 px-0 overflow-y-auto">
                         {
                             authMenu.map((item, i) => (
-                                <button key={i} className="border-l-2 border-l-white border-l-chart-5o">
-                                    <Link href={item.link} className="flex items-center gap-x-2 h-14 pl-9 text-sm font-medium text-main-primary hover:text-chart-5/90 transition-all duration-300 ease-in-out">
+                                <button key={i} className={`border-l-3 ${pathname !== item.link ? "border-l-white text-black/70" : "border-l-main-primary/70 text-main-primary"}`}>
+                                    <Link href={item.link} className={`flex items-center gap-x-2 h-13 pl-6 text-sm hover:text-chart-5/90 ${pathname === item.link && "bg-main-primary/2"} transition-all duration-300 ease-in-out`}>
                                         {item.icon}
                                         {item.name}
                                     </Link>
@@ -30,8 +33,8 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                             ))
                         }
                     </div>
-                    <div className="pl-5">
-                        <button className="cursor-pointer border-l-2 border-l-white w-full flex items-center gap-x-2 h-14 pl-9 text-sm font-medium text-main-primary hover:text-chart-5/90 transition-all duration-300 ease-in-out">
+                    <div className="pl-0">
+                        <button className="cursor-pointer border-l-3 border-l-white w-full flex items-center gap-x-2 h-13 pl-6 text-sm hover:text-chart-5/90 transition-all duration-300 ease-in-out">
                             <LogOut className="w-5" />
                             Log Out
                         </button>
