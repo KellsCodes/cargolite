@@ -1,5 +1,5 @@
 "use client"
-import { ChartNoAxesColumnIncreasing, ChevronUp } from "lucide-react";
+import { ChartNoAxesColumnIncreasing, ChevronUp, Ellipsis } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar"
 import { Button } from "@/components/ui/button"
 import {
@@ -7,6 +7,15 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { format, addMonths } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import React from "react";
@@ -33,7 +42,7 @@ export default function ShipmentAnalytics() {
                     </span>
                 </h1>
 
-                <div>
+                <div className="flex items-center gap-2">
                     <div className="grid gap-2">
                         <Popover>
                             <PopoverTrigger asChild>
@@ -82,7 +91,33 @@ export default function ShipmentAnalytics() {
                                 </div>
                             </PopoverContent>
                         </Popover>
+
                     </div>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="outline" className="focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0" >
+                                <Ellipsis className="w-4 h-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent onCloseAutoFocus={(e) => e.preventDefault()}>
+                            <DropdownMenuGroup>
+                                <DropdownMenuLabel>Chart filter</DropdownMenuLabel>
+                                <DropdownMenuItem>Total delivery</DropdownMenuItem>
+                                <DropdownMenuItem>In Transit</DropdownMenuItem>
+                            </DropdownMenuGroup>
+                            <DropdownMenuGroup>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>Cancelled</DropdownMenuItem>
+                                <DropdownMenuItem>Returned</DropdownMenuItem>
+                            </DropdownMenuGroup>
+                            <DropdownMenuGroup>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>Revenue</DropdownMenuItem>
+                            </DropdownMenuGroup>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+
+
                 </div>
             </div>
             <ShipmentChart />
