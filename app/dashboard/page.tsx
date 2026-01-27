@@ -4,6 +4,7 @@ import { statCardData } from "./statCardData";
 import StatCard from "./StatCards";
 import { data } from "./dummyData";
 import ShipmentAnalytics from "./Analytics";
+import RevenueDisplay from "./revenueSummary/RevenueDisplay";
 
 export default function DashBoard() {
     return (
@@ -38,7 +39,7 @@ export default function DashBoard() {
                             <h1>Live tracking</h1>
                         </div>
                         <div className="bg-white p-5 rounded-md">
-                            <h1>Shipment revenue</h1>
+                            <RevenueDisplay />
                         </div>
                     </div>
                 </div>
