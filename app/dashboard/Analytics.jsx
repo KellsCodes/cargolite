@@ -34,8 +34,8 @@ export default function ShipmentAnalytics() {
         <div className="p-6">
             <div className="flex items-center justify-between mb-6">
                 <h1 className="font-medium flex items-center gap-x-2">
-                    <span className="border-main-primary/30 bg-main-primary/3 text-main-primary p-1 h-8 w-9 rounded flex items-center justify-center">
-                        <ChartNoAxesColumnIncreasing className="w-4 stroke-3" />
+                    <span className="border-main-primary/30 bg-main-primary/3 p-1 h-8 w-9 rounded flex items-center justify-center">
+                        <ChartNoAxesColumnIncreasing className="w-4 stroke-3 text-blue-600" />
                     </span>
                     <span>
                         Shipment Analytics

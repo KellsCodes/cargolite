@@ -13,7 +13,7 @@ interface AuthLayoutProps {
 export default function AuthLayout({ children }: AuthLayoutProps) {
     const pathname = usePathname()
     return (
-        <div className="h-screen flex flex-col md:flex-row bg-white">
+        <div className="h-screen flex flex-col md:flex-row bg-white relative">
             <aside className="w-full md:w-64 border-r-3 border-r-black/3">
                 <div className="h-16 border-b-3 border-b-black/3 flex items-center pl-7">
                     <Link href="/dashboard">
@@ -76,6 +76,8 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                 </main>
 
             </div>
+
+            <div className="absolute bottom-0 left-0 right-0 h-12 bg-white" />
         </div>
     )
 }

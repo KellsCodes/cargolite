@@ -6,6 +6,7 @@ import { data } from "./dummyData";
 import ShipmentAnalytics from "./Analytics";
 import RevenueDisplay from "./revenueSummary/RevenueDisplay";
 import LiveTrackingSimulate from "./liveTrackingDisplay/LiveTrackingSimulate";
+import AddShipmentBtn from "../components/AddShipment";
 
 export default function DashBoard() {
     return (
@@ -16,10 +17,7 @@ export default function DashBoard() {
                         <p className="text-xs opacity-60">Hello Joshua Gueye</p>
                         <p className="font-medium">Good Morning!</p>
                     </div>
-                    <div className="flex items-center gap-x-5">
-                        <button className="cursor-pointer flex items-center justify-center gap-x-1 w-[140px] hover:opacity-70 transition-all duration-300 ease-in-out h-12 bg-white text-sm p-5 rounded-sm">Export CSV <Upload className="w-4" /></button>
-                        <button className="cursor-pointer flex items-center justify-center gap-x-1 w-[174px] hover:opacity-80 transition-all duration-300 ease-in-out h-12 bg-main-primary text-sm p-5 text-white rounded-sm">Add New Shipping <Plus className="w-4" /></button>
-                    </div>
+                    <AddShipmentBtn />
                 </div>
 
                 <div className="grid grid-cols-4 gap-x-5 mt-5">

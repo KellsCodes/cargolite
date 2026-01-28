@@ -59,7 +59,7 @@ export default function LiveTrackingSimulate() {
 
 
             <div className="absolute bottom-6 left-0 right-0 px-5">
-                <button className="h-10 w-full bg-white border rounded-sm text-sm font-medium cursor-pointer">
+                <button className="h-10 w-full bg-white border rounded-sm text-sm font-medium cursor-pointer hover:opacity-50 transition-all duration-300 ease-in-out">
                     View details
                     <ArrowRight className="w-4 inline-block ml-2" />
                 </button>

@@ -142,7 +142,7 @@ export default function RevenueDisplay() {
             </div>
 
             <div className="absolute bottom-2 left-0 right-0 px-0">
-                <button className="h-10 w-full bg-white border rounded-sm text-sm font-medium cursor-pointer">
+                <button className="h-10 w-full bg-white border rounded-sm text-sm font-medium cursor-pointer hover:opacity-50 transition-all duration-300 ease-in-out">
                     View details
                     <ArrowRight className="w-4 inline-block ml-2" />
                 </button>
