@@ -5,10 +5,18 @@ import {
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination"
 import { ChartNoAxesColumnIncreasing, ChevronLeft, Search, Settings2 } from "lucide-react";
 import { DataTable } from "./DataTable";
 
@@ -27,7 +35,7 @@ export default function ShippingTable() {
 
                 <div className="flex items-center gap-x-2">
                     <div className="h-10 w-[250px] border rounded-md flex items-center gap-x-2 px-2">
-                        <Search className="w-5 opacity-70" />
+                        <Search className="w-5 opacity-30" />
                         <input type="text" className="h-full w-full focus:outline-none focus:ring-0 text-xs text-black/60" placeholder="Search something here" />
                     </div>
                     <DropdownMenu>
@@ -76,6 +84,30 @@ export default function ShippingTable() {
                 <p className="text-xs text-black/60">Showing 1 to 20 of 100 entries</p>
                 <div className="flex gap-x-2">
                     {/* Your Pagination Buttons Here */}
+                    <Pagination>
+                        <PaginationContent>
+                            <PaginationItem>
+                                <PaginationPrevious href="#" />
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationLink href="#">1</PaginationLink>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationLink href="#" isActive>
+                                    2
+                                </PaginationLink>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationLink href="#">3</PaginationLink>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationEllipsis />
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationNext href="#" />
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
                 </div>
             </div>
         </div>
