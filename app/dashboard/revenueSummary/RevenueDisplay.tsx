@@ -18,7 +18,7 @@ export default function RevenueDisplay() {
     return (
         <div className="flex flex-col h-full relative">
             <div className="flex items-center justify-between">
-                <h2>Shipment revenue</h2>
+                <h2 className="font-medium">Shipment revenue</h2>
                 <Popover>
                     <PopoverTrigger asChild>
                         <Button variant="outline" className="justify-start text-left">

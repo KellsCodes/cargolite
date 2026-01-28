@@ -5,6 +5,7 @@ import StatCard from "./StatCards";
 import { data } from "./dummyData";
 import ShipmentAnalytics from "./Analytics";
 import RevenueDisplay from "./revenueSummary/RevenueDisplay";
+import LiveTrackingSimulate from "./liveTrackingDisplay/LiveTrackingSimulate";
 
 export default function DashBoard() {
     return (
@@ -30,13 +31,13 @@ export default function DashBoard() {
                     })}
                 </div>
 
-                <div className="grid grid-cols-4 gap-x-5 mt-10">
+                <div className="grid grid-cols-4 gap-x-5 mt-5">
                     <div className="col-span-2 bg-white rounded-md">
                         <ShipmentAnalytics />
                     </div>
                     <div className="col-span-2 grid grid-cols-2 gap-x-5">
-                        <div className="bg-white p-5 rounded-md">
-                            <h1>Live tracking</h1>
+                        <div className="bg-white rounded-md">
+                            <LiveTrackingSimulate />
                         </div>
                         <div className="bg-white p-5 rounded-md">
                             <RevenueDisplay />
