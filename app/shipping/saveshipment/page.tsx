@@ -18,9 +18,9 @@ export default function saveShipment() {
                 </div>
 
                 <div className="h-[74vh] bg-white rounded-lg py-5">
-                    <div className="h-full flex-1 flex flex-col overflow-y-auto">
                         <SaveShipmentForm />
-                    </div>
+                    {/* <div className="h-full flex-1 flex flex-col overflow-y-auto">
+                    </div> */}
                 </div>
             </div>
         </AuthLayout>
