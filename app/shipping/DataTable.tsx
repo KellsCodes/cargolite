@@ -16,6 +16,15 @@ import {
 } from "@/components/ui/table"
 import { MoreHorizontalIcon } from "lucide-react"
 import { shippingData } from "./mockdata"
+import { cn } from "@/lib/utils"
+
+const statusStyles: Record<string, string> = {
+    "Delivered": "bg-green-100 text-green-700 border-green-200",
+    "In Transit": "bg-blue-100 text-blue-700 border-blue-200",
+    "Pending": "bg-amber-100 text-amber-700 border-amber-200",
+    "Picked Up": "bg-purple-100 text-purple-700 border-purple-200",
+    "Cancelled": "bg-red-100 text-red-700 border-red-200",
+};
 
 export function DataTable() {
     return (
@@ -41,7 +50,14 @@ export function DataTable() {
                         <TableCell>{shipment.pickup}</TableCell>
                         <TableCell>{shipment.drop}</TableCell>
                         <TableCell>{shipment.amount}</TableCell>
-                        <TableCell>{shipment.status}</TableCell>
+                        <TableCell>
+                            <span className={cn(
+                                "px-2.5 py-0.5 rounded-full text-xs font-medium border",
+                                statusStyles[shipment.status] || "bg-gray-100 text-gray-700"
+                            )}>
+                                {shipment.status}
+                            </span>
+                        </TableCell>
                         <TableCell className="text-right">
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>

@@ -24,7 +24,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                     <div className="flex flex-col gap-y-0 p-5 px-0 overflow-y-auto">
                         {
                             authMenu.map((item, i) => (
-                                <button key={i} className={`border-l-3 ${pathname !== item.link ? "border-l-white text-black/70" : "border-l-main-primary/70 text-main-primary"}`}>
+                                <button key={i} className={`border-l-3 ${!pathname.startsWith(item.link) ? "border-l-white text-black/70" : "border-l-main-primary/70 text-main-primary"}`}>
                                     <Link href={item.link} className={`flex items-center gap-x-2 h-13 pl-6 text-sm hover:text-chart-5/90 ${pathname === item.link && "bg-main-primary/2"} transition-all duration-300 ease-in-out`}>
                                         {item.icon}
                                         {item.name}
