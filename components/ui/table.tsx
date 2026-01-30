@@ -31,7 +31,7 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
         "[&_th]:sticky [&_th]:top-0 [&_th]:bg-white [&_th]:z-10",
         // Add your tint back using an overlay effect on the cells
         "[&_th]:after:absolute [&_th]:after:inset-0 [&_th]:after:bg-main-primary/3 [&_th]:after:-z-10",
-        "[&_th]:px-7",
+        "[&_th]:px-5",
         className
       )}
       {...props}
@@ -49,7 +49,7 @@ function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
       className={cn(
         "[&_tr:last-child]:border-0",
         "[&_tr:not(:last-child)_td]:border-b", 
-        "[&_td]:px-7",
+        "[&_td]:px-5",
         "[&_td]:py-3",
         className
       )}
