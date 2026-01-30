@@ -13,8 +13,8 @@ interface AuthLayoutProps {
 export default function AuthLayout({ children }: AuthLayoutProps) {
     const pathname = usePathname()
     return (
-        <div className="h-screen flex flex-col md:flex-row bg-white relative">
-            <aside className="w-full md:w-64 border-r-3 border-r-black/3">
+        <div className="h-screen flex flex-col md:flex-row bg-white relative overflow-x-hidden">
+            <aside className="w-full md:w-64 shrink-0 border-r-3 border-r-black/3">
                 <div className="h-16 border-b-3 border-b-black/3 flex items-center pl-7">
                     <Link href="/dashboard">
                         <LogoText />
@@ -43,7 +43,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
 
                 </div>
             </aside>
-            <div className="flex-1 flex flex-col">
+            <div className="flex-1 flex flex-col min-w-0">
                 <nav className="h-16 border-b-3 border-b-black/3 flex items-center justify-between px-6 bg-white">
                     {/* Search Area */}
                     <div className="flex items-center gap-x-0 border border-black/10 rounded-lg px-3 shadow-sm bg-transparent">
@@ -71,7 +71,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                 </nav>
 
 
-                <main className="p-6 flex-1 overflow-y-auto bg-[#F4F6F8]/40">
+                <main className="p-6 flex-1 min-w-0 bg-[#F4F6F8]/40">
                     {children}
                 </main>
 
