@@ -17,9 +17,9 @@ export const authMenu = [
         link: "/tracking"
     },
     {
-        name: "Customers",
+        name: "Clients",
         icon: <Users className="w-5" />,
-        link: "/customers"
+        link: "/clients"
     },
     {
         name: "Payments",

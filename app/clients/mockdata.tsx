@@ -1,0 +1,22 @@
+export const shippingData = [
+    { id: "SHP-7721", customer: "Alice Johnson", date: "July 23, 2025", pickup: "Lagos, NG", drop: "London, UK", amount: "$450.00", status: "Delivered", tracking: "AWP8823410921" },
+    { id: "SHP-1092", customer: "Marcus Chen", date: "August 05, 2025", pickup: "Shanghai, CN", drop: "New York, US", amount: "$1,200.50", status: "In Transit", tracking: "AWP5521098342" },
+    { id: "SHP-4432", customer: "Elena Rodriguez", date: "September 12, 2025", pickup: "Madrid, ES", drop: "Berlin, DE", amount: "$320.00", status: "Pending", tracking: "AWP1109823745" },
+    { id: "SHP-8890", customer: "Kofi Mensah", date: "July 28, 2025", pickup: "Accra, GH", drop: "Paris, FR", amount: "$890.00", status: "Picked Up", tracking: "AWP6672341109" },
+    { id: "SHP-2231", customer: "Sarah Miller", date: "October 02, 2025", pickup: "Toronto, CA", drop: "Sydney, AU", amount: "$2,100.00", status: "Delivered", tracking: "AWP9901238475" },
+    { id: "SHP-5567", customer: "Yuki Tanaka", date: "July 23, 2025", pickup: "Tokyo, JP", drop: "Seoul, KR", amount: "$150.75", status: "Cancelled", tracking: "AWP4432109876" },
+    { id: "SHP-3341", customer: "David Smith", date: "November 15, 2025", pickup: "Chicago, US", drop: "Mexico City, MX", amount: "$540.20", status: "In Transit", tracking: "AWP7765432109" },
+    { id: "SHP-9908", customer: "Amara Okeke", date: "December 01, 2025", pickup: "Enugu, NG", drop: "Dubai, AE", amount: "$1,050.00", status: "In Transit", tracking: "AWP2211334455" },
+    { id: "SHP-1123", customer: "Liam Wilson", date: "July 23, 2025", pickup: "Dublin, IE", drop: "Rome, IT", amount: "$280.00", status: "Delivered", tracking: "AWP3344556677" },
+    { id: "SHP-6654", customer: "Fatima Zahra", date: "January 10, 2026", pickup: "Casablanca, MA", drop: "Istanbul, TR", amount: "$670.40", status: "Pending", tracking: "AWP8899001122" },
+    { id: "SHP-7789", customer: "James Anderson", date: "February 14, 2026", pickup: "Seattle, US", drop: "Vancouver, CA", amount: "$195.00", status: "Picked Up", tracking: "AWP5544332211" },
+    { id: "SHP-4401", customer: "Isabella Rossi", date: "July 23, 2025", pickup: "Milan, IT", drop: "Zurich, CH", amount: "$410.00", status: "Delivered", tracking: "AWP1122334499" },
+    { id: "SHP-2298", customer: "Ahmed Hassan", date: "March 20, 2026", pickup: "Cairo, EG", drop: "Riyadh, SA", amount: "$820.00", status: "In Transit", tracking: "AWP9988776655" },
+    { id: "SHP-3312", customer: "Chloe Lefebvre", date: "April 05, 2026", pickup: "Lyon, FR", drop: "Brussels, BE", amount: "$225.50", status: "Delivered", tracking: "AWP7788996655" },
+    { id: "SHP-5509", customer: "Oliver Brown", date: "July 23, 2025", pickup: "Melbourne, AU", drop: "Auckland, NZ", amount: "$590.00", status: "Pending", tracking: "AWP4455667788" },
+    { id: "SHP-8812", customer: "Sofia Gaitan", date: "May 18, 2026", pickup: "Bogota, CO", drop: "Lima, PE", amount: "$380.00", status: "In Transit", tracking: "AWP1234567890" },
+    { id: "SHP-1145", customer: "Noah Schmid", date: "June 01, 2026", pickup: "Vienna, AT", drop: "Prague, CZ", amount: "$290.00", status: "Picked Up", tracking: "AWP9876543210" },
+    { id: "SHP-6670", customer: "Priya Sharma", date: "July 23, 2025", pickup: "Mumbai, IN", drop: "Singapore, SG", amount: "$1,450.00", status: "Delivered", tracking: "AWP6655443322" },
+    { id: "SHP-9932", customer: "Lucas Jensen", date: "July 15, 2026", pickup: "Oslo, NO", drop: "Copenhagen, DK", amount: "$310.00", status: "Pending", tracking: "AWP3322110099" },
+    { id: "SHP-4487", customer: "Sasha Ivanova", date: "August 20, 2026", pickup: "Moscow, RU", drop: "Beijing, CN", amount: "$980.00", status: "In Transit", tracking: "AWP0011223344" }
+];
