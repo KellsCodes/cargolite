@@ -1,0 +1,22 @@
+export const paymentMockData = [
+    { id: "INV-2025-001", client: "Alice Johnson", shipmentId: "AWP-7721", date: "July 23, 2025", amount: "$450.00", method: "Bank Transfer", status: "Paid" },
+    { id: "INV-2025-002", client: "Bob Smith", shipmentId: "AWP-7722", date: "July 24, 2025", amount: "$120.50", method: "Credit Card", status: "Paid" },
+    { id: "INV-2025-003", client: "Charlie Davis", shipmentId: "AWP-7723", date: "July 25, 2025", amount: "$890.00", method: "Wallet", status: "Unpaid" },
+    { id: "INV-2025-004", client: "Diana Prince", shipmentId: "AWP-7724", date: "July 26, 2025", amount: "$2,100.00", method: "Bank Transfer", status: "Overdue" },
+    { id: "INV-2025-005", client: "Edward Norton", shipmentId: "AWP-7725", date: "July 27, 2025", amount: "$340.00", method: "Credit Card", status: "Paid" },
+    { id: "INV-2025-006", client: "Fiona Gallagher", shipmentId: "AWP-7726", date: "July 28, 2025", amount: "$150.00", method: "Cash", status: "Paid" },
+    { id: "INV-2025-007", client: "George Miller", shipmentId: "AWP-7727", date: "July 29, 2025", amount: "$1,250.00", method: "Bank Transfer", status: "Unpaid" },
+    { id: "INV-2025-008", client: "Hannah Abbott", shipmentId: "AWP-7728", date: "July 30, 2025", amount: "$45.00", method: "Wallet", status: "Paid" },
+    { id: "INV-2025-009", client: "Isaac Newton", shipmentId: "AWP-7729", date: "July 31, 2025", amount: "$670.00", method: "Credit Card", status: "Refunded" },
+    { id: "INV-2025-010", client: "Julia Roberts", shipmentId: "AWP-7730", date: "August 01, 2025", amount: "$2,400.00", method: "Bank Transfer", status: "Paid" },
+    { id: "INV-2025-011", client: "Kevin Hart", shipmentId: "AWP-7731", date: "August 02, 2025", amount: "$110.00", method: "Cash", status: "Paid" },
+    { id: "INV-2025-012", client: "Laura Palmer", shipmentId: "AWP-7732", date: "August 03, 2025", amount: "$500.00", method: "Credit Card", status: "Overdue" },
+    { id: "INV-2025-013", client: "Michael Jordan", shipmentId: "AWP-7733", date: "August 04, 2025", amount: "$3,200.00", method: "Bank Transfer", status: "Paid" },
+    { id: "INV-2025-014", client: "Nina Simone", shipmentId: "AWP-7734", date: "August 05, 2025", amount: "$95.00", method: "Wallet", status: "Unpaid" },
+    { id: "INV-2025-015", client: "Oscar Wilde", shipmentId: "AWP-7735", date: "August 06, 2025", amount: "$420.00", method: "Credit Card", status: "Paid" },
+    { id: "INV-2025-016", client: "Peter Parker", shipmentId: "AWP-7736", date: "August 07, 2025", amount: "$210.00", method: "Cash", status: "Paid" },
+    { id: "INV-2025-017", client: "Quentin Tarantino", shipmentId: "AWP-7737", date: "August 08, 2025", amount: "$1,800.00", method: "Bank Transfer", status: "Paid" },
+    { id: "INV-2025-018", client: "Rihanna Fenty", shipmentId: "AWP-7738", date: "August 09, 2025", amount: "$5,000.00", method: "Bank Transfer", status: "Paid" },
+    { id: "INV-2025-019", client: "Samuel Jackson", shipmentId: "AWP-7739", date: "August 10, 2025", amount: "$300.00", method: "Credit Card", status: "Unpaid" },
+    { id: "INV-2025-020", client: "Tony Stark", shipmentId: "AWP-7740", date: "August 11, 2025", amount: "$12,500.00", method: "Bank Transfer", status: "Paid" }
+];

@@ -22,9 +22,9 @@ export const authMenu = [
         link: "/clients"
     },
     {
-        name: "Payments",
+        name: "Transactions",
         icon: <CircleDollarSign className="w-5" />,
-        link: "/payments"
+        link: "/transactions"
     },
     {
         name: "Message",
