@@ -84,8 +84,8 @@ export default function ClientsTable() {
             </div>
 
             {/* Tab Switching */}
-            <div className="px-5 mt-5">
-                <div className="flex items-center gap-x-8 border-b border-gray-100">
+            <div className="px-5 mt-5 border-b border-gray-100">
+                <div className="flex items-center gap-x-8 ">
                     {tabs.map((tab) => (
                         <button
                             key={tab.id}

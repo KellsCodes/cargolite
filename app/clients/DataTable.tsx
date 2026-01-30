@@ -14,16 +14,24 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
 import { MoreHorizontalIcon } from "lucide-react"
-import { shippingData } from "./mockdata"
+import { clientMockData } from "./mockdata"
 import { cn } from "@/lib/utils"
 
 const statusStyles: Record<string, string> = {
-    "Delivered": "bg-green-100 text-green-700 border-green-200",
-    "In Transit": "bg-blue-100 text-blue-700 border-blue-200",
-    "Pending": "bg-amber-100 text-amber-700 border-amber-200",
-    "Picked Up": "bg-purple-100 text-purple-700 border-purple-200",
-    "Cancelled": "bg-red-100 text-red-700 border-red-200",
+    // Active: Matches "Delivered" (Green) - Positive/Healthy state
+    "Active": "bg-green-100 text-green-700 border-green-200",
+
+    // Inactive: Matches "Pending" (Amber) - Dormant/Needs attention
+    "Inactive": "bg-amber-100 text-amber-700 border-amber-200",
+
+    // Suspended: Matches "Cancelled" (Red) - Blocked/Action required
+    "Suspended": "bg-red-100 text-red-700 border-red-200",
+
+    // Flagged: Matches "Picked Up" (Purple) - Special case/Warning
+    "Flagged": "bg-purple-100 text-purple-700 border-purple-200",
 };
 
 export function DataTable() {
@@ -31,31 +39,34 @@ export function DataTable() {
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Shipping ID</TableHead>
-                    <TableHead>Customer Name</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Pickup Location</TableHead>
-                    <TableHead>Drop Location</TableHead>
-                    <TableHead>Amount</TableHead>
-                    <TableHead>Status</TableHead>
+                    <TableHead>Client Name</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Phone</TableHead>
+                    <TableHead>Total Shipments</TableHead>
+                    {/* Helps identify if they are a regular or new customer */}
+                    <TableHead>Last Activity</TableHead>
+                    <TableHead>Location</TableHead>
+                    {/* Critical for identifying high-value or problematic clients */}
+                    <TableHead>Account Status</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
             </TableHeader>
+
             <TableBody>
-                {shippingData.map((shipment) => (
-                    <TableRow key={shipment.id}>
-                        <TableCell className="font-medium">{shipment.tracking}</TableCell>
-                        <TableCell>{shipment.customer}</TableCell>
-                        <TableCell>{shipment.date}</TableCell>
-                        <TableCell>{shipment.pickup}</TableCell>
-                        <TableCell>{shipment.drop}</TableCell>
-                        <TableCell>{shipment.amount}</TableCell>
+                {clientMockData.map((client) => (
+                    <TableRow key={client.id}>
+                        <TableCell className="font-medium">{client.name}</TableCell>
+                        <TableCell>{client.email}</TableCell>
+                        <TableCell>{client.phone}</TableCell>
+                        <TableCell>{client.totalShipments}</TableCell>
+                        <TableCell>{client.lastActivity}</TableCell>
+                        <TableCell>{client.location}</TableCell>
                         <TableCell>
                             <span className={cn(
                                 "px-2.5 py-0.5 rounded-full text-xs font-medium border",
-                                statusStyles[shipment.status] || "bg-gray-100 text-gray-700"
+                                statusStyles[client.status] || "bg-gray-100 text-gray-700"
                             )}>
-                                {shipment.status}
+                                {client.status}
                             </span>
                         </TableCell>
                         <TableCell className="text-right">
@@ -63,12 +74,15 @@ export function DataTable() {
                                 <DropdownMenuTrigger asChild>
                                     <Button variant="ghost" size="icon" className="size-8">
                                         <MoreHorizontalIcon />
-                                        <span className="sr-only">Open menu</span>
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                                    <DropdownMenuItem>Duplicate</DropdownMenuItem>
+                                    <DropdownMenuItem>View History</DropdownMenuItem>
+                                    <DropdownMenuItem>Message</DropdownMenuItem>
+                                    <div className="flex items-center space-x-2 text-xs px-2">
+                                        <Label htmlFor="suspend" className="font-normal">Suspend</Label>
+                                        <Switch id="suspend" />
+                                    </div>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem variant="destructive">
                                         Delete
