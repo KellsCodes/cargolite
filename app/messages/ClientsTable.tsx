@@ -34,7 +34,7 @@ export default function MessageTable() {
 
     return (
         <div className="h-full bg-white rounded-lg relative p-0 flex flex-col min-w-0">
-            <div className="flex items-center justify-between px-5 pt-5 bg-blue-5000">
+            <div className="flex items-center justify-between px-5 pt-5">
                 <h1 className="font-medium flex items-center gap-x-2">
                     <span className="border-main-primary/30 bg-main-primary/3 p-1 h-8 w-9 rounded flex items-center justify-center">
                         <MessagesSquare className="w-4 stroke-3 text-blue-600" />
