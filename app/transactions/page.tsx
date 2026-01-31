@@ -5,7 +5,7 @@ import TransactionsTable from "./TransactionsTable";
 export default function Customers() {
     return (
         <AuthLayout>
-            <div className="space-y-6 overflow-hidden">
+            <div className="space-y-6 overflow-hidden p-6">
                 <div className="flex items-center justify-between">
                     <h1 className="font-medium">Transactions</h1>
                     <AddShipmentBtn />

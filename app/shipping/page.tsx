@@ -5,7 +5,7 @@ import ShippingTable from "./ShippingTable";
 export default function ShippingOrders() {
     return (
         <AuthLayout>
-            <div className="space-y-6 overflow-hidden">
+            <div className="space-y-6 overflow-hidden p-6">
                 <div className="flex items-center justify-between">
                     <h1 className="font-medium">Shipping</h1>
                     <AddShipmentBtn />

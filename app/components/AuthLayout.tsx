@@ -44,7 +44,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                 </div>
             </aside>
             <div className="flex-1 flex flex-col min-w-0">
-                <nav className="h-16 border-b-3 border-b-black/3 flex items-center justify-between px-4 md:px-6 bg-white">
+                <nav className="h-16 shrink-0 border-b-3 border-b-black/3 flex items-center justify-between px-4 md:px-6 bg-white">
                     {/* Search Area */}
                     <div className="hidden md:flex items-center gap-x-0 border border-black/10 rounded-lg px-3 shadow-sm bg-transparent">
                         <Search className="w-4 text-black/50" />
@@ -75,7 +75,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                 </nav>
 
 
-                <main className="hidden md:block p-6 flex-1 min-w-0 bg-[#F4F6F8]/40">
+                <main className="hidden md:block p-0 flex-1 min-w-0 bg-[#F4F6F8]/40">
                     {children}
                 </main>
 

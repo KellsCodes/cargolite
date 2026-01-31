@@ -11,7 +11,7 @@ import AddShipmentBtn from "../components/AddShipment";
 export default function DashBoard() {
     return (
         <AuthLayout>
-            <div className="">
+            <div className="p-6">
                 <div className="flex items-center justify-between">
                     <div className="flex flex-col justify-center text-sm gap-y-1 h-12">
                         <p className="text-xs opacity-60">Hello Joshua Gueye</p>

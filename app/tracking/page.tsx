@@ -8,7 +8,7 @@ export default function TrackingPage() {
     const [trackError, setTrackError] = useState(false)
     return (
         <AuthLayout>
-            <div className="space-y-6">
+            <div className="space-y-6 p-6">
                 <div>
                     <h1 className="font-medium">Tracking Shipments</h1>
 
