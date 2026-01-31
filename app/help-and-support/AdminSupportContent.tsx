@@ -1,9 +1,7 @@
 import {
     Ticket,
-    Activity,
     ShieldAlert,
     MessageSquareMore,
-    Clock,
     ChevronRight,
     Search
 } from "lucide-react";

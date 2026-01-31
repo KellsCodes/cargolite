@@ -1,4 +1,4 @@
-import { ArrowDown, OctagonAlert, PackageCheck } from "lucide-react";
+import { OctagonAlert, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import React from "react";
 
 interface StatItem {
@@ -16,27 +16,52 @@ interface StatCardProps {
     data: StatData
 }
 
+
 export default function StatCard({ item, data }: StatCardProps) {
+    const isNegative = data.currentPerformance < 0;
+
     return (
-        <div className="bg-white rounded-md p-6 space-y-2 relative">
-            <div className="w-[30px] h-[30px] rounded-full absolute right-6 top-6 flex items-center justify-center border border-black/20">
+        <div className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+            {/* Top Row: Icon & Name */}
+            <div className="flex items-start justify-between mb-4">
+                <div className="space-y-1">
+                    <div className="flex items-center gap-x-1.5">
+                        <span className="text-[13px] font-semibold text-slate-500 tracking-tight uppercase">
+                            {item.name}
+                        </span>
+                        <OctagonAlert className="w-3.5 h-3.5 text-slate-300 hover:text-slate-400 transition-colors cursor-help" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-900 tracking-tight">
+                        {data.total.toLocaleString()}
+                    </h3>
+                </div>
+
+                {/* Styled Icon Container */}
+                <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-600 group-hover:bg-blue-50 group-hover:text-blue-600 transition-all duration-300">
+                    {item.icon}
+                </div>
+            </div>
+
+            {/* Bottom Row: Performance Indicator */}
+            <div className="flex items-center justify-between mt-2">
+                <div className="flex items-center gap-x-2">
+                    <span className={`flex items-center gap-x-0.5 px-2 py-0.5 rounded-full text-[11px] font-bold border ${isNegative
+                            ? "bg-rose-50 border-rose-100 text-rose-600"
+                            : "bg-emerald-50 border-emerald-100 text-emerald-600"
+                        }`}>
+                        {isNegative ? <ArrowDownRight className="w-3 h-3" /> : <ArrowUpRight className="w-3 h-3" />}
+                        12%
+                    </span>
+                    <p className="text-[11px] text-slate-400 font-medium">
+                        <span className="text-slate-600">{data.currentPerformance.toLocaleString()}</span> vs last month
+                    </p>
+                </div>
+            </div>
+
+            {/* Subtle Decorative Background Element */}
+            <div className="absolute -right-2 -bottom-2 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity">
                 {item.icon}
             </div>
-            <div className="flex items-center gap-x-1">
-                <span className="text-sm">{item.name}</span>
-                <OctagonAlert className="w-4 opacity-40" />
-            </div>
-            <p className="font-medium text-sm">{data.total.toLocaleString()}</p>
-            <div className="flex items-center text-xs gap-x-5">
-                <p className="space-x-1">
-                    <span className="font-medium">{data.currentPerformance.toLocaleString()}</span>
-                    <span className="opacity-60">vs last month</span>
-                </p>
-
-                <span className={`flex items-center justify-center border ${data.currentPerformance < 0 ? "border-red-500/30 bg-red-500/3 text-red-700" : "border-green-500/30 bg-green-500/3 text-green-700"} w-15 rounded-full text-xs`}>
-                    <ArrowDown className={`w-4 ${data.currentPerformance < 0 ? "rotate-0" : "rotate-180"} `} />12%
-                </span>
-            </div>
         </div>
-    )
+    );
 }
