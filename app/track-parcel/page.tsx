@@ -17,19 +17,19 @@ export default function TrackParcel() {
 
     return (
         <Layout>
-            <div className="bg-white py-20">
-                <div className="w-[74vw] mx-auto">
+            <div className="bg-white pt-20 pb-10">
+                <div className="w-[72vw] mx-auto">
                     <TrackingParcel trackError={trackError} />
                 </div>
             </div>
 
             {/* RESULTS SECTION: TRACKING DATA */}
-            <div className="w-[74vw] mx-auto -mt-10 mb-10">
+            {/* <div className="w-[72vw] mx-auto -mt-5 mb-0 z-0 relative">
                 <TrackData />
-            </div>
+            </div> */}
 
             {/* INFO SECTION: GLOBAL SERVICE */}
-            <section className="w-[74vw] mx-auto py-24 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <section className="w-[72vw] mx-auto pb-24 pt-5 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                 <div className="space-y-8">
                     <div className="space-y-4">
                         <span className="inline-block px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-widest rounded-md border border-blue-100">
@@ -77,7 +77,7 @@ export default function TrackParcel() {
             </section>
 
             {/* 4. FAQ SECTION */}
-            <section className="w-[74vw] mx-auto py-24 border-t border-slate-100">
+            <section className="w-[72vw] mx-auto py-24 border-t border-slate-100">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
                     <div className="space-y-8">
                         <h2 className="text-4xl font-bold tracking-tight text-slate-900">Frequently Asked Questions</h2>

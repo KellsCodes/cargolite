@@ -14,7 +14,7 @@ export default function TrackingPage() {
 
                 </div>
 
-                <div className="bg-white rounded-lg h-[74vh] overflow-hidden py-6">
+                <div className="bg-white rounded-[2.5rem] h-[76vh] overflow-hidden py-10">
                     <div className="flex flex-col h-full">
 
                         {/* The scrollable area */}

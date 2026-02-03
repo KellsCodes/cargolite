@@ -1,5 +1,5 @@
 "use client"
-import { ArrowLeft, ChevronDown, ChevronUp, CircleDot, Flag, Goal, History, MapPin, Package2, PackageSearch, Plane, Share2, Ship, User } from "lucide-react";
+import { ArrowLeft, Box, CheckCircle2, ChevronDown, ChevronUp, CircleDot, Flag, Goal, History, MapPin, Package2, PackageSearch, Plane, Ruler, Scale, Share2, Ship, Truck, User } from "lucide-react";
 import Link from "next/link";
 import { MapPoint } from "./ShipmentMap";
 import dynamic from "next/dynamic";
@@ -14,335 +14,208 @@ export default function TrackData() {
     const originCoords: MapPoint = [37.422, -122.084];
     const currentCoords: MapPoint = [53.381, -1.470];
     const destinationCoords: MapPoint = [51.519, -0.127];
-    const [showAdditionalDetails, setShowAdditionalDetails] = useState(false)
+
     return (
-        <div className="space-y-20">
-            <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                    <Link href={"/tract-parcel"}>
-                        <button className="flex items-center font-medium text-[#034460] cursor-pointer"><ArrowLeft /> Back to tracking</button>
-                    </Link>
-                    <button className="flex items-center font-medium text-main-primary gap-x-2"><Share2 className="w-4" /> Share</button>
-                </div>
+        <div className="space-y-10 pb-20">
+            {/* Top Navigation */}
+            <div className="flex items-center justify-between">
+                <Link href="/track-parcel">
+                    <button className="group flex items-center gap-x-2 font-semibold text-slate-500 hover:text-blue-600 transition-all cursor-pointer">
+                        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                        Back to tracking
+                    </button>
+                </Link>
+                <button className="flex items-center font-bold text-blue-600 gap-x-2 bg-blue-50 px-4 py-2 rounded-xl hover:bg-blue-100 transition-all">
+                    <Share2 className="w-4 h-4" /> Share Tracking
+                </button>
+            </div>
 
-                <div className="px-10 py-7 bg-[#034460] rounded-lg space-y-7"
-                    style={{
-                        backgroundImage: `linear-gradient(rgba(3, 68, 96, 0.7), rgba(3, 68, 96, 0.7)), url(/bg-offer.png)`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                    }}
-                >
-                    <div className="flex items-center justify-between">
-                        <div className="space-y-1">
-                            <p className="flex items-center gap-x-2 text-white"><PackageSearch color="#ffffff" /> AWP1234567890</p>
-                            <p className="font-bold"><span className="text-white/50">Status:</span> <span className="text-white">In Transit</span></p>
+            {/* 1. HERO TRACKING CARD */}
+            <div className="relative overflow-hidden rounded-[2.5rem] bg-slate-900 p-8 lg:p-12 shadow-2xl">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/40 to-slate-900/95 z-0" />
+
+                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                    {/* Left: Parcel Info */}
+                    <div className="lg:col-span-8 space-y-8">
+                        <div className="space-y-2">
+                            <div className="flex items-center gap-x-3">
+                                <div className="bg-white/10 p-2.5 rounded-xl backdrop-blur-md">
+                                    <PackageSearch className="w-6 h-6 text-white" />
+                                </div>
+                                <h2 className="text-3xl font-black text-white tracking-tight">AWP1234567890</h2>
+                            </div>
+                            <div className="flex items-center gap-x-3">
+                                <span className="bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-[10px] font-black border border-emerald-500/30 uppercase tracking-tighter">
+                                    In Transit
+                                </span>
+                                <span className="text-white/40 text-xs font-bold uppercase tracking-widest italic">Moving through Sheffield Hub</span>
+                            </div>
                         </div>
-                        <div className="text-center p-2 w-48 bg-header-top/30 rounded-sm text-white">
-                            <p>Estimated Delivery</p>
-                            <p>23rd January, 2026</p>
+
+                        {/* Progress */}
+                        <div className="space-y-4 max-w-xl">
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs font-bold text-white uppercase tracking-widest opacity-60">Progress</span>
+                                <span className="text-2xl font-black text-white">75%</span>
+                            </div>
+                            <div className="h-3 w-full bg-white/10 rounded-full overflow-hidden p-0.5 border border-white/5">
+                                <div className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-1000" style={{ width: '75%' }} />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <HeroStat label="Origin" value="Mountain View, CA" icon={<MapPin className="text-blue-300" />} />
+                            <HeroStat label="Current" value="Sheffield, UK" icon={<Truck className="text-emerald-300" />} />
+                            <HeroStat label="Destination" value="London, UK" icon={<Flag className="text-rose-300" />} />
                         </div>
                     </div>
 
-                    <div className="space-y-3">
-                        <div className="flex items-center justify-between text-sm font-medium text-white">
-                            <p className="bg-header-top/30 py-2 px-3 rounded-xl">Shipment Progress</p>
-                            <p>75%</p>
+                    {/* Right: Parcel Image Preview */}
+                    <div className="lg:col-span-4 flex justify-center lg:justify-end">
+                        <div className="relative group">
+                            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                            <div className="relative w-64 h-64 bg-slate-800 rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl">
+                                <img src="/package2.png" alt="Parcel" className="w-full h-full object-contain opacity-80 group-hover:scale-110 transition-transform duration-700" />
+                                {/* <div className="text-xs text-center text-white h-full flex items-center justify-center">No preview image</div> */}
+                                <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md p-3 rounded-xl border border-white/10">
+                                    <p className="text-[10px] font-black text-white uppercase tracking-widest text-center">Live Package Photo</p>
+                                </div>
+                            </div>
                         </div>
-                        <div className="w-full h-2 bg-header-top/40 rounded-full">
-                            <div className="h-full bg-white transition-all duration-700 ease-in-out w-[75%] rounded-full" />
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-x-6">
-                        <div className="min-h-24 col-span-1 bg-header-top/40 rounded-md flex flex-col justify-center p-5 space-y-2">
-                            <p className="text-white/60">Origin</p>
-                            <p className="text-white flex items-center gap-x-1">
-                                <MapPin color="#ffffff" className="w-[19px]" />
-                                1600 Amphitheatre Parkway, Mountain View, CA
-                            </p>
-                        </div>
-                        <div className="min-h-24 col-span-1 bg-header-top/40 rounded-md flex flex-col justify-center p-5 space-y-2">
-                            <p className="text-white/60">Current Location</p>
-                            <p className="text-white flex items-center gap-x-1">
-                                <MapPin color="#ffffff" className="w-[19px]" />
-                                42 Willow Crescent Shefield S10 3LT
-                            </p>
-                        </div>
-                        <div className="min-h-24 col-span-1 bg-header-top/40 rounded-md flex flex-col justify-center p-5 space-y-2">
-                            <p className="text-white/60">Destination</p>
-                            <p className="text-white flex items-center gap-x-1">
-                                <Flag color="#ffffff" className="w-[19px]" />
-                                Great Russel St, London, WCLB 3DG, United Kingdom
-                            </p>
-                        </div>
-
                     </div>
                 </div>
             </div>
 
-
-            {/* Shipment route */}
-            <div className="flex items-start gap-x-5">
-                <div className="w-[65%] space-y-4">
-                    <div className="w-full space-y-0 shadow-md rounded-b-md bg-white">
-                        <div className="p-5 bg-black/2">
-                            <p className="flex items-center gap-x-1 text-main-primary font-bold"><Ship className="w-5" /> Shipment Route</p>
-                        </div>
-                        <div className="h-130 relative z-5">
-                            <ShipmentMap
-                                origin={originCoords}
-                                current={currentCoords}
-                                destination={destinationCoords}
-                            />
-                        </div>
+            {/* 2. MAIN CONTENT GRID */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div className="lg:col-span-8 space-y-8">
+                    {/* Map */}
+                    <div className="bg-white border border-slate-200 rounded-[2.5rem] shadow-sm overflow-hidden h-[500px]">
+                        <ShipmentMap origin={originCoords} current={currentCoords} destination={destinationCoords} />
                     </div>
 
-                    <div className="w-full shadow-md rounded-b-md bg-white">
-                        <div className="p-5 bg-black/2">
-                            <p className="flex items-center gap-x-1 text-main-primary font-bold"><MapPin className="w-5" /> Location Information</p>
-                        </div>
-                        <div className="grid grid-cols-3 gap-x-4 p-5">
-                            <div className="col-span-1 space-y-2">
-                                <p className="text-sm text-main-primary/70 font-medium">Origin</p>
-                                <div className="flex items-center gap-x-2">
-                                    <CircleDot className="w-5 text-main-primary" />
-                                    <p className="text-sm text-black opacity-60">1600 Amphitheatre Parkway, Mountain View, CA</p>
-                                </div>
-                            </div>
-                            <div className="col-span-1 space-y-2">
-                                <p className="text-sm text-main-primary/70 font-medium">Current Location</p>
-                                <div className="flex items-center gap-x-2">
-                                    <CircleDot className="w-5 text-main-primary" />
-                                    <p className="text-sm text-black opacity-60">42 Willow Crescent Shefield S10 3LT</p>
-                                </div>
-                            </div>
-                            <div className="col-span-1 space-y-2">
-                                <p className="text-sm text-main-primary/70 font-medium">Destination</p>
-                                <div className="flex items-center gap-x-2">
-                                    <CircleDot className="w-5 text-main-primary" />
-                                    <p className="text-sm text-black opacity-60">Great Russell St, London, WC1B 3DG, United Kingdom</p>
-                                </div>
-                            </div>
-
-                        </div>
+                    {/* Party Details */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <PartyCard type="Sender" name="Joshua Nikeldon" location="Leeds, United Kingdom" />
+                        <PartyCard type="Receiver" name="Alex Smith" location="London, United Kingdom" />
                     </div>
 
-                    <div className="w-full shadow-md rounded-b-md bg-white">
-                        <div className="p-5 bg-black/[0.02] border-b">
-                            <p className="flex items-center gap-x-1 text-main-primary font-bold">
-                                <History className="w-5" /> Shipment Timeline
-                            </p>
-                        </div>
-
-                        {/* The Timeline Container */}
-                        <div className="p-8 space-y-0">
-
-                            {/* Step 1: Origin */}
-                            <div className="flex gap-x-6">
-                                <div className="relative flex flex-col items-center">
-                                    {/* Dot */}
-                                    <div className="z-10 w-6 h-6 bg-white border-2 border-main-primary rounded-full flex items-center justify-center shrink-0">
-                                        <div className="w-3 h-3 rounded-full bg-main-primary" />
-                                    </div>
-                                    {/* Vertical Line Segment */}
-                                    <div className="w-[2px] h-full bg-main-primary/10" />
-                                </div>
-
-                                <div className="pb-10 w-full">
-                                    <div className="p-4 rounded-sm bg-main-primary/5 space-y-1 border border-main-primary/10">
-                                        <div className="flex items-center justify-between">
-                                            <p className="text-main-primary font-bold">Dispatched from Origin</p>
-                                            <p className="text-sm opacity-60">Dec 17, 2026</p>
-                                        </div>
-                                        <p className="py-1 px-3 w-fit text-main-primary text-[10px] bg-main-primary/10 rounded-full font-bold uppercase tracking-wider">Dispatched</p>
-                                        <p className="text-sm opacity-70">1600 Amphitheatre Parkway, Mountain View, CA</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Step 2: Current Location (Dynamic Height) */}
-                            <div className="flex gap-x-6">
-                                <div className="relative flex flex-col items-center">
-                                    {/* Ping Dot */}
-                                    <div className="z-10 flex items-center justify-center shrink-0">
-                                        <div className="absolute w-5 h-5 bg-chart-5 rounded-full animate-ping opacity-75" />
-                                        <div className="relative w-5 h-5 bg-white border-2 border-chart-5 rounded-full flex items-center justify-center">
-                                            <div className="w-2 h-2 rounded-full bg-chart-5" />
-                                        </div>
-                                    </div>
-                                    {/* Vertical Line Segment */}
-                                    <div className="w-[2px] h-full bg-main-primary/10" />
-                                </div>
-
-                                <div className="pb-10 w-full">
-                                    <div className="p-4 rounded-sm bg-chart-5/10 space-y-1 border border-chart-5/20">
-                                        <div className="flex items-center justify-between">
-                                            <p className="text-black font-bold">Current Location</p>
-                                            <p className="text-sm opacity-60">Jan 08, 2026</p>
-                                        </div>
-                                        <p className="py-1 px-3 w-fit text-chart-5 text-[10px] bg-chart-5/20 rounded-full font-bold uppercase tracking-wider">In Transit</p>
-                                        <p className="text-sm opacity-70">42 Willow Crescent, Sheffield S10 3LT</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Step 3: Destination */}
-                            <div className="flex gap-x-6">
-                                <div className="relative flex flex-col items-center">
-                                    {/* Goal Dot */}
-                                    <div className="z-10 w-6 h-6 bg-white border-2 border-green-500 rounded-full flex items-center justify-center shrink-0">
-                                        <Goal className="w-3.5 text-green-500" />
-                                    </div>
-                                    <div className="w-[2px] h-full bg-main-primary/10" />
-                                </div>
-
-                                <div className="w-full">
-                                    <div className="p-4 rounded-sm bg-green-50 space-y-1 border border-green-100">
-                                        <div className="flex items-center justify-between">
-                                            <p className="text-black font-bold">Delivery Destination</p>
-                                            <p className="text-sm opacity-60">Pending</p>
-                                        </div>
-                                        <p className="py-1 px-3 w-fit text-green-600 text-[10px] bg-green-100 rounded-full font-bold uppercase tracking-wider">Upcoming</p>
-                                        <p className="text-sm opacity-70">Great Russell St, London WC1B 3DG</p>
-                                    </div>
-                                </div>
-                            </div>
-
+                    {/* Specs */}
+                    <div className="bg-white border border-slate-200 rounded-[2.5rem] p-8 shadow-sm">
+                        <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400 mb-8 flex items-center gap-2">
+                            <Box className="w-4 h-4" /> Package Specifications
+                        </h3>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                            <SpecItem icon={<Box className="w-4 h-4" />} label="Item Count" value="12 Packages" />
+                            <SpecItem icon={<Scale className="w-4 h-4" />} label="Total Weight" value="45.50 kg" />
+                            <SpecItem icon={<Ruler className="w-4 h-4" />} label="Dimensions" value="120 x 80 x 60 cm" />
+                            <SpecItem icon={<Truck className="w-4 h-4" />} label="Service" value="Express" highlight />
                         </div>
                     </div>
-
-                    {/* PACKAGE DETAILS */}
-                    <div className="w-full space-y-3 shadow-md rounded-b-md bg-white">
-                        <div className="p-5 bg-black/[0.02]">
-                            <p className="flex items-center gap-x-1 text-main-primary font-bold"><Package2 className="w-5 stroke-[2.2]" />Package Details</p>
-                        </div>
-                        <div className="grid grid-cols-2 p-5 gap-7">
-                            <div className="col-span-1 space-y-2">
-                                <p className="text-sm opacity-70">Description</p>
-                                <p className="text-sm">Brief description of the item</p>
-                            </div>
-                            <div className="space-y-2">
-                                <p className="text-sm opacity-70">Shipping Mode</p>
-                                <p className="flex items-center gap-x-1 font-bold"><Plane className="w-4 text-main-primary fill-main-primary rotate-12" /> Air</p>
-                            </div>
-                            <div className="col-span-1 space-y-2">
-                                <p className="text-sm opacity-70">Weight</p>
-                                <p className="text-sm font-bold">12</p>
-                            </div>
-                            <div className="col-span-1 space-y-2">
-                                <p className="text-sm opacity-70">Quantity</p>
-                                <p className="text-sm font-bold">1</p>
-                            </div>
-                            <div className="col-span-1 space-y-2">
-                                <p className="text-sm opacity-70">Carrier</p>
-                                <p className="text-sm font-bold">dhl</p>
-                            </div>
-                            <div className="col-span-1 space-y-2">
-                                <p className="text-sm opacity-70">Carrier Reference</p>
-                                <p className="text-sm font-bold">23532523</p>
-                            </div>
-
-                            <div className="col-span-2">
-                                <button
-                                    className="text-sm text-blue-500 font-bold flex items-center gap-x-0 cursor-pointer"
-                                    onClick={() => setShowAdditionalDetails(prev => !prev)}
-                                >
-                                    {showAdditionalDetails ? 'Hide' : 'Show'} Additional Details
-                                    <ChevronDown
-                                        className={`transition-transform duration-200 ease-in-out ${showAdditionalDetails ? '-rotate-180' : 'rotate-0'}`}
-                                    />
-                                </button>
-
-                                <div className={`grid transition-all duration-500 ease-in-out ${showAdditionalDetails
-                                    ? 'grid-rows-[1fr] opacity-100 mt-4'
-                                    : 'grid-rows-[0fr] opacity-0 mt-0'
-                                    }`}>
-                                    <div className="overflow-hidden">
-                                        {/* Your Actual Content */}
-                                        <div className="grid grid-cols-2 gap-5">
-                                            <div className="col-span-1 space-y-2">
-                                                <p className="text-sm opacity-70">Payment Mode</p>
-                                                <p className="text-sm font-bold">Cash</p>
-                                            </div>
-                                            <div className="col-span-1 space-y-2">
-                                                <p className="text-sm opacity-70">Total Freight Cost</p>
-                                                <p className="text-sm font-bold">$100</p>
-                                            </div>
-                                            <div className="col-span-1 space-y-2">
-                                                <p className="text-sm opacity-70">Estimated Timeline</p>
-                                                <p className="text-sm font-bold">Dispatch: Jan, 02 2026</p>
-                                                <p className="text-sm font-bold">Delivery: Feb, 02 2026</p>
-                                            </div>
-                                            <div className="col-span-2 space-y-2">
-                                                <p className="text-sm opacity-70">Package Image</p>
-                                                <div className="">
-                                                    <img src="/package2.png" alt="package image" loading="lazy" className="" />
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
-                {/* USER INFO */}
-                <div className="w-[35%] space-y-5">
-
-                    <div className="w-full space-y-3 shadow-md rounded-b-md bg-white">
-                        <div className="p-5 bg-black/2">
-                            <p className="flex items-center gap-x-1 text-main-primary font-bold"><User className="w-5 fill-main-primary" />Receiver Information</p>
+                {/* Right Column: Timeline with ACTIVE PULSE */}
+                <div className="lg:col-span-4">
+                    <div className="bg-white border border-slate-200 rounded-[2.5rem] shadow-sm overflow-hidden sticky top-8">
+                        <div className="p-6 border-b border-slate-50 flex items-center gap-2 bg-slate-50/50">
+                            <History className="w-4 h-4 text-slate-600" />
+                            <h3 className="font-bold text-slate-800 text-sm uppercase tracking-wider">Timeline</h3>
                         </div>
-                        <div className="space-y-4 p-5 pt-0">
-                            <div>
-                                <p className="text-main-primary/70 text-sm">Name</p>
-                                <p className="text-main-primary font-bold">May D. Rivas</p>
-                            </div>
-
-                            <div>
-                                <p className="text-main-primary/70 text-sm">Email</p>
-                                <p className="text-main-primary font-bold">may***@gmail.com</p>
-                            </div>
-
-                            <div>
-                                <p className="text-main-primary/70 text-sm">Contact</p>
-                                <p className="text-main-primary font-bold">901***004</p>
-                            </div>
-
-                            <div>
-                                <p className="text-main-primary/70 text-sm">Delivery Address</p>
-                                <p className="text-main-primary font-bold">355 Lightning Point Drive Memphis</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="w-full space-y-3 shadow-md rounded-b-md bg-white">
-                        <div className="p-5 bg-black/2">
-                            <p className="flex items-center gap-x-1 text-main-primary font-bold"><User className="w-5 fill-main-primary" />Sender Information</p>
-                        </div>
-                        <div className="space-y-4 p-5 pt-0">
-                            <div>
-                                <p className="text-main-primary/70 text-sm">Name</p>
-                                <p className="text-main-primary font-bold">Lorreta D. Greer</p>
-                            </div>
-
-                            <div>
-                                <p className="text-main-primary/70 text-sm">Email</p>
-                                <p className="text-main-primary font-bold">lorr***@gmail.com</p>
-                            </div>
-
-                            <div>
-                                <p className="text-main-primary/70 text-sm">Delivery Address</p>
-                                <p className="text-main-primary font-bold">2888 Kelly Drive Summersville</p>
-                            </div>
+                        <div className="p-8 space-y-10">
+                            {/* Current (Active) Location */}
+                            <TimelineStep
+                                title="In Transit"
+                                location="Sheffield Distribution Center, UK"
+                                time="10:45 AM"
+                                date="Feb 3, 2026"
+                                isActive
+                            />
+                            <TimelineStep
+                                title="Processed at Hub"
+                                location="Manchester Gateway"
+                                time="08:20 PM"
+                                date="Feb 2, 2026"
+                                isCompleted
+                            />
+                            <TimelineStep
+                                title="Shipment Picked Up"
+                                location="Mountain View, CA"
+                                time="02:00 PM"
+                                date="Jan 31, 2026"
+                                isCompleted
+                                isLast
+                            />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
+}
+
+// -- UPDATED TIMELINE COMPONENT WITH PULSE --
+function TimelineStep({ title, location, time, date, isActive, isCompleted, isLast }: any) {
+    return (
+        <div className="flex gap-x-5 relative">
+            {!isLast && <div className="absolute left-[11px] top-8 bottom-0 w-0.5 bg-slate-100" />}
+            <div className="relative z-10 w-6 h-6">
+                {isActive && (
+                    <div className="absolute inset-0 rounded-full bg-blue-400 animate-ping opacity-25" />
+                )}
+                <div className={`relative w-6 h-6 rounded-full flex items-center justify-center border-2 ${isActive ? 'bg-blue-600 border-blue-600 shadow-lg shadow-blue-200' :
+                    isCompleted ? 'bg-emerald-500 border-emerald-500' : 'bg-white border-slate-200'
+                    }`}>
+                    {isCompleted && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
+                    {isActive && <div className="w-2 h-2 rounded-full bg-white animate-pulse" />}
+                </div>
+            </div>
+            <div className="pb-2">
+                <p className={`text-sm font-bold leading-none mb-1 ${isActive ? 'text-blue-600' : 'text-slate-900'}`}>{title}</p>
+                <p className="text-xs text-slate-500 font-semibold">{location}</p>
+                <p className="text-[10px] text-slate-400 font-bold mt-1 uppercase tracking-tight">{date} • {time}</p>
+            </div>
+        </div>
+    );
+}
+
+// (HeroStat, PartyCard, SpecItem remain same as previous version)
+function HeroStat({ label, value, icon }: { label: string, value: string, icon: any }) {
+    return (
+        <div className="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex items-center gap-4">
+            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+                {icon}
+            </div>
+            <div className="min-w-0">
+                <p className="text-[9px] uppercase font-black text-white/40 tracking-widest mb-0.5">{label}</p>
+                <p className="text-xs font-bold text-white truncate">{value}</p>
+            </div>
+        </div>
+    );
+}
+
+function PartyCard({ type, name, location }: { type: string, name: string, location: string }) {
+    return (
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 flex items-center gap-5 shadow-sm">
+            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${type === 'Sender' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}`}>
+                <User className="w-6 h-6" />
+            </div>
+            <div>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">{type}</p>
+                <p className="text-sm font-bold text-slate-900">{name}</p>
+                <p className="text-xs text-slate-500 font-medium">{location}</p>
+            </div>
+        </div>
+    );
+}
+
+function SpecItem({ icon, label, value, highlight }: { icon: any, label: string, value: string, highlight?: boolean }) {
+    return (
+        <div className="space-y-2">
+            <div className="flex items-center gap-2 text-slate-400">
+                {icon}
+                <p className="text-[10px] font-black uppercase tracking-widest">{label}</p>
+            </div>
+            <p className={`text-sm font-bold ${highlight ? 'text-blue-600' : 'text-slate-700'}`}>{value}</p>
+        </div>
+    );
 }
