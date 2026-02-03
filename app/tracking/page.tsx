@@ -18,9 +18,9 @@ export default function TrackingPage() {
                     <div className="flex flex-col h-full">
 
                         {/* The scrollable area */}
-                        <div className="flex-1 overflow-y-auto custom-scroll px-6">
+                        <div className="flex-1 overflow-y-auto custom-scroll px-6 space-y-10">
                             <TrackingParcel trackError={trackError} />
-                            <TrackData />
+                            {/* <TrackData /> */}
                         </div>
                     </div>
                 </div>

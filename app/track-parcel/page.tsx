@@ -24,9 +24,9 @@ export default function TrackParcel() {
             </div>
 
             {/* RESULTS SECTION: TRACKING DATA */}
-            {/* <div className="w-[72vw] mx-auto -mt-5 mb-0 z-0 relative">
+            <div className="w-[72vw] mx-auto mt-5 mb-0 z-0 relative">
                 <TrackData />
-            </div> */}
+            </div>
 
             {/* INFO SECTION: GLOBAL SERVICE */}
             <section className="w-[72vw] mx-auto pb-24 pt-5 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
