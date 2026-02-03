@@ -41,7 +41,7 @@ export default function Signup() {
         <div className="relative h-screen w-screen overflow-hidden bg-white flex items-center justify-center selection:bg-chart-5/50">
 
             {/* --- Animated Sparks (Bubbles) --- */}
-            {mounted && (
+            {/* {mounted && (
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                     {particles.map((p) => (
                         <motion.div
@@ -71,7 +71,7 @@ export default function Signup() {
                         />
                     ))}
                 </div>
-            )}
+            )} */}
 
             {/* --- Ambient Background Blobs --- */}
             <div className="absolute inset-0 z-0 pointer-events-none">
