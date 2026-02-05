@@ -10,5 +10,39 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
+}
+
+enum Role {
+  USER
+  ADMIN
+  MANAGER
+}
+
+
+model User {
+  id            Int       @id   @default(autoincrement())
+  email         String    @unique
+  password      String  
+  role          Role      @default(USER)
+  createdAt     DateTime  @updatedAt
+  profile       Profile?
+}
+
+model Profile {
+  id            Int       @id   @default(autoincrement())
+  displayName   String?   @db.VarChar(50)
+  firstName     String    @db.VarChar(50)
+  lastName      String    @db.VarChar(50)
+  region        String    @map("country") // Maps code variable to 'country' column
+  city          String
+  postalCode    String?   @db.VarChar(20)
+  telephone     String?   @db.VarChar(20)
+  profileImage  String?   @db.Text // Text type for long URLs/Base64
+
+  // Relationship to User
+  userId        Int       @unique
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
