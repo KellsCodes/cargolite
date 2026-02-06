@@ -19,15 +19,35 @@ enum Role {
   MANAGER
 }
 
+enum OtpType {
+  SIGNUP
+  PASSWORD_RESET
+  PAYOUT_CONFIRMATION
+  ACCOUNT_DELETE
+}
+
 
 model User {
   id            Int       @id   @default(autoincrement())
   email         String    @unique
   password      String  
   role          Role      @default(USER)
+  isVerified    Boolean   @default(false)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   profile       Profile?
+  otp           Otp?
+}
+
+model Otp {
+  id            Int       @id   @default(autoincrement())
+  code          String
+  type          OtpType   @default(SIGNUP)
+  expires       DateTime
+  userId        Int       @unique
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type])
 }
 
 model Profile {
