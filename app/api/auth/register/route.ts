@@ -1,5 +1,6 @@
 import { registerUser } from "@/services/auth.service";
 import { NextResponse } from "next/server";
+import z from "zod";
 
 export async function POST(req: Request) {
   try {
@@ -14,9 +15,16 @@ export async function POST(req: Request) {
       );
     }
 
-    if (error.message === "ZodError") {
+    if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: "Invalid input data"},
+        { error: "Validation failed", details: error.flatten().fieldErrors },
+        { status: 400 }
+      );
+    }
+
+    if (error instanceof SyntaxError) {
+      return NextResponse.json(
+        { error: "Invalid JSON format" },
         { status: 400 }
       );
     }
