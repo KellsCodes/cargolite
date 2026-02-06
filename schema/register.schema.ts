@@ -15,7 +15,7 @@ export const RegisterSchema = z.object({
     .regex(/[0-9]/, "Password must contain at least one number")
     .regex(/[\W_]/, "Password must contain at least one special character"),
   region: z.string().min(2, "Please select your region"),
-  role: z.enum(["USER", "ADMIN", "MANAGER"], "Please select a valid role"),
+  role: z.enum(["USER", "ADMIN", "MANAGER"]).optional().default("USER"),
 });
 
 export type RegisterInput = z.infer<typeof RegisterSchema>;
