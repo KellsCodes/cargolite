@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../lib/generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -35,7 +35,7 @@ model Profile {
   firstName     String    @db.VarChar(50)
   lastName      String    @db.VarChar(50)
   region        String    @map("country") // Maps code variable to 'country' column
-  city          String
+  city          String?
   postalCode    String?   @db.VarChar(20)
   telephone     String?   @db.VarChar(20)
   profileImage  String?   @db.Text // Text type for long URLs/Base64

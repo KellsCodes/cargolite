@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const RegisterSchema = z.object({
-  firstname: z.string().min(2, "First name required"),
-  lastname: z.string().min(2, "Last name required"),
+  firstName: z.string().min(2, "First name required"),
+  lastName: z.string().min(2, "Last name required"),
   email: z.string().email("Invalid email address"),
   phone: z
     .string()
@@ -15,6 +15,7 @@ export const RegisterSchema = z.object({
     .regex(/[0-9]/, "Password must contain at least one number")
     .regex(/[\W_]/, "Password must contain at least one special character"),
   region: z.string().min(2, "Please select your region"),
+  role: z.enum(["USER", "ADMIN", "MANAGER"], "Please select a valid role"),
 });
 
 export type RegisterInput = z.infer<typeof RegisterSchema>;
