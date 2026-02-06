@@ -11,3 +11,17 @@ export const createOtp = async (userId: number, type: OtpType) => {
     create: { userId, code, expires, type },
   });
 };
+
+export const verifyOTP = async (userId: number, code: string, type: OtpType) => {
+  const otp = await prisma.otp.findUnique({
+    where: { userId },
+  });
+
+  if (!otp || otp.code !== code || otp.type !== type || otp.expires < new Date()) {
+    return false; // Invalid or expired OTP
+  }
+
+  // Optionally, you can delete the OTP after successful verification
+  await prisma.otp.delete({ where: { userId } });
+  return true; // OTP is valid
+};
