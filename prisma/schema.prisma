@@ -26,6 +26,35 @@ enum OtpType {
   ACCOUNT_DELETE
 }
 
+model Account {
+  id            String    @id   @default(cuid())
+  userId        Int
+  type          String
+  provider      String
+  providerAccoundId String
+  refreshToken  String?   @db.Text
+  accessToken   String?   @db.Text
+  expiresAt     Int?
+  tokenType     String?
+  scope         String?
+  idToken       String?   @db.Text
+  sessionState  String?
+
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccoundId])
+  @@index([userId])
+}
+
+model Session {
+  id            String    @id  @default(cuid())
+  sessionToken  String    @unique
+  userId        Int
+  expires       DateTime
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
 
 model User {
   id            Int       @id   @default(autoincrement())
@@ -37,6 +66,9 @@ model User {
   updatedAt     DateTime  @updatedAt
   profile       Profile?
   otp           Otp?
+
+  accounts      Account[]
+  sessionState  Session[]
 }
 
 model Otp {
