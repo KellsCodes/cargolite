@@ -5,6 +5,13 @@ import { createOtp } from "./token.service";
 import { OtpType } from "@/generated/prisma/enums";
 import { sendOtpEmail } from "@/lib/mail";
 
+import NextAuth from "next-auth";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import Credentials from "next-auth/providers/credentials";
+import bcrypt from "bcrypt";
+import { z } from "zod";
+import { CredentialsSignin } from "next-auth";
+
 export const registerUser = async (data: any) => {
   // Validate data
   const validatedData = RegisterSchema.parse(data);
@@ -55,6 +62,86 @@ export const registerUser = async (data: any) => {
     throw new Error("DATABASE_ERROR");
   }
 };
+
+
+class InvalidLoginError extends CredentialsSignin {
+  code = "INVALID_CREDENTIALS";
+}
+
+class UnverifiedUserError extends CredentialsSignin {
+  code = "USER_NOT_VERIFIED";
+}
+
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  secret: process.env.AUTH_SECRET, // Ensure this is set in your .env
+  adapter: PrismaAdapter(prisma),
+  session: { strategy: "jwt" }, // Use JWT strategy for Credentials
+  pages: {
+    signIn: "/login", // Redirect users here for login
+    error: "/auth/error",
+  },
+  providers: [
+    Credentials({
+      async authorize(credentials) {
+        // Validate the input fields using Zod
+        const parsedCredentials = z
+          .object({ email: z.string().email(), password: z.string().min(8) })
+          .safeParse(credentials);
+
+        if (!parsedCredentials.success) return null;
+
+        const { email, password } = parsedCredentials.data;
+
+        // Find the user in MySQL via Prisma
+        const user = await prisma.user.findUnique({
+          where: { email: email.toLowerCase() },
+          // include: { profile: true }, // Include profile if you need to check verification status
+        });
+
+        // Security Checks
+        if (!user || !user.password) {
+          throw new InvalidLoginError()};
+
+        // Verify Password
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if (!passwordMatch) {
+          throw new InvalidLoginError()};
+
+        // Logistics Check: Is the user verified via OTP?
+        if (!user.isVerified) {
+          // You can throw a custom error to handle on the frontend
+          throw new UnverifiedUserError();
+        }
+
+        // Return user object (this info goes into the JWT/Session)
+        return {
+          id: user.id.toString(),
+          email: user.email,
+          role: user.role,
+          // profile: { ...user.profile },
+        };
+      },
+    }),
+  ],
+  callbacks: {
+    // Add custom data (like Role) to the JWT token
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+      return token;
+    },
+    // Expose the JWT data to the Client Session
+    async session({ session, token }) {
+      if (token && session.user) {
+        session.user.id = token.id as string;
+        session.user.role = token.role as any;
+      }
+      return session;
+    },
+  },
+});
 
 const findUserByEmail = async (email: string) => {
   return await prisma.user.findUnique({
