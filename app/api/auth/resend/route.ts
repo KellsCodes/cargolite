@@ -1,4 +1,4 @@
-import { ResendVerificationOtp } from "@/services/auth.service";
+import { ResendVerificationOtp } from "@/services/token.service";
 
 export async function POST(req: Request) {
   try {

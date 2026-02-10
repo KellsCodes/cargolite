@@ -144,22 +144,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
 });
 
-export const ResendVerificationOtp = async (email: string) => {
-  const user = await findUserByEmail(email);
-  if (!user) {
-    throw new Error("USER_NOT_FOUND");
-  }
-  if (user.isVerified) {
-    throw new Error("USER_ALREADY_VERIFIED");
-  }
-  const otp = await createOtp(user.id, OtpType.SIGNUP);
-  const data = await sendOtpEmail(user.email, otp.code, otp.type);
-  if (!data.success) {
-    throw new Error("OTP_SEND_FAILED");
-  }
-  return { success: true };
-};
-
 const findUserByEmail = async (email: string) => {
   return await prisma.user.findUnique({
     where: { email },
