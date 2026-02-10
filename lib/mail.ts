@@ -17,13 +17,13 @@ export const sendOtpEmail = async (to: string, otp: string, type: string) => {
     });
 
     if (error) {
-      console.error("Resend Error:", error);
+      // console.error("Resend Error:", error);
       return { success: false, error };
     }
 
     return { success: true, data };
   } catch (err) {
-    console.error("Mail Service Error:", err);
+    // console.error("Mail Service Error:", err);
     return { success: false, error: err };
   }
 };
