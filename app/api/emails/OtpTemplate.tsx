@@ -17,7 +17,7 @@ interface OtpEmailProps {
 }
 
 export const OtpEmail = ({ otp, type }: OtpEmailProps) => {
-    const actionText = type === "SIGNUP" ? "verify your account" : "confirm your action";
+    const actionText = type === "SIGNUP" ? "verify your account" : type === "PASSWORD_RESET" ? "reset your password" : "confirm your action";
 
     return (
         <Html>
