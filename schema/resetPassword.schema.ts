@@ -1,6 +1,6 @@
 import {z} from 'zod'
 
-const newPasswordSchema = z.object({
+export const newPasswordSchema = z.object({
     code: z.string().min(6, "OTP code must be at least 6 characters long"),
     newPassword: z.string()
         .min(8, "Password must be at least 8 characters long")
