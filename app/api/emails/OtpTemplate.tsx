@@ -47,7 +47,7 @@ export const OtpEmail = ({ otp, type }: OtpEmailProps) => {
                         </Section>
 
                         <Heading className="text-black text-[20px] font-semibold text-center p-0 my-[20px] mx-0">
-                            Account Verification
+                            {type === "SIGNUP" ? "Account Verification" : type === "PASSWORD_RESET" ? "Password Reset Request" : "Action Confirmation"}
                         </Heading>
 
                         <Text className="text-[#444444] text-[14px] leading-[24px] text-center">
