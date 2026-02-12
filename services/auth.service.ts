@@ -144,8 +144,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
 });
 
-const findUserByEmail = async (email: string) => {
-  return await prisma.user.findUnique({
+export const ForgotPasswordRequest = async (email: string) => {
+  if (!email) throw new Error("INVALID_EMAIL");
+  const user = await prisma.user.findUnique({
     where: { email },
   });
+  if (!user) throw new Error("INVALID_EMAIL");
+  // Create OTP and send to user email
+  const otp = await createOtp(user.id, OtpType.PASSWORD_RESET);
+  await sendOtpEmail(user.email, otp.code, otp.type);
+  return { success: true };
 };
