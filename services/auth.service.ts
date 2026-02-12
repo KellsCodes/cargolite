@@ -144,7 +144,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
 });
 
-export const ForgotPasswordRequest = async (email: string) => {
+export const forgotPasswordRequest = async (email: string) => {
   if (!email) throw new Error("INVALID_EMAIL");
   const user = await prisma.user.findUnique({
     where: { email },
@@ -153,5 +153,37 @@ export const ForgotPasswordRequest = async (email: string) => {
   // Create OTP and send to user email
   const otp = await createOtp(user.id, OtpType.PASSWORD_RESET);
   await sendOtpEmail(user.email, otp.code, otp.type);
+  return { success: true };
+};
+
+export const resetPassword = async (
+  code: string,
+  newPassword: string,
+  otpType: OtpType
+) => {
+  if (!code || !newPassword) throw new Error("INVALID_CODE_OR_PASSWORD");
+  const retrieveUserIdFromOtpCode = await prisma.otp.findFirst({
+    where: {
+      code,
+      type: otpType,
+    },
+  });
+
+  if (!retrieveUserIdFromOtpCode || retrieveUserIdFromOtpCode.expires < new Date()) throw new Error("INVALID_OTP_CODE");
+
+  const hashedPassword = await hashPassword(newPassword);
+
+  await prisma.user.update({
+    where: { id: retrieveUserIdFromOtpCode.userId },
+    data: {
+      password: hashedPassword,
+    },
+  });
+
+  // delete the OTP after successful password reset
+  await prisma.otp.delete({
+    where: { userId: retrieveUserIdFromOtpCode.userId },
+  });
+
   return { success: true };
 };
