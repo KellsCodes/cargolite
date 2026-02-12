@@ -18,14 +18,15 @@ export const createOtp = async (
   });
 };
 
-export const verifyOTP = async (
-  userId: number,
-  code: string,
-  type: OtpType
-) => {
-  const otp = await prisma.otp.findUnique({
-    where: { userId },
+export const verifyOTP = async (email: string, code: string, type: OtpType) => {
+  const user = await prisma.user.findUnique({
+    where: { email },
+    include: {
+      otp: true,
+    },
   });
+
+  const otp = user?.otp;
 
   if (
     !otp ||
@@ -33,12 +34,24 @@ export const verifyOTP = async (
     otp.type !== type ||
     otp.expires < new Date()
   ) {
-    return false; // Invalid or expired OTP
+    throw new Error("OTP_INVALID"); // Invalid or expired OTP
   }
 
-  // delete the OTP after successful verification
-  await prisma.otp.delete({ where: { userId } });
-  return true; // OTP is valid
+  // Mark the user as verified
+  const data = await prisma.$transaction(async (tx) => {
+    const verifiedUser = await tx.user.update({
+      where: { id: user.id },
+      data: { isVerified: true },
+    });
+    // delete the OTP after successful verification
+    await tx.otp.delete({ where: { userId: user.id } });
+    return verifiedUser;
+  });
+
+  if (data.isVerified) {
+    return { success: true }; // OTP is valid and user is verified
+  }
+  throw new Error("OTP_VERIFICATION_FAILED");
 };
 
 export const ResendVerificationOtp = async (email: string) => {
