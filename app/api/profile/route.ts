@@ -4,6 +4,7 @@ import { auth } from "@/services/auth.service";
 import { processImage } from "@/services/image.service";
 import { getUserProfile, updateUserProfile } from "@/services/profile";
 import { NextResponse } from "next/server";
+import { deleteCloudImage } from "../utils/uploadImage.utils";
 
 export const GET = async () => {
   // check if user is authenticated
@@ -58,7 +59,13 @@ export const PATCH = async (req: Request) => {
     } else {
       if (imageFile && imageFile.size > 0) {
         const imageUrl = await processImage(imageFile, user.id, "profile");
-        if (imageUrl) data.profileImage = imageUrl; // Add the image URL to the profile data
+        if (imageUrl) {
+          data.profileImage = imageUrl; // Add the image URL to the profile data
+          // Get and Remove the previous profile image from cloud storage
+          const userProfile = await getUserProfile(user.id);
+          if (userProfile?.profileImage)
+            deleteCloudImage(userProfile.profileImage);
+        }
       }
     }
 
