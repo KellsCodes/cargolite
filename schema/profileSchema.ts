@@ -8,7 +8,7 @@ export const ProfileSchema = z.object({
     .nullable(),
   firstName: z.string().min(2, "First name is too short").max(50),
   lastName: z.string().min(2, "Last name is too short").max(50),
-  region: z.string().min(2, "Region/Country is required"),
+  region: z.string().min(2, "Region/Country is required").optional(),
   city: z.string().optional().nullable(),
   postalCode: z.string().max(20).optional().nullable(),
   telephone: z
