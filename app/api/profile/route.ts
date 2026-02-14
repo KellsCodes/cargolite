@@ -1,6 +1,7 @@
 import { authError, getUserSession } from "@/lib/authUtils";
 import { ProfileSchema } from "@/schema/profileSchema";
 import { auth } from "@/services/auth.service";
+import { processImage } from "@/services/image.service";
 import { getUserProfile, updateUserProfile } from "@/services/profile";
 import { NextResponse } from "next/server";
 
@@ -28,8 +29,14 @@ export const PATCH = async (req: Request) => {
   if (!user) return authError();
 
   try {
-    const body = await req.json();
-    const validatedData = ProfileSchema.safeParse(body);
+    const body = await req.formData();
+    const rawData: Record<string, string> = {};
+    body.forEach((value, key) => {
+      if (key !== "profileImage" && typeof value === "string") {
+        rawData[key] = value;
+      }
+    });
+    const validatedData = ProfileSchema.safeParse(rawData);
     const { data, error, success } = validatedData;
     if (!success) {
       return new Response(
@@ -40,6 +47,22 @@ export const PATCH = async (req: Request) => {
         { status: 400 }
       );
     }
+
+    // Handle profile image upload if provided
+    const imageFile = body.get("profileImage") as File | null;
+    if (imageFile && imageFile.size > 2 * 1024 * 1024) {
+      return NextResponse.json(
+        { error: "Profile image must be less than 2MB" },
+        { status: 400 }
+      );
+    } else {
+      if (imageFile && imageFile.size > 0) {
+        const imageUrl = await processImage(imageFile, user.id, "profile");
+        if (imageUrl) data.profileImage = imageUrl; // Add the image URL to the profile data
+      }
+    }
+
+    // Update profile data
     const updatedProfile = await updateUserProfile(user.id, data);
     return NextResponse.json(updatedProfile);
   } catch (error) {
