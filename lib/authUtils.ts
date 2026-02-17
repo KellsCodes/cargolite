@@ -16,3 +16,13 @@ export const getUserSession = async () => {
 export const authError = () => {
   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 };
+
+// check for user role
+export const isAdmin = (user: any) =>
+  user.role === "ADMIN" || user.role === "MANAGER";
+
+// handle wrong user role
+export const adminError = () => {
+  return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+};
+
