@@ -42,3 +42,18 @@ export type Otp = Prisma.OtpModel
  * 
  */
 export type Profile = Prisma.ProfileModel
+/**
+ * Model Client
+ * 
+ */
+export type Client = Prisma.ClientModel
+/**
+ * Model Invoice
+ * 
+ */
+export type Invoice = Prisma.InvoiceModel
+/**
+ * Model Shipment
+ * 
+ */
+export type Shipment = Prisma.ShipmentModel

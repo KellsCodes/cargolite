@@ -18,6 +18,14 @@ export const Role = {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
+export const ClientType = {
+  SENDER: 'SENDER',
+  RECEIVER: 'RECEIVER'
+} as const
+
+export type ClientType = (typeof ClientType)[keyof typeof ClientType]
+
+
 export const OtpType = {
   SIGNUP: 'SIGNUP',
   PASSWORD_RESET: 'PASSWORD_RESET',
@@ -26,3 +34,22 @@ export const OtpType = {
 } as const
 
 export type OtpType = (typeof OtpType)[keyof typeof OtpType]
+
+
+export const PackageType = {
+  STANDARD: 'STANDARD',
+  FRAGILE: 'FRAGILE',
+  PERISHABLE: 'PERISHABLE',
+  HAZARDOUS: 'HAZARDOUS'
+} as const
+
+export type PackageType = (typeof PackageType)[keyof typeof PackageType]
+
+
+export const CourierType = {
+  SHIP: 'SHIP',
+  AIRPLANE: 'AIRPLANE',
+  BUS: 'BUS'
+} as const
+
+export type CourierType = (typeof CourierType)[keyof typeof CourierType]

@@ -55,7 +55,10 @@ export const ModelName = {
   Session: 'Session',
   User: 'User',
   Otp: 'Otp',
-  Profile: 'Profile'
+  Profile: 'Profile',
+  Client: 'Client',
+  Invoice: 'Invoice',
+  Shipment: 'Shipment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -142,6 +145,52 @@ export const ProfileScalarFieldEnum = {
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
 
 
+export const ClientScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  telephone: 'telephone',
+  clientType: 'clientType',
+  status: 'status',
+  createdAt: 'createdAt'
+} as const
+
+export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
+
+
+export const InvoiceScalarFieldEnum = {
+  id: 'id',
+  transactionID: 'transactionID',
+  amount: 'amount',
+  paymentMethod: 'paymentMethod',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  clientId: 'clientId'
+} as const
+
+export type InvoiceScalarFieldEnum = (typeof InvoiceScalarFieldEnum)[keyof typeof InvoiceScalarFieldEnum]
+
+
+export const ShipmentScalarFieldEnum = {
+  id: 'id',
+  shipmentID: 'shipmentID',
+  weight: 'weight',
+  packageType: 'packageType',
+  courierType: 'courierType',
+  packageImage: 'packageImage',
+  dropLocation: 'dropLocation',
+  pickupLocation: 'pickupLocation',
+  arrival: 'arrival',
+  senderId: 'senderId',
+  receiverId: 'receiverId',
+  invoiceId: 'invoiceId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ShipmentScalarFieldEnum = (typeof ShipmentScalarFieldEnum)[keyof typeof ShipmentScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -209,4 +258,31 @@ export const ProfileOrderByRelevanceFieldEnum = {
 } as const
 
 export type ProfileOrderByRelevanceFieldEnum = (typeof ProfileOrderByRelevanceFieldEnum)[keyof typeof ProfileOrderByRelevanceFieldEnum]
+
+
+export const ClientOrderByRelevanceFieldEnum = {
+  name: 'name',
+  email: 'email',
+  telephone: 'telephone'
+} as const
+
+export type ClientOrderByRelevanceFieldEnum = (typeof ClientOrderByRelevanceFieldEnum)[keyof typeof ClientOrderByRelevanceFieldEnum]
+
+
+export const InvoiceOrderByRelevanceFieldEnum = {
+  transactionID: 'transactionID',
+  paymentMethod: 'paymentMethod'
+} as const
+
+export type InvoiceOrderByRelevanceFieldEnum = (typeof InvoiceOrderByRelevanceFieldEnum)[keyof typeof InvoiceOrderByRelevanceFieldEnum]
+
+
+export const ShipmentOrderByRelevanceFieldEnum = {
+  shipmentID: 'shipmentID',
+  packageImage: 'packageImage',
+  dropLocation: 'dropLocation',
+  pickupLocation: 'pickupLocation'
+} as const
+
+export type ShipmentOrderByRelevanceFieldEnum = (typeof ShipmentOrderByRelevanceFieldEnum)[keyof typeof ShipmentOrderByRelevanceFieldEnum]
 

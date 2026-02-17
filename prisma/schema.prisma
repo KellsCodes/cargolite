@@ -19,11 +19,29 @@ enum Role {
   MANAGER
 }
 
+enum ClientType {
+  SENDER
+  RECEIVER
+}
+
 enum OtpType {
   SIGNUP
   PASSWORD_RESET
   PAYOUT_CONFIRMATION
   ACCOUNT_DELETE
+}
+
+enum PackageType {
+  STANDARD
+  FRAGILE
+  PERISHABLE
+  HAZARDOUS
+}
+
+enum CourierType {
+  SHIP
+  AIRPLANE
+  BUS
 }
 
 model Account {
@@ -98,4 +116,62 @@ model Profile {
   user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+model Client {
+  id          Int        @id @default(autoincrement())
+  name        String     @db.VarChar(150)
+  email       String     @unique @db.VarChar(100) // Added @unique for lookups
+  telephone   String?    @db.VarChar(20)
+  clientType  ClientType
+  status      Int        @default(1) // 1=active, 2=inactive, 3=suspended
+  createdAt   DateTime   @default(now())
+  
+  // Relations
+  sentShipments     Shipment[] @relation("SentShipments")
+  receivedShipments Shipment[] @relation("ReceivedShipments")
+  invoices          Invoice[]
+}
+
+model Invoice {
+  id            Int      @id @default(autoincrement())
+  transactionID String   @unique @db.VarChar(250) // Added @unique for payment tracking
+  amount        Decimal  @db.Decimal(10, 2) // Changed Int to Decimal for currency
+  paymentMethod String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  clientId   Int
+  client     Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
+  // Link to Shipment is 1:1 and optional to avoid circular dependency during creation
+  shipment   Shipment? 
+}
+
+model Shipment {
+  id             Int         @id @default(autoincrement())
+  shipmentID     String      @unique @db.VarChar(50)
+  weight         Float
+  packageType    PackageType
+  courierType    CourierType
+  packageImage   String?     @db.VarChar(255) // Increased to 255 for Cloudinary URLs
+  dropLocation   String      @db.VarChar(150)
+  pickupLocation String      @db.VarChar(150)
+  arrival        DateTime
+  
+  // Relations
+  senderId       Int
+  sender         Client      @relation("SentShipments", fields: [senderId], references: [id], onDelete: Cascade)
+  receiverId     Int
+  receiver       Client      @relation("ReceivedShipments", fields: [receiverId], references: [id], onDelete: Cascade)
+  
+  invoiceId      Int         @unique
+  invoice        Invoice     @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@index([senderId])
+  @@index([receiverId])
 }
