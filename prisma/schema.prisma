@@ -134,19 +134,19 @@ model Client {
 }
 
 model Invoice {
-  id            Int      @id @default(autoincrement())
-  transactionID String   @unique @db.VarChar(250) // Added @unique for payment tracking
-  amount        Decimal  @db.Decimal(10, 2) // Changed Int to Decimal for currency
+  id            Int       @id @default(autoincrement())
+  transactionID String    @unique @db.VarChar(250)
+  amount        Decimal   @db.Decimal(10, 2)
   paymentMethod String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  // Relations
-  clientId   Int
-  client     Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  payerRole     ClientType @default(SENDER) // Track who is responsible
   
-  // Link to Shipment is 1:1 and optional to avoid circular dependency during creation
-  shipment   Shipment? 
+  // The Client linked here is the one who PAID
+  clientId      Int
+  client        Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
+  shipment      Shipment? 
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Shipment {
