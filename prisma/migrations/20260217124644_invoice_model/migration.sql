@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Invoice` ADD COLUMN `payerRole` ENUM('SENDER', 'RECEIVER') NOT NULL DEFAULT 'SENDER';
