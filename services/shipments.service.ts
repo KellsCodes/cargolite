@@ -67,3 +67,40 @@ export const processNewShipment = async (data: any) => {
     });
   });
 };
+
+export const updateShipmentRecord = async (id: number, data: any) => {
+  return await prisma.shipment.update({
+    where: { id },
+    data: {
+      // Partial Update of Shipment fields
+      weight: data.weight,
+      packageType: data.packageType,
+      courierType: data.courierType,
+      dropLocation: data.dropLocation,
+      pickupLocation: data.pickupLocation,
+      arrival: data.arrival ? new Date(data.arrival) : undefined,
+      packageImage: data.packageImage,
+
+      // Nested Update for the Invoice (if amount or method changed)
+      invoice: {
+        update: {
+          amount: data.amount,
+          paymentMethod: data.paymentMethod,
+        },
+      },
+
+      // Nested Update for Client details (if needed)
+      sender: {
+        update: {
+          name: data.senderName,
+          telephone: data.senderPhone,
+        },
+      },
+    },
+    include: {
+      invoice: true,
+      sender: true,
+      receiver: true,
+    },
+  });
+};
