@@ -1,6 +1,5 @@
 import { authError, getUserSession } from "@/lib/authUtils";
 import { ProfileSchema } from "@/schema/profileSchema";
-import { auth } from "@/services/auth.service";
 import { processImage } from "@/services/image.service";
 import { getUserProfile, updateUserProfile } from "@/services/profile";
 import { NextResponse } from "next/server";
