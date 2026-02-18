@@ -1,3 +1,4 @@
+import { paginate } from "@/app/api/utils/pagination.utils";
 import prisma from "@/lib/prisma";
 import { randomInt } from "crypto";
 
@@ -110,4 +111,31 @@ export const getShipmentByID = async (id: number) => {
   return await prisma.shipment.findUnique({
     where: { id },
   });
+};
+
+export const getAllShipments = async (page: number, limit: number) => {
+  const result = await paginate<any>(prisma.shipment, {
+    page,
+    limit,
+    include: {
+      sender: { select: { name: true } },
+      receiver: { select: { name: true } },
+      invoice: { select: { amount: true, payerRole: true } },
+    },
+  });
+
+  // Map the generic result to include custom clientName
+  const formattedData = result.data.map((shipment) => ({
+    ...shipment,
+    clientName:
+      shipment.invoice.payerRole === "RECEIVER"
+        ? shipment.receiver.name
+        : shipment.sender.name,
+    amount: shipment.invoice.amount,
+  }));
+
+  return {
+    ...result,
+    data: formattedData,
+  };
 };

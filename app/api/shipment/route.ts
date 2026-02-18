@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { CreateShipmentSchema } from "@/schema/shipment.schema";
-import { processNewShipment } from "@/services/shipments.service";
+import {
+  getAllShipments,
+  processNewShipment,
+} from "@/services/shipments.service";
 import { Prisma } from "@/generated/prisma/client";
 import { z } from "zod";
 import { authError, getUserSession } from "@/lib/authUtils";
@@ -58,6 +61,24 @@ export async function POST(req: Request) {
     console.error("Shipment Creation Error:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(req: Request) {
+  const user = await getUserSession();
+  if (!user) return authError();
+
+  try {
+    const { searchParams } = new URL(req.url);
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "10");
+    const result = await getAllShipments(page, limit);
+    return NextResponse.json(result);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to fetch shipments" },
       { status: 500 }
     );
   }
