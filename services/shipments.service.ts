@@ -113,10 +113,25 @@ export const getShipmentByID = async (id: number) => {
   });
 };
 
-export const getAllShipments = async (page: number, limit: number) => {
+export const getAllShipments = async (
+  page: number,
+  limit: number,
+  search?: string
+) => {
+  // Build the search filter
+  const where = search
+    ? {
+        OR: [
+          { shipmentID: { contains: search } }, // Search the shipmentID AWP
+          { sender: { name: { contains: search } } }, // Search Sender Name
+          { receiver: { name: { contains: search } } }, // Search Reciever Name
+        ],
+      }
+    : {};
   const result = await paginate<any>(prisma.shipment, {
     page,
     limit,
+    where, // Search filter is passed here
     include: {
       sender: { select: { name: true } },
       receiver: { select: { name: true } },

@@ -74,7 +74,8 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
-    const result = await getAllShipments(page, limit);
+    const search = searchParams.get("search") || undefined;
+    const result = await getAllShipments(page, limit, search);
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json(
