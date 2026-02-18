@@ -12,7 +12,8 @@ export const CreateShipmentSchema = z.object({
   // Shipment Details
   weight: z.number().positive("Weight must be greater than 0"),
   packageType: z.enum(["STANDARD", "FRAGILE", "PERISHABLE", "HAZARDOUS"]),
-  courierType: z.enum(["BIKE", "VAN", "TRUCK"]), // Based on your CourierType enum
+  courierType: z.enum(["SHIP", "AIRPLANE", "BUS"]),
+  packageImage: z.string().url().optional().nullable(),
   dropLocation: z.string().min(5),
   pickupLocation: z.string().min(5),
   arrival: z.string().refine((date) => !isNaN(Date.parse(date)), "Invalid date"),
