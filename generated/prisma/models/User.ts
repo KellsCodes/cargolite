@@ -236,6 +236,7 @@ export type UserWhereInput = {
   otp?: Prisma.XOR<Prisma.OtpNullableScalarRelationFilter, Prisma.OtpWhereInput> | null
   accounts?: Prisma.AccountListRelationFilter
   sessionState?: Prisma.SessionListRelationFilter
+  trackingUpdates?: Prisma.TrackingHistoryListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -250,6 +251,7 @@ export type UserOrderByWithRelationInput = {
   otp?: Prisma.OtpOrderByWithRelationInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   sessionState?: Prisma.SessionOrderByRelationAggregateInput
+  trackingUpdates?: Prisma.TrackingHistoryOrderByRelationAggregateInput
   _relevance?: Prisma.UserOrderByRelevanceInput
 }
 
@@ -268,6 +270,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   otp?: Prisma.XOR<Prisma.OtpNullableScalarRelationFilter, Prisma.OtpWhereInput> | null
   accounts?: Prisma.AccountListRelationFilter
   sessionState?: Prisma.SessionListRelationFilter
+  trackingUpdates?: Prisma.TrackingHistoryListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -309,6 +312,7 @@ export type UserCreateInput = {
   otp?: Prisma.OtpCreateNestedOneWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessionState?: Prisma.SessionCreateNestedManyWithoutUserInput
+  trackingUpdates?: Prisma.TrackingHistoryCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -323,6 +327,7 @@ export type UserUncheckedCreateInput = {
   otp?: Prisma.OtpUncheckedCreateNestedOneWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessionState?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  trackingUpdates?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUpdateInput = {
@@ -336,6 +341,7 @@ export type UserUpdateInput = {
   otp?: Prisma.OtpUpdateOneWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessionState?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  trackingUpdates?: Prisma.TrackingHistoryUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -350,6 +356,7 @@ export type UserUncheckedUpdateInput = {
   otp?: Prisma.OtpUncheckedUpdateOneWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessionState?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  trackingUpdates?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -494,6 +501,20 @@ export type UserUpdateOneRequiredWithoutProfileNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProfileInput, Prisma.UserUpdateWithoutProfileInput>, Prisma.UserUncheckedUpdateWithoutProfileInput>
 }
 
+export type UserCreateNestedOneWithoutTrackingUpdatesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTrackingUpdatesInput, Prisma.UserUncheckedCreateWithoutTrackingUpdatesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTrackingUpdatesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTrackingUpdatesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTrackingUpdatesInput, Prisma.UserUncheckedCreateWithoutTrackingUpdatesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTrackingUpdatesInput
+  upsert?: Prisma.UserUpsertWithoutTrackingUpdatesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTrackingUpdatesInput, Prisma.UserUpdateWithoutTrackingUpdatesInput>, Prisma.UserUncheckedUpdateWithoutTrackingUpdatesInput>
+}
+
 export type UserCreateWithoutAccountsInput = {
   email: string
   password: string
@@ -504,6 +525,7 @@ export type UserCreateWithoutAccountsInput = {
   profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   otp?: Prisma.OtpCreateNestedOneWithoutUserInput
   sessionState?: Prisma.SessionCreateNestedManyWithoutUserInput
+  trackingUpdates?: Prisma.TrackingHistoryCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -517,6 +539,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   otp?: Prisma.OtpUncheckedCreateNestedOneWithoutUserInput
   sessionState?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  trackingUpdates?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -545,6 +568,7 @@ export type UserUpdateWithoutAccountsInput = {
   profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   otp?: Prisma.OtpUpdateOneWithoutUserNestedInput
   sessionState?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  trackingUpdates?: Prisma.TrackingHistoryUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -558,6 +582,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   otp?: Prisma.OtpUncheckedUpdateOneWithoutUserNestedInput
   sessionState?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  trackingUpdates?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutSessionStateInput = {
@@ -570,6 +595,7 @@ export type UserCreateWithoutSessionStateInput = {
   profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   otp?: Prisma.OtpCreateNestedOneWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  trackingUpdates?: Prisma.TrackingHistoryCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutSessionStateInput = {
@@ -583,6 +609,7 @@ export type UserUncheckedCreateWithoutSessionStateInput = {
   profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   otp?: Prisma.OtpUncheckedCreateNestedOneWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  trackingUpdates?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutSessionStateInput = {
@@ -611,6 +638,7 @@ export type UserUpdateWithoutSessionStateInput = {
   profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   otp?: Prisma.OtpUpdateOneWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  trackingUpdates?: Prisma.TrackingHistoryUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionStateInput = {
@@ -624,6 +652,7 @@ export type UserUncheckedUpdateWithoutSessionStateInput = {
   profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   otp?: Prisma.OtpUncheckedUpdateOneWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  trackingUpdates?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutOtpInput = {
@@ -636,6 +665,7 @@ export type UserCreateWithoutOtpInput = {
   profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessionState?: Prisma.SessionCreateNestedManyWithoutUserInput
+  trackingUpdates?: Prisma.TrackingHistoryCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutOtpInput = {
@@ -649,6 +679,7 @@ export type UserUncheckedCreateWithoutOtpInput = {
   profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessionState?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  trackingUpdates?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutOtpInput = {
@@ -677,6 +708,7 @@ export type UserUpdateWithoutOtpInput = {
   profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessionState?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  trackingUpdates?: Prisma.TrackingHistoryUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOtpInput = {
@@ -690,6 +722,7 @@ export type UserUncheckedUpdateWithoutOtpInput = {
   profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessionState?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  trackingUpdates?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserCreateWithoutProfileInput = {
@@ -702,6 +735,7 @@ export type UserCreateWithoutProfileInput = {
   otp?: Prisma.OtpCreateNestedOneWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessionState?: Prisma.SessionCreateNestedManyWithoutUserInput
+  trackingUpdates?: Prisma.TrackingHistoryCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserUncheckedCreateWithoutProfileInput = {
@@ -715,6 +749,7 @@ export type UserUncheckedCreateWithoutProfileInput = {
   otp?: Prisma.OtpUncheckedCreateNestedOneWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessionState?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  trackingUpdates?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
 }
 
 export type UserCreateOrConnectWithoutProfileInput = {
@@ -743,6 +778,7 @@ export type UserUpdateWithoutProfileInput = {
   otp?: Prisma.OtpUpdateOneWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessionState?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  trackingUpdates?: Prisma.TrackingHistoryUpdateManyWithoutUpdatedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfileInput = {
@@ -756,6 +792,77 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   otp?: Prisma.OtpUncheckedUpdateOneWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessionState?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  trackingUpdates?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+}
+
+export type UserCreateWithoutTrackingUpdatesInput = {
+  email: string
+  password: string
+  role?: $Enums.Role
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  otp?: Prisma.OtpCreateNestedOneWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessionState?: Prisma.SessionCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutTrackingUpdatesInput = {
+  id?: number
+  email: string
+  password: string
+  role?: $Enums.Role
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  otp?: Prisma.OtpUncheckedCreateNestedOneWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessionState?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutTrackingUpdatesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTrackingUpdatesInput, Prisma.UserUncheckedCreateWithoutTrackingUpdatesInput>
+}
+
+export type UserUpsertWithoutTrackingUpdatesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTrackingUpdatesInput, Prisma.UserUncheckedUpdateWithoutTrackingUpdatesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTrackingUpdatesInput, Prisma.UserUncheckedCreateWithoutTrackingUpdatesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTrackingUpdatesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTrackingUpdatesInput, Prisma.UserUncheckedUpdateWithoutTrackingUpdatesInput>
+}
+
+export type UserUpdateWithoutTrackingUpdatesInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  otp?: Prisma.OtpUpdateOneWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessionState?: Prisma.SessionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTrackingUpdatesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  otp?: Prisma.OtpUncheckedUpdateOneWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessionState?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -766,11 +873,13 @@ export type UserUncheckedUpdateWithoutProfileInput = {
 export type UserCountOutputType = {
   accounts: number
   sessionState: number
+  trackingUpdates: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
   sessionState?: boolean | UserCountOutputTypeCountSessionStateArgs
+  trackingUpdates?: boolean | UserCountOutputTypeCountTrackingUpdatesArgs
 }
 
 /**
@@ -797,6 +906,13 @@ export type UserCountOutputTypeCountSessionStateArgs<ExtArgs extends runtime.Typ
   where?: Prisma.SessionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTrackingUpdatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TrackingHistoryWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -810,6 +926,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   otp?: boolean | Prisma.User$otpArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessionState?: boolean | Prisma.User$sessionStateArgs<ExtArgs>
+  trackingUpdates?: boolean | Prisma.User$trackingUpdatesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -831,6 +948,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   otp?: boolean | Prisma.User$otpArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessionState?: boolean | Prisma.User$sessionStateArgs<ExtArgs>
+  trackingUpdates?: boolean | Prisma.User$trackingUpdatesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -841,6 +959,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     otp: Prisma.$OtpPayload<ExtArgs> | null
     accounts: Prisma.$AccountPayload<ExtArgs>[]
     sessionState: Prisma.$SessionPayload<ExtArgs>[]
+    trackingUpdates: Prisma.$TrackingHistoryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1194,6 +1313,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   otp<T extends Prisma.User$otpArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$otpArgs<ExtArgs>>): Prisma.Prisma__OtpClient<runtime.Types.Result.GetResult<Prisma.$OtpPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessionState<T extends Prisma.User$sessionStateArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionStateArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  trackingUpdates<T extends Prisma.User$trackingUpdatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$trackingUpdatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrackingHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1656,6 +1776,30 @@ export type User$sessionStateArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.SessionScalarFieldEnum | Prisma.SessionScalarFieldEnum[]
+}
+
+/**
+ * User.trackingUpdates
+ */
+export type User$trackingUpdatesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TrackingHistory
+   */
+  select?: Prisma.TrackingHistorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TrackingHistory
+   */
+  omit?: Prisma.TrackingHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TrackingHistoryInclude<ExtArgs> | null
+  where?: Prisma.TrackingHistoryWhereInput
+  orderBy?: Prisma.TrackingHistoryOrderByWithRelationInput | Prisma.TrackingHistoryOrderByWithRelationInput[]
+  cursor?: Prisma.TrackingHistoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TrackingHistoryScalarFieldEnum | Prisma.TrackingHistoryScalarFieldEnum[]
 }
 
 /**

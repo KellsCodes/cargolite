@@ -79,3 +79,8 @@ export type Invoice = Prisma.InvoiceModel
  * 
  */
 export type Shipment = Prisma.ShipmentModel
+/**
+ * Model TrackingHistory
+ * 
+ */
+export type TrackingHistory = Prisma.TrackingHistoryModel

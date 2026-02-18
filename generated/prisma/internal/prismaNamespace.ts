@@ -391,7 +391,8 @@ export const ModelName = {
   Profile: 'Profile',
   Client: 'Client',
   Invoice: 'Invoice',
-  Shipment: 'Shipment'
+  Shipment: 'Shipment',
+  TrackingHistory: 'TrackingHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -407,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "account" | "session" | "user" | "otp" | "profile" | "client" | "invoice" | "shipment"
+    modelProps: "account" | "session" | "user" | "otp" | "profile" | "client" | "invoice" | "shipment" | "trackingHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -939,6 +940,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TrackingHistory: {
+      payload: Prisma.$TrackingHistoryPayload<ExtArgs>
+      fields: Prisma.TrackingHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TrackingHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrackingHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TrackingHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrackingHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.TrackingHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrackingHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TrackingHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrackingHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.TrackingHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrackingHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.TrackingHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrackingHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.TrackingHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.TrackingHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrackingHistoryPayload>
+        }
+        update: {
+          args: Prisma.TrackingHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrackingHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.TrackingHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TrackingHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.TrackingHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrackingHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.TrackingHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTrackingHistory>
+        }
+        groupBy: {
+          args: Prisma.TrackingHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TrackingHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TrackingHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TrackingHistoryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1093,6 +1160,19 @@ export const ShipmentScalarFieldEnum = {
 export type ShipmentScalarFieldEnum = (typeof ShipmentScalarFieldEnum)[keyof typeof ShipmentScalarFieldEnum]
 
 
+export const TrackingHistoryScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  location: 'location',
+  notes: 'notes',
+  updatedById: 'updatedById',
+  shipmentId: 'shipmentId',
+  createdAt: 'createdAt'
+} as const
+
+export type TrackingHistoryScalarFieldEnum = (typeof TrackingHistoryScalarFieldEnum)[keyof typeof TrackingHistoryScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1189,6 +1269,14 @@ export const ShipmentOrderByRelevanceFieldEnum = {
 export type ShipmentOrderByRelevanceFieldEnum = (typeof ShipmentOrderByRelevanceFieldEnum)[keyof typeof ShipmentOrderByRelevanceFieldEnum]
 
 
+export const TrackingHistoryOrderByRelevanceFieldEnum = {
+  location: 'location',
+  notes: 'notes'
+} as const
+
+export type TrackingHistoryOrderByRelevanceFieldEnum = (typeof TrackingHistoryOrderByRelevanceFieldEnum)[keyof typeof TrackingHistoryOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -1269,6 +1357,13 @@ export type EnumPackageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'CourierType'
  */
 export type EnumCourierTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CourierType'>
+    
+
+
+/**
+ * Reference to a field of type 'ShipmentStatus'
+ */
+export type EnumShipmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ShipmentStatus'>
     
 
 /**
@@ -1374,6 +1469,7 @@ export type GlobalOmitConfig = {
   client?: Prisma.ClientOmit
   invoice?: Prisma.InvoiceOmit
   shipment?: Prisma.ShipmentOmit
+  trackingHistory?: Prisma.TrackingHistoryOmit
 }
 
 /* Types for Logging */

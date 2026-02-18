@@ -58,7 +58,8 @@ export const ModelName = {
   Profile: 'Profile',
   Client: 'Client',
   Invoice: 'Invoice',
-  Shipment: 'Shipment'
+  Shipment: 'Shipment',
+  TrackingHistory: 'TrackingHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -192,6 +193,19 @@ export const ShipmentScalarFieldEnum = {
 export type ShipmentScalarFieldEnum = (typeof ShipmentScalarFieldEnum)[keyof typeof ShipmentScalarFieldEnum]
 
 
+export const TrackingHistoryScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  location: 'location',
+  notes: 'notes',
+  updatedById: 'updatedById',
+  shipmentId: 'shipmentId',
+  createdAt: 'createdAt'
+} as const
+
+export type TrackingHistoryScalarFieldEnum = (typeof TrackingHistoryScalarFieldEnum)[keyof typeof TrackingHistoryScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -286,4 +300,12 @@ export const ShipmentOrderByRelevanceFieldEnum = {
 } as const
 
 export type ShipmentOrderByRelevanceFieldEnum = (typeof ShipmentOrderByRelevanceFieldEnum)[keyof typeof ShipmentOrderByRelevanceFieldEnum]
+
+
+export const TrackingHistoryOrderByRelevanceFieldEnum = {
+  location: 'location',
+  notes: 'notes'
+} as const
+
+export type TrackingHistoryOrderByRelevanceFieldEnum = (typeof TrackingHistoryOrderByRelevanceFieldEnum)[keyof typeof TrackingHistoryOrderByRelevanceFieldEnum]
 

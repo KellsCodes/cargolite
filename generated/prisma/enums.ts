@@ -53,3 +53,17 @@ export const CourierType = {
 } as const
 
 export type CourierType = (typeof CourierType)[keyof typeof CourierType]
+
+
+export const ShipmentStatus = {
+  PICKED_UP: 'PICKED_UP',
+  IN_TRANSIT: 'IN_TRANSIT',
+  WAREHOUSE_ARRIVED: 'WAREHOUSE_ARRIVED',
+  OUT_FOR_DELIVERY: 'OUT_FOR_DELIVERY',
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED',
+  DELAYED: 'DELAYED',
+  RETURNED: 'RETURNED'
+} as const
+
+export type ShipmentStatus = (typeof ShipmentStatus)[keyof typeof ShipmentStatus]

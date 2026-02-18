@@ -316,6 +316,23 @@ export type EnumCourierTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumCourierTypeFilter<$PrismaModel>
 }
 
+export type EnumShipmentStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShipmentStatus | Prisma.EnumShipmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ShipmentStatus[]
+  notIn?: $Enums.ShipmentStatus[]
+  not?: Prisma.NestedEnumShipmentStatusFilter<$PrismaModel> | $Enums.ShipmentStatus
+}
+
+export type EnumShipmentStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShipmentStatus | Prisma.EnumShipmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ShipmentStatus[]
+  notIn?: $Enums.ShipmentStatus[]
+  not?: Prisma.NestedEnumShipmentStatusWithAggregatesFilter<$PrismaModel> | $Enums.ShipmentStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumShipmentStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumShipmentStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[]
@@ -622,6 +639,23 @@ export type NestedEnumCourierTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumCourierTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumCourierTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumShipmentStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShipmentStatus | Prisma.EnumShipmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ShipmentStatus[]
+  notIn?: $Enums.ShipmentStatus[]
+  not?: Prisma.NestedEnumShipmentStatusFilter<$PrismaModel> | $Enums.ShipmentStatus
+}
+
+export type NestedEnumShipmentStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ShipmentStatus | Prisma.EnumShipmentStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ShipmentStatus[]
+  notIn?: $Enums.ShipmentStatus[]
+  not?: Prisma.NestedEnumShipmentStatusWithAggregatesFilter<$PrismaModel> | $Enums.ShipmentStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumShipmentStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumShipmentStatusFilter<$PrismaModel>
 }
 
 

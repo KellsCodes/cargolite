@@ -44,6 +44,17 @@ enum CourierType {
   BUS
 }
 
+enum ShipmentStatus {
+  PICKED_UP
+  IN_TRANSIT
+  WAREHOUSE_ARRIVED
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+  DELAYED
+  RETURNED
+}
+
 model Account {
   id            String    @id   @default(cuid())
   userId        Int
@@ -87,6 +98,7 @@ model User {
 
   accounts      Account[]
   sessionState  Session[]
+  trackingUpdates TrackingHistory[]
 }
 
 model Otp {
@@ -169,9 +181,31 @@ model Shipment {
   invoiceId      Int         @unique
   invoice        Invoice     @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
 
+  trackingHistory TrackingHistory[]
+
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
 
   @@index([senderId])
   @@index([receiverId])
+}
+
+model TrackingHistory {
+  id            Int         @id  @default(autoincrement())
+  status        ShipmentStatus   @default(PICKED_UP)
+  location      String      @db.VarChar(150)
+  notes         String      @db.Text
+
+  // Who performed the update?
+  updatedById   Int
+  updatedBy     User        @relation(fields: [updatedById], references: [id])
+
+  // Link to Shipment
+  shipmentId    Int
+  shipment      Shipment    @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+  
+  createdAt     DateTime    @default(now())
+
+  @@index([shipmentId])
+  @@index([updatedById])
 }
