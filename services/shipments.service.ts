@@ -2,7 +2,7 @@ import { paginate } from "@/app/api/utils/pagination.utils";
 import prisma from "@/lib/prisma";
 import { randomInt } from "crypto";
 
-export const processNewShipment = async (data: any) => {
+export const processNewShipment = async (data: any, adminID: number) => {
   return await prisma.$transaction(async (tx) => {
     // Upsert Sender & Receiver (Same as before)
     const sender = await tx.client.upsert({
@@ -64,6 +64,14 @@ export const processNewShipment = async (data: any) => {
         receiverId: receiver.id,
         invoiceId: invoice.id,
         packageImage: data.packageImage || null,
+        trackingHistory: {
+          create: {
+            status: "PICKED_UP",
+            location: data.pickupLocation,
+            notes: "Shipment record created and picked up.",
+            updatedById: adminID,
+          },
+        },
       },
       include: { invoice: true, sender: true, receiver: true },
     });

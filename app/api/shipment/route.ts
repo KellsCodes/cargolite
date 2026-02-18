@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     const validatedData = CreateShipmentSchema.parse(formattedData);
 
     //  Process Transaction (Clients + Invoice + Shipment)
-    const result = await processNewShipment(validatedData);
+    const result = await processNewShipment(validatedData, user.id);
 
     return NextResponse.json(result, { status: 201 });
   } catch (error) {
