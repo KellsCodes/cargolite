@@ -62,6 +62,7 @@ export const processNewShipment = async (data: any) => {
         senderId: sender.id,
         receiverId: receiver.id,
         invoiceId: invoice.id,
+        packageImage: data.packageImage || null,
       },
       include: { invoice: true, sender: true, receiver: true },
     });
@@ -102,5 +103,11 @@ export const updateShipmentRecord = async (id: number, data: any) => {
       sender: true,
       receiver: true,
     },
+  });
+};
+
+export const getShipmentByID = async (id: number) => {
+  return await prisma.shipment.findUnique({
+    where: { id },
   });
 };
