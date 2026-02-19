@@ -1,6 +1,8 @@
 import { paginate } from "@/app/api/utils/pagination.utils";
+import { ShipmentStatus } from "@/generated/prisma/enums";
 import prisma from "@/lib/prisma";
 import { randomInt } from "crypto";
+// import { trackingHistory } from "./tracking";
 
 export const processNewShipment = async (data: any, adminID: number) => {
   return await prisma.$transaction(async (tx) => {
@@ -124,18 +126,32 @@ export const getShipmentByID = async (id: number) => {
 export const getAllShipments = async (
   page: number,
   limit: number,
-  search?: string
+  search?: string,
+  status?: ShipmentStatus
 ) => {
   // Build the search filter
-  const where = search
-    ? {
-        OR: [
-          { shipmentID: { contains: search } }, // Search the shipmentID AWP
-          { sender: { name: { contains: search } } }, // Search Sender Name
-          { receiver: { name: { contains: search } } }, // Search Reciever Name
-        ],
-      }
-    : {};
+  const where: any = {
+    AND: [
+      // Search Filter with client name or shipmentID
+      search
+        ? {
+            OR: [
+              { shipmentID: { contains: search } }, // Search the shipmentID AWP
+              { sender: { name: { contains: search } } }, // Search Sender Name
+              { receiver: { name: { contains: search } } }, // Search Reciever Name
+            ],
+          }
+        : {},
+      status
+        ? {
+            trackingHistory: {
+              some: { status },
+            },
+          }
+        : {},
+    ],
+  };
+
   const result = await paginate<any>(prisma.shipment, {
     page,
     limit,
@@ -171,13 +187,12 @@ export const getAllShipments = async (
   };
 };
 
-
 export const trackShipment = async (shipmentID: string) => {
   return await prisma.shipment.findUnique({
     where: { shipmentID },
-    include: { 
+    include: {
       trackingHistory: { orderBy: { createdAt: "desc" } },
-      sender: { select: { name: true,  } },
+      sender: { select: { name: true } },
       receiver: { select: { name: true } },
     },
   });

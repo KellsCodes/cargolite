@@ -4,7 +4,7 @@ import {
   getAllShipments,
   processNewShipment,
 } from "@/services/shipments.service";
-import { Prisma } from "@/generated/prisma/client";
+import { Prisma, ShipmentStatus } from "@/generated/prisma/client";
 import { z } from "zod";
 import { authError, getUserSession } from "@/lib/authUtils";
 import { processImage } from "@/services/image.service";
@@ -75,7 +75,8 @@ export async function GET(req: Request) {
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
     const search = searchParams.get("search") || undefined;
-    const result = await getAllShipments(page, limit, search);
+    const status = searchParams.get("status") as ShipmentStatus | undefined;
+    const result = await getAllShipments(page, limit, search, status);
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json(
