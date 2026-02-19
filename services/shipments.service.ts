@@ -170,3 +170,15 @@ export const getAllShipments = async (
     data: formattedData,
   };
 };
+
+
+export const trackShipment = async (shipmentID: string) => {
+  return await prisma.shipment.findUnique({
+    where: { shipmentID },
+    include: { 
+      trackingHistory: { orderBy: { createdAt: "desc" } },
+      sender: { select: { name: true,  } },
+      receiver: { select: { name: true } },
+    },
+  });
+};

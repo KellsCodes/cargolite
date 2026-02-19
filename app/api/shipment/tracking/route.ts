@@ -1,5 +1,6 @@
 import { authError, getUserSession } from "@/lib/authUtils";
 import { TrackingHistorySchema } from "@/schema/trackingHistory.schema";
+import { trackShipment } from "@/services/shipments.service";
 import { trackingHistory } from "@/services/tracking";
 import { NextResponse } from "next/server";
 import z from "zod";
@@ -40,6 +41,34 @@ export async function POST(req: Request) {
     }
     return NextResponse.json(
       { error: "Tracking update failed." },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const shipmentID = searchParams.get("tracking_number");
+    if (!shipmentID) {
+      return NextResponse.json(
+        { error: "Tracking number is required." },
+        { status: 400 }
+      );
+    }
+
+    const shipment = await trackShipment(shipmentID);
+    if (!shipment) {
+      return NextResponse.json(
+        { error: "Shipment not found." },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(shipment);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to retrieve shipment." },
       { status: 500 }
     );
   }
