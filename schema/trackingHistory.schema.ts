@@ -10,3 +10,6 @@ export const TrackingHistorySchema = z.object({
     .max(150),
   notes: z.string().max(500).optional().nullable(),
 });
+
+
+export const UpdateTrackingHistorySchema = TrackingHistorySchema.partial();

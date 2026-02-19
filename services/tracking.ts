@@ -17,10 +17,18 @@ export const trackingHistory = async (data: any, userId: number) => {
   if (latestUpdate?.status === "DELIVERED") {
     throw new Error("CANNOT_UPDATE_DELIVERED_SHIPMENT");
   }
-  if (latestUpdate?.status === "CANCELLED"){
+  if (latestUpdate?.status === "CANCELLED") {
     throw new Error("CANNOT_UPDATE_CANCELLED_SHIPMENT");
   }
   return await prisma.trackingHistory.create({
     data: { ...data, updatedBy: userId },
+  });
+};
+
+export const updateTrackingRecord = async (id: number, data: any) => {
+  return await prisma.trackingHistory.update({
+    where: { id },
+    data: { location: data.location, notes: data.notes },
+    // Don't allow changing the updatedBy field to keep the original scanner
   });
 };
