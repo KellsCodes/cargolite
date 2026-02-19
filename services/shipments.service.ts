@@ -144,6 +144,14 @@ export const getAllShipments = async (
       sender: { select: { name: true } },
       receiver: { select: { name: true } },
       invoice: { select: { amount: true, payerRole: true } },
+      trackingHistory: {
+        orderBy: { createdAt: "desc" },
+        take: 1, // Get only the latest tracking status
+        select: {
+          status: true,
+          id: true,
+        },
+      },
     },
   });
 

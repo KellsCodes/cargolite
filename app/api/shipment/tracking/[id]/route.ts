@@ -22,11 +22,15 @@ export async function PATCH(
 
     return NextResponse.json(updatedRecord);
   } catch (error: any) {
+    console.log(error)
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { errors: error.flatten().fieldErrors },
         { status: 400 }
       );
+    }
+    if (error.code === "P2025") {
+      return NextResponse.json({ error: "Tracking record not found" }, { status: 404 });
     }
     return NextResponse.json(
       { error: "Tracking update failed." },

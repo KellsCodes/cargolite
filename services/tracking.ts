@@ -21,7 +21,7 @@ export const trackingHistory = async (data: any, userId: number) => {
     throw new Error("CANNOT_UPDATE_CANCELLED_SHIPMENT");
   }
   return await prisma.trackingHistory.create({
-    data: { ...data, updatedBy: userId },
+    data: { ...data, updatedById: userId },
   });
 };
 
