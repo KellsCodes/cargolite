@@ -1,5 +1,5 @@
 import { authError, getUserSession } from "@/lib/authUtils";
-import { getClients } from "@/services/client.service";
+import { getClientsByRole } from "@/services/client.service";
 import { NextResponse } from "next/server";
 import { ClientType } from "@/generated/prisma/enums";
 
@@ -17,9 +17,10 @@ export async function GET(req: Request) {
       ? Number(searchParams.get("status"))
       : undefined;
 
-    const result = await getClients(role, page, limit, search, status);
+    const result = await getClientsByRole(role, page, limit, search, status);
     return NextResponse.json(result);
   } catch (error) {
+    console.log(error)
     return NextResponse.json(
       { error: "Failed to fetch clients" },
       { status: 500 }

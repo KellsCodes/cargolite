@@ -1,8 +1,9 @@
 import { paginate } from "@/app/api/utils/pagination.utils";
 import { ClientType } from "@/generated/prisma/enums";
 import prisma from "@/lib/prisma";
+import { isBefore, subMonths } from "date-fns";
 
-export const getClients = async (
+export const getClientsByRole = async (
   role: ClientType,
   page: number,
   limit: number,
@@ -12,6 +13,7 @@ export const getClients = async (
   // identify which relation to count based on the clientType
   const relationKey =
     role === ClientType.SENDER ? "sentShipments" : "receivedShipments";
+  const sixMonthsAgo = subMonths(new Date(), 6);
 
   const where: any = {
     AND: [
@@ -34,7 +36,10 @@ export const getClients = async (
     include: {
       [relationKey]: {
         orderBy: { createdAt: "desc" },
-        take: 1, // Only get the latest shipment for activity/location
+        // take: 1, // Only get the latest shipment for activity/location
+        include: {
+          trackingHistory: { orderBy: { createdAt: "desc" } },
+        },
       },
       _count: {
         select: {
@@ -45,16 +50,69 @@ export const getClients = async (
   });
 
   // Map data for the Frontend Table
-  const formattedData = result.data.map((client: any) => ({
-    id: client.id,
-    name: client.name,
-    email: client.email,
-    telephone: client.telephone,
-    status: client.status,
-    latestShipment: client[relationKey]?.[0],
-    shipmentCount: client._count[relationKey],
-    lastLocation: role === ClientType.RECEIVER ? client[relationKey]?.[0]?.dropLocation : client[relationKey]?.[0]?.pickupLocation,
-  }));
+  const formattedData = await Promise.all(
+    result.data.map(async (client: any) => {
+      const shipments = client[relationKey];
+      const lastShipment = shipments?.[0];
+      let shouldBeInactive = false;
 
+      if (role === "SENDER") {
+        // Check the last shipment date
+        if (
+          !lastShipment ||
+          isBefore(new Date(lastShipment.createdAt), sixMonthsAgo)
+        ) {
+          shouldBeInactive = true;
+        }
+      } else {
+        // Find latest "DELIVERED" status in history for receiver client
+        const deliveredStatus = await prisma.trackingHistory.findFirst({
+          where: {
+            shipmentId: client.id,
+            status: "DELIVERED",
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        });
+
+        if (
+          !deliveredStatus ||
+          isBefore(new Date(deliveredStatus.createdAt), sixMonthsAgo)
+        ) {
+          shouldBeInactive = true;
+        }
+      }
+
+      // Update client status if inactive
+      if (shouldBeInactive && client.status === 1) {
+        await prisma.client.update({
+          where: { id: client.id },
+          data: { status: 2 },
+        });
+        client.status = 2; // Update local object to reflect change
+      }
+
+      return {
+        id: client.id,
+        name: client.name,
+        email: client.email,
+        telephone: client.telephone,
+        status: client.status,
+        shipmentCount: client._count[relationKey],
+        latestShipment:
+          role === "SENDER"
+            ? client[relationKey]?.[0]?.createdAt
+            : client[relationKey]?.[0]?.trackingHistory?.[0]?.status ===
+              "DELIVERED"
+            ? client[relationKey]?.[0]?.trackingHistory?.[0]?.createdAt
+            : null,
+        lastLocation:
+          role === ClientType.RECEIVER
+            ? client[relationKey]?.[0]?.pickupLocation
+            : client[relationKey]?.[0]?.dropLocation,
+      };
+    })
+  );
   return { ...result, data: formattedData };
 };
