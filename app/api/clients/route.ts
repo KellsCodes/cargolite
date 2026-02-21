@@ -1,5 +1,8 @@
 import { authError, getUserSession } from "@/lib/authUtils";
-import { getClientsByRole } from "@/services/client.service";
+import {
+  clientSuspensionAndActivation,
+  getClientsByRole,
+} from "@/services/client.service";
 import { NextResponse } from "next/server";
 import { ClientType } from "@/generated/prisma/enums";
 
@@ -20,9 +23,32 @@ export async function GET(req: Request) {
     const result = await getClientsByRole(role, page, limit, search, status);
     return NextResponse.json(result);
   } catch (error) {
-    console.log(error)
+    // console.log(error);
     return NextResponse.json(
       { error: "Failed to fetch clients" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(req: Request) {
+  const user = await getUserSession();
+  if (!user) return authError();
+
+  try {
+    const { clientId, status } = (await req.json()) as {
+      clientId: number;
+      status: number;
+    };
+    const result = await clientSuspensionAndActivation(clientId, status);
+    return NextResponse.json(result);
+  } catch (error: any) {
+    // console.log(error);
+    if (error.message === "CLIENT_NOT_FOUND") {
+      return NextResponse.json({ error: "Client not found" }, { status: 404 });
+    }
+    return NextResponse.json(
+      { error: "Failed to update client" },
       { status: 500 }
     );
   }

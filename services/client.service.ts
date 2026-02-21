@@ -91,6 +91,12 @@ export const getClientsByRole = async (
           data: { status: 2 },
         });
         client.status = 2; // Update local object to reflect change
+      } else if (!shouldBeInactive && client.status === 2) {
+        await prisma.client.update({
+          where: { id: client.id },
+          data: { status: 1 },
+        });
+        client.status = 1; // Update local object to reflect change
       }
 
       return {
@@ -115,4 +121,29 @@ export const getClientsByRole = async (
     })
   );
   return { ...result, data: formattedData };
+};
+
+export const clientSuspensionAndActivation = async (
+  clientId: number,
+  status: number
+) => {
+  const client = await prisma.client.findUnique({
+    where: { id: clientId },
+  });
+
+  if (!client) {
+    throw new Error("CLIENT_NOT_FOUND");
+  }
+
+  await prisma.client.update({
+    where: { id: clientId },
+    data: { status },
+  });
+
+  return {
+    message:
+      status === 3
+        ? "Client suspended successfully."
+        : "Client activated successfully.",
+  };
 };
