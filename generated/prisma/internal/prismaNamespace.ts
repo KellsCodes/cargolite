@@ -392,7 +392,8 @@ export const ModelName = {
   Client: 'Client',
   Invoice: 'Invoice',
   Shipment: 'Shipment',
-  TrackingHistory: 'TrackingHistory'
+  TrackingHistory: 'TrackingHistory',
+  AdminMessage: 'AdminMessage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "account" | "session" | "user" | "otp" | "profile" | "client" | "invoice" | "shipment" | "trackingHistory"
+    modelProps: "account" | "session" | "user" | "otp" | "profile" | "client" | "invoice" | "shipment" | "trackingHistory" | "adminMessage"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1006,6 +1007,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AdminMessage: {
+      payload: Prisma.$AdminMessagePayload<ExtArgs>
+      fields: Prisma.AdminMessageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AdminMessageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AdminMessageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessagePayload>
+        }
+        findFirst: {
+          args: Prisma.AdminMessageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AdminMessageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessagePayload>
+        }
+        findMany: {
+          args: Prisma.AdminMessageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessagePayload>[]
+        }
+        create: {
+          args: Prisma.AdminMessageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessagePayload>
+        }
+        createMany: {
+          args: Prisma.AdminMessageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.AdminMessageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessagePayload>
+        }
+        update: {
+          args: Prisma.AdminMessageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessagePayload>
+        }
+        deleteMany: {
+          args: Prisma.AdminMessageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AdminMessageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.AdminMessageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessagePayload>
+        }
+        aggregate: {
+          args: Prisma.AdminMessageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAdminMessage>
+        }
+        groupBy: {
+          args: Prisma.AdminMessageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdminMessageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AdminMessageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdminMessageCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1173,6 +1240,19 @@ export const TrackingHistoryScalarFieldEnum = {
 export type TrackingHistoryScalarFieldEnum = (typeof TrackingHistoryScalarFieldEnum)[keyof typeof TrackingHistoryScalarFieldEnum]
 
 
+export const AdminMessageScalarFieldEnum = {
+  id: 'id',
+  subject: 'subject',
+  body: 'body',
+  attachmentUrl: 'attachmentUrl',
+  recipientId: 'recipientId',
+  adminId: 'adminId',
+  createdAt: 'createdAt'
+} as const
+
+export type AdminMessageScalarFieldEnum = (typeof AdminMessageScalarFieldEnum)[keyof typeof AdminMessageScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1275,6 +1355,15 @@ export const TrackingHistoryOrderByRelevanceFieldEnum = {
 } as const
 
 export type TrackingHistoryOrderByRelevanceFieldEnum = (typeof TrackingHistoryOrderByRelevanceFieldEnum)[keyof typeof TrackingHistoryOrderByRelevanceFieldEnum]
+
+
+export const AdminMessageOrderByRelevanceFieldEnum = {
+  subject: 'subject',
+  body: 'body',
+  attachmentUrl: 'attachmentUrl'
+} as const
+
+export type AdminMessageOrderByRelevanceFieldEnum = (typeof AdminMessageOrderByRelevanceFieldEnum)[keyof typeof AdminMessageOrderByRelevanceFieldEnum]
 
 
 
@@ -1470,6 +1559,7 @@ export type GlobalOmitConfig = {
   invoice?: Prisma.InvoiceOmit
   shipment?: Prisma.ShipmentOmit
   trackingHistory?: Prisma.TrackingHistoryOmit
+  adminMessage?: Prisma.AdminMessageOmit
 }
 
 /* Types for Logging */

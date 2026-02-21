@@ -99,6 +99,7 @@ model User {
   accounts      Account[]
   sessionState  Session[]
   trackingUpdates TrackingHistory[]
+  sentMessages  AdminMessage[]
 }
 
 model Otp {
@@ -143,6 +144,7 @@ model Client {
   sentShipments     Shipment[] @relation("SentShipments")
   receivedShipments Shipment[] @relation("ReceivedShipments")
   invoices          Invoice[]
+  receivedMessages  AdminMessage[]
 }
 
 model Invoice {
@@ -208,4 +210,19 @@ model TrackingHistory {
 
   @@index([shipmentId])
   @@index([updatedById])
+}
+
+model AdminMessage {
+  id             Int        @id @default(autoincrement())
+  subject        String     @db.VarChar(200)
+  body           String     @db.Text
+  attachmentUrl  String?    @db.Text
+  recipientId    Int
+  recipient      Client     @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+  adminId        Int
+  admin          User       @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  createdAt      DateTime   @default(now())
+
+  @@index([recipientId])
+  @@index([adminId])
 }

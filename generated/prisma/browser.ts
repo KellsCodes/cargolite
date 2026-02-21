@@ -62,3 +62,8 @@ export type Shipment = Prisma.ShipmentModel
  * 
  */
 export type TrackingHistory = Prisma.TrackingHistoryModel
+/**
+ * Model AdminMessage
+ * 
+ */
+export type AdminMessage = Prisma.AdminMessageModel

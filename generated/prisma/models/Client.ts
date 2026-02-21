@@ -239,6 +239,7 @@ export type ClientWhereInput = {
   sentShipments?: Prisma.ShipmentListRelationFilter
   receivedShipments?: Prisma.ShipmentListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
+  receivedMessages?: Prisma.AdminMessageListRelationFilter
 }
 
 export type ClientOrderByWithRelationInput = {
@@ -252,6 +253,7 @@ export type ClientOrderByWithRelationInput = {
   sentShipments?: Prisma.ShipmentOrderByRelationAggregateInput
   receivedShipments?: Prisma.ShipmentOrderByRelationAggregateInput
   invoices?: Prisma.InvoiceOrderByRelationAggregateInput
+  receivedMessages?: Prisma.AdminMessageOrderByRelationAggregateInput
   _relevance?: Prisma.ClientOrderByRelevanceInput
 }
 
@@ -269,6 +271,7 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
   sentShipments?: Prisma.ShipmentListRelationFilter
   receivedShipments?: Prisma.ShipmentListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
+  receivedMessages?: Prisma.AdminMessageListRelationFilter
 }, "id" | "email">
 
 export type ClientOrderByWithAggregationInput = {
@@ -309,6 +312,7 @@ export type ClientCreateInput = {
   sentShipments?: Prisma.ShipmentCreateNestedManyWithoutSenderInput
   receivedShipments?: Prisma.ShipmentCreateNestedManyWithoutReceiverInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutClientInput
+  receivedMessages?: Prisma.AdminMessageCreateNestedManyWithoutRecipientInput
 }
 
 export type ClientUncheckedCreateInput = {
@@ -322,6 +326,7 @@ export type ClientUncheckedCreateInput = {
   sentShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutSenderInput
   receivedShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutReceiverInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutClientInput
+  receivedMessages?: Prisma.AdminMessageUncheckedCreateNestedManyWithoutRecipientInput
 }
 
 export type ClientUpdateInput = {
@@ -334,6 +339,7 @@ export type ClientUpdateInput = {
   sentShipments?: Prisma.ShipmentUpdateManyWithoutSenderNestedInput
   receivedShipments?: Prisma.ShipmentUpdateManyWithoutReceiverNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutClientNestedInput
+  receivedMessages?: Prisma.AdminMessageUpdateManyWithoutRecipientNestedInput
 }
 
 export type ClientUncheckedUpdateInput = {
@@ -347,6 +353,7 @@ export type ClientUncheckedUpdateInput = {
   sentShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutSenderNestedInput
   receivedShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutReceiverNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutClientNestedInput
+  receivedMessages?: Prisma.AdminMessageUncheckedUpdateManyWithoutRecipientNestedInput
 }
 
 export type ClientCreateManyInput = {
@@ -475,6 +482,20 @@ export type ClientUpdateOneRequiredWithoutReceivedShipmentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutReceivedShipmentsInput, Prisma.ClientUpdateWithoutReceivedShipmentsInput>, Prisma.ClientUncheckedUpdateWithoutReceivedShipmentsInput>
 }
 
+export type ClientCreateNestedOneWithoutReceivedMessagesInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutReceivedMessagesInput, Prisma.ClientUncheckedCreateWithoutReceivedMessagesInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutReceivedMessagesInput
+  connect?: Prisma.ClientWhereUniqueInput
+}
+
+export type ClientUpdateOneRequiredWithoutReceivedMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutReceivedMessagesInput, Prisma.ClientUncheckedCreateWithoutReceivedMessagesInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutReceivedMessagesInput
+  upsert?: Prisma.ClientUpsertWithoutReceivedMessagesInput
+  connect?: Prisma.ClientWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutReceivedMessagesInput, Prisma.ClientUpdateWithoutReceivedMessagesInput>, Prisma.ClientUncheckedUpdateWithoutReceivedMessagesInput>
+}
+
 export type ClientCreateWithoutInvoicesInput = {
   name: string
   email: string
@@ -484,6 +505,7 @@ export type ClientCreateWithoutInvoicesInput = {
   createdAt?: Date | string
   sentShipments?: Prisma.ShipmentCreateNestedManyWithoutSenderInput
   receivedShipments?: Prisma.ShipmentCreateNestedManyWithoutReceiverInput
+  receivedMessages?: Prisma.AdminMessageCreateNestedManyWithoutRecipientInput
 }
 
 export type ClientUncheckedCreateWithoutInvoicesInput = {
@@ -496,6 +518,7 @@ export type ClientUncheckedCreateWithoutInvoicesInput = {
   createdAt?: Date | string
   sentShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutSenderInput
   receivedShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutReceiverInput
+  receivedMessages?: Prisma.AdminMessageUncheckedCreateNestedManyWithoutRecipientInput
 }
 
 export type ClientCreateOrConnectWithoutInvoicesInput = {
@@ -523,6 +546,7 @@ export type ClientUpdateWithoutInvoicesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentShipments?: Prisma.ShipmentUpdateManyWithoutSenderNestedInput
   receivedShipments?: Prisma.ShipmentUpdateManyWithoutReceiverNestedInput
+  receivedMessages?: Prisma.AdminMessageUpdateManyWithoutRecipientNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutInvoicesInput = {
@@ -535,6 +559,7 @@ export type ClientUncheckedUpdateWithoutInvoicesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutSenderNestedInput
   receivedShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutReceiverNestedInput
+  receivedMessages?: Prisma.AdminMessageUncheckedUpdateManyWithoutRecipientNestedInput
 }
 
 export type ClientCreateWithoutSentShipmentsInput = {
@@ -546,6 +571,7 @@ export type ClientCreateWithoutSentShipmentsInput = {
   createdAt?: Date | string
   receivedShipments?: Prisma.ShipmentCreateNestedManyWithoutReceiverInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutClientInput
+  receivedMessages?: Prisma.AdminMessageCreateNestedManyWithoutRecipientInput
 }
 
 export type ClientUncheckedCreateWithoutSentShipmentsInput = {
@@ -558,6 +584,7 @@ export type ClientUncheckedCreateWithoutSentShipmentsInput = {
   createdAt?: Date | string
   receivedShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutReceiverInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutClientInput
+  receivedMessages?: Prisma.AdminMessageUncheckedCreateNestedManyWithoutRecipientInput
 }
 
 export type ClientCreateOrConnectWithoutSentShipmentsInput = {
@@ -574,6 +601,7 @@ export type ClientCreateWithoutReceivedShipmentsInput = {
   createdAt?: Date | string
   sentShipments?: Prisma.ShipmentCreateNestedManyWithoutSenderInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutClientInput
+  receivedMessages?: Prisma.AdminMessageCreateNestedManyWithoutRecipientInput
 }
 
 export type ClientUncheckedCreateWithoutReceivedShipmentsInput = {
@@ -586,6 +614,7 @@ export type ClientUncheckedCreateWithoutReceivedShipmentsInput = {
   createdAt?: Date | string
   sentShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutSenderInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutClientInput
+  receivedMessages?: Prisma.AdminMessageUncheckedCreateNestedManyWithoutRecipientInput
 }
 
 export type ClientCreateOrConnectWithoutReceivedShipmentsInput = {
@@ -613,6 +642,7 @@ export type ClientUpdateWithoutSentShipmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   receivedShipments?: Prisma.ShipmentUpdateManyWithoutReceiverNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutClientNestedInput
+  receivedMessages?: Prisma.AdminMessageUpdateManyWithoutRecipientNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutSentShipmentsInput = {
@@ -625,6 +655,7 @@ export type ClientUncheckedUpdateWithoutSentShipmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   receivedShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutReceiverNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutClientNestedInput
+  receivedMessages?: Prisma.AdminMessageUncheckedUpdateManyWithoutRecipientNestedInput
 }
 
 export type ClientUpsertWithoutReceivedShipmentsInput = {
@@ -647,6 +678,7 @@ export type ClientUpdateWithoutReceivedShipmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentShipments?: Prisma.ShipmentUpdateManyWithoutSenderNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutClientNestedInput
+  receivedMessages?: Prisma.AdminMessageUpdateManyWithoutRecipientNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutReceivedShipmentsInput = {
@@ -659,6 +691,73 @@ export type ClientUncheckedUpdateWithoutReceivedShipmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutSenderNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutClientNestedInput
+  receivedMessages?: Prisma.AdminMessageUncheckedUpdateManyWithoutRecipientNestedInput
+}
+
+export type ClientCreateWithoutReceivedMessagesInput = {
+  name: string
+  email: string
+  telephone?: string | null
+  clientType: $Enums.ClientType
+  status?: number
+  createdAt?: Date | string
+  sentShipments?: Prisma.ShipmentCreateNestedManyWithoutSenderInput
+  receivedShipments?: Prisma.ShipmentCreateNestedManyWithoutReceiverInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutClientInput
+}
+
+export type ClientUncheckedCreateWithoutReceivedMessagesInput = {
+  id?: number
+  name: string
+  email: string
+  telephone?: string | null
+  clientType: $Enums.ClientType
+  status?: number
+  createdAt?: Date | string
+  sentShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutSenderInput
+  receivedShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutReceiverInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutClientInput
+}
+
+export type ClientCreateOrConnectWithoutReceivedMessagesInput = {
+  where: Prisma.ClientWhereUniqueInput
+  create: Prisma.XOR<Prisma.ClientCreateWithoutReceivedMessagesInput, Prisma.ClientUncheckedCreateWithoutReceivedMessagesInput>
+}
+
+export type ClientUpsertWithoutReceivedMessagesInput = {
+  update: Prisma.XOR<Prisma.ClientUpdateWithoutReceivedMessagesInput, Prisma.ClientUncheckedUpdateWithoutReceivedMessagesInput>
+  create: Prisma.XOR<Prisma.ClientCreateWithoutReceivedMessagesInput, Prisma.ClientUncheckedCreateWithoutReceivedMessagesInput>
+  where?: Prisma.ClientWhereInput
+}
+
+export type ClientUpdateToOneWithWhereWithoutReceivedMessagesInput = {
+  where?: Prisma.ClientWhereInput
+  data: Prisma.XOR<Prisma.ClientUpdateWithoutReceivedMessagesInput, Prisma.ClientUncheckedUpdateWithoutReceivedMessagesInput>
+}
+
+export type ClientUpdateWithoutReceivedMessagesInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  telephone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientType?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
+  status?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentShipments?: Prisma.ShipmentUpdateManyWithoutSenderNestedInput
+  receivedShipments?: Prisma.ShipmentUpdateManyWithoutReceiverNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutClientNestedInput
+}
+
+export type ClientUncheckedUpdateWithoutReceivedMessagesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  telephone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientType?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
+  status?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutSenderNestedInput
+  receivedShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutReceiverNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutClientNestedInput
 }
 
 
@@ -670,12 +769,14 @@ export type ClientCountOutputType = {
   sentShipments: number
   receivedShipments: number
   invoices: number
+  receivedMessages: number
 }
 
 export type ClientCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sentShipments?: boolean | ClientCountOutputTypeCountSentShipmentsArgs
   receivedShipments?: boolean | ClientCountOutputTypeCountReceivedShipmentsArgs
   invoices?: boolean | ClientCountOutputTypeCountInvoicesArgs
+  receivedMessages?: boolean | ClientCountOutputTypeCountReceivedMessagesArgs
 }
 
 /**
@@ -709,6 +810,13 @@ export type ClientCountOutputTypeCountInvoicesArgs<ExtArgs extends runtime.Types
   where?: Prisma.InvoiceWhereInput
 }
 
+/**
+ * ClientCountOutputType without action
+ */
+export type ClientCountOutputTypeCountReceivedMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AdminMessageWhereInput
+}
+
 
 export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -721,6 +829,7 @@ export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   sentShipments?: boolean | Prisma.Client$sentShipmentsArgs<ExtArgs>
   receivedShipments?: boolean | Prisma.Client$receivedShipmentsArgs<ExtArgs>
   invoices?: boolean | Prisma.Client$invoicesArgs<ExtArgs>
+  receivedMessages?: boolean | Prisma.Client$receivedMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.ClientCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["client"]>
 
@@ -741,6 +850,7 @@ export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   sentShipments?: boolean | Prisma.Client$sentShipmentsArgs<ExtArgs>
   receivedShipments?: boolean | Prisma.Client$receivedShipmentsArgs<ExtArgs>
   invoices?: boolean | Prisma.Client$invoicesArgs<ExtArgs>
+  receivedMessages?: boolean | Prisma.Client$receivedMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.ClientCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -750,6 +860,7 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     sentShipments: Prisma.$ShipmentPayload<ExtArgs>[]
     receivedShipments: Prisma.$ShipmentPayload<ExtArgs>[]
     invoices: Prisma.$InvoicePayload<ExtArgs>[]
+    receivedMessages: Prisma.$AdminMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1102,6 +1213,7 @@ export interface Prisma__ClientClient<T, Null = never, ExtArgs extends runtime.T
   sentShipments<T extends Prisma.Client$sentShipmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$sentShipmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShipmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   receivedShipments<T extends Prisma.Client$receivedShipmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$receivedShipmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShipmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   invoices<T extends Prisma.Client$invoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  receivedMessages<T extends Prisma.Client$receivedMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$receivedMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdminMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1550,6 +1662,30 @@ export type Client$invoicesArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.InvoiceScalarFieldEnum | Prisma.InvoiceScalarFieldEnum[]
+}
+
+/**
+ * Client.receivedMessages
+ */
+export type Client$receivedMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AdminMessage
+   */
+  select?: Prisma.AdminMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AdminMessage
+   */
+  omit?: Prisma.AdminMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AdminMessageInclude<ExtArgs> | null
+  where?: Prisma.AdminMessageWhereInput
+  orderBy?: Prisma.AdminMessageOrderByWithRelationInput | Prisma.AdminMessageOrderByWithRelationInput[]
+  cursor?: Prisma.AdminMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AdminMessageScalarFieldEnum | Prisma.AdminMessageScalarFieldEnum[]
 }
 
 /**
