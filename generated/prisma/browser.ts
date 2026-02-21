@@ -67,3 +67,8 @@ export type TrackingHistory = Prisma.TrackingHistoryModel
  * 
  */
 export type AdminMessage = Prisma.AdminMessageModel
+/**
+ * Model AdminMessageAttachment
+ * 
+ */
+export type AdminMessageAttachment = Prisma.AdminMessageAttachmentModel

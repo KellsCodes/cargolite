@@ -333,6 +333,23 @@ export type EnumShipmentStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumShipmentStatusFilter<$PrismaModel>
 }
 
+export type EnumEmailAttachmentTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmailAttachmentType | Prisma.EnumEmailAttachmentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.EmailAttachmentType[]
+  notIn?: $Enums.EmailAttachmentType[]
+  not?: Prisma.NestedEnumEmailAttachmentTypeFilter<$PrismaModel> | $Enums.EmailAttachmentType
+}
+
+export type EnumEmailAttachmentTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmailAttachmentType | Prisma.EnumEmailAttachmentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.EmailAttachmentType[]
+  notIn?: $Enums.EmailAttachmentType[]
+  not?: Prisma.NestedEnumEmailAttachmentTypeWithAggregatesFilter<$PrismaModel> | $Enums.EmailAttachmentType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEmailAttachmentTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEmailAttachmentTypeFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[]
@@ -656,6 +673,23 @@ export type NestedEnumShipmentStatusWithAggregatesFilter<$PrismaModel = never> =
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumShipmentStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumShipmentStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumEmailAttachmentTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmailAttachmentType | Prisma.EnumEmailAttachmentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.EmailAttachmentType[]
+  notIn?: $Enums.EmailAttachmentType[]
+  not?: Prisma.NestedEnumEmailAttachmentTypeFilter<$PrismaModel> | $Enums.EmailAttachmentType
+}
+
+export type NestedEnumEmailAttachmentTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EmailAttachmentType | Prisma.EnumEmailAttachmentTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.EmailAttachmentType[]
+  notIn?: $Enums.EmailAttachmentType[]
+  not?: Prisma.NestedEnumEmailAttachmentTypeWithAggregatesFilter<$PrismaModel> | $Enums.EmailAttachmentType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEmailAttachmentTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEmailAttachmentTypeFilter<$PrismaModel>
 }
 
 

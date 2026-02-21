@@ -393,7 +393,8 @@ export const ModelName = {
   Invoice: 'Invoice',
   Shipment: 'Shipment',
   TrackingHistory: 'TrackingHistory',
-  AdminMessage: 'AdminMessage'
+  AdminMessage: 'AdminMessage',
+  AdminMessageAttachment: 'AdminMessageAttachment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -409,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "account" | "session" | "user" | "otp" | "profile" | "client" | "invoice" | "shipment" | "trackingHistory" | "adminMessage"
+    modelProps: "account" | "session" | "user" | "otp" | "profile" | "client" | "invoice" | "shipment" | "trackingHistory" | "adminMessage" | "adminMessageAttachment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1073,6 +1074,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AdminMessageAttachment: {
+      payload: Prisma.$AdminMessageAttachmentPayload<ExtArgs>
+      fields: Prisma.AdminMessageAttachmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AdminMessageAttachmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessageAttachmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AdminMessageAttachmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessageAttachmentPayload>
+        }
+        findFirst: {
+          args: Prisma.AdminMessageAttachmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessageAttachmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AdminMessageAttachmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessageAttachmentPayload>
+        }
+        findMany: {
+          args: Prisma.AdminMessageAttachmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessageAttachmentPayload>[]
+        }
+        create: {
+          args: Prisma.AdminMessageAttachmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessageAttachmentPayload>
+        }
+        createMany: {
+          args: Prisma.AdminMessageAttachmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.AdminMessageAttachmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessageAttachmentPayload>
+        }
+        update: {
+          args: Prisma.AdminMessageAttachmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessageAttachmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.AdminMessageAttachmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AdminMessageAttachmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.AdminMessageAttachmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminMessageAttachmentPayload>
+        }
+        aggregate: {
+          args: Prisma.AdminMessageAttachmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAdminMessageAttachment>
+        }
+        groupBy: {
+          args: Prisma.AdminMessageAttachmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdminMessageAttachmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AdminMessageAttachmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdminMessageAttachmentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1244,13 +1311,23 @@ export const AdminMessageScalarFieldEnum = {
   id: 'id',
   subject: 'subject',
   body: 'body',
-  attachmentUrl: 'attachmentUrl',
   recipientId: 'recipientId',
   adminId: 'adminId',
   createdAt: 'createdAt'
 } as const
 
 export type AdminMessageScalarFieldEnum = (typeof AdminMessageScalarFieldEnum)[keyof typeof AdminMessageScalarFieldEnum]
+
+
+export const AdminMessageAttachmentScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  type: 'type',
+  adminMessageId: 'adminMessageId',
+  createdAt: 'createdAt'
+} as const
+
+export type AdminMessageAttachmentScalarFieldEnum = (typeof AdminMessageAttachmentScalarFieldEnum)[keyof typeof AdminMessageAttachmentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1359,11 +1436,17 @@ export type TrackingHistoryOrderByRelevanceFieldEnum = (typeof TrackingHistoryOr
 
 export const AdminMessageOrderByRelevanceFieldEnum = {
   subject: 'subject',
-  body: 'body',
-  attachmentUrl: 'attachmentUrl'
+  body: 'body'
 } as const
 
 export type AdminMessageOrderByRelevanceFieldEnum = (typeof AdminMessageOrderByRelevanceFieldEnum)[keyof typeof AdminMessageOrderByRelevanceFieldEnum]
+
+
+export const AdminMessageAttachmentOrderByRelevanceFieldEnum = {
+  url: 'url'
+} as const
+
+export type AdminMessageAttachmentOrderByRelevanceFieldEnum = (typeof AdminMessageAttachmentOrderByRelevanceFieldEnum)[keyof typeof AdminMessageAttachmentOrderByRelevanceFieldEnum]
 
 
 
@@ -1453,6 +1536,13 @@ export type EnumCourierTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'ShipmentStatus'
  */
 export type EnumShipmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ShipmentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'EmailAttachmentType'
+ */
+export type EnumEmailAttachmentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmailAttachmentType'>
     
 
 /**
@@ -1560,6 +1650,7 @@ export type GlobalOmitConfig = {
   shipment?: Prisma.ShipmentOmit
   trackingHistory?: Prisma.TrackingHistoryOmit
   adminMessage?: Prisma.AdminMessageOmit
+  adminMessageAttachment?: Prisma.AdminMessageAttachmentOmit
 }
 
 /* Types for Logging */

@@ -67,3 +67,11 @@ export const ShipmentStatus = {
 } as const
 
 export type ShipmentStatus = (typeof ShipmentStatus)[keyof typeof ShipmentStatus]
+
+
+export const EmailAttachmentType = {
+  IMAGE: 'IMAGE',
+  DOC: 'DOC'
+} as const
+
+export type EmailAttachmentType = (typeof EmailAttachmentType)[keyof typeof EmailAttachmentType]

@@ -55,6 +55,11 @@ enum ShipmentStatus {
   RETURNED
 }
 
+enum EmailAttachmentType {
+  IMAGE
+  DOC
+}
+
 model Account {
   id            String    @id   @default(cuid())
   userId        Int
@@ -216,13 +221,25 @@ model AdminMessage {
   id             Int        @id @default(autoincrement())
   subject        String     @db.VarChar(200)
   body           String     @db.Text
-  attachmentUrl  String?    @db.Text
   recipientId    Int
   recipient      Client     @relation(fields: [recipientId], references: [id], onDelete: Cascade)
   adminId        Int
   admin          User       @relation(fields: [adminId], references: [id], onDelete: Cascade)
   createdAt      DateTime   @default(now())
 
+  attachmentsUrls AdminMessageAttachment[]
+
   @@index([recipientId])
   @@index([adminId])
+}
+
+model AdminMessageAttachment {
+  id             Int        @id @default(autoincrement())
+  url            String     @db.Text
+  type           EmailAttachmentType
+  adminMessageId Int
+  adminMessage   AdminMessage @relation(fields: [adminMessageId], references: [id], onDelete: Cascade)
+  createdAt      DateTime   @default(now())
+
+  @@index([adminMessageId])
 }

@@ -42,7 +42,6 @@ export type AdminMessageMinAggregateOutputType = {
   id: number | null
   subject: string | null
   body: string | null
-  attachmentUrl: string | null
   recipientId: number | null
   adminId: number | null
   createdAt: Date | null
@@ -52,7 +51,6 @@ export type AdminMessageMaxAggregateOutputType = {
   id: number | null
   subject: string | null
   body: string | null
-  attachmentUrl: string | null
   recipientId: number | null
   adminId: number | null
   createdAt: Date | null
@@ -62,7 +60,6 @@ export type AdminMessageCountAggregateOutputType = {
   id: number
   subject: number
   body: number
-  attachmentUrl: number
   recipientId: number
   adminId: number
   createdAt: number
@@ -86,7 +83,6 @@ export type AdminMessageMinAggregateInputType = {
   id?: true
   subject?: true
   body?: true
-  attachmentUrl?: true
   recipientId?: true
   adminId?: true
   createdAt?: true
@@ -96,7 +92,6 @@ export type AdminMessageMaxAggregateInputType = {
   id?: true
   subject?: true
   body?: true
-  attachmentUrl?: true
   recipientId?: true
   adminId?: true
   createdAt?: true
@@ -106,7 +101,6 @@ export type AdminMessageCountAggregateInputType = {
   id?: true
   subject?: true
   body?: true
-  attachmentUrl?: true
   recipientId?: true
   adminId?: true
   createdAt?: true
@@ -203,7 +197,6 @@ export type AdminMessageGroupByOutputType = {
   id: number
   subject: string
   body: string
-  attachmentUrl: string | null
   recipientId: number
   adminId: number
   createdAt: Date
@@ -236,24 +229,24 @@ export type AdminMessageWhereInput = {
   id?: Prisma.IntFilter<"AdminMessage"> | number
   subject?: Prisma.StringFilter<"AdminMessage"> | string
   body?: Prisma.StringFilter<"AdminMessage"> | string
-  attachmentUrl?: Prisma.StringNullableFilter<"AdminMessage"> | string | null
   recipientId?: Prisma.IntFilter<"AdminMessage"> | number
   adminId?: Prisma.IntFilter<"AdminMessage"> | number
   createdAt?: Prisma.DateTimeFilter<"AdminMessage"> | Date | string
   recipient?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   admin?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  attachmentsUrls?: Prisma.AdminMessageAttachmentListRelationFilter
 }
 
 export type AdminMessageOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   subject?: Prisma.SortOrder
   body?: Prisma.SortOrder
-  attachmentUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   recipientId?: Prisma.SortOrder
   adminId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   recipient?: Prisma.ClientOrderByWithRelationInput
   admin?: Prisma.UserOrderByWithRelationInput
+  attachmentsUrls?: Prisma.AdminMessageAttachmentOrderByRelationAggregateInput
   _relevance?: Prisma.AdminMessageOrderByRelevanceInput
 }
 
@@ -264,19 +257,18 @@ export type AdminMessageWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.AdminMessageWhereInput | Prisma.AdminMessageWhereInput[]
   subject?: Prisma.StringFilter<"AdminMessage"> | string
   body?: Prisma.StringFilter<"AdminMessage"> | string
-  attachmentUrl?: Prisma.StringNullableFilter<"AdminMessage"> | string | null
   recipientId?: Prisma.IntFilter<"AdminMessage"> | number
   adminId?: Prisma.IntFilter<"AdminMessage"> | number
   createdAt?: Prisma.DateTimeFilter<"AdminMessage"> | Date | string
   recipient?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   admin?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  attachmentsUrls?: Prisma.AdminMessageAttachmentListRelationFilter
 }, "id">
 
 export type AdminMessageOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   subject?: Prisma.SortOrder
   body?: Prisma.SortOrder
-  attachmentUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   recipientId?: Prisma.SortOrder
   adminId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -294,7 +286,6 @@ export type AdminMessageScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"AdminMessage"> | number
   subject?: Prisma.StringWithAggregatesFilter<"AdminMessage"> | string
   body?: Prisma.StringWithAggregatesFilter<"AdminMessage"> | string
-  attachmentUrl?: Prisma.StringNullableWithAggregatesFilter<"AdminMessage"> | string | null
   recipientId?: Prisma.IntWithAggregatesFilter<"AdminMessage"> | number
   adminId?: Prisma.IntWithAggregatesFilter<"AdminMessage"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AdminMessage"> | Date | string
@@ -303,46 +294,45 @@ export type AdminMessageScalarWhereWithAggregatesInput = {
 export type AdminMessageCreateInput = {
   subject: string
   body: string
-  attachmentUrl?: string | null
   createdAt?: Date | string
   recipient: Prisma.ClientCreateNestedOneWithoutReceivedMessagesInput
   admin: Prisma.UserCreateNestedOneWithoutSentMessagesInput
+  attachmentsUrls?: Prisma.AdminMessageAttachmentCreateNestedManyWithoutAdminMessageInput
 }
 
 export type AdminMessageUncheckedCreateInput = {
   id?: number
   subject: string
   body: string
-  attachmentUrl?: string | null
   recipientId: number
   adminId: number
   createdAt?: Date | string
+  attachmentsUrls?: Prisma.AdminMessageAttachmentUncheckedCreateNestedManyWithoutAdminMessageInput
 }
 
 export type AdminMessageUpdateInput = {
   subject?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recipient?: Prisma.ClientUpdateOneRequiredWithoutReceivedMessagesNestedInput
   admin?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
+  attachmentsUrls?: Prisma.AdminMessageAttachmentUpdateManyWithoutAdminMessageNestedInput
 }
 
 export type AdminMessageUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   subject?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recipientId?: Prisma.IntFieldUpdateOperationsInput | number
   adminId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attachmentsUrls?: Prisma.AdminMessageAttachmentUncheckedUpdateManyWithoutAdminMessageNestedInput
 }
 
 export type AdminMessageCreateManyInput = {
   id?: number
   subject: string
   body: string
-  attachmentUrl?: string | null
   recipientId: number
   adminId: number
   createdAt?: Date | string
@@ -351,7 +341,6 @@ export type AdminMessageCreateManyInput = {
 export type AdminMessageUpdateManyMutationInput = {
   subject?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -359,7 +348,6 @@ export type AdminMessageUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   subject?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recipientId?: Prisma.IntFieldUpdateOperationsInput | number
   adminId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -385,7 +373,6 @@ export type AdminMessageCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   subject?: Prisma.SortOrder
   body?: Prisma.SortOrder
-  attachmentUrl?: Prisma.SortOrder
   recipientId?: Prisma.SortOrder
   adminId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -401,7 +388,6 @@ export type AdminMessageMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   subject?: Prisma.SortOrder
   body?: Prisma.SortOrder
-  attachmentUrl?: Prisma.SortOrder
   recipientId?: Prisma.SortOrder
   adminId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -411,7 +397,6 @@ export type AdminMessageMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   subject?: Prisma.SortOrder
   body?: Prisma.SortOrder
-  attachmentUrl?: Prisma.SortOrder
   recipientId?: Prisma.SortOrder
   adminId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -421,6 +406,11 @@ export type AdminMessageSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   recipientId?: Prisma.SortOrder
   adminId?: Prisma.SortOrder
+}
+
+export type AdminMessageScalarRelationFilter = {
+  is?: Prisma.AdminMessageWhereInput
+  isNot?: Prisma.AdminMessageWhereInput
 }
 
 export type AdminMessageCreateNestedManyWithoutAdminInput = {
@@ -507,21 +497,35 @@ export type AdminMessageUncheckedUpdateManyWithoutRecipientNestedInput = {
   deleteMany?: Prisma.AdminMessageScalarWhereInput | Prisma.AdminMessageScalarWhereInput[]
 }
 
+export type AdminMessageCreateNestedOneWithoutAttachmentsUrlsInput = {
+  create?: Prisma.XOR<Prisma.AdminMessageCreateWithoutAttachmentsUrlsInput, Prisma.AdminMessageUncheckedCreateWithoutAttachmentsUrlsInput>
+  connectOrCreate?: Prisma.AdminMessageCreateOrConnectWithoutAttachmentsUrlsInput
+  connect?: Prisma.AdminMessageWhereUniqueInput
+}
+
+export type AdminMessageUpdateOneRequiredWithoutAttachmentsUrlsNestedInput = {
+  create?: Prisma.XOR<Prisma.AdminMessageCreateWithoutAttachmentsUrlsInput, Prisma.AdminMessageUncheckedCreateWithoutAttachmentsUrlsInput>
+  connectOrCreate?: Prisma.AdminMessageCreateOrConnectWithoutAttachmentsUrlsInput
+  upsert?: Prisma.AdminMessageUpsertWithoutAttachmentsUrlsInput
+  connect?: Prisma.AdminMessageWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AdminMessageUpdateToOneWithWhereWithoutAttachmentsUrlsInput, Prisma.AdminMessageUpdateWithoutAttachmentsUrlsInput>, Prisma.AdminMessageUncheckedUpdateWithoutAttachmentsUrlsInput>
+}
+
 export type AdminMessageCreateWithoutAdminInput = {
   subject: string
   body: string
-  attachmentUrl?: string | null
   createdAt?: Date | string
   recipient: Prisma.ClientCreateNestedOneWithoutReceivedMessagesInput
+  attachmentsUrls?: Prisma.AdminMessageAttachmentCreateNestedManyWithoutAdminMessageInput
 }
 
 export type AdminMessageUncheckedCreateWithoutAdminInput = {
   id?: number
   subject: string
   body: string
-  attachmentUrl?: string | null
   recipientId: number
   createdAt?: Date | string
+  attachmentsUrls?: Prisma.AdminMessageAttachmentUncheckedCreateNestedManyWithoutAdminMessageInput
 }
 
 export type AdminMessageCreateOrConnectWithoutAdminInput = {
@@ -557,7 +561,6 @@ export type AdminMessageScalarWhereInput = {
   id?: Prisma.IntFilter<"AdminMessage"> | number
   subject?: Prisma.StringFilter<"AdminMessage"> | string
   body?: Prisma.StringFilter<"AdminMessage"> | string
-  attachmentUrl?: Prisma.StringNullableFilter<"AdminMessage"> | string | null
   recipientId?: Prisma.IntFilter<"AdminMessage"> | number
   adminId?: Prisma.IntFilter<"AdminMessage"> | number
   createdAt?: Prisma.DateTimeFilter<"AdminMessage"> | Date | string
@@ -566,18 +569,18 @@ export type AdminMessageScalarWhereInput = {
 export type AdminMessageCreateWithoutRecipientInput = {
   subject: string
   body: string
-  attachmentUrl?: string | null
   createdAt?: Date | string
   admin: Prisma.UserCreateNestedOneWithoutSentMessagesInput
+  attachmentsUrls?: Prisma.AdminMessageAttachmentCreateNestedManyWithoutAdminMessageInput
 }
 
 export type AdminMessageUncheckedCreateWithoutRecipientInput = {
   id?: number
   subject: string
   body: string
-  attachmentUrl?: string | null
   adminId: number
   createdAt?: Date | string
+  attachmentsUrls?: Prisma.AdminMessageAttachmentUncheckedCreateNestedManyWithoutAdminMessageInput
 }
 
 export type AdminMessageCreateOrConnectWithoutRecipientInput = {
@@ -606,11 +609,60 @@ export type AdminMessageUpdateManyWithWhereWithoutRecipientInput = {
   data: Prisma.XOR<Prisma.AdminMessageUpdateManyMutationInput, Prisma.AdminMessageUncheckedUpdateManyWithoutRecipientInput>
 }
 
+export type AdminMessageCreateWithoutAttachmentsUrlsInput = {
+  subject: string
+  body: string
+  createdAt?: Date | string
+  recipient: Prisma.ClientCreateNestedOneWithoutReceivedMessagesInput
+  admin: Prisma.UserCreateNestedOneWithoutSentMessagesInput
+}
+
+export type AdminMessageUncheckedCreateWithoutAttachmentsUrlsInput = {
+  id?: number
+  subject: string
+  body: string
+  recipientId: number
+  adminId: number
+  createdAt?: Date | string
+}
+
+export type AdminMessageCreateOrConnectWithoutAttachmentsUrlsInput = {
+  where: Prisma.AdminMessageWhereUniqueInput
+  create: Prisma.XOR<Prisma.AdminMessageCreateWithoutAttachmentsUrlsInput, Prisma.AdminMessageUncheckedCreateWithoutAttachmentsUrlsInput>
+}
+
+export type AdminMessageUpsertWithoutAttachmentsUrlsInput = {
+  update: Prisma.XOR<Prisma.AdminMessageUpdateWithoutAttachmentsUrlsInput, Prisma.AdminMessageUncheckedUpdateWithoutAttachmentsUrlsInput>
+  create: Prisma.XOR<Prisma.AdminMessageCreateWithoutAttachmentsUrlsInput, Prisma.AdminMessageUncheckedCreateWithoutAttachmentsUrlsInput>
+  where?: Prisma.AdminMessageWhereInput
+}
+
+export type AdminMessageUpdateToOneWithWhereWithoutAttachmentsUrlsInput = {
+  where?: Prisma.AdminMessageWhereInput
+  data: Prisma.XOR<Prisma.AdminMessageUpdateWithoutAttachmentsUrlsInput, Prisma.AdminMessageUncheckedUpdateWithoutAttachmentsUrlsInput>
+}
+
+export type AdminMessageUpdateWithoutAttachmentsUrlsInput = {
+  subject?: Prisma.StringFieldUpdateOperationsInput | string
+  body?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recipient?: Prisma.ClientUpdateOneRequiredWithoutReceivedMessagesNestedInput
+  admin?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
+}
+
+export type AdminMessageUncheckedUpdateWithoutAttachmentsUrlsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  subject?: Prisma.StringFieldUpdateOperationsInput | string
+  body?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientId?: Prisma.IntFieldUpdateOperationsInput | number
+  adminId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type AdminMessageCreateManyAdminInput = {
   id?: number
   subject: string
   body: string
-  attachmentUrl?: string | null
   recipientId: number
   createdAt?: Date | string
 }
@@ -618,25 +670,24 @@ export type AdminMessageCreateManyAdminInput = {
 export type AdminMessageUpdateWithoutAdminInput = {
   subject?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   recipient?: Prisma.ClientUpdateOneRequiredWithoutReceivedMessagesNestedInput
+  attachmentsUrls?: Prisma.AdminMessageAttachmentUpdateManyWithoutAdminMessageNestedInput
 }
 
 export type AdminMessageUncheckedUpdateWithoutAdminInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   subject?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recipientId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attachmentsUrls?: Prisma.AdminMessageAttachmentUncheckedUpdateManyWithoutAdminMessageNestedInput
 }
 
 export type AdminMessageUncheckedUpdateManyWithoutAdminInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   subject?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   recipientId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -645,7 +696,6 @@ export type AdminMessageCreateManyRecipientInput = {
   id?: number
   subject: string
   body: string
-  attachmentUrl?: string | null
   adminId: number
   createdAt?: Date | string
 }
@@ -653,41 +703,70 @@ export type AdminMessageCreateManyRecipientInput = {
 export type AdminMessageUpdateWithoutRecipientInput = {
   subject?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   admin?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
+  attachmentsUrls?: Prisma.AdminMessageAttachmentUpdateManyWithoutAdminMessageNestedInput
 }
 
 export type AdminMessageUncheckedUpdateWithoutRecipientInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   subject?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attachmentsUrls?: Prisma.AdminMessageAttachmentUncheckedUpdateManyWithoutAdminMessageNestedInput
 }
 
 export type AdminMessageUncheckedUpdateManyWithoutRecipientInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   subject?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type AdminMessageCountOutputType
+ */
+
+export type AdminMessageCountOutputType = {
+  attachmentsUrls: number
+}
+
+export type AdminMessageCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  attachmentsUrls?: boolean | AdminMessageCountOutputTypeCountAttachmentsUrlsArgs
+}
+
+/**
+ * AdminMessageCountOutputType without action
+ */
+export type AdminMessageCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AdminMessageCountOutputType
+   */
+  select?: Prisma.AdminMessageCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * AdminMessageCountOutputType without action
+ */
+export type AdminMessageCountOutputTypeCountAttachmentsUrlsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AdminMessageAttachmentWhereInput
+}
 
 
 export type AdminMessageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   subject?: boolean
   body?: boolean
-  attachmentUrl?: boolean
   recipientId?: boolean
   adminId?: boolean
   createdAt?: boolean
   recipient?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   admin?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  attachmentsUrls?: boolean | Prisma.AdminMessage$attachmentsUrlsArgs<ExtArgs>
+  _count?: boolean | Prisma.AdminMessageCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["adminMessage"]>
 
 
@@ -696,16 +775,17 @@ export type AdminMessageSelectScalar = {
   id?: boolean
   subject?: boolean
   body?: boolean
-  attachmentUrl?: boolean
   recipientId?: boolean
   adminId?: boolean
   createdAt?: boolean
 }
 
-export type AdminMessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "subject" | "body" | "attachmentUrl" | "recipientId" | "adminId" | "createdAt", ExtArgs["result"]["adminMessage"]>
+export type AdminMessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "subject" | "body" | "recipientId" | "adminId" | "createdAt", ExtArgs["result"]["adminMessage"]>
 export type AdminMessageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   recipient?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   admin?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  attachmentsUrls?: boolean | Prisma.AdminMessage$attachmentsUrlsArgs<ExtArgs>
+  _count?: boolean | Prisma.AdminMessageCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $AdminMessagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -713,12 +793,12 @@ export type $AdminMessagePayload<ExtArgs extends runtime.Types.Extensions.Intern
   objects: {
     recipient: Prisma.$ClientPayload<ExtArgs>
     admin: Prisma.$UserPayload<ExtArgs>
+    attachmentsUrls: Prisma.$AdminMessageAttachmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     subject: string
     body: string
-    attachmentUrl: string | null
     recipientId: number
     adminId: number
     createdAt: Date
@@ -1064,6 +1144,7 @@ export interface Prisma__AdminMessageClient<T, Null = never, ExtArgs extends run
   readonly [Symbol.toStringTag]: "PrismaPromise"
   recipient<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   admin<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  attachmentsUrls<T extends Prisma.AdminMessage$attachmentsUrlsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AdminMessage$attachmentsUrlsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdminMessageAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1096,7 +1177,6 @@ export interface AdminMessageFieldRefs {
   readonly id: Prisma.FieldRef<"AdminMessage", 'Int'>
   readonly subject: Prisma.FieldRef<"AdminMessage", 'String'>
   readonly body: Prisma.FieldRef<"AdminMessage", 'String'>
-  readonly attachmentUrl: Prisma.FieldRef<"AdminMessage", 'String'>
   readonly recipientId: Prisma.FieldRef<"AdminMessage", 'Int'>
   readonly adminId: Prisma.FieldRef<"AdminMessage", 'Int'>
   readonly createdAt: Prisma.FieldRef<"AdminMessage", 'DateTime'>
@@ -1440,6 +1520,30 @@ export type AdminMessageDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many AdminMessages to delete.
    */
   limit?: number
+}
+
+/**
+ * AdminMessage.attachmentsUrls
+ */
+export type AdminMessage$attachmentsUrlsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AdminMessageAttachment
+   */
+  select?: Prisma.AdminMessageAttachmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AdminMessageAttachment
+   */
+  omit?: Prisma.AdminMessageAttachmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AdminMessageAttachmentInclude<ExtArgs> | null
+  where?: Prisma.AdminMessageAttachmentWhereInput
+  orderBy?: Prisma.AdminMessageAttachmentOrderByWithRelationInput | Prisma.AdminMessageAttachmentOrderByWithRelationInput[]
+  cursor?: Prisma.AdminMessageAttachmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AdminMessageAttachmentScalarFieldEnum | Prisma.AdminMessageAttachmentScalarFieldEnum[]
 }
 
 /**

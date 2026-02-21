@@ -60,7 +60,8 @@ export const ModelName = {
   Invoice: 'Invoice',
   Shipment: 'Shipment',
   TrackingHistory: 'TrackingHistory',
-  AdminMessage: 'AdminMessage'
+  AdminMessage: 'AdminMessage',
+  AdminMessageAttachment: 'AdminMessageAttachment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -211,13 +212,23 @@ export const AdminMessageScalarFieldEnum = {
   id: 'id',
   subject: 'subject',
   body: 'body',
-  attachmentUrl: 'attachmentUrl',
   recipientId: 'recipientId',
   adminId: 'adminId',
   createdAt: 'createdAt'
 } as const
 
 export type AdminMessageScalarFieldEnum = (typeof AdminMessageScalarFieldEnum)[keyof typeof AdminMessageScalarFieldEnum]
+
+
+export const AdminMessageAttachmentScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  type: 'type',
+  adminMessageId: 'adminMessageId',
+  createdAt: 'createdAt'
+} as const
+
+export type AdminMessageAttachmentScalarFieldEnum = (typeof AdminMessageAttachmentScalarFieldEnum)[keyof typeof AdminMessageAttachmentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -326,9 +337,15 @@ export type TrackingHistoryOrderByRelevanceFieldEnum = (typeof TrackingHistoryOr
 
 export const AdminMessageOrderByRelevanceFieldEnum = {
   subject: 'subject',
-  body: 'body',
-  attachmentUrl: 'attachmentUrl'
+  body: 'body'
 } as const
 
 export type AdminMessageOrderByRelevanceFieldEnum = (typeof AdminMessageOrderByRelevanceFieldEnum)[keyof typeof AdminMessageOrderByRelevanceFieldEnum]
+
+
+export const AdminMessageAttachmentOrderByRelevanceFieldEnum = {
+  url: 'url'
+} as const
+
+export type AdminMessageAttachmentOrderByRelevanceFieldEnum = (typeof AdminMessageAttachmentOrderByRelevanceFieldEnum)[keyof typeof AdminMessageAttachmentOrderByRelevanceFieldEnum]
 
