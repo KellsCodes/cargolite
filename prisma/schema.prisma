@@ -236,7 +236,8 @@ model AdminMessage {
 model AdminMessageAttachment {
   id             Int        @id @default(autoincrement())
   url            String     @db.Text
-  type           EmailAttachmentType
+  fileType       EmailAttachmentType
+  fileName       String?
   adminMessageId Int
   adminMessage   AdminMessage @relation(fields: [adminMessageId], references: [id], onDelete: Cascade)
   createdAt      DateTime   @default(now())

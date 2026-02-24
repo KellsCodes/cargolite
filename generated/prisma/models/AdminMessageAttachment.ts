@@ -39,7 +39,8 @@ export type AdminMessageAttachmentSumAggregateOutputType = {
 export type AdminMessageAttachmentMinAggregateOutputType = {
   id: number | null
   url: string | null
-  type: $Enums.EmailAttachmentType | null
+  fileType: $Enums.EmailAttachmentType | null
+  fileName: string | null
   adminMessageId: number | null
   createdAt: Date | null
 }
@@ -47,7 +48,8 @@ export type AdminMessageAttachmentMinAggregateOutputType = {
 export type AdminMessageAttachmentMaxAggregateOutputType = {
   id: number | null
   url: string | null
-  type: $Enums.EmailAttachmentType | null
+  fileType: $Enums.EmailAttachmentType | null
+  fileName: string | null
   adminMessageId: number | null
   createdAt: Date | null
 }
@@ -55,7 +57,8 @@ export type AdminMessageAttachmentMaxAggregateOutputType = {
 export type AdminMessageAttachmentCountAggregateOutputType = {
   id: number
   url: number
-  type: number
+  fileType: number
+  fileName: number
   adminMessageId: number
   createdAt: number
   _all: number
@@ -75,7 +78,8 @@ export type AdminMessageAttachmentSumAggregateInputType = {
 export type AdminMessageAttachmentMinAggregateInputType = {
   id?: true
   url?: true
-  type?: true
+  fileType?: true
+  fileName?: true
   adminMessageId?: true
   createdAt?: true
 }
@@ -83,7 +87,8 @@ export type AdminMessageAttachmentMinAggregateInputType = {
 export type AdminMessageAttachmentMaxAggregateInputType = {
   id?: true
   url?: true
-  type?: true
+  fileType?: true
+  fileName?: true
   adminMessageId?: true
   createdAt?: true
 }
@@ -91,7 +96,8 @@ export type AdminMessageAttachmentMaxAggregateInputType = {
 export type AdminMessageAttachmentCountAggregateInputType = {
   id?: true
   url?: true
-  type?: true
+  fileType?: true
+  fileName?: true
   adminMessageId?: true
   createdAt?: true
   _all?: true
@@ -186,7 +192,8 @@ export type AdminMessageAttachmentGroupByArgs<ExtArgs extends runtime.Types.Exte
 export type AdminMessageAttachmentGroupByOutputType = {
   id: number
   url: string
-  type: $Enums.EmailAttachmentType
+  fileType: $Enums.EmailAttachmentType
+  fileName: string | null
   adminMessageId: number
   createdAt: Date
   _count: AdminMessageAttachmentCountAggregateOutputType | null
@@ -217,7 +224,8 @@ export type AdminMessageAttachmentWhereInput = {
   NOT?: Prisma.AdminMessageAttachmentWhereInput | Prisma.AdminMessageAttachmentWhereInput[]
   id?: Prisma.IntFilter<"AdminMessageAttachment"> | number
   url?: Prisma.StringFilter<"AdminMessageAttachment"> | string
-  type?: Prisma.EnumEmailAttachmentTypeFilter<"AdminMessageAttachment"> | $Enums.EmailAttachmentType
+  fileType?: Prisma.EnumEmailAttachmentTypeFilter<"AdminMessageAttachment"> | $Enums.EmailAttachmentType
+  fileName?: Prisma.StringNullableFilter<"AdminMessageAttachment"> | string | null
   adminMessageId?: Prisma.IntFilter<"AdminMessageAttachment"> | number
   createdAt?: Prisma.DateTimeFilter<"AdminMessageAttachment"> | Date | string
   adminMessage?: Prisma.XOR<Prisma.AdminMessageScalarRelationFilter, Prisma.AdminMessageWhereInput>
@@ -226,7 +234,8 @@ export type AdminMessageAttachmentWhereInput = {
 export type AdminMessageAttachmentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   url?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  fileType?: Prisma.SortOrder
+  fileName?: Prisma.SortOrderInput | Prisma.SortOrder
   adminMessageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   adminMessage?: Prisma.AdminMessageOrderByWithRelationInput
@@ -239,7 +248,8 @@ export type AdminMessageAttachmentWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.AdminMessageAttachmentWhereInput[]
   NOT?: Prisma.AdminMessageAttachmentWhereInput | Prisma.AdminMessageAttachmentWhereInput[]
   url?: Prisma.StringFilter<"AdminMessageAttachment"> | string
-  type?: Prisma.EnumEmailAttachmentTypeFilter<"AdminMessageAttachment"> | $Enums.EmailAttachmentType
+  fileType?: Prisma.EnumEmailAttachmentTypeFilter<"AdminMessageAttachment"> | $Enums.EmailAttachmentType
+  fileName?: Prisma.StringNullableFilter<"AdminMessageAttachment"> | string | null
   adminMessageId?: Prisma.IntFilter<"AdminMessageAttachment"> | number
   createdAt?: Prisma.DateTimeFilter<"AdminMessageAttachment"> | Date | string
   adminMessage?: Prisma.XOR<Prisma.AdminMessageScalarRelationFilter, Prisma.AdminMessageWhereInput>
@@ -248,7 +258,8 @@ export type AdminMessageAttachmentWhereUniqueInput = Prisma.AtLeast<{
 export type AdminMessageAttachmentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   url?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  fileType?: Prisma.SortOrder
+  fileName?: Prisma.SortOrderInput | Prisma.SortOrder
   adminMessageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.AdminMessageAttachmentCountOrderByAggregateInput
@@ -264,14 +275,16 @@ export type AdminMessageAttachmentScalarWhereWithAggregatesInput = {
   NOT?: Prisma.AdminMessageAttachmentScalarWhereWithAggregatesInput | Prisma.AdminMessageAttachmentScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"AdminMessageAttachment"> | number
   url?: Prisma.StringWithAggregatesFilter<"AdminMessageAttachment"> | string
-  type?: Prisma.EnumEmailAttachmentTypeWithAggregatesFilter<"AdminMessageAttachment"> | $Enums.EmailAttachmentType
+  fileType?: Prisma.EnumEmailAttachmentTypeWithAggregatesFilter<"AdminMessageAttachment"> | $Enums.EmailAttachmentType
+  fileName?: Prisma.StringNullableWithAggregatesFilter<"AdminMessageAttachment"> | string | null
   adminMessageId?: Prisma.IntWithAggregatesFilter<"AdminMessageAttachment"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AdminMessageAttachment"> | Date | string
 }
 
 export type AdminMessageAttachmentCreateInput = {
   url: string
-  type: $Enums.EmailAttachmentType
+  fileType: $Enums.EmailAttachmentType
+  fileName?: string | null
   createdAt?: Date | string
   adminMessage: Prisma.AdminMessageCreateNestedOneWithoutAttachmentsUrlsInput
 }
@@ -279,14 +292,16 @@ export type AdminMessageAttachmentCreateInput = {
 export type AdminMessageAttachmentUncheckedCreateInput = {
   id?: number
   url: string
-  type: $Enums.EmailAttachmentType
+  fileType: $Enums.EmailAttachmentType
+  fileName?: string | null
   adminMessageId: number
   createdAt?: Date | string
 }
 
 export type AdminMessageAttachmentUpdateInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumEmailAttachmentTypeFieldUpdateOperationsInput | $Enums.EmailAttachmentType
+  fileType?: Prisma.EnumEmailAttachmentTypeFieldUpdateOperationsInput | $Enums.EmailAttachmentType
+  fileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   adminMessage?: Prisma.AdminMessageUpdateOneRequiredWithoutAttachmentsUrlsNestedInput
 }
@@ -294,7 +309,8 @@ export type AdminMessageAttachmentUpdateInput = {
 export type AdminMessageAttachmentUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   url?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumEmailAttachmentTypeFieldUpdateOperationsInput | $Enums.EmailAttachmentType
+  fileType?: Prisma.EnumEmailAttachmentTypeFieldUpdateOperationsInput | $Enums.EmailAttachmentType
+  fileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminMessageId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -302,21 +318,24 @@ export type AdminMessageAttachmentUncheckedUpdateInput = {
 export type AdminMessageAttachmentCreateManyInput = {
   id?: number
   url: string
-  type: $Enums.EmailAttachmentType
+  fileType: $Enums.EmailAttachmentType
+  fileName?: string | null
   adminMessageId: number
   createdAt?: Date | string
 }
 
 export type AdminMessageAttachmentUpdateManyMutationInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumEmailAttachmentTypeFieldUpdateOperationsInput | $Enums.EmailAttachmentType
+  fileType?: Prisma.EnumEmailAttachmentTypeFieldUpdateOperationsInput | $Enums.EmailAttachmentType
+  fileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AdminMessageAttachmentUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   url?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumEmailAttachmentTypeFieldUpdateOperationsInput | $Enums.EmailAttachmentType
+  fileType?: Prisma.EnumEmailAttachmentTypeFieldUpdateOperationsInput | $Enums.EmailAttachmentType
+  fileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminMessageId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -340,7 +359,8 @@ export type AdminMessageAttachmentOrderByRelevanceInput = {
 export type AdminMessageAttachmentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   url?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  fileType?: Prisma.SortOrder
+  fileName?: Prisma.SortOrder
   adminMessageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -353,7 +373,8 @@ export type AdminMessageAttachmentAvgOrderByAggregateInput = {
 export type AdminMessageAttachmentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   url?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  fileType?: Prisma.SortOrder
+  fileName?: Prisma.SortOrder
   adminMessageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -361,7 +382,8 @@ export type AdminMessageAttachmentMaxOrderByAggregateInput = {
 export type AdminMessageAttachmentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   url?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  fileType?: Prisma.SortOrder
+  fileName?: Prisma.SortOrder
   adminMessageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -419,14 +441,16 @@ export type EnumEmailAttachmentTypeFieldUpdateOperationsInput = {
 
 export type AdminMessageAttachmentCreateWithoutAdminMessageInput = {
   url: string
-  type: $Enums.EmailAttachmentType
+  fileType: $Enums.EmailAttachmentType
+  fileName?: string | null
   createdAt?: Date | string
 }
 
 export type AdminMessageAttachmentUncheckedCreateWithoutAdminMessageInput = {
   id?: number
   url: string
-  type: $Enums.EmailAttachmentType
+  fileType: $Enums.EmailAttachmentType
+  fileName?: string | null
   createdAt?: Date | string
 }
 
@@ -462,7 +486,8 @@ export type AdminMessageAttachmentScalarWhereInput = {
   NOT?: Prisma.AdminMessageAttachmentScalarWhereInput | Prisma.AdminMessageAttachmentScalarWhereInput[]
   id?: Prisma.IntFilter<"AdminMessageAttachment"> | number
   url?: Prisma.StringFilter<"AdminMessageAttachment"> | string
-  type?: Prisma.EnumEmailAttachmentTypeFilter<"AdminMessageAttachment"> | $Enums.EmailAttachmentType
+  fileType?: Prisma.EnumEmailAttachmentTypeFilter<"AdminMessageAttachment"> | $Enums.EmailAttachmentType
+  fileName?: Prisma.StringNullableFilter<"AdminMessageAttachment"> | string | null
   adminMessageId?: Prisma.IntFilter<"AdminMessageAttachment"> | number
   createdAt?: Prisma.DateTimeFilter<"AdminMessageAttachment"> | Date | string
 }
@@ -470,27 +495,31 @@ export type AdminMessageAttachmentScalarWhereInput = {
 export type AdminMessageAttachmentCreateManyAdminMessageInput = {
   id?: number
   url: string
-  type: $Enums.EmailAttachmentType
+  fileType: $Enums.EmailAttachmentType
+  fileName?: string | null
   createdAt?: Date | string
 }
 
 export type AdminMessageAttachmentUpdateWithoutAdminMessageInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumEmailAttachmentTypeFieldUpdateOperationsInput | $Enums.EmailAttachmentType
+  fileType?: Prisma.EnumEmailAttachmentTypeFieldUpdateOperationsInput | $Enums.EmailAttachmentType
+  fileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AdminMessageAttachmentUncheckedUpdateWithoutAdminMessageInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   url?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumEmailAttachmentTypeFieldUpdateOperationsInput | $Enums.EmailAttachmentType
+  fileType?: Prisma.EnumEmailAttachmentTypeFieldUpdateOperationsInput | $Enums.EmailAttachmentType
+  fileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AdminMessageAttachmentUncheckedUpdateManyWithoutAdminMessageInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   url?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumEmailAttachmentTypeFieldUpdateOperationsInput | $Enums.EmailAttachmentType
+  fileType?: Prisma.EnumEmailAttachmentTypeFieldUpdateOperationsInput | $Enums.EmailAttachmentType
+  fileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -499,7 +528,8 @@ export type AdminMessageAttachmentUncheckedUpdateManyWithoutAdminMessageInput = 
 export type AdminMessageAttachmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   url?: boolean
-  type?: boolean
+  fileType?: boolean
+  fileName?: boolean
   adminMessageId?: boolean
   createdAt?: boolean
   adminMessage?: boolean | Prisma.AdminMessageDefaultArgs<ExtArgs>
@@ -510,12 +540,13 @@ export type AdminMessageAttachmentSelect<ExtArgs extends runtime.Types.Extension
 export type AdminMessageAttachmentSelectScalar = {
   id?: boolean
   url?: boolean
-  type?: boolean
+  fileType?: boolean
+  fileName?: boolean
   adminMessageId?: boolean
   createdAt?: boolean
 }
 
-export type AdminMessageAttachmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "url" | "type" | "adminMessageId" | "createdAt", ExtArgs["result"]["adminMessageAttachment"]>
+export type AdminMessageAttachmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "url" | "fileType" | "fileName" | "adminMessageId" | "createdAt", ExtArgs["result"]["adminMessageAttachment"]>
 export type AdminMessageAttachmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   adminMessage?: boolean | Prisma.AdminMessageDefaultArgs<ExtArgs>
 }
@@ -528,7 +559,8 @@ export type $AdminMessageAttachmentPayload<ExtArgs extends runtime.Types.Extensi
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     url: string
-    type: $Enums.EmailAttachmentType
+    fileType: $Enums.EmailAttachmentType
+    fileName: string | null
     adminMessageId: number
     createdAt: Date
   }, ExtArgs["result"]["adminMessageAttachment"]>
@@ -903,7 +935,8 @@ export interface Prisma__AdminMessageAttachmentClient<T, Null = never, ExtArgs e
 export interface AdminMessageAttachmentFieldRefs {
   readonly id: Prisma.FieldRef<"AdminMessageAttachment", 'Int'>
   readonly url: Prisma.FieldRef<"AdminMessageAttachment", 'String'>
-  readonly type: Prisma.FieldRef<"AdminMessageAttachment", 'EmailAttachmentType'>
+  readonly fileType: Prisma.FieldRef<"AdminMessageAttachment", 'EmailAttachmentType'>
+  readonly fileName: Prisma.FieldRef<"AdminMessageAttachment", 'String'>
   readonly adminMessageId: Prisma.FieldRef<"AdminMessageAttachment", 'Int'>
   readonly createdAt: Prisma.FieldRef<"AdminMessageAttachment", 'DateTime'>
 }

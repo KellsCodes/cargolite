@@ -223,7 +223,8 @@ export type AdminMessageScalarFieldEnum = (typeof AdminMessageScalarFieldEnum)[k
 export const AdminMessageAttachmentScalarFieldEnum = {
   id: 'id',
   url: 'url',
-  type: 'type',
+  fileType: 'fileType',
+  fileName: 'fileName',
   adminMessageId: 'adminMessageId',
   createdAt: 'createdAt'
 } as const
@@ -344,7 +345,8 @@ export type AdminMessageOrderByRelevanceFieldEnum = (typeof AdminMessageOrderByR
 
 
 export const AdminMessageAttachmentOrderByRelevanceFieldEnum = {
-  url: 'url'
+  url: 'url',
+  fileName: 'fileName'
 } as const
 
 export type AdminMessageAttachmentOrderByRelevanceFieldEnum = (typeof AdminMessageAttachmentOrderByRelevanceFieldEnum)[keyof typeof AdminMessageAttachmentOrderByRelevanceFieldEnum]
