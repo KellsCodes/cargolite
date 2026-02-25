@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import { OtpEmail } from "@/app/api/emails/OtpTemplate";
 import { render } from "@react-email/components";
+import { AdminMessageEmail } from "@/app/api/emails/AdminMessageTemplate";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -26,4 +27,20 @@ export const sendOtpEmail = async (to: string, otp: string, type: string) => {
     // console.error("Mail Service Error:", err);
     return { success: false, error: err };
   }
+};
+
+export const sendAdminMessageByEmail = async (
+  to: string,
+  subject: string,
+  body: string,
+  senderName: string,
+  attachmentUrls?: string[]
+) => {
+  return await resend.emails.send({
+    from: "Cargolite <onboarding@resend.dev>", // Replace with your domain once verified
+    to: [to],
+    subject,
+    react: AdminMessageEmail({ body, senderName }),
+    attachments: attachmentUrls?.length ? attachmentUrls.map(url => ({ path: url, filename: url.split('/').pop() || 'attachment' })) : [],
+  });
 };
