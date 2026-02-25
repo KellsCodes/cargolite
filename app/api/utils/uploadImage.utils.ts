@@ -14,15 +14,15 @@ cloudinary.config({
 export function cloudImageUpload(
   buffer: Buffer,
   folder: string,
-  filename: string
+  filename: string,
+  resourceType: "image" | "raw" | "auto" = "auto"
 ) {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
         folder: `cargolite/${folder}`,
-        public_id: filename.replace(/\.[^/.]+$/, ""),
-        resource_type: "image",
-        format: "webp",
+        public_id: filename,
+        resource_type: resourceType,
       },
       (error, result) => {
         if (error) reject(error);

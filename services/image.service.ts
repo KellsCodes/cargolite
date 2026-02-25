@@ -14,15 +14,26 @@ export const processImage = async (
   try {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    const processedBuffer = await sharp(buffer)
-      .resize(500, 500, {
-        fit: "cover",
-      })
-      .webp({ quality: 80 })
-      .toBuffer();
-    const filename = `${type}_${userId}_${Date.now()}.webp`;
-    const imageURL = await cloudImageUpload(buffer, type, filename);
-    return imageURL as string;
+    const isImage = file.type.startsWith("image/");
+    const cloudinaryResourceType = isImage ? "image" : "raw";
+
+    let filename =
+      `${userId}_${Date.now()}_` +
+      file.name
+        .split(".")[0]
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9-]/g, "");
+    if (!isImage) {
+      filename += `.${file.name.split(".")[1]}`; // Append file extension for non-image files
+    }
+    const fileURL = await cloudImageUpload(
+      buffer,
+      type,
+      filename,
+      cloudinaryResourceType
+    );
+    return fileURL as string;
   } catch (error) {
     console.error(error);
     return null;
