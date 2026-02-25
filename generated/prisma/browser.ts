@@ -72,3 +72,13 @@ export type AdminMessage = Prisma.AdminMessageModel
  * 
  */
 export type AdminMessageAttachment = Prisma.AdminMessageAttachmentModel
+/**
+ * Model ClientEnquiryMessage
+ * 
+ */
+export type ClientEnquiryMessage = Prisma.ClientEnquiryMessageModel
+/**
+ * Model RepliedEnquiryMessage
+ * 
+ */
+export type RepliedEnquiryMessage = Prisma.RepliedEnquiryMessageModel

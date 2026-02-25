@@ -238,6 +238,7 @@ export type UserWhereInput = {
   sessionState?: Prisma.SessionListRelationFilter
   trackingUpdates?: Prisma.TrackingHistoryListRelationFilter
   sentMessages?: Prisma.AdminMessageListRelationFilter
+  replies?: Prisma.RepliedEnquiryMessageListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -254,6 +255,7 @@ export type UserOrderByWithRelationInput = {
   sessionState?: Prisma.SessionOrderByRelationAggregateInput
   trackingUpdates?: Prisma.TrackingHistoryOrderByRelationAggregateInput
   sentMessages?: Prisma.AdminMessageOrderByRelationAggregateInput
+  replies?: Prisma.RepliedEnquiryMessageOrderByRelationAggregateInput
   _relevance?: Prisma.UserOrderByRelevanceInput
 }
 
@@ -274,6 +276,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   sessionState?: Prisma.SessionListRelationFilter
   trackingUpdates?: Prisma.TrackingHistoryListRelationFilter
   sentMessages?: Prisma.AdminMessageListRelationFilter
+  replies?: Prisma.RepliedEnquiryMessageListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -317,6 +320,7 @@ export type UserCreateInput = {
   sessionState?: Prisma.SessionCreateNestedManyWithoutUserInput
   trackingUpdates?: Prisma.TrackingHistoryCreateNestedManyWithoutUpdatedByInput
   sentMessages?: Prisma.AdminMessageCreateNestedManyWithoutAdminInput
+  replies?: Prisma.RepliedEnquiryMessageCreateNestedManyWithoutAdminInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -333,6 +337,7 @@ export type UserUncheckedCreateInput = {
   sessionState?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   trackingUpdates?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
   sentMessages?: Prisma.AdminMessageUncheckedCreateNestedManyWithoutAdminInput
+  replies?: Prisma.RepliedEnquiryMessageUncheckedCreateNestedManyWithoutAdminInput
 }
 
 export type UserUpdateInput = {
@@ -348,6 +353,7 @@ export type UserUpdateInput = {
   sessionState?: Prisma.SessionUpdateManyWithoutUserNestedInput
   trackingUpdates?: Prisma.TrackingHistoryUpdateManyWithoutUpdatedByNestedInput
   sentMessages?: Prisma.AdminMessageUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.RepliedEnquiryMessageUpdateManyWithoutAdminNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -364,6 +370,7 @@ export type UserUncheckedUpdateInput = {
   sessionState?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   trackingUpdates?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   sentMessages?: Prisma.AdminMessageUncheckedUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.RepliedEnquiryMessageUncheckedUpdateManyWithoutAdminNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -536,6 +543,20 @@ export type UserUpdateOneRequiredWithoutSentMessagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentMessagesInput, Prisma.UserUpdateWithoutSentMessagesInput>, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>
 }
 
+export type UserCreateNestedOneWithoutRepliesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRepliesInput, Prisma.UserUncheckedCreateWithoutRepliesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRepliesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutRepliesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRepliesInput, Prisma.UserUncheckedCreateWithoutRepliesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRepliesInput
+  upsert?: Prisma.UserUpsertWithoutRepliesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRepliesInput, Prisma.UserUpdateWithoutRepliesInput>, Prisma.UserUncheckedUpdateWithoutRepliesInput>
+}
+
 export type UserCreateWithoutAccountsInput = {
   email: string
   password: string
@@ -548,6 +569,7 @@ export type UserCreateWithoutAccountsInput = {
   sessionState?: Prisma.SessionCreateNestedManyWithoutUserInput
   trackingUpdates?: Prisma.TrackingHistoryCreateNestedManyWithoutUpdatedByInput
   sentMessages?: Prisma.AdminMessageCreateNestedManyWithoutAdminInput
+  replies?: Prisma.RepliedEnquiryMessageCreateNestedManyWithoutAdminInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -563,6 +585,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   sessionState?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   trackingUpdates?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
   sentMessages?: Prisma.AdminMessageUncheckedCreateNestedManyWithoutAdminInput
+  replies?: Prisma.RepliedEnquiryMessageUncheckedCreateNestedManyWithoutAdminInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -593,6 +616,7 @@ export type UserUpdateWithoutAccountsInput = {
   sessionState?: Prisma.SessionUpdateManyWithoutUserNestedInput
   trackingUpdates?: Prisma.TrackingHistoryUpdateManyWithoutUpdatedByNestedInput
   sentMessages?: Prisma.AdminMessageUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.RepliedEnquiryMessageUpdateManyWithoutAdminNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -608,6 +632,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   sessionState?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   trackingUpdates?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   sentMessages?: Prisma.AdminMessageUncheckedUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.RepliedEnquiryMessageUncheckedUpdateManyWithoutAdminNestedInput
 }
 
 export type UserCreateWithoutSessionStateInput = {
@@ -622,6 +647,7 @@ export type UserCreateWithoutSessionStateInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   trackingUpdates?: Prisma.TrackingHistoryCreateNestedManyWithoutUpdatedByInput
   sentMessages?: Prisma.AdminMessageCreateNestedManyWithoutAdminInput
+  replies?: Prisma.RepliedEnquiryMessageCreateNestedManyWithoutAdminInput
 }
 
 export type UserUncheckedCreateWithoutSessionStateInput = {
@@ -637,6 +663,7 @@ export type UserUncheckedCreateWithoutSessionStateInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   trackingUpdates?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
   sentMessages?: Prisma.AdminMessageUncheckedCreateNestedManyWithoutAdminInput
+  replies?: Prisma.RepliedEnquiryMessageUncheckedCreateNestedManyWithoutAdminInput
 }
 
 export type UserCreateOrConnectWithoutSessionStateInput = {
@@ -667,6 +694,7 @@ export type UserUpdateWithoutSessionStateInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   trackingUpdates?: Prisma.TrackingHistoryUpdateManyWithoutUpdatedByNestedInput
   sentMessages?: Prisma.AdminMessageUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.RepliedEnquiryMessageUpdateManyWithoutAdminNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionStateInput = {
@@ -682,6 +710,7 @@ export type UserUncheckedUpdateWithoutSessionStateInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   trackingUpdates?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   sentMessages?: Prisma.AdminMessageUncheckedUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.RepliedEnquiryMessageUncheckedUpdateManyWithoutAdminNestedInput
 }
 
 export type UserCreateWithoutOtpInput = {
@@ -696,6 +725,7 @@ export type UserCreateWithoutOtpInput = {
   sessionState?: Prisma.SessionCreateNestedManyWithoutUserInput
   trackingUpdates?: Prisma.TrackingHistoryCreateNestedManyWithoutUpdatedByInput
   sentMessages?: Prisma.AdminMessageCreateNestedManyWithoutAdminInput
+  replies?: Prisma.RepliedEnquiryMessageCreateNestedManyWithoutAdminInput
 }
 
 export type UserUncheckedCreateWithoutOtpInput = {
@@ -711,6 +741,7 @@ export type UserUncheckedCreateWithoutOtpInput = {
   sessionState?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   trackingUpdates?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
   sentMessages?: Prisma.AdminMessageUncheckedCreateNestedManyWithoutAdminInput
+  replies?: Prisma.RepliedEnquiryMessageUncheckedCreateNestedManyWithoutAdminInput
 }
 
 export type UserCreateOrConnectWithoutOtpInput = {
@@ -741,6 +772,7 @@ export type UserUpdateWithoutOtpInput = {
   sessionState?: Prisma.SessionUpdateManyWithoutUserNestedInput
   trackingUpdates?: Prisma.TrackingHistoryUpdateManyWithoutUpdatedByNestedInput
   sentMessages?: Prisma.AdminMessageUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.RepliedEnquiryMessageUpdateManyWithoutAdminNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOtpInput = {
@@ -756,6 +788,7 @@ export type UserUncheckedUpdateWithoutOtpInput = {
   sessionState?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   trackingUpdates?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   sentMessages?: Prisma.AdminMessageUncheckedUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.RepliedEnquiryMessageUncheckedUpdateManyWithoutAdminNestedInput
 }
 
 export type UserCreateWithoutProfileInput = {
@@ -770,6 +803,7 @@ export type UserCreateWithoutProfileInput = {
   sessionState?: Prisma.SessionCreateNestedManyWithoutUserInput
   trackingUpdates?: Prisma.TrackingHistoryCreateNestedManyWithoutUpdatedByInput
   sentMessages?: Prisma.AdminMessageCreateNestedManyWithoutAdminInput
+  replies?: Prisma.RepliedEnquiryMessageCreateNestedManyWithoutAdminInput
 }
 
 export type UserUncheckedCreateWithoutProfileInput = {
@@ -785,6 +819,7 @@ export type UserUncheckedCreateWithoutProfileInput = {
   sessionState?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   trackingUpdates?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
   sentMessages?: Prisma.AdminMessageUncheckedCreateNestedManyWithoutAdminInput
+  replies?: Prisma.RepliedEnquiryMessageUncheckedCreateNestedManyWithoutAdminInput
 }
 
 export type UserCreateOrConnectWithoutProfileInput = {
@@ -815,6 +850,7 @@ export type UserUpdateWithoutProfileInput = {
   sessionState?: Prisma.SessionUpdateManyWithoutUserNestedInput
   trackingUpdates?: Prisma.TrackingHistoryUpdateManyWithoutUpdatedByNestedInput
   sentMessages?: Prisma.AdminMessageUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.RepliedEnquiryMessageUpdateManyWithoutAdminNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfileInput = {
@@ -830,6 +866,7 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   sessionState?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   trackingUpdates?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
   sentMessages?: Prisma.AdminMessageUncheckedUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.RepliedEnquiryMessageUncheckedUpdateManyWithoutAdminNestedInput
 }
 
 export type UserCreateWithoutTrackingUpdatesInput = {
@@ -844,6 +881,7 @@ export type UserCreateWithoutTrackingUpdatesInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessionState?: Prisma.SessionCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.AdminMessageCreateNestedManyWithoutAdminInput
+  replies?: Prisma.RepliedEnquiryMessageCreateNestedManyWithoutAdminInput
 }
 
 export type UserUncheckedCreateWithoutTrackingUpdatesInput = {
@@ -859,6 +897,7 @@ export type UserUncheckedCreateWithoutTrackingUpdatesInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessionState?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.AdminMessageUncheckedCreateNestedManyWithoutAdminInput
+  replies?: Prisma.RepliedEnquiryMessageUncheckedCreateNestedManyWithoutAdminInput
 }
 
 export type UserCreateOrConnectWithoutTrackingUpdatesInput = {
@@ -889,6 +928,7 @@ export type UserUpdateWithoutTrackingUpdatesInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessionState?: Prisma.SessionUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.AdminMessageUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.RepliedEnquiryMessageUpdateManyWithoutAdminNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTrackingUpdatesInput = {
@@ -904,6 +944,7 @@ export type UserUncheckedUpdateWithoutTrackingUpdatesInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessionState?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.AdminMessageUncheckedUpdateManyWithoutAdminNestedInput
+  replies?: Prisma.RepliedEnquiryMessageUncheckedUpdateManyWithoutAdminNestedInput
 }
 
 export type UserCreateWithoutSentMessagesInput = {
@@ -918,6 +959,7 @@ export type UserCreateWithoutSentMessagesInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessionState?: Prisma.SessionCreateNestedManyWithoutUserInput
   trackingUpdates?: Prisma.TrackingHistoryCreateNestedManyWithoutUpdatedByInput
+  replies?: Prisma.RepliedEnquiryMessageCreateNestedManyWithoutAdminInput
 }
 
 export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -933,6 +975,7 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessionState?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   trackingUpdates?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  replies?: Prisma.RepliedEnquiryMessageUncheckedCreateNestedManyWithoutAdminInput
 }
 
 export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -963,6 +1006,7 @@ export type UserUpdateWithoutSentMessagesInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessionState?: Prisma.SessionUpdateManyWithoutUserNestedInput
   trackingUpdates?: Prisma.TrackingHistoryUpdateManyWithoutUpdatedByNestedInput
+  replies?: Prisma.RepliedEnquiryMessageUpdateManyWithoutAdminNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -978,6 +1022,85 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessionState?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   trackingUpdates?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  replies?: Prisma.RepliedEnquiryMessageUncheckedUpdateManyWithoutAdminNestedInput
+}
+
+export type UserCreateWithoutRepliesInput = {
+  email: string
+  password: string
+  role?: $Enums.Role
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  otp?: Prisma.OtpCreateNestedOneWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessionState?: Prisma.SessionCreateNestedManyWithoutUserInput
+  trackingUpdates?: Prisma.TrackingHistoryCreateNestedManyWithoutUpdatedByInput
+  sentMessages?: Prisma.AdminMessageCreateNestedManyWithoutAdminInput
+}
+
+export type UserUncheckedCreateWithoutRepliesInput = {
+  id?: number
+  email: string
+  password: string
+  role?: $Enums.Role
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  otp?: Prisma.OtpUncheckedCreateNestedOneWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessionState?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  trackingUpdates?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  sentMessages?: Prisma.AdminMessageUncheckedCreateNestedManyWithoutAdminInput
+}
+
+export type UserCreateOrConnectWithoutRepliesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutRepliesInput, Prisma.UserUncheckedCreateWithoutRepliesInput>
+}
+
+export type UserUpsertWithoutRepliesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutRepliesInput, Prisma.UserUncheckedUpdateWithoutRepliesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutRepliesInput, Prisma.UserUncheckedCreateWithoutRepliesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutRepliesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutRepliesInput, Prisma.UserUncheckedUpdateWithoutRepliesInput>
+}
+
+export type UserUpdateWithoutRepliesInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  otp?: Prisma.OtpUpdateOneWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessionState?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  trackingUpdates?: Prisma.TrackingHistoryUpdateManyWithoutUpdatedByNestedInput
+  sentMessages?: Prisma.AdminMessageUpdateManyWithoutAdminNestedInput
+}
+
+export type UserUncheckedUpdateWithoutRepliesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  otp?: Prisma.OtpUncheckedUpdateOneWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessionState?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  trackingUpdates?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  sentMessages?: Prisma.AdminMessageUncheckedUpdateManyWithoutAdminNestedInput
 }
 
 
@@ -990,6 +1113,7 @@ export type UserCountOutputType = {
   sessionState: number
   trackingUpdates: number
   sentMessages: number
+  replies: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -997,6 +1121,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   sessionState?: boolean | UserCountOutputTypeCountSessionStateArgs
   trackingUpdates?: boolean | UserCountOutputTypeCountTrackingUpdatesArgs
   sentMessages?: boolean | UserCountOutputTypeCountSentMessagesArgs
+  replies?: boolean | UserCountOutputTypeCountRepliesArgs
 }
 
 /**
@@ -1037,6 +1162,13 @@ export type UserCountOutputTypeCountSentMessagesArgs<ExtArgs extends runtime.Typ
   where?: Prisma.AdminMessageWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountRepliesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RepliedEnquiryMessageWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1052,6 +1184,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   sessionState?: boolean | Prisma.User$sessionStateArgs<ExtArgs>
   trackingUpdates?: boolean | Prisma.User$trackingUpdatesArgs<ExtArgs>
   sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
+  replies?: boolean | Prisma.User$repliesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1075,6 +1208,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   sessionState?: boolean | Prisma.User$sessionStateArgs<ExtArgs>
   trackingUpdates?: boolean | Prisma.User$trackingUpdatesArgs<ExtArgs>
   sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
+  replies?: boolean | Prisma.User$repliesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1087,6 +1221,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     sessionState: Prisma.$SessionPayload<ExtArgs>[]
     trackingUpdates: Prisma.$TrackingHistoryPayload<ExtArgs>[]
     sentMessages: Prisma.$AdminMessagePayload<ExtArgs>[]
+    replies: Prisma.$RepliedEnquiryMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1442,6 +1577,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   sessionState<T extends Prisma.User$sessionStateArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionStateArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   trackingUpdates<T extends Prisma.User$trackingUpdatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$trackingUpdatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrackingHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sentMessages<T extends Prisma.User$sentMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdminMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  replies<T extends Prisma.User$repliesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$repliesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RepliedEnquiryMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1952,6 +2088,30 @@ export type User$sentMessagesArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.AdminMessageScalarFieldEnum | Prisma.AdminMessageScalarFieldEnum[]
+}
+
+/**
+ * User.replies
+ */
+export type User$repliesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RepliedEnquiryMessage
+   */
+  select?: Prisma.RepliedEnquiryMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RepliedEnquiryMessage
+   */
+  omit?: Prisma.RepliedEnquiryMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RepliedEnquiryMessageInclude<ExtArgs> | null
+  where?: Prisma.RepliedEnquiryMessageWhereInput
+  orderBy?: Prisma.RepliedEnquiryMessageOrderByWithRelationInput | Prisma.RepliedEnquiryMessageOrderByWithRelationInput[]
+  cursor?: Prisma.RepliedEnquiryMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RepliedEnquiryMessageScalarFieldEnum | Prisma.RepliedEnquiryMessageScalarFieldEnum[]
 }
 
 /**

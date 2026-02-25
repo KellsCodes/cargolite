@@ -394,7 +394,9 @@ export const ModelName = {
   Shipment: 'Shipment',
   TrackingHistory: 'TrackingHistory',
   AdminMessage: 'AdminMessage',
-  AdminMessageAttachment: 'AdminMessageAttachment'
+  AdminMessageAttachment: 'AdminMessageAttachment',
+  ClientEnquiryMessage: 'ClientEnquiryMessage',
+  RepliedEnquiryMessage: 'RepliedEnquiryMessage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -410,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "account" | "session" | "user" | "otp" | "profile" | "client" | "invoice" | "shipment" | "trackingHistory" | "adminMessage" | "adminMessageAttachment"
+    modelProps: "account" | "session" | "user" | "otp" | "profile" | "client" | "invoice" | "shipment" | "trackingHistory" | "adminMessage" | "adminMessageAttachment" | "clientEnquiryMessage" | "repliedEnquiryMessage"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1140,6 +1142,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ClientEnquiryMessage: {
+      payload: Prisma.$ClientEnquiryMessagePayload<ExtArgs>
+      fields: Prisma.ClientEnquiryMessageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ClientEnquiryMessageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientEnquiryMessagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ClientEnquiryMessageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientEnquiryMessagePayload>
+        }
+        findFirst: {
+          args: Prisma.ClientEnquiryMessageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientEnquiryMessagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ClientEnquiryMessageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientEnquiryMessagePayload>
+        }
+        findMany: {
+          args: Prisma.ClientEnquiryMessageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientEnquiryMessagePayload>[]
+        }
+        create: {
+          args: Prisma.ClientEnquiryMessageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientEnquiryMessagePayload>
+        }
+        createMany: {
+          args: Prisma.ClientEnquiryMessageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ClientEnquiryMessageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientEnquiryMessagePayload>
+        }
+        update: {
+          args: Prisma.ClientEnquiryMessageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientEnquiryMessagePayload>
+        }
+        deleteMany: {
+          args: Prisma.ClientEnquiryMessageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ClientEnquiryMessageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ClientEnquiryMessageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientEnquiryMessagePayload>
+        }
+        aggregate: {
+          args: Prisma.ClientEnquiryMessageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClientEnquiryMessage>
+        }
+        groupBy: {
+          args: Prisma.ClientEnquiryMessageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClientEnquiryMessageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ClientEnquiryMessageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClientEnquiryMessageCountAggregateOutputType> | number
+        }
+      }
+    }
+    RepliedEnquiryMessage: {
+      payload: Prisma.$RepliedEnquiryMessagePayload<ExtArgs>
+      fields: Prisma.RepliedEnquiryMessageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RepliedEnquiryMessageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepliedEnquiryMessagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RepliedEnquiryMessageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepliedEnquiryMessagePayload>
+        }
+        findFirst: {
+          args: Prisma.RepliedEnquiryMessageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepliedEnquiryMessagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RepliedEnquiryMessageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepliedEnquiryMessagePayload>
+        }
+        findMany: {
+          args: Prisma.RepliedEnquiryMessageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepliedEnquiryMessagePayload>[]
+        }
+        create: {
+          args: Prisma.RepliedEnquiryMessageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepliedEnquiryMessagePayload>
+        }
+        createMany: {
+          args: Prisma.RepliedEnquiryMessageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.RepliedEnquiryMessageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepliedEnquiryMessagePayload>
+        }
+        update: {
+          args: Prisma.RepliedEnquiryMessageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepliedEnquiryMessagePayload>
+        }
+        deleteMany: {
+          args: Prisma.RepliedEnquiryMessageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RepliedEnquiryMessageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.RepliedEnquiryMessageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RepliedEnquiryMessagePayload>
+        }
+        aggregate: {
+          args: Prisma.RepliedEnquiryMessageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRepliedEnquiryMessage>
+        }
+        groupBy: {
+          args: Prisma.RepliedEnquiryMessageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepliedEnquiryMessageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RepliedEnquiryMessageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RepliedEnquiryMessageCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1331,6 +1465,32 @@ export const AdminMessageAttachmentScalarFieldEnum = {
 export type AdminMessageAttachmentScalarFieldEnum = (typeof AdminMessageAttachmentScalarFieldEnum)[keyof typeof AdminMessageAttachmentScalarFieldEnum]
 
 
+export const ClientEnquiryMessageScalarFieldEnum = {
+  id: 'id',
+  subject: 'subject',
+  body: 'body',
+  senderEmail: 'senderEmail',
+  senderName: 'senderName',
+  messageStatus: 'messageStatus',
+  packageHeight: 'packageHeight',
+  packageWeight: 'packageWeight',
+  createdAt: 'createdAt'
+} as const
+
+export type ClientEnquiryMessageScalarFieldEnum = (typeof ClientEnquiryMessageScalarFieldEnum)[keyof typeof ClientEnquiryMessageScalarFieldEnum]
+
+
+export const RepliedEnquiryMessageScalarFieldEnum = {
+  id: 'id',
+  body: 'body',
+  clientEnquiryMessageId: 'clientEnquiryMessageId',
+  adminId: 'adminId',
+  createdAt: 'createdAt'
+} as const
+
+export type RepliedEnquiryMessageScalarFieldEnum = (typeof RepliedEnquiryMessageScalarFieldEnum)[keyof typeof RepliedEnquiryMessageScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1449,6 +1609,25 @@ export const AdminMessageAttachmentOrderByRelevanceFieldEnum = {
 } as const
 
 export type AdminMessageAttachmentOrderByRelevanceFieldEnum = (typeof AdminMessageAttachmentOrderByRelevanceFieldEnum)[keyof typeof AdminMessageAttachmentOrderByRelevanceFieldEnum]
+
+
+export const ClientEnquiryMessageOrderByRelevanceFieldEnum = {
+  subject: 'subject',
+  body: 'body',
+  senderEmail: 'senderEmail',
+  senderName: 'senderName',
+  packageHeight: 'packageHeight',
+  packageWeight: 'packageWeight'
+} as const
+
+export type ClientEnquiryMessageOrderByRelevanceFieldEnum = (typeof ClientEnquiryMessageOrderByRelevanceFieldEnum)[keyof typeof ClientEnquiryMessageOrderByRelevanceFieldEnum]
+
+
+export const RepliedEnquiryMessageOrderByRelevanceFieldEnum = {
+  body: 'body'
+} as const
+
+export type RepliedEnquiryMessageOrderByRelevanceFieldEnum = (typeof RepliedEnquiryMessageOrderByRelevanceFieldEnum)[keyof typeof RepliedEnquiryMessageOrderByRelevanceFieldEnum]
 
 
 
@@ -1653,6 +1832,8 @@ export type GlobalOmitConfig = {
   trackingHistory?: Prisma.TrackingHistoryOmit
   adminMessage?: Prisma.AdminMessageOmit
   adminMessageAttachment?: Prisma.AdminMessageAttachmentOmit
+  clientEnquiryMessage?: Prisma.ClientEnquiryMessageOmit
+  repliedEnquiryMessage?: Prisma.RepliedEnquiryMessageOmit
 }
 
 /* Types for Logging */

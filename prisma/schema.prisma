@@ -105,6 +105,7 @@ model User {
   sessionState  Session[]
   trackingUpdates TrackingHistory[]
   sentMessages  AdminMessage[]
+  replies       RepliedEnquiryMessage[]
 }
 
 model Otp {
@@ -243,4 +244,36 @@ model AdminMessageAttachment {
   createdAt      DateTime   @default(now())
 
   @@index([adminMessageId])
+}
+
+model ClientEnquiryMessage {
+  id             Int                     @id @default(autoincrement())
+  subject        String                  @db.VarChar(200)
+  body           String                  @db.Text
+  senderEmail    String                  @db.VarChar(200)
+  senderName     String                  @db.VarChar(200)
+  messageStatus  Int                     @default(1) // 1=unread, 2=read, 3=replied
+  packageHeight  String?
+  packageWeight  String?
+  createdAt      DateTime                @default(now())
+  
+  replies        RepliedEnquiryMessage[]
+
+  @@index([messageStatus])
+}
+
+model RepliedEnquiryMessage {
+  id                     Int                  @id @default(autoincrement())
+  body                   String               @db.Text
+  clientEnquiryMessageId Int
+  enquiry                ClientEnquiryMessage @relation(fields: [clientEnquiryMessageId], references: [id], onDelete: Cascade)
+  
+  // Track who replied
+  adminId                Int
+  admin                  User                 @relation(fields: [adminId], references: [id])
+  
+  createdAt              DateTime             @default(now())
+
+  @@index([clientEnquiryMessageId])
+  @@index([adminId])
 }

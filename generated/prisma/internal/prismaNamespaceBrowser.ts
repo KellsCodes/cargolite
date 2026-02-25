@@ -61,7 +61,9 @@ export const ModelName = {
   Shipment: 'Shipment',
   TrackingHistory: 'TrackingHistory',
   AdminMessage: 'AdminMessage',
-  AdminMessageAttachment: 'AdminMessageAttachment'
+  AdminMessageAttachment: 'AdminMessageAttachment',
+  ClientEnquiryMessage: 'ClientEnquiryMessage',
+  RepliedEnquiryMessage: 'RepliedEnquiryMessage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -232,6 +234,32 @@ export const AdminMessageAttachmentScalarFieldEnum = {
 export type AdminMessageAttachmentScalarFieldEnum = (typeof AdminMessageAttachmentScalarFieldEnum)[keyof typeof AdminMessageAttachmentScalarFieldEnum]
 
 
+export const ClientEnquiryMessageScalarFieldEnum = {
+  id: 'id',
+  subject: 'subject',
+  body: 'body',
+  senderEmail: 'senderEmail',
+  senderName: 'senderName',
+  messageStatus: 'messageStatus',
+  packageHeight: 'packageHeight',
+  packageWeight: 'packageWeight',
+  createdAt: 'createdAt'
+} as const
+
+export type ClientEnquiryMessageScalarFieldEnum = (typeof ClientEnquiryMessageScalarFieldEnum)[keyof typeof ClientEnquiryMessageScalarFieldEnum]
+
+
+export const RepliedEnquiryMessageScalarFieldEnum = {
+  id: 'id',
+  body: 'body',
+  clientEnquiryMessageId: 'clientEnquiryMessageId',
+  adminId: 'adminId',
+  createdAt: 'createdAt'
+} as const
+
+export type RepliedEnquiryMessageScalarFieldEnum = (typeof RepliedEnquiryMessageScalarFieldEnum)[keyof typeof RepliedEnquiryMessageScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -350,4 +378,23 @@ export const AdminMessageAttachmentOrderByRelevanceFieldEnum = {
 } as const
 
 export type AdminMessageAttachmentOrderByRelevanceFieldEnum = (typeof AdminMessageAttachmentOrderByRelevanceFieldEnum)[keyof typeof AdminMessageAttachmentOrderByRelevanceFieldEnum]
+
+
+export const ClientEnquiryMessageOrderByRelevanceFieldEnum = {
+  subject: 'subject',
+  body: 'body',
+  senderEmail: 'senderEmail',
+  senderName: 'senderName',
+  packageHeight: 'packageHeight',
+  packageWeight: 'packageWeight'
+} as const
+
+export type ClientEnquiryMessageOrderByRelevanceFieldEnum = (typeof ClientEnquiryMessageOrderByRelevanceFieldEnum)[keyof typeof ClientEnquiryMessageOrderByRelevanceFieldEnum]
+
+
+export const RepliedEnquiryMessageOrderByRelevanceFieldEnum = {
+  body: 'body'
+} as const
+
+export type RepliedEnquiryMessageOrderByRelevanceFieldEnum = (typeof RepliedEnquiryMessageOrderByRelevanceFieldEnum)[keyof typeof RepliedEnquiryMessageOrderByRelevanceFieldEnum]
 
