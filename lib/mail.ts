@@ -40,7 +40,7 @@ export const sendAdminMessageByEmail = async (
     from: "Cargolite <onboarding@resend.dev>", // Replace with your domain once verified
     to: [to],
     subject,
-    react: AdminMessageEmail({ body, senderName }),
+    react: AdminMessageEmail({ body, subject, senderName }),
     attachments: attachmentUrls?.length ? attachmentUrls.map(url => ({ path: url, filename: url.split('/').pop() || 'attachment' })) : [],
   });
 };
