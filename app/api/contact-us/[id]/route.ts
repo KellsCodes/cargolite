@@ -1,5 +1,5 @@
 import { authError, getUserSession } from "@/lib/authUtils";
-import { deleteEnquiry, updateEnquiry } from "@/services/enquiry.service";
+import { deleteEnquiry, getMessage, updateEnquiry } from "@/services/enquiry.service";
 import { NextResponse } from "next/server";
 
 export async function PATCH(
@@ -53,11 +53,27 @@ export async function DELETE(
     if (!id) {
       return NextResponse.json("Invalid request data", { status: 400 });
     }
-    const res = await deleteEnquiry(Number(id));
-    return NextResponse.json(res, { status: 200 });
+    await deleteEnquiry(Number(id));
+    return NextResponse.json({message: "Message deleted successfully."}, { status: 200 });
   } catch (error: any) {
     if (error.code === "P2025") {
       return NextResponse.json({ error: "Message Deletion failed. Message not found." }, { status: 404 });
+    }
+    return NextResponse.json("Internal server error", { status: 500 });
+  }
+}
+
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  if (!id) {
+    return NextResponse.json("Invalid request data", { status: 400 });
+  }
+  try {
+    const message = await getMessage(Number(id));
+    return NextResponse.json(message, { status: 200 });
+  } catch (error: any) {
+    if (error.message === "MESSAGE_NOT_FOUND") {
+      return NextResponse.json({ error: "Message not found." }, { status: 404 });
     }
     return NextResponse.json("Internal server error", { status: 500 });
   }

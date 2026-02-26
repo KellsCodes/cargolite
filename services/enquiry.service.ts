@@ -52,3 +52,25 @@ export const deleteEnquiry = async (id: number) => {
   });
   return deletedMessage;
 };
+
+export const getMessage = async (id: number) => {
+  return await prisma.$transaction(async (tx) => {
+    const message = await tx.clientEnquiryMessage.findUnique({
+      where: { id },
+      include: {
+        replies: true,
+      },
+    });
+    if (!message) {
+      throw new Error("MESSAGE_NOT_FOUND");
+    }
+
+    if (message.messageStatus === 1) {
+      await tx.clientEnquiryMessage.update({
+        where: { id },
+        data: { messageStatus: 2 },
+      });
+    }
+    return message;
+  });
+};
