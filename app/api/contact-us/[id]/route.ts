@@ -1,5 +1,5 @@
 import { authError, getUserSession } from "@/lib/authUtils";
-import { updateEnquiry } from "@/services/enquiry.service";
+import { deleteEnquiry, updateEnquiry } from "@/services/enquiry.service";
 import { NextResponse } from "next/server";
 
 export async function PATCH(
@@ -33,7 +33,31 @@ export async function PATCH(
     }
 
     if (error.message === "ENQUIRY_STATUS_UNCHANGED") {
-      return NextResponse.json({ error: "Status not updated." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Status not updated." },
+        { status: 400 }
+      );
+    }
+    return NextResponse.json("Internal server error", { status: 500 });
+  }
+}
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const admin = await getUserSession();
+  if (!admin) return authError();
+  try {
+    const { id } = await params;
+    if (!id) {
+      return NextResponse.json("Invalid request data", { status: 400 });
+    }
+    const res = await deleteEnquiry(Number(id));
+    return NextResponse.json(res, { status: 200 });
+  } catch (error: any) {
+    if (error.code === "P2025") {
+      return NextResponse.json({ error: "Message Deletion failed. Message not found." }, { status: 404 });
     }
     return NextResponse.json("Internal server error", { status: 500 });
   }

@@ -27,10 +27,11 @@ export const updateEnquiry = async (id: number, status: number) => {
 
   // message status can change from 1=unread to 2=read and 3=replied but can't be changed from replied to read after being replied
   if (
-    ((currentMessageStatus?.messageStatus === 2 ||
+    currentMessageStatus?.messageStatus !== 4 && // For archiving messages
+    (((currentMessageStatus?.messageStatus === 2 ||
       currentMessageStatus?.messageStatus === 3) &&
       status === 1) ||
-    (currentMessageStatus?.messageStatus === 3 && status === 2)
+      (currentMessageStatus?.messageStatus === 3 && status === 2))
   ) {
     throw new Error("INVALID_STATUS");
   }
@@ -43,4 +44,11 @@ export const updateEnquiry = async (id: number, status: number) => {
     data: { messageStatus: status },
   });
   return updatedEnquiry;
+};
+
+export const deleteEnquiry = async (id: number) => {
+  const deletedMessage = await prisma.clientEnquiryMessage.delete({
+    where: { id },
+  });
+  return deletedMessage;
 };
