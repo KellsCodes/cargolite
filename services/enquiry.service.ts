@@ -1,3 +1,4 @@
+import { paginate } from "@/app/api/utils/pagination.utils";
 import prisma from "@/lib/prisma";
 
 interface Enquiry {
@@ -73,4 +74,39 @@ export const getMessage = async (id: number) => {
     }
     return message;
   });
+};
+
+export const getAllEnquiries = async (
+  page: number,
+  limit: number,
+  search?: string,
+  messageStatus?: number
+) => {
+  // Build the search filter
+  const where: any = {
+    AND: [],
+  };
+
+  // Add search filter
+  if (search) {
+    where.AND.push({
+      OR: [
+        { senderName: { contains: search } }, // Search the sender name
+        { senderEmail: { contains: search } }, // Search Sender Email
+      ],
+    });
+  }
+
+  // Add message status filter
+  if (messageStatus) {
+    where.AND.push({ messageStatus: { equals: messageStatus } });
+  }
+
+  const result = await paginate<any>(prisma.clientEnquiryMessage, {
+    page,
+    limit,
+    where, // Search filter is passed here
+    orderBy: { createdAt: "desc" },
+  });
+  return result;
 };
