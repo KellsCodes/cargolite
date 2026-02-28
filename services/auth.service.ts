@@ -94,7 +94,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         // Find the user in MySQL via Prisma
         const user = await prisma.user.findUnique({
           where: { email: email.toLowerCase() },
-          // include: { profile: true }, // Include profile if you need to check verification status
+          include: { profile: true }, // Include profile if you need to check verification status
         });
 
         // Security Checks
@@ -108,7 +108,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           throw new InvalidLoginError();
         }
 
-        // Logistics Check: Is the user verified via OTP?
+        // Is the user verified via OTP?
         if (!user.isVerified) {
           // You can throw a custom error to handle on the frontend
           throw new UnverifiedUserError();
@@ -119,7 +119,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           id: user.id.toString(),
           email: user.email,
           role: user.role,
-          // profile: { ...user.profile },
+          name: user.profile ? `${user.profile.firstName} ${user.profile.lastName}` : undefined,
         };
       },
     }),
@@ -130,6 +130,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.name = user.name;
       }
       return token;
     },
@@ -138,6 +139,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (token && session.user) {
         session.user.id = token.id as string;
         session.user.role = token.role as any;
+        session.user.name = token.name as string;
       }
       return session;
     },
