@@ -49,12 +49,12 @@ export async function POST(req: Request) {
   }
 }
 
-export async function DELETE(req: Request) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const admin = await getUserSession();
   if (!admin) return authError();
   try {
-    const body = await req.json();
-    await deleteReply(body.id);
+    const id = parseInt((await params).id);
+    await deleteReply(id);
     return NextResponse.json(
       { message: "Message deleted successfully." },
       { status: 200 }
