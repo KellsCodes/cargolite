@@ -1,4 +1,5 @@
 import { paginate } from "@/app/api/utils/pagination.utils";
+import { sendAdminMessageByEmail } from "@/lib/mail";
 import prisma from "@/lib/prisma";
 
 interface Enquiry {
@@ -109,4 +110,75 @@ export const getAllEnquiries = async (
     orderBy: { createdAt: "desc" },
   });
   return result;
+};
+
+export const adminReplyToEnquiry = async (
+  id: number,
+  adminId: number,
+  replyBody: string,
+  adminName = "Admin"
+) => {
+  console.log({ id });
+  const enquiry = await prisma.clientEnquiryMessage.findUnique({
+    where: { id },
+    include: {
+      replies: true,
+    },
+  });
+
+  if (!enquiry) {
+    throw new Error("ENQUIRY_NOT_FOUND");
+  }
+
+  if (enquiry.replies.length > 0) {
+    throw new Error("ENQUIRY_ALREADY_REPLIED");
+  }
+
+  const email = await sendAdminMessageByEmail(
+    enquiry.senderEmail,
+    `Re: ${enquiry.subject}`,
+    replyBody,
+    adminName
+  );
+
+  if (email.error) throw new Error("EMAIL_SENDING_FAILED");
+
+  // Save Reply & Set Status to Replied (3)
+  return await prisma.$transaction(async (tx) => {
+    const reply = await tx.repliedEnquiryMessage.create({
+      data: {
+        clientEnquiryMessageId: id,
+        adminId,
+        body: replyBody,
+      },
+      include: {
+        enquiry: true,
+      },
+    });
+    await tx.clientEnquiryMessage.update({
+      where: { id },
+      data: { messageStatus: 3 },
+    });
+    return reply;
+  });
+};
+
+export const deleteReply = async (id: number) => {
+  const deletedReply = await prisma.repliedEnquiryMessage.delete({
+    where: { id },
+  });
+  return deletedReply;
+};
+
+export const getSingleReply = async (id: number) => {
+  const reply = await prisma.repliedEnquiryMessage.findUnique({
+    where: { id },
+    include: {
+      enquiry: true,
+    },
+  });
+  if (!reply) {
+    throw new Error("REPLY_NOT_FOUND");
+  }
+  return reply;
 };
