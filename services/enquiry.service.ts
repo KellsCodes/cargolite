@@ -118,7 +118,6 @@ export const adminReplyToEnquiry = async (
   replyBody: string,
   adminName = "Admin"
 ) => {
-  console.log({ id });
   const enquiry = await prisma.clientEnquiryMessage.findUnique({
     where: { id },
     include: {
