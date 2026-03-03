@@ -75,3 +75,13 @@ export const EmailAttachmentType = {
 } as const
 
 export type EmailAttachmentType = (typeof EmailAttachmentType)[keyof typeof EmailAttachmentType]
+
+
+export const InvoiceStatus = {
+  PAID: 'PAID',
+  UNPAID: 'UNPAID',
+  REFUND: 'REFUND',
+  OVERDUE: 'OVERDUE'
+} as const
+
+export type InvoiceStatus = (typeof InvoiceStatus)[keyof typeof InvoiceStatus]

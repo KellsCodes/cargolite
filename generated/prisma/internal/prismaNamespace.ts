@@ -1400,6 +1400,7 @@ export const InvoiceScalarFieldEnum = {
   amount: 'amount',
   paymentMethod: 'paymentMethod',
   payerRole: 'payerRole',
+  invoiceStatus: 'invoiceStatus',
   clientId: 'clientId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1689,6 +1690,13 @@ export type EnumClientTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'Decimal'
  */
 export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'InvoiceStatus'
+ */
+export type EnumInvoiceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InvoiceStatus'>
     
 
 

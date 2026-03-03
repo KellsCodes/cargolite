@@ -60,6 +60,13 @@ enum EmailAttachmentType {
   DOC
 }
 
+enum InvoiceStatus {
+  PAID
+  UNPAID
+  REFUND
+  OVERDUE
+}
+
 model Account {
   id            String    @id   @default(cuid())
   userId        Int
@@ -159,6 +166,7 @@ model Invoice {
   amount        Decimal   @db.Decimal(10, 2)
   paymentMethod String
   payerRole     ClientType @default(SENDER) // Track who is responsible
+  invoiceStatus InvoiceStatus @default(UNPAID)
   
   // The Client linked here is the one who PAID
   clientId      Int

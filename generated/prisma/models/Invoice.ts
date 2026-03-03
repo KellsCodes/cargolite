@@ -44,6 +44,7 @@ export type InvoiceMinAggregateOutputType = {
   amount: runtime.Decimal | null
   paymentMethod: string | null
   payerRole: $Enums.ClientType | null
+  invoiceStatus: $Enums.InvoiceStatus | null
   clientId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -55,6 +56,7 @@ export type InvoiceMaxAggregateOutputType = {
   amount: runtime.Decimal | null
   paymentMethod: string | null
   payerRole: $Enums.ClientType | null
+  invoiceStatus: $Enums.InvoiceStatus | null
   clientId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -66,6 +68,7 @@ export type InvoiceCountAggregateOutputType = {
   amount: number
   paymentMethod: number
   payerRole: number
+  invoiceStatus: number
   clientId: number
   createdAt: number
   updatedAt: number
@@ -91,6 +94,7 @@ export type InvoiceMinAggregateInputType = {
   amount?: true
   paymentMethod?: true
   payerRole?: true
+  invoiceStatus?: true
   clientId?: true
   createdAt?: true
   updatedAt?: true
@@ -102,6 +106,7 @@ export type InvoiceMaxAggregateInputType = {
   amount?: true
   paymentMethod?: true
   payerRole?: true
+  invoiceStatus?: true
   clientId?: true
   createdAt?: true
   updatedAt?: true
@@ -113,6 +118,7 @@ export type InvoiceCountAggregateInputType = {
   amount?: true
   paymentMethod?: true
   payerRole?: true
+  invoiceStatus?: true
   clientId?: true
   createdAt?: true
   updatedAt?: true
@@ -211,6 +217,7 @@ export type InvoiceGroupByOutputType = {
   amount: runtime.Decimal
   paymentMethod: string
   payerRole: $Enums.ClientType
+  invoiceStatus: $Enums.InvoiceStatus
   clientId: number
   createdAt: Date
   updatedAt: Date
@@ -245,6 +252,7 @@ export type InvoiceWhereInput = {
   amount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.StringFilter<"Invoice"> | string
   payerRole?: Prisma.EnumClientTypeFilter<"Invoice"> | $Enums.ClientType
+  invoiceStatus?: Prisma.EnumInvoiceStatusFilter<"Invoice"> | $Enums.InvoiceStatus
   clientId?: Prisma.IntFilter<"Invoice"> | number
   createdAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
@@ -258,6 +266,7 @@ export type InvoiceOrderByWithRelationInput = {
   amount?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   payerRole?: Prisma.SortOrder
+  invoiceStatus?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -275,6 +284,7 @@ export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
   amount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.StringFilter<"Invoice"> | string
   payerRole?: Prisma.EnumClientTypeFilter<"Invoice"> | $Enums.ClientType
+  invoiceStatus?: Prisma.EnumInvoiceStatusFilter<"Invoice"> | $Enums.InvoiceStatus
   clientId?: Prisma.IntFilter<"Invoice"> | number
   createdAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
@@ -288,6 +298,7 @@ export type InvoiceOrderByWithAggregationInput = {
   amount?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   payerRole?: Prisma.SortOrder
+  invoiceStatus?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -307,6 +318,7 @@ export type InvoiceScalarWhereWithAggregatesInput = {
   amount?: Prisma.DecimalWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
   payerRole?: Prisma.EnumClientTypeWithAggregatesFilter<"Invoice"> | $Enums.ClientType
+  invoiceStatus?: Prisma.EnumInvoiceStatusWithAggregatesFilter<"Invoice"> | $Enums.InvoiceStatus
   clientId?: Prisma.IntWithAggregatesFilter<"Invoice"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Invoice"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Invoice"> | Date | string
@@ -317,6 +329,7 @@ export type InvoiceCreateInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: string
   payerRole?: $Enums.ClientType
+  invoiceStatus?: $Enums.InvoiceStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutInvoicesInput
@@ -329,6 +342,7 @@ export type InvoiceUncheckedCreateInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: string
   payerRole?: $Enums.ClientType
+  invoiceStatus?: $Enums.InvoiceStatus
   clientId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -340,6 +354,7 @@ export type InvoiceUpdateInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   payerRole?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
+  invoiceStatus?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutInvoicesNestedInput
@@ -352,6 +367,7 @@ export type InvoiceUncheckedUpdateInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   payerRole?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
+  invoiceStatus?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
   clientId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -364,6 +380,7 @@ export type InvoiceCreateManyInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: string
   payerRole?: $Enums.ClientType
+  invoiceStatus?: $Enums.InvoiceStatus
   clientId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -374,6 +391,7 @@ export type InvoiceUpdateManyMutationInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   payerRole?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
+  invoiceStatus?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -384,6 +402,7 @@ export type InvoiceUncheckedUpdateManyInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   payerRole?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
+  invoiceStatus?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
   clientId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -411,6 +430,7 @@ export type InvoiceCountOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   payerRole?: Prisma.SortOrder
+  invoiceStatus?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -428,6 +448,7 @@ export type InvoiceMaxOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   payerRole?: Prisma.SortOrder
+  invoiceStatus?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -439,6 +460,7 @@ export type InvoiceMinOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   payerRole?: Prisma.SortOrder
+  invoiceStatus?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -505,6 +527,10 @@ export type DecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type EnumInvoiceStatusFieldUpdateOperationsInput = {
+  set?: $Enums.InvoiceStatus
+}
+
 export type InvoiceCreateNestedOneWithoutShipmentInput = {
   create?: Prisma.XOR<Prisma.InvoiceCreateWithoutShipmentInput, Prisma.InvoiceUncheckedCreateWithoutShipmentInput>
   connectOrCreate?: Prisma.InvoiceCreateOrConnectWithoutShipmentInput
@@ -524,6 +550,7 @@ export type InvoiceCreateWithoutClientInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: string
   payerRole?: $Enums.ClientType
+  invoiceStatus?: $Enums.InvoiceStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   shipment?: Prisma.ShipmentCreateNestedOneWithoutInvoiceInput
@@ -535,6 +562,7 @@ export type InvoiceUncheckedCreateWithoutClientInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: string
   payerRole?: $Enums.ClientType
+  invoiceStatus?: $Enums.InvoiceStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   shipment?: Prisma.ShipmentUncheckedCreateNestedOneWithoutInvoiceInput
@@ -575,6 +603,7 @@ export type InvoiceScalarWhereInput = {
   amount?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.StringFilter<"Invoice"> | string
   payerRole?: Prisma.EnumClientTypeFilter<"Invoice"> | $Enums.ClientType
+  invoiceStatus?: Prisma.EnumInvoiceStatusFilter<"Invoice"> | $Enums.InvoiceStatus
   clientId?: Prisma.IntFilter<"Invoice"> | number
   createdAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
@@ -585,6 +614,7 @@ export type InvoiceCreateWithoutShipmentInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: string
   payerRole?: $Enums.ClientType
+  invoiceStatus?: $Enums.InvoiceStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutInvoicesInput
@@ -596,6 +626,7 @@ export type InvoiceUncheckedCreateWithoutShipmentInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: string
   payerRole?: $Enums.ClientType
+  invoiceStatus?: $Enums.InvoiceStatus
   clientId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -622,6 +653,7 @@ export type InvoiceUpdateWithoutShipmentInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   payerRole?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
+  invoiceStatus?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutInvoicesNestedInput
@@ -633,6 +665,7 @@ export type InvoiceUncheckedUpdateWithoutShipmentInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   payerRole?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
+  invoiceStatus?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
   clientId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -644,6 +677,7 @@ export type InvoiceCreateManyClientInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: string
   payerRole?: $Enums.ClientType
+  invoiceStatus?: $Enums.InvoiceStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -653,6 +687,7 @@ export type InvoiceUpdateWithoutClientInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   payerRole?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
+  invoiceStatus?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shipment?: Prisma.ShipmentUpdateOneWithoutInvoiceNestedInput
@@ -664,6 +699,7 @@ export type InvoiceUncheckedUpdateWithoutClientInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   payerRole?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
+  invoiceStatus?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shipment?: Prisma.ShipmentUncheckedUpdateOneWithoutInvoiceNestedInput
@@ -675,6 +711,7 @@ export type InvoiceUncheckedUpdateManyWithoutClientInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
   payerRole?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
+  invoiceStatus?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -687,6 +724,7 @@ export type InvoiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   amount?: boolean
   paymentMethod?: boolean
   payerRole?: boolean
+  invoiceStatus?: boolean
   clientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -702,12 +740,13 @@ export type InvoiceSelectScalar = {
   amount?: boolean
   paymentMethod?: boolean
   payerRole?: boolean
+  invoiceStatus?: boolean
   clientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type InvoiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "transactionID" | "amount" | "paymentMethod" | "payerRole" | "clientId" | "createdAt" | "updatedAt", ExtArgs["result"]["invoice"]>
+export type InvoiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "transactionID" | "amount" | "paymentMethod" | "payerRole" | "invoiceStatus" | "clientId" | "createdAt" | "updatedAt", ExtArgs["result"]["invoice"]>
 export type InvoiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   shipment?: boolean | Prisma.Invoice$shipmentArgs<ExtArgs>
@@ -725,6 +764,7 @@ export type $InvoicePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     amount: runtime.Decimal
     paymentMethod: string
     payerRole: $Enums.ClientType
+    invoiceStatus: $Enums.InvoiceStatus
     clientId: number
     createdAt: Date
     updatedAt: Date
@@ -1104,6 +1144,7 @@ export interface InvoiceFieldRefs {
   readonly amount: Prisma.FieldRef<"Invoice", 'Decimal'>
   readonly paymentMethod: Prisma.FieldRef<"Invoice", 'String'>
   readonly payerRole: Prisma.FieldRef<"Invoice", 'ClientType'>
+  readonly invoiceStatus: Prisma.FieldRef<"Invoice", 'InvoiceStatus'>
   readonly clientId: Prisma.FieldRef<"Invoice", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Invoice", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Invoice", 'DateTime'>
