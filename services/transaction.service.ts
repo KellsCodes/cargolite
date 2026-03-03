@@ -66,6 +66,43 @@ export const getAllTransactions = async (
       orderBy: { createdAt: "desc" },
     });
   });
+};
 
-  // const transactions = await paginate
+export const getTransactionById = async (id: number) => {
+  return await prisma.invoice.findUnique({
+    where: { id },
+    include: {
+      client: {
+        select: { name: true, email: true, id: true },
+      },
+      shipment: {
+        select: {
+          shipmentID: true,
+          pickupLocation: true,
+          dropLocation: true,
+          id: true,
+        },
+      },
+    },
+  });
+};
+
+export const updateInvoiceStatus = async (
+  id: number,
+  status: InvoiceStatus
+) => {
+  const invoice = await prisma.invoice.findUnique({ where: { id } });
+  if (!invoice) throw new Error("INVALID_INVOICE");
+  if (
+    invoice.invoiceStatus === InvoiceStatus.PAID ||
+    invoice.invoiceStatus === InvoiceStatus.REFUND ||
+    invoice.invoiceStatus === (status.toUpperCase() as InvoiceStatus)
+  ) {
+    throw new Error("INVALID_INVOICE_STATUS");
+  }
+  const invoiceStatus = status.toUpperCase() as InvoiceStatus;
+  return await prisma.invoice.update({
+    where: { id },
+    data: { invoiceStatus },
+  });
 };
