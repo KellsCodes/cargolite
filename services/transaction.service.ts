@@ -106,3 +106,17 @@ export const updateInvoiceStatus = async (
     data: { invoiceStatus },
   });
 };
+
+export const downloadTransactionInvoice = async (id: number) => {
+  const invoice = await prisma.invoice.findUnique({
+    where: { id },
+    include: {
+      client: true,
+      shipment: true,
+    },
+  });
+
+  if (!invoice) throw new Error("INVOICE_NOT_FOUND");
+
+  return invoice;
+};
