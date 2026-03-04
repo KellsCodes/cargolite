@@ -204,6 +204,7 @@ model Shipment {
 
   @@index([senderId])
   @@index([receiverId])
+  @@index([createdAt])
 }
 
 model TrackingHistory {
@@ -224,6 +225,7 @@ model TrackingHistory {
 
   @@index([shipmentId])
   @@index([updatedById])
+  @@index([createdAt])
 }
 
 model AdminMessage {
