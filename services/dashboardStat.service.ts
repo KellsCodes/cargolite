@@ -6,7 +6,13 @@ import {
   startOfMonth,
   subMonths,
 } from "date-fns";
-import { difference } from "next/dist/build/utils";
+// import { difference } from "next/dist/build/utils";
+
+const currentMonthEnd = new Date(
+  new Date().getFullYear(),
+  new Date().getMonth() + 1,
+  0
+);
 
 export const getDashboardStats = async () => {
   const now = new Date();
@@ -98,12 +104,33 @@ export const getShipmentMonthlyAnalytics = async (params: {
 }) => {
   const now = new Date();
 
-  // Default range: Last 3 months + Current month
-  const defaultStart = new Date(now.getFullYear(), now.getMonth() - 3, 1);
-  const defaultEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0); // End of current month
+  let startDate;
+  let endDate;
 
-  const startDate = params.startMonth || defaultStart;
-  const endDate = params.endMonth || defaultEnd;
+  if (params.startMonth && params.endMonth) {
+    // Both provided: Use them as is
+    startDate = params.startMonth;
+    endDate = params.endMonth;
+  } else if (params.startMonth && !params.endMonth) {
+    // Start provided: Calculate 5 months forward (Total 6 months)
+    const calculatedEnd = new Date(
+      params.startMonth.getFullYear(),
+      params.startMonth.getMonth() + 6,
+      0
+    );
+    startDate = params.startMonth;
+    // Get last day of the month 5 months from the start
+    endDate = calculatedEnd > currentMonthEnd ? currentMonthEnd : calculatedEnd;
+  } else if (!params.startMonth && params.endMonth) {
+    // End provided: Calculate 5 months backward (Total 6 months)
+    endDate = params.endMonth;
+    // Get first day of the month 5 months prior to the end
+    startDate = new Date(endDate.getFullYear(), endDate.getMonth() - 4, 1);
+  } else {
+    // Neither provided: Default to current month and 5 months back
+    endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0); // End of current month
+    startDate = new Date(now.getFullYear(), now.getMonth() - 4, 1); // Start of 6 months ago
+  }
 
   if (startDate > endDate) {
     throw new Error("INVALID_DATE_RANGE");
@@ -166,18 +193,23 @@ export const getRevenueMonthlyAnalytics = async (params: {
     endDate = params.end;
   } else if (params.start && !params.end) {
     // Start provided: Calculate 5 months forward (Total 6 months)
+    const calculatedEnd = new Date(
+      params.start.getFullYear(),
+      params.start.getMonth() + 6,
+      0
+    );
     startDate = params.start;
     // Get last day of the month 5 months from the start
-    endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 6, 0);
+    endDate = calculatedEnd > currentMonthEnd ? currentMonthEnd : calculatedEnd;
   } else if (!params.start && params.end) {
     // End provided: Calculate 5 months backward (Total 6 months)
     endDate = params.end;
     // Get first day of the month 5 months prior to the end
-    startDate = new Date(endDate.getFullYear(), endDate.getMonth() - 5, 1);
+    startDate = new Date(endDate.getFullYear(), endDate.getMonth() - 4, 1);
   } else {
     // Neither provided: Default to current month and 5 months back
     endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0); // End of current month
-    startDate = new Date(now.getFullYear(), now.getMonth() - 5, 1); // Start of 6 months ago
+    startDate = new Date(now.getFullYear(), now.getMonth() - 4, 1); // Start of 6 months ago
   }
   const monthDiff = differenceInMonths(endDate, startDate) + 1;
 
