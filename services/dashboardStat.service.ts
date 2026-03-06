@@ -83,3 +83,63 @@ async function getMonthlyMetrics(startDate: Date, endDate: Date) {
 
   return stats;
 }
+
+// Shipment Monthly Analytics
+export const getShipmentMonthlyAnalytics = async (params: {
+  startMonth?: Date;
+  endMonth?: Date;
+  status?: ShipmentStatus;
+}) => {
+  const now = new Date();
+
+  // Default range: Last 3 months + Current month
+  const defaultStart = new Date(now.getFullYear(), now.getMonth() - 3, 1);
+  const defaultEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0); // End of current month
+
+  const startDate = params.startMonth || defaultStart;
+  const endDate = params.endMonth || defaultEnd;
+
+  if (startDate > endDate) {
+    throw new Error("INVALID_DATE_RANGE");
+  }
+
+  const results = await prisma.$queryRawUnsafe<any[]>(
+    `
+    WITH RECURSIVE months_series AS (
+      SELECT LAST_DAY(?) + INTERVAL 1 DAY - INTERVAL 1 MONTH as month_date
+      UNION ALL
+      SELECT month_date + INTERVAL 1 MONTH
+      FROM months_series
+      WHERE month_date < LAST_DAY(?) - INTERVAL 1 MONTH
+    )
+    SELECT 
+      YEAR(m.month_date) as year, 
+      MONTH(m.month_date) as month, 
+      DATE_FORMAT(m.month_date, '%M %Y') as label, 
+      COALESCE(COUNT(s.id), 0) as count
+    FROM months_series m
+    LEFT JOIN Shipment s ON 
+      YEAR(s.createdAt) = YEAR(m.month_date) AND 
+      MONTH(s.createdAt) = MONTH(m.month_date)
+      ${
+        params.status
+          ? `AND s.id IN (
+        SELECT th.shipmentId FROM TrackingHistory th 
+        WHERE th.status = '${params.status}' 
+        AND th.id = (SELECT MAX(id) FROM TrackingHistory WHERE shipmentId = th.shipmentId)
+      )`
+          : ""
+      }
+    GROUP BY year, month, label
+    ORDER BY year DESC, month DESC
+  `,
+    startDate,
+    endDate
+  );
+
+  // Convert BigInt to Number for JSON serialization
+  return results.map((row) => ({
+    ...row,
+    count: Number(row.count),
+  }));
+};
