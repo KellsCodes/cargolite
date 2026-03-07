@@ -190,7 +190,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <main className="w-full flex-1 mx-auto">{children}</main>
 
             <footer className="bg-main-primary">
-                <div className="w-[95vw] 2xl:w-[72vw] mx-auto grid grid-cols-3 gap-y-5 md:gap-y-0 sm:gap-x-5 py-7 px-3 2xl:py-24 text-white text-sm 2xl:text-base">
+                <div className="w-full 2xl:w-[72vw] mx-auto grid grid-cols-3 gap-y-5 md:gap-y-0 sm:gap-x-5 py-7 px-5 2xl:px-0 2xl:py-24 text-white text-sm 2xl:text-base">
                     <div className="col-span-3 md:col-span-1 space-y-4">
                         <h3 className="font-medium text-chart-5 text-xl">
                             <span className="text-white uppercase">cargo</span>
@@ -211,7 +211,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             </a>
                         </div>
                     </div>
-                    <div className="col-span-3 md:col-span-1 md:pl-10 space-y-4">
+                    <div className="col-span-3 sm:col-span-1 md:col-span-1 md:pl-10 space-y-4">
                         <h3 className="font-medium text-chart-5 text-xl">Useful Links</h3>
                         <ul className="list-none flex flex-col gap-y-6">
                             <li>
@@ -228,7 +228,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             </li>
                         </ul>
                     </div>
-                    <div className="col-span-3 md:col-span-1 space-y-4">
+                    <div className="col-span-3 sm:col-span-2 md:col-span-1 space-y-4">
                         <h3 className="font-medium text-chart-5 text-xl">Contact Info</h3>
                         <ul className="list-none flex flex-col gap-y-5">
                             <li className="flex items-center gap-x-2 hover:text-chart-5">
@@ -251,7 +251,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     </div>
                 </div>
                 <div className="bg-header-top text-center h-20">
-                    <div className="w-[95vw] 2xl:w-[72vw] h-full mx-auto text-white/40 flex flex-col sm:flex-row items-center justify-center sm:justify-between">
+                    <div className="w-full 2xl:w-[72vw] h-full mx-auto sm:px-5 text-white/40 flex flex-col sm:flex-row items-center justify-center sm:justify-between">
                         <p>
                             {new Date().getFullYear()} © Cargolite. All rights reserved.
                         </p>
