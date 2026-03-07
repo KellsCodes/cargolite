@@ -71,7 +71,7 @@ export default function TeamGrid() {
         }
     ]
     return (
-        <div className="grid grid-cols-4 gap-x-5 gap-y-11">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-11 sm:gap-x-5 xl:gap-x-5">
             {
                 team_data.map((member, i) => (
                     <TeamCard {...member} key={i} />

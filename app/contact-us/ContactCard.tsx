@@ -62,7 +62,7 @@ const ContactCard = ({ img, cardImg, title, address, phone, email }: BranchProps
 
 export default function BranchesGrid() {
     return (
-        <div className="grid grid-cols-4 gap-x-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-11 xl:gap-y-0 sm:gap-x-5 xl:gap-x-5">
             {BRANCHDATA.map((branch, i) => (
                 <ContactCard {...branch} key={i} />
             ))}
