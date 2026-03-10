@@ -3,6 +3,7 @@ import GoogleMaps from "../components/GoogleMaps";
 import Layout from "../components/Layout";
 import BranchesGrid from "./ContactCard";
 import TeamGrid from "../about/TeamCard";
+import { ContactForm } from "../components/ContactForm";
 
 export default function ContactUsPage() {
     return (
@@ -16,17 +17,7 @@ export default function ContactUsPage() {
                     <div className="w-full 2xl:w-[65%] bg-[#E0F0F6] p-5 md:p-8 2xl:p-15 space-y-4">
                         <h2 className="font-medium text-2xl md:text-3xl text-[#034460]">Still have a question?</h2>
                         <p className="md:text-lg text-black/50">Can't find the answer you are looking for? Please chat to our friendly team.</p>
-                        <form action="#" className="grid grid-cols-2 gap-y-8 lg:gap-x-7 mt-6">
-                            <input type="text" className="px-5 h-13 bg-white col-span-2 lg:col-span-1 placeholder:text-xs" placeholder="Your name *" />
-                            <input type="email" className="px-5 h-13 bg-white col-span-2 lg:col-span-1 placeholder:text-xs" placeholder="Your email *" />
-                            <input type="text" className="px-5 h-13 bg-white col-span-2 lg:col-span-1 placeholder:text-xs" placeholder="Height *" />
-                            <input type="text" className="px-5 h-13 bg-white col-span-2 lg:col-span-1 placeholder:text-xs" placeholder="Weight *" />
-                            <textarea name="" id="" className="resize-none col-span-2 h-36 lg:h-56 bg-white p-5 placeholder:text-xs" placeholder="Message/ Note"></textarea>
-                            <div className="col-span-2">
-                                <button className="text-sm text-[#034460] bg-chart-5 h-13 w-30 hover:bg-[#034460] hover:text-white transition-all duration-500 ease-in-out cursor-pointer">Submit Now</button>
-                            </div>
-
-                        </form>
+                        <ContactForm />
                     </div>
                     <div className="w-full 2xl:w-[35%] bg-[#FFE799] p-5 lg:p-0 lg:px-12 flex flex-col justify-center space-y-8">
                         <h2 className="text-2xl font-medium text-[#034460]">Headquarters</h2>

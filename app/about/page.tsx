@@ -5,6 +5,7 @@ import GetInTouch from "../components/GetInTouch"
 import TeamGrid from "./TeamCard"
 import ReviewSlider from "../components/ReviewSlider"
 import GoogleMaps from "../components/GoogleMaps"
+import { ContactForm } from "../components/ContactForm"
 
 export default function AboutPage() {
     return (
@@ -110,20 +111,14 @@ export default function AboutPage() {
                 </div>
 
                 {/* Contact */}
-                <div className="w-[72vw] mx-auto p-16 bg-[#FFE799] space-y-8">
+                <div className="w-[72vw] mx-auto py-16 px-12 bg-[#FFE799] space-y-8">
                     <h3 className="text-3xl font-bold text-[#034460]">Get in Touch</h3>
-                    <div className="flex items-stretched justify-between">
-                        <div className="col-span-2 grid grid-cols-2 gap-6 w-[42%]">
-                            <input type="text" className="h-12 col-span-1 bg-white py-2 px-4 placeholder:text-xs text-xs" placeholder="Your name *" />
-                            <input type="text" className="h-12 col-span-1 bg-white py-2 px-4 placeholder:text-xs text-xs" placeholder="Your email *" />
-                            <input type="text" className="h-12 col-span-1 bg-white py-2 px-4 placeholder:text-xs text-xs" placeholder="Weight *" />
-                            <input type="text" className="h-12 col-span-1 bg-white py-2 px-4 placeholder:text-xs text-xs" placeholder="Height *" />
-                            <textarea name="" id="" className="col-span-2 h-30 resize-none bg-white p-5 placeholder:text-xs text-xs" placeholder="Message/Note"></textarea>
-                        </div>
-                        <div className="w-[26%] bg-white p-[2px] rounded-xs">
+                    <div className="grid grid-cols-5 gap-x-3">
+                        <ContactForm className="col-span-2 grid grid-cols-2 gap-y-5 gap-x-2" />
+                        <div className="bg-white p-[2px] rounded-xs col-span-2">
                             <GoogleMaps />
                         </div>
-                        <div className="w-[26%] p-4 flex flex-col justify-between">
+                        <div className="p-0 flex flex-col gap-y-8 col-span-1">
                             <div className="flex items-center gap-x-3">
                                 <div className="min-h-14 min-w-14 bg-chart-5/80 rounded-full flex items-center justify-center">
                                     <img src="/address.png" alt="." loading="lazy" />
@@ -153,7 +148,6 @@ export default function AboutPage() {
                             </div>
                         </div>
                     </div>
-                    <button className="h-12 w-30 bg-chart-5 text-sm text-[#034460]">Submit Now</button>
                 </div>
 
             </Layout>
