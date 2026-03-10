@@ -13,7 +13,7 @@ export default function ContactUsPage() {
                     <GoogleMaps />
                 </div>
 
-                <div className="w-full 2xl:w-[72vw] px-4 xl:px-9 2xl:px-0 mx-auto flex flex-col sm:flex-row items-stretch md:h-auto my-10 gap-y-8 md:gap-y-0">
+                <div className="w-full 2xl:w-[72vw] px-4 md:px-8 xl:px-9 2xl:px-0 mx-auto flex flex-col sm:flex-row items-stretch md:h-auto my-10 gap-y-8 md:gap-y-0">
                     <div className="w-full 2xl:w-[65%] bg-[#E0F0F6] p-5 md:p-8 2xl:p-15 space-y-4">
                         <h2 className="font-medium text-2xl md:text-3xl text-[#034460]">Still have a question?</h2>
                         <p className="md:text-lg text-black/50">Can't find the answer you are looking for? Please chat to our friendly team.</p>
