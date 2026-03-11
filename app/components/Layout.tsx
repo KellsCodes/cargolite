@@ -251,7 +251,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     </div>
                 </div>
                 <div className="bg-header-top text-center h-20">
-                    <div className="w-full 2xl:w-[72vw] h-full lg:mx-auto sm:px-5 text-white/40 flex flex-col sm:flex-row items-center justify-center sm:justify-between">
+                    <div className="w-full 2xl:w-[72vw] h-full lg:mx-auto sm:px-5 xl:px-0 text-white/40 flex flex-col sm:flex-row items-center justify-center sm:justify-between">
                         <p>
                             {new Date().getFullYear()} © Cargolite. All rights reserved.
                         </p>

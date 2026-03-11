@@ -1,7 +1,43 @@
+"use client"
+
+import { TrackingAPI } from "@/lib/api/tracking";
 import { Info, Search } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { AnimateSpin } from "./AnimateSpin";
+import { ShipmentData } from "../types/shipment";
 
-export default function TrackingParcel({ trackError }: { trackError: boolean }) {
+export default function TrackingParcel({
+    setData
+}: {
+    setData: (data: ShipmentData | null) => void
+}) {
+    const [loading, setLoading] = useState<boolean>(false)
+    const [trackingError, setTrackError] = useState<string | null>(null)
+    const [tracking_number, setTrackingNumber] = useState<string>("")
+
+    const handleFetchPackage = async () => {
+        setLoading(true)
+        setTrackError("")
+        if (!tracking_number) {
+            setLoading(false)
+            toast.error("Missing Tracking Number.")
+            return
+        }
+        try {
+            const { data } = await TrackingAPI.trackPackage(tracking_number)
+            console.log(data)
+            // setPackageData(data)
+            setData(data)
+        } catch (error: any) {
+            console.log(error)
+            toast.error(error.message || "An error occurred. Please try again.")
+            setTrackError(error.message || "An error occurred. Please try again.")
+        } finally {
+            setLoading(false)
+        }
+    }
     return (
         <div
             className="relative w-full rounded-[2.5rem] overflow-hidden bg-slate-900 px-6 py-20 flex flex-col items-center text-center shadow-2xl shadow-blue-900/20"
@@ -39,19 +75,33 @@ export default function TrackingParcel({ trackError }: { trackError: boolean }) 
                                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300/50" />
                                 <input
                                     type="text"
+                                    value={tracking_number}
+                                    onChange={e => setTrackingNumber(e.target.value)}
                                     className="h-14 w-full bg-transparent pl-12 pr-4 text-white placeholder:text-blue-100/40 focus:outline-none font-medium text-base"
                                     placeholder="Enter tracking ID (e.g., EDF123456789)"
                                 />
                             </div>
-                            <button className="h-14 w-full md:w-44 bg-white hover:bg-blue-50 text-slate-900 rounded-xl font-bold text-sm transition-all shadow-lg active:scale-95 cursor-pointer">
-                                Track Parcel
+                            <button
+                                disabled={loading}
+                                onClick={handleFetchPackage}
+                                className="h-14 w-full md:w-44 bg-white hover:bg-blue-50 text-slate-900 rounded-xl font-bold text-sm transition-all shadow-lg active:scale-95 cursor-pointer"
+                            >
+                                {loading ? (
+                                    <span className="flex items-center justify-center gap-2">
+                                        {/* Simple CSS Spinner */}
+                                        <AnimateSpin />
+                                        Sending...
+                                    </span>
+                                ) : (
+                                    "Track Parcel"
+                                )}
                             </button>
                         </div>
                     </div>
 
                     {/* Helper/Error Messaging */}
                     <div className="min-h-[24px]">
-                        {!trackError ? (
+                        {!trackingError ? (
                             <p className="flex items-center justify-center gap-2 text-blue-100/60 text-xs font-semibold uppercase tracking-tight">
                                 <Info className="w-3.5 h-3.5" />
                                 Ready to track?

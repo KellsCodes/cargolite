@@ -42,7 +42,7 @@ export function ContactForm({
             })
             toast.success("Enquiry submitted successfully!");
         } catch (error: any) {
-            toast.error(error.message)
+            toast.error(error.message || "An error occurred. Please try again.")
         } finally {
             setLoading(false)
         }

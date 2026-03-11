@@ -4,21 +4,45 @@ import Link from "next/link";
 import { MapPoint } from "./ShipmentMap";
 import dynamic from "next/dynamic";
 import { useState } from "react";
+import { ShipmentData } from "../types/shipment";
+import { ShipmentStatus } from "@/generated/prisma/enums";
 
 const ShipmentMap = dynamic(() => import('./ShipmentMap'), {
     ssr: false,
     loading: () => <div className="bg-header-top/30 h-full animate-pulse flex items-center justify-center text-white">Loading Route Map...</div>
 });
 
-export default function TrackData() {
+const getProgress = (status: ShipmentStatus) => {
+    const mapping = {
+        RETURNED: 0,
+        PICKED_UP: 10,
+        DELAYED: 45,
+        IN_TRANSIT: 50,
+        WAREHOUSE_ARRIVED: 70,
+        OUT_FOR_DELIVERY: 80,
+        DELIVERED: 100,
+        CANCELLED: 100
+    };
+    return mapping[status] ?? 0;
+};
+
+
+export default function TrackData({ data }: { data: ShipmentData | null }) {
     const originCoords: MapPoint = [37.422, -122.084];
     const currentCoords: MapPoint = [53.381, -1.470];
     const destinationCoords: MapPoint = [51.519, -0.127];
+    const currentStatus = data?.trackingHistory[0]?.status;
+    const currentUpdate = data?.trackingHistory?.[0];
+    const { label, color, message } = getStatusDisplay(
+        currentUpdate?.status as ShipmentStatus,
+        currentUpdate?.location || "Unknown Location",
+        data?.pickupLocation || "Origin"
+    );
 
     return (
         <div className="space-y-10 pb-20">
             {/* Top Navigation */}
-            <div className="flex items-center justify-between">
+            {/* <div className="flex items-center justify-between">
                 <Link href="/track-parcel">
                     <button className="group flex items-center gap-x-2 font-semibold text-slate-500 hover:text-blue-600 transition-all cursor-pointer">
                         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
@@ -28,7 +52,7 @@ export default function TrackData() {
                 <button className="flex items-center font-bold text-blue-600 gap-x-2 bg-blue-50 px-4 py-2 rounded-xl hover:bg-blue-100 transition-all">
                     <Share2 className="w-4 h-4" /> Share Tracking
                 </button>
-            </div>
+            </div> */}
 
             {/* 1. HERO TRACKING CARD */}
             <div className="relative overflow-hidden rounded-[2.5rem] bg-slate-900 p-8 lg:p-12 shadow-2xl">
@@ -42,13 +66,13 @@ export default function TrackData() {
                                 <div className="bg-white/10 p-2.5 rounded-xl backdrop-blur-md">
                                     <PackageSearch className="w-6 h-6 text-white" />
                                 </div>
-                                <h2 className="text-3xl font-black text-white tracking-tight">AWP1234567890</h2>
+                                <h2 className="text-3xl font-black text-white tracking-tight">{data?.shipmentID}</h2>
                             </div>
                             <div className="flex items-center gap-x-3">
-                                <span className="bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-[10px] font-black border border-emerald-500/30 uppercase tracking-tighter">
-                                    In Transit
+                                <span className={`${color} px-3 py-1 rounded-full text-[10px] font-black border border-emerald-500/30 uppercase tracking-tighter`}>
+                                    {label}
                                 </span>
-                                <span className="text-white/40 text-xs font-bold uppercase tracking-widest italic">Moving through Sheffield Hub</span>
+                                <span className="text-white/40 text-xs font-bold uppercase tracking-widest italic">{message}</span>
                             </div>
                         </div>
 
@@ -56,17 +80,17 @@ export default function TrackData() {
                         <div className="space-y-4 max-w-xl">
                             <div className="flex items-center justify-between">
                                 <span className="text-xs font-bold text-white uppercase tracking-widest opacity-60">Progress</span>
-                                <span className="text-2xl font-black text-white">75%</span>
+                                <span className="text-2xl font-black text-white">{currentStatus ? getProgress(currentStatus as ShipmentStatus) : 0}%</span>
                             </div>
                             <div className="h-3 w-full bg-white/10 rounded-full overflow-hidden p-0.5 border border-white/5">
-                                <div className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-1000" style={{ width: '75%' }} />
+                                <div className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full transition-all duration-1000" style={{ width: `${currentStatus ? getProgress(currentStatus as ShipmentStatus) : 0}%` }} />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <HeroStat label="Origin" value="Mountain View, CA" icon={<MapPin className="text-blue-300" />} />
-                            <HeroStat label="Current" value="Sheffield, UK" icon={<Truck className="text-emerald-300" />} />
-                            <HeroStat label="Destination" value="London, UK" icon={<Flag className="text-rose-300" />} />
+                            <HeroStat label="Origin" value={data?.dropLocation} icon={<MapPin className="text-blue-300" />} />
+                            <HeroStat label="Current" value={data?.trackingHistory[0].location} icon={<Truck className="text-emerald-300" />} />
+                            <HeroStat label="Destination" value={data?.pickupLocation} icon={<Flag className="text-rose-300" />} />
                         </div>
                     </div>
 
@@ -75,8 +99,11 @@ export default function TrackData() {
                         <div className="relative group">
                             <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
                             <div className="relative w-64 h-64 bg-slate-800 rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl">
-                                <img src="/package2.png" alt="Parcel" className="w-full h-full object-contain opacity-80 group-hover:scale-110 transition-transform duration-700" />
-                                {/* <div className="text-xs text-center text-white h-full flex items-center justify-center">No preview image</div> */}
+                                {data?.packageImage ?
+                                    <img src={data?.packageImage} alt="Parcel" className="w-full object-contain opacity-80 group-hover:scale-110 transition-transform duration-700" />
+                                    :
+                                    <div className="text-xs text-center text-white h-full flex items-center justify-center">No preview image</div>
+                                }
                                 <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md p-3 rounded-xl border border-white/10">
                                     <p className="text-[10px] font-black text-white uppercase tracking-widest text-center">Live Package Photo</p>
                                 </div>
@@ -179,7 +206,7 @@ function TimelineStep({ title, location, time, date, isActive, isCompleted, isLa
 }
 
 // (HeroStat, PartyCard, SpecItem remain same as previous version)
-function HeroStat({ label, value, icon }: { label: string, value: string, icon: any }) {
+function HeroStat({ label, value, icon }: { label: string, value?: string, icon: any }) {
     return (
         <div className="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-2xl flex items-center gap-4">
             <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
@@ -219,3 +246,54 @@ function SpecItem({ icon, label, value, highlight }: { icon: any, label: string,
         </div>
     );
 }
+
+
+const getStatusDisplay = (status: ShipmentStatus | undefined, location: string, pickupLocation: string) => {
+    // Default fallback if data is missing
+    if (!status) return { label: "N/A", color: "bg-gray-500/20 text-gray-400 border-gray-500/30", message: "Updating..." };
+
+    const styles: Record<ShipmentStatus, { label: string; color: string; message: string }> = {
+        IN_TRANSIT: {
+            label: "In Transit",
+            color: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+            message: `Moving through ${location}`
+        },
+        WAREHOUSE_ARRIVED: {
+            label: "At Warehouse",
+            color: "bg-purple-500/20 text-purple-400 border-purple-500/30",
+            message: `Moving through ${location}`
+        },
+        OUT_FOR_DELIVERY: {
+            label: "Out for Delivery",
+            color: "bg-indigo-500/20 text-indigo-400 border-indigo-500/30",
+            message: `Delivered at ${location}`
+        },
+        DELIVERED: {
+            label: "Delivered",
+            color: "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
+            message: `Delivered at ${location}`
+        },
+        CANCELLED: {
+            label: "Cancelled",
+            color: "bg-slate-500/20 text-slate-400 border-slate-500/30",
+            message: `Cancelled at ${location}`
+        },
+        PICKED_UP: {
+            label: "Picked Up",
+            color: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+            message: `Picked up at ${location}`
+        },
+        RETURNED: {
+            label: "Returned",
+            color: "bg-rose-500/20 text-rose-400 border-rose-500/30",
+            message: `Returned to ${pickupLocation}`
+        },
+        DELAYED: {
+            label: "Delayed",
+            color: "bg-amber-500/20 text-amber-400 border-amber-500/30",
+            message: `Delayed at ${location}`
+        },
+    };
+
+    return styles[status] ?? { label: status, color: "bg-gray-500/20", message: location };
+};

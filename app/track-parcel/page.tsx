@@ -11,22 +11,25 @@ import {
 } from "@/components/ui/accordion"
 import TrackData from "./TrackDetails";
 import TrackingParcel from "../components/TrackParcel";
+import { ShipmentData } from "../types/shipment";
 
 export default function TrackParcel() {
-    const [trackError, setTrackError] = useState(false);
+    const [data, setData] = useState<ShipmentData | null>(null)
 
     return (
         <Layout>
             <div className="bg-white pt-20 pb-10">
                 <div className="w-[72vw] mx-auto">
-                    <TrackingParcel trackError={trackError} />
+                    <TrackingParcel setData={setData} />
                 </div>
             </div>
 
             {/* RESULTS SECTION: TRACKING DATA */}
-            <div className="w-[72vw] mx-auto mt-5 mb-0 z-0 relative">
-                <TrackData />
-            </div>
+            {data ?
+                <div className="w-[72vw] mx-auto mt-5 mb-0 z-0 relative">
+                    <TrackData data={data} />
+                </div> : null
+            }
 
             {/* INFO SECTION: GLOBAL SERVICE */}
             <section className="w-[72vw] mx-auto pb-24 pt-5 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
