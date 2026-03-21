@@ -1,8 +1,10 @@
 "use client"
+import { Auth } from "@/lib/api/auth";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Lock, ArrowRight, Loader2, ShieldCheck } from "lucide-react";
+import { Mail, Lock, ArrowRight, Loader2, ShieldCheck, Eye, EyeClosed } from "lucide-react";
 import Link from "next/link";
 import React, { useState, useEffect, FormEvent } from "react";
+import { toast } from "react-toastify";
 
 // TypeScript interface for our spark particles
 interface Particle {
@@ -18,6 +20,9 @@ export default function Login() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [particles, setParticles] = useState<Particle[]>([]);
     const [mounted, setMounted] = useState(false);
+    const [email, setEmail] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
+    const [showPassword, setShowPassword] = useState<boolean>(false)
 
     useEffect(() => {
         setMounted(true);
@@ -34,8 +39,29 @@ export default function Login() {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!email || !password) {
+            toast.error("Email and password fields are required.")
+            return
+        }
         setIsLoading(true);
-        setTimeout(() => setIsLoading(false), 2000);
+        try {
+            const result = await Auth.login(email, password)
+            if (result?.error) {
+                toast.error(result.error === "CredentialsSignin" ? "Invalid email or password" : result.error)
+            } else {
+                toast.success("Login successful!")
+                // Manually redirect if you set redirect: false
+                setTimeout(() => {
+                    window.location.href = result?.url || "/dashboard";
+                }, 1000)
+            }
+
+        } catch (error) {
+            toast.error("A network error occurred.")
+
+        } finally {
+            setIsLoading(false)
+        }
     };
 
     return (
@@ -124,6 +150,8 @@ export default function Login() {
                                 <input
                                     type="email"
                                     placeholder="name@company.com"
+                                    value={email}
+                                    onChange={e => setEmail(e.target.value)}
                                     className="w-full bg-black/5 border border-black/10 p-4 pl-12 rounded-xl outline-none focus:border-[#034460]/40 focus:bg-white text-[#034460] text-sm transition-all placeholder:text-black/30"
                                     required
                                 />
@@ -137,9 +165,16 @@ export default function Login() {
                             </div>
                             <div className="relative group">
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-black/30 group-focus-within:text-[#034460] transition-colors" />
+                                {showPassword ?
+                                    <EyeClosed onClick={() => setShowPassword(false)} className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-black/30 group-focus-within:text-[#034460] transition-colors" />
+                                    :
+                                    <Eye onClick={() => setShowPassword(true)} className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-black/30 group-focus-within:text-[#034460] transition-colors" />
+                                }
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     placeholder="••••••••"
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
                                     className="w-full bg-black/5 border border-black/10 p-4 pl-12 rounded-xl outline-none focus:border-[#034460]/40 focus:bg-white text-[#034460] text-sm transition-all placeholder:text-black/30"
                                     required
                                 />
