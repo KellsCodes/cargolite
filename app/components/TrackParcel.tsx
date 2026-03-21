@@ -78,7 +78,7 @@ export default function TrackingParcel({
                                     value={tracking_number}
                                     onChange={e => setTrackingNumber(e.target.value)}
                                     className="h-14 w-full bg-transparent pl-12 pr-4 text-white placeholder:text-blue-100/40 focus:outline-none font-medium text-base"
-                                    placeholder="Enter tracking ID (e.g., EDF123456789)"
+                                    placeholder="Enter tracking ID (e.g., AWP8484923256)"
                                 />
                             </div>
                             <button

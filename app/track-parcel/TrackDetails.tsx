@@ -1,6 +1,5 @@
 "use client"
-import { ArrowLeft, Box, CheckCircle2, ChevronDown, ChevronUp, CircleDot, Flag, Goal, History, MapPin, Package2, PackageSearch, Plane, Ruler, Scale, Share2, Ship, Truck, User } from "lucide-react";
-import Link from "next/link";
+import { Box, CheckCircle2, Flag, History, MapPin, PackageSearch, Ruler, Scale, Truck, User } from "lucide-react";
 import { MapPoint } from "./ShipmentMap";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
@@ -28,16 +27,30 @@ const getProgress = (status: ShipmentStatus) => {
     return mapping[status] ?? 0;
 };
 
+// Helper to format dates (Standard Intl API)
+const formatDate = (dateStr: string | undefined) => {
+    // Return a default object if dateStr is missing
+    if (!dateStr) return { time: "--", date: "Pending" };
+
+    const date = new Date(dateStr);
+    return {
+        time: date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }),
+        date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    };
+};
+
 
 export default function TrackData({ data }: { data: ShipmentData | null }) {
-    // const originCoords: MapPoint = [37.422, -122.084];
-    // const currentCoords: MapPoint = [53.381, -1.470];
-    // const destinationCoords: MapPoint = [51.519, -0.127];
+    const history = data?.trackingHistory || [];
     const [originCoords, setOriginCoords] = useState<MapPoint | null>(null)
     const [currentCoords, setCurrentCoords] = useState<MapPoint | null>(null)
     const [destinationCoords, setDestinationCoords] = useState<MapPoint | null>(null)
-    const currentStatus = data?.trackingHistory[0]?.status;
     const currentUpdate = data?.trackingHistory?.[0];
+    const currentStatus = (currentUpdate?.status as ShipmentStatus) || "PICKED_UP";
+    const progress = getProgress(currentStatus);
+    const isDelivered = currentStatus === "DELIVERED";
+    const isPickedUp = history.length > 0;
+
     const { label, color, message } = getStatusDisplay(
         currentUpdate?.status as ShipmentStatus,
         currentUpdate?.location || "Unknown Location",
@@ -178,30 +191,38 @@ export default function TrackData({ data }: { data: ShipmentData | null }) {
                             <h3 className="font-bold text-slate-800 text-sm uppercase tracking-wider">Timeline</h3>
                         </div>
                         <div className="p-8 space-y-10">
-                            {/* Current (Active) Location */}
+                            {/* DROP LOCATION (The Goal) */}
+                            {data?.pickupLocation && (
+                                <TimelineStep
+                                    title={isDelivered ? "DELIVERED" : "Final Destination"}
+                                    location={data?.pickupLocation}
+                                    {...formatDate(data?.arrival ?? "")}
+                                    time="Estimated Arrival"
+                                    isActive={isDelivered} // Glows only when actually delivered
+                                    isCompleted={isDelivered}
+                                />
+                            )}
+
+                            {/* CURRENT STATUS (The Live Update) */}
+                            {!isDelivered && currentUpdate && (
+                                <TimelineStep
+                                    title={currentUpdate.status.replace(/_/g, ' ')}
+                                    location={currentUpdate.location}
+                                    {...formatDate(currentUpdate.createdAt)}
+                                    isActive={true} // Always active if it's the middle "live" step
+                                />
+                            )}
+
+                            {/* PICKUP LOCATION (The Start) */}
                             <TimelineStep
-                                title="In Transit"
-                                location="Sheffield Distribution Center, UK"
-                                time="10:45 AM"
-                                date="Feb 3, 2026"
-                                isActive
-                            />
-                            <TimelineStep
-                                title="Processed at Hub"
-                                location="Manchester Gateway"
-                                time="08:20 PM"
-                                date="Feb 2, 2026"
-                                isCompleted
-                            />
-                            <TimelineStep
-                                title="Shipment Picked Up"
-                                location="Mountain View, CA"
-                                time="02:00 PM"
-                                date="Jan 31, 2026"
-                                isCompleted
-                                isLast
+                                title="PICKED UP"
+                                location={data?.dropLocation}
+                                {...formatDate(data?.createdAt)}
+                                isCompleted={isPickedUp}
+                                isLast={true} // Ends the vertical line
                             />
                         </div>
+
                     </div>
                 </div>
             </div>
