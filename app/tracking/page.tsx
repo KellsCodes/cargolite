@@ -3,9 +3,10 @@ import { useState } from "react";
 import AuthLayout from "../components/AuthLayout";
 import TrackData from "../track-parcel/TrackDetails";
 import TrackingParcel from "../components/TrackParcel";
+import { ShipmentData } from "../types/shipment";
 
 export default function TrackingPage() {
-    const [trackError, setTrackError] = useState(false)
+    const [data, setData] = useState<ShipmentData | null>(null)
     return (
         <AuthLayout>
             <div className="space-y-6 p-6">
@@ -19,8 +20,13 @@ export default function TrackingPage() {
 
                         {/* The scrollable area */}
                         <div className="flex-1 overflow-y-auto custom-scroll px-6 space-y-10">
-                            <TrackingParcel trackError={trackError} />
-                            {/* <TrackData /> */}
+                            <TrackingParcel setData={setData} />
+                            {/* RESULTS SECTION: TRACKING DATA */}
+                            {data ?
+                                <div className="w-full mx-auto mt-5 mb-0 z-0 relative">
+                                    <TrackData data={data} />
+                                </div> : null
+                            }
                         </div>
                     </div>
                 </div>

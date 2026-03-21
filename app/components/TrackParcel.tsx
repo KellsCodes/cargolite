@@ -27,7 +27,7 @@ export default function TrackingParcel({
         }
         try {
             const { data } = await TrackingAPI.trackPackage(tracking_number)
-            console.log(data)
+            // console.log(data)
             // setPackageData(data)
             setData(data)
         } catch (error: any) {
