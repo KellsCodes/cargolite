@@ -224,8 +224,8 @@ export type RepliedEnquiryMessageWhereInput = {
   clientEnquiryMessageId?: Prisma.IntFilter<"RepliedEnquiryMessage"> | number
   adminId?: Prisma.IntFilter<"RepliedEnquiryMessage"> | number
   createdAt?: Prisma.DateTimeFilter<"RepliedEnquiryMessage"> | Date | string
-  enquiry?: Prisma.XOR<Prisma.ClientEnquiryMessageScalarRelationFilter, Prisma.ClientEnquiryMessageWhereInput>
   admin?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  enquiry?: Prisma.XOR<Prisma.ClientEnquiryMessageScalarRelationFilter, Prisma.ClientEnquiryMessageWhereInput>
 }
 
 export type RepliedEnquiryMessageOrderByWithRelationInput = {
@@ -234,8 +234,8 @@ export type RepliedEnquiryMessageOrderByWithRelationInput = {
   clientEnquiryMessageId?: Prisma.SortOrder
   adminId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  enquiry?: Prisma.ClientEnquiryMessageOrderByWithRelationInput
   admin?: Prisma.UserOrderByWithRelationInput
+  enquiry?: Prisma.ClientEnquiryMessageOrderByWithRelationInput
   _relevance?: Prisma.RepliedEnquiryMessageOrderByRelevanceInput
 }
 
@@ -248,8 +248,8 @@ export type RepliedEnquiryMessageWhereUniqueInput = Prisma.AtLeast<{
   clientEnquiryMessageId?: Prisma.IntFilter<"RepliedEnquiryMessage"> | number
   adminId?: Prisma.IntFilter<"RepliedEnquiryMessage"> | number
   createdAt?: Prisma.DateTimeFilter<"RepliedEnquiryMessage"> | Date | string
-  enquiry?: Prisma.XOR<Prisma.ClientEnquiryMessageScalarRelationFilter, Prisma.ClientEnquiryMessageWhereInput>
   admin?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  enquiry?: Prisma.XOR<Prisma.ClientEnquiryMessageScalarRelationFilter, Prisma.ClientEnquiryMessageWhereInput>
 }, "id">
 
 export type RepliedEnquiryMessageOrderByWithAggregationInput = {
@@ -279,8 +279,8 @@ export type RepliedEnquiryMessageScalarWhereWithAggregatesInput = {
 export type RepliedEnquiryMessageCreateInput = {
   body: string
   createdAt?: Date | string
-  enquiry: Prisma.ClientEnquiryMessageCreateNestedOneWithoutRepliesInput
   admin: Prisma.UserCreateNestedOneWithoutRepliesInput
+  enquiry: Prisma.ClientEnquiryMessageCreateNestedOneWithoutRepliesInput
 }
 
 export type RepliedEnquiryMessageUncheckedCreateInput = {
@@ -294,8 +294,8 @@ export type RepliedEnquiryMessageUncheckedCreateInput = {
 export type RepliedEnquiryMessageUpdateInput = {
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  enquiry?: Prisma.ClientEnquiryMessageUpdateOneRequiredWithoutRepliesNestedInput
   admin?: Prisma.UserUpdateOneRequiredWithoutRepliesNestedInput
+  enquiry?: Prisma.ClientEnquiryMessageUpdateOneRequiredWithoutRepliesNestedInput
 }
 
 export type RepliedEnquiryMessageUncheckedUpdateInput = {
@@ -614,8 +614,8 @@ export type RepliedEnquiryMessageSelect<ExtArgs extends runtime.Types.Extensions
   clientEnquiryMessageId?: boolean
   adminId?: boolean
   createdAt?: boolean
-  enquiry?: boolean | Prisma.ClientEnquiryMessageDefaultArgs<ExtArgs>
   admin?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  enquiry?: boolean | Prisma.ClientEnquiryMessageDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["repliedEnquiryMessage"]>
 
 
@@ -630,15 +630,15 @@ export type RepliedEnquiryMessageSelectScalar = {
 
 export type RepliedEnquiryMessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "body" | "clientEnquiryMessageId" | "adminId" | "createdAt", ExtArgs["result"]["repliedEnquiryMessage"]>
 export type RepliedEnquiryMessageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  enquiry?: boolean | Prisma.ClientEnquiryMessageDefaultArgs<ExtArgs>
   admin?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  enquiry?: boolean | Prisma.ClientEnquiryMessageDefaultArgs<ExtArgs>
 }
 
 export type $RepliedEnquiryMessagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "RepliedEnquiryMessage"
   objects: {
-    enquiry: Prisma.$ClientEnquiryMessagePayload<ExtArgs>
     admin: Prisma.$UserPayload<ExtArgs>
+    enquiry: Prisma.$ClientEnquiryMessagePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -986,8 +986,8 @@ readonly fields: RepliedEnquiryMessageFieldRefs;
  */
 export interface Prisma__RepliedEnquiryMessageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  enquiry<T extends Prisma.ClientEnquiryMessageDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientEnquiryMessageDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientEnquiryMessageClient<runtime.Types.Result.GetResult<Prisma.$ClientEnquiryMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   admin<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  enquiry<T extends Prisma.ClientEnquiryMessageDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientEnquiryMessageDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientEnquiryMessageClient<runtime.Types.Result.GetResult<Prisma.$ClientEnquiryMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

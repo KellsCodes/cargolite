@@ -19,6 +19,7 @@ export interface ShipmentData {
     trackingHistory: TrackingEvent[];
     sender: { name: string };
     receiver: { name: string };
+    packageCount: number;
     // Using [key: string]: any allows the "more later" fields to be added
     [key: string]: any;
 }

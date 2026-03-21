@@ -232,8 +232,8 @@ export type AdminMessageWhereInput = {
   recipientId?: Prisma.IntFilter<"AdminMessage"> | number
   adminId?: Prisma.IntFilter<"AdminMessage"> | number
   createdAt?: Prisma.DateTimeFilter<"AdminMessage"> | Date | string
-  recipient?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   admin?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  recipient?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   attachmentsUrls?: Prisma.AdminMessageAttachmentListRelationFilter
 }
 
@@ -244,8 +244,8 @@ export type AdminMessageOrderByWithRelationInput = {
   recipientId?: Prisma.SortOrder
   adminId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  recipient?: Prisma.ClientOrderByWithRelationInput
   admin?: Prisma.UserOrderByWithRelationInput
+  recipient?: Prisma.ClientOrderByWithRelationInput
   attachmentsUrls?: Prisma.AdminMessageAttachmentOrderByRelationAggregateInput
   _relevance?: Prisma.AdminMessageOrderByRelevanceInput
 }
@@ -260,8 +260,8 @@ export type AdminMessageWhereUniqueInput = Prisma.AtLeast<{
   recipientId?: Prisma.IntFilter<"AdminMessage"> | number
   adminId?: Prisma.IntFilter<"AdminMessage"> | number
   createdAt?: Prisma.DateTimeFilter<"AdminMessage"> | Date | string
-  recipient?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   admin?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  recipient?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   attachmentsUrls?: Prisma.AdminMessageAttachmentListRelationFilter
 }, "id">
 
@@ -295,8 +295,8 @@ export type AdminMessageCreateInput = {
   subject: string
   body: string
   createdAt?: Date | string
-  recipient: Prisma.ClientCreateNestedOneWithoutReceivedMessagesInput
   admin: Prisma.UserCreateNestedOneWithoutSentMessagesInput
+  recipient: Prisma.ClientCreateNestedOneWithoutReceivedMessagesInput
   attachmentsUrls?: Prisma.AdminMessageAttachmentCreateNestedManyWithoutAdminMessageInput
 }
 
@@ -314,8 +314,8 @@ export type AdminMessageUpdateInput = {
   subject?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  recipient?: Prisma.ClientUpdateOneRequiredWithoutReceivedMessagesNestedInput
   admin?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
+  recipient?: Prisma.ClientUpdateOneRequiredWithoutReceivedMessagesNestedInput
   attachmentsUrls?: Prisma.AdminMessageAttachmentUpdateManyWithoutAdminMessageNestedInput
 }
 
@@ -613,8 +613,8 @@ export type AdminMessageCreateWithoutAttachmentsUrlsInput = {
   subject: string
   body: string
   createdAt?: Date | string
-  recipient: Prisma.ClientCreateNestedOneWithoutReceivedMessagesInput
   admin: Prisma.UserCreateNestedOneWithoutSentMessagesInput
+  recipient: Prisma.ClientCreateNestedOneWithoutReceivedMessagesInput
 }
 
 export type AdminMessageUncheckedCreateWithoutAttachmentsUrlsInput = {
@@ -646,8 +646,8 @@ export type AdminMessageUpdateWithoutAttachmentsUrlsInput = {
   subject?: Prisma.StringFieldUpdateOperationsInput | string
   body?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  recipient?: Prisma.ClientUpdateOneRequiredWithoutReceivedMessagesNestedInput
   admin?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
+  recipient?: Prisma.ClientUpdateOneRequiredWithoutReceivedMessagesNestedInput
 }
 
 export type AdminMessageUncheckedUpdateWithoutAttachmentsUrlsInput = {
@@ -763,8 +763,8 @@ export type AdminMessageSelect<ExtArgs extends runtime.Types.Extensions.Internal
   recipientId?: boolean
   adminId?: boolean
   createdAt?: boolean
-  recipient?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   admin?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  recipient?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   attachmentsUrls?: boolean | Prisma.AdminMessage$attachmentsUrlsArgs<ExtArgs>
   _count?: boolean | Prisma.AdminMessageCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["adminMessage"]>
@@ -782,8 +782,8 @@ export type AdminMessageSelectScalar = {
 
 export type AdminMessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "subject" | "body" | "recipientId" | "adminId" | "createdAt", ExtArgs["result"]["adminMessage"]>
 export type AdminMessageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  recipient?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   admin?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  recipient?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   attachmentsUrls?: boolean | Prisma.AdminMessage$attachmentsUrlsArgs<ExtArgs>
   _count?: boolean | Prisma.AdminMessageCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -791,8 +791,8 @@ export type AdminMessageInclude<ExtArgs extends runtime.Types.Extensions.Interna
 export type $AdminMessagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AdminMessage"
   objects: {
-    recipient: Prisma.$ClientPayload<ExtArgs>
     admin: Prisma.$UserPayload<ExtArgs>
+    recipient: Prisma.$ClientPayload<ExtArgs>
     attachmentsUrls: Prisma.$AdminMessageAttachmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1142,8 +1142,8 @@ readonly fields: AdminMessageFieldRefs;
  */
 export interface Prisma__AdminMessageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  recipient<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   admin<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  recipient<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   attachmentsUrls<T extends Prisma.AdminMessage$attachmentsUrlsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AdminMessage$attachmentsUrlsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdminMessageAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

@@ -240,8 +240,8 @@ export type TrackingHistoryWhereInput = {
   updatedById?: Prisma.IntFilter<"TrackingHistory"> | number
   shipmentId?: Prisma.IntFilter<"TrackingHistory"> | number
   createdAt?: Prisma.DateTimeFilter<"TrackingHistory"> | Date | string
-  updatedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   shipment?: Prisma.XOR<Prisma.ShipmentScalarRelationFilter, Prisma.ShipmentWhereInput>
+  updatedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type TrackingHistoryOrderByWithRelationInput = {
@@ -252,8 +252,8 @@ export type TrackingHistoryOrderByWithRelationInput = {
   updatedById?: Prisma.SortOrder
   shipmentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedBy?: Prisma.UserOrderByWithRelationInput
   shipment?: Prisma.ShipmentOrderByWithRelationInput
+  updatedBy?: Prisma.UserOrderByWithRelationInput
   _relevance?: Prisma.TrackingHistoryOrderByRelevanceInput
 }
 
@@ -268,8 +268,8 @@ export type TrackingHistoryWhereUniqueInput = Prisma.AtLeast<{
   updatedById?: Prisma.IntFilter<"TrackingHistory"> | number
   shipmentId?: Prisma.IntFilter<"TrackingHistory"> | number
   createdAt?: Prisma.DateTimeFilter<"TrackingHistory"> | Date | string
-  updatedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   shipment?: Prisma.XOR<Prisma.ShipmentScalarRelationFilter, Prisma.ShipmentWhereInput>
+  updatedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type TrackingHistoryOrderByWithAggregationInput = {
@@ -305,8 +305,8 @@ export type TrackingHistoryCreateInput = {
   location: string
   notes: string
   createdAt?: Date | string
-  updatedBy: Prisma.UserCreateNestedOneWithoutTrackingUpdatesInput
   shipment: Prisma.ShipmentCreateNestedOneWithoutTrackingHistoryInput
+  updatedBy: Prisma.UserCreateNestedOneWithoutTrackingUpdatesInput
 }
 
 export type TrackingHistoryUncheckedCreateInput = {
@@ -324,8 +324,8 @@ export type TrackingHistoryUpdateInput = {
   location?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedBy?: Prisma.UserUpdateOneRequiredWithoutTrackingUpdatesNestedInput
   shipment?: Prisma.ShipmentUpdateOneRequiredWithoutTrackingHistoryNestedInput
+  updatedBy?: Prisma.UserUpdateOneRequiredWithoutTrackingUpdatesNestedInput
 }
 
 export type TrackingHistoryUncheckedUpdateInput = {
@@ -690,8 +690,8 @@ export type TrackingHistorySelect<ExtArgs extends runtime.Types.Extensions.Inter
   updatedById?: boolean
   shipmentId?: boolean
   createdAt?: boolean
-  updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   shipment?: boolean | Prisma.ShipmentDefaultArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["trackingHistory"]>
 
 
@@ -708,15 +708,15 @@ export type TrackingHistorySelectScalar = {
 
 export type TrackingHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "status" | "location" | "notes" | "updatedById" | "shipmentId" | "createdAt", ExtArgs["result"]["trackingHistory"]>
 export type TrackingHistoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   shipment?: boolean | Prisma.ShipmentDefaultArgs<ExtArgs>
+  updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $TrackingHistoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TrackingHistory"
   objects: {
-    updatedBy: Prisma.$UserPayload<ExtArgs>
     shipment: Prisma.$ShipmentPayload<ExtArgs>
+    updatedBy: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1066,8 +1066,8 @@ readonly fields: TrackingHistoryFieldRefs;
  */
 export interface Prisma__TrackingHistoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  updatedBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   shipment<T extends Prisma.ShipmentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ShipmentDefaultArgs<ExtArgs>>): Prisma.Prisma__ShipmentClient<runtime.Types.Result.GetResult<Prisma.$ShipmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  updatedBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

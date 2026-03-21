@@ -1346,9 +1346,9 @@ export const UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   role: 'role',
-  isVerified: 'isVerified',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  isVerified: 'isVerified'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -1399,11 +1399,11 @@ export const InvoiceScalarFieldEnum = {
   transactionID: 'transactionID',
   amount: 'amount',
   paymentMethod: 'paymentMethod',
-  payerRole: 'payerRole',
-  invoiceStatus: 'invoiceStatus',
-  clientId: 'clientId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  clientId: 'clientId',
+  payerRole: 'payerRole',
+  invoiceStatus: 'invoiceStatus'
 } as const
 
 export type InvoiceScalarFieldEnum = (typeof InvoiceScalarFieldEnum)[keyof typeof InvoiceScalarFieldEnum]
@@ -1423,7 +1423,8 @@ export const ShipmentScalarFieldEnum = {
   receiverId: 'receiverId',
   invoiceId: 'invoiceId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  packageCount: 'packageCount'
 } as const
 
 export type ShipmentScalarFieldEnum = (typeof ShipmentScalarFieldEnum)[keyof typeof ShipmentScalarFieldEnum]
@@ -1457,10 +1458,10 @@ export type AdminMessageScalarFieldEnum = (typeof AdminMessageScalarFieldEnum)[k
 export const AdminMessageAttachmentScalarFieldEnum = {
   id: 'id',
   url: 'url',
-  fileType: 'fileType',
-  fileName: 'fileName',
   adminMessageId: 'adminMessageId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  fileName: 'fileName',
+  fileType: 'fileType'
 } as const
 
 export type AdminMessageAttachmentScalarFieldEnum = (typeof AdminMessageAttachmentScalarFieldEnum)[keyof typeof AdminMessageAttachmentScalarFieldEnum]

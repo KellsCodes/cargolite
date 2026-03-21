@@ -3,9 +3,11 @@ import { ArrowLeft, Box, CheckCircle2, ChevronDown, ChevronUp, CircleDot, Flag, 
 import Link from "next/link";
 import { MapPoint } from "./ShipmentMap";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ShipmentData } from "../types/shipment";
 import { ShipmentStatus } from "@/generated/prisma/enums";
+import { getCoordsFromAddress } from "../api/utils/MapPointCordinates";
+import VividLoader from "../components/LoadingDots";
 
 const ShipmentMap = dynamic(() => import('./ShipmentMap'), {
     ssr: false,
@@ -28,9 +30,12 @@ const getProgress = (status: ShipmentStatus) => {
 
 
 export default function TrackData({ data }: { data: ShipmentData | null }) {
-    const originCoords: MapPoint = [37.422, -122.084];
-    const currentCoords: MapPoint = [53.381, -1.470];
-    const destinationCoords: MapPoint = [51.519, -0.127];
+    // const originCoords: MapPoint = [37.422, -122.084];
+    // const currentCoords: MapPoint = [53.381, -1.470];
+    // const destinationCoords: MapPoint = [51.519, -0.127];
+    const [originCoords, setOriginCoords] = useState<MapPoint | null>(null)
+    const [currentCoords, setCurrentCoords] = useState<MapPoint | null>(null)
+    const [destinationCoords, setDestinationCoords] = useState<MapPoint | null>(null)
     const currentStatus = data?.trackingHistory[0]?.status;
     const currentUpdate = data?.trackingHistory?.[0];
     const { label, color, message } = getStatusDisplay(
@@ -39,6 +44,26 @@ export default function TrackData({ data }: { data: ShipmentData | null }) {
         data?.pickupLocation || "Origin"
     );
 
+    useEffect(() => {
+        // Item shipping location
+        if (data?.pickupLocation) {
+            getCoordsFromAddress(data?.pickupLocation).then(coords => {
+                if (coords) setOriginCoords(coords)
+            })
+        }
+        // Item shipping destination
+        if (data?.dropLocation) {
+            getCoordsFromAddress(data?.dropLocation).then(coords => {
+                if (coords) setDestinationCoords(coords)
+            })
+        }
+        // Current Item location
+        if (data?.trackingHistory[0]?.location) {
+            getCoordsFromAddress(data?.trackingHistory[0]?.location).then(coords => {
+                if (coords) setCurrentCoords(coords)
+            })
+        }
+    }, [])
     return (
         <div className="space-y-10 pb-20">
             {/* Top Navigation */}
@@ -118,13 +143,17 @@ export default function TrackData({ data }: { data: ShipmentData | null }) {
                 <div className="lg:col-span-8 space-y-8">
                     {/* Map */}
                     <div className="bg-white border border-slate-200 rounded-[2.5rem] shadow-sm overflow-hidden h-[500px]">
-                        <ShipmentMap origin={originCoords} current={currentCoords} destination={destinationCoords} />
+                        {originCoords && currentCoords && destinationCoords ?
+                            <ShipmentMap origin={originCoords} current={currentCoords} destination={destinationCoords} />
+                            :
+                            <VividLoader />
+                        }
                     </div>
 
                     {/* Party Details */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <PartyCard type="Sender" name="Joshua Nikeldon" location="Leeds, United Kingdom" />
-                        <PartyCard type="Receiver" name="Alex Smith" location="London, United Kingdom" />
+                        <PartyCard type="Sender" name={data?.sender.name} location={data?.dropLocation} />
+                        <PartyCard type="Receiver" name={data?.receiver.name} location={data?.pickupLocation} />
                     </div>
 
                     {/* Specs */}
@@ -133,10 +162,10 @@ export default function TrackData({ data }: { data: ShipmentData | null }) {
                             <Box className="w-4 h-4" /> Package Specifications
                         </h3>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                            <SpecItem icon={<Box className="w-4 h-4" />} label="Item Count" value="12 Packages" />
-                            <SpecItem icon={<Scale className="w-4 h-4" />} label="Total Weight" value="45.50 kg" />
+                            <SpecItem icon={<Box className="w-4 h-4" />} label="Item Count" value={`${data?.packageCount} Package${data?.packageCount && data?.packageCount > 1 ? "s" : ""}`} />
+                            <SpecItem icon={<Scale className="w-4 h-4" />} label="Total Weight" value={`${data?.weight}kg`} />
                             <SpecItem icon={<Ruler className="w-4 h-4" />} label="Dimensions" value="120 x 80 x 60 cm" />
-                            <SpecItem icon={<Truck className="w-4 h-4" />} label="Service" value="Express" highlight />
+                            <SpecItem icon={<Truck className="w-4 h-4" />} label="Service" value={data?.courierType} highlight />
                         </div>
                     </div>
                 </div>
@@ -220,7 +249,7 @@ function HeroStat({ label, value, icon }: { label: string, value?: string, icon:
     );
 }
 
-function PartyCard({ type, name, location }: { type: string, name: string, location: string }) {
+function PartyCard({ type, name, location }: { type: string, name?: string, location?: string }) {
     return (
         <div className="bg-white border border-slate-200 rounded-3xl p-6 flex items-center gap-5 shadow-sm">
             <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${type === 'Sender' ? 'bg-blue-50 text-blue-600' : 'bg-emerald-50 text-emerald-600'}`}>
@@ -235,7 +264,7 @@ function PartyCard({ type, name, location }: { type: string, name: string, locat
     );
 }
 
-function SpecItem({ icon, label, value, highlight }: { icon: any, label: string, value: string, highlight?: boolean }) {
+function SpecItem({ icon, label, value, highlight }: { icon: any, label: string, value?: string, highlight?: boolean }) {
     return (
         <div className="space-y-2">
             <div className="flex items-center gap-2 text-slate-400">

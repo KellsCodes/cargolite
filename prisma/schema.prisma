@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -11,6 +5,207 @@ generator client {
 
 datasource db {
   provider = "mysql"
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            Int
+  type              String
+  provider          String
+  providerAccoundId String
+  refreshToken      String? @db.Text
+  accessToken       String? @db.Text
+  expiresAt         Int?
+  tokenType         String?
+  scope             String?
+  idToken           String? @db.Text
+  sessionState      String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccoundId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       Int
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model User {
+  id              Int                     @id @default(autoincrement())
+  email           String                  @unique
+  password        String
+  role            Role                    @default(USER)
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+  isVerified      Boolean                 @default(false)
+  accounts        Account[]
+  sentMessages    AdminMessage[]
+  otp             Otp?
+  profile         Profile?
+  replies         RepliedEnquiryMessage[]
+  sessionState    Session[]
+  trackingUpdates TrackingHistory[]
+}
+
+model Otp {
+  id      Int      @id @default(autoincrement())
+  code    String
+  type    OtpType  @default(SIGNUP)
+  expires DateTime
+  userId  Int      @unique
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type])
+}
+
+model Profile {
+  id           Int     @id @default(autoincrement())
+  displayName  String? @db.VarChar(50)
+  firstName    String  @db.VarChar(50)
+  lastName     String  @db.VarChar(50)
+  region       String  @map("country")
+  city         String?
+  postalCode   String? @db.VarChar(20)
+  telephone    String? @db.VarChar(20)
+  profileImage String? @db.Text
+  userId       Int     @unique
+  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Client {
+  id                Int            @id @default(autoincrement())
+  name              String         @db.VarChar(150)
+  email             String         @unique @db.VarChar(100)
+  telephone         String?        @db.VarChar(20)
+  clientType        ClientType
+  status            Int            @default(1)
+  createdAt         DateTime       @default(now())
+  receivedMessages  AdminMessage[]
+  invoices          Invoice[]
+  receivedShipments Shipment[]     @relation("ReceivedShipments")
+  sentShipments     Shipment[]     @relation("SentShipments")
+}
+
+model Invoice {
+  id            Int           @id @default(autoincrement())
+  transactionID String        @unique @db.VarChar(250)
+  amount        Decimal       @db.Decimal(10, 2)
+  paymentMethod String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  clientId      Int
+  payerRole     ClientType    @default(SENDER)
+  invoiceStatus InvoiceStatus @default(UNPAID)
+  client        Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  shipment      Shipment?
+
+  @@index([clientId], map: "Invoice_clientId_fkey")
+}
+
+model Shipment {
+  id              Int               @id @default(autoincrement())
+  shipmentID      String            @unique @db.VarChar(50)
+  weight          Float
+  packageType     PackageType
+  courierType     CourierType
+  packageImage    String?           @db.VarChar(255)
+  dropLocation    String            @db.VarChar(150)
+  pickupLocation  String            @db.VarChar(150)
+  arrival         DateTime
+  senderId        Int
+  receiverId      Int
+  invoiceId       Int               @unique
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  packageCount    Int               @default(1)
+  invoice         Invoice           @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  receiver        Client            @relation("ReceivedShipments", fields: [receiverId], references: [id], onDelete: Cascade)
+  sender          Client            @relation("SentShipments", fields: [senderId], references: [id], onDelete: Cascade)
+  trackingHistory TrackingHistory[]
+
+  @@index([senderId])
+  @@index([receiverId])
+  @@index([createdAt])
+}
+
+model TrackingHistory {
+  id          Int            @id @default(autoincrement())
+  status      ShipmentStatus @default(PICKED_UP)
+  location    String         @db.VarChar(150)
+  notes       String         @db.Text
+  updatedById Int
+  shipmentId  Int
+  createdAt   DateTime       @default(now())
+  shipment    Shipment       @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+  updatedBy   User           @relation(fields: [updatedById], references: [id])
+
+  @@index([shipmentId])
+  @@index([updatedById])
+  @@index([createdAt])
+}
+
+model AdminMessage {
+  id              Int                      @id @default(autoincrement())
+  subject         String                   @db.VarChar(200)
+  body            String                   @db.Text
+  recipientId     Int
+  adminId         Int
+  createdAt       DateTime                 @default(now())
+  admin           User                     @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  recipient       Client                   @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+  attachmentsUrls AdminMessageAttachment[]
+
+  @@index([recipientId])
+  @@index([adminId])
+}
+
+model AdminMessageAttachment {
+  id             Int                 @id @default(autoincrement())
+  url            String              @db.Text
+  adminMessageId Int
+  createdAt      DateTime            @default(now())
+  fileName       String?
+  fileType       EmailAttachmentType
+  adminMessage   AdminMessage        @relation(fields: [adminMessageId], references: [id], onDelete: Cascade)
+
+  @@index([adminMessageId])
+}
+
+model ClientEnquiryMessage {
+  id            Int                     @id @default(autoincrement())
+  subject       String                  @db.VarChar(200)
+  body          String                  @db.Text
+  senderEmail   String                  @db.VarChar(200)
+  senderName    String                  @db.VarChar(200)
+  messageStatus Int                     @default(1)
+  packageHeight String?
+  packageWeight String?
+  createdAt     DateTime                @default(now())
+  replies       RepliedEnquiryMessage[]
+
+  @@index([messageStatus])
+  @@index([senderEmail])
+}
+
+model RepliedEnquiryMessage {
+  id                     Int                  @id @default(autoincrement())
+  body                   String               @db.Text
+  clientEnquiryMessageId Int
+  adminId                Int
+  createdAt              DateTime             @default(now())
+  admin                  User                 @relation(fields: [adminId], references: [id])
+  enquiry                ClientEnquiryMessage @relation(fields: [clientEnquiryMessageId], references: [id], onDelete: Cascade)
+
+  @@index([clientEnquiryMessageId])
+  @@index([adminId])
 }
 
 enum Role {
@@ -65,226 +260,4 @@ enum InvoiceStatus {
   UNPAID
   REFUND
   OVERDUE
-}
-
-model Account {
-  id            String    @id   @default(cuid())
-  userId        Int
-  type          String
-  provider      String
-  providerAccoundId String
-  refreshToken  String?   @db.Text
-  accessToken   String?   @db.Text
-  expiresAt     Int?
-  tokenType     String?
-  scope         String?
-  idToken       String?   @db.Text
-  sessionState  String?
-
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccoundId])
-  @@index([userId])
-}
-
-model Session {
-  id            String    @id  @default(cuid())
-  sessionToken  String    @unique
-  userId        Int
-  expires       DateTime
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-}
-
-model User {
-  id            Int       @id   @default(autoincrement())
-  email         String    @unique
-  password      String  
-  role          Role      @default(USER)
-  isVerified    Boolean   @default(false)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  profile       Profile?
-  otp           Otp?
-
-  accounts      Account[]
-  sessionState  Session[]
-  trackingUpdates TrackingHistory[]
-  sentMessages  AdminMessage[]
-  replies       RepliedEnquiryMessage[]
-}
-
-model Otp {
-  id            Int       @id   @default(autoincrement())
-  code          String
-  type          OtpType   @default(SIGNUP)
-  expires       DateTime
-  userId        Int       @unique
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId, type])
-}
-
-model Profile {
-  id            Int       @id   @default(autoincrement())
-  displayName   String?   @db.VarChar(50)
-  firstName     String    @db.VarChar(50)
-  lastName      String    @db.VarChar(50)
-  region        String    @map("country") // Maps code variable to 'country' column
-  city          String?
-  postalCode    String?   @db.VarChar(20)
-  telephone     String?   @db.VarChar(20)
-  profileImage  String?   @db.Text // Text type for long URLs/Base64
-
-  // Relationship to User
-  userId        Int       @unique
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-}
-
-model Client {
-  id          Int        @id @default(autoincrement())
-  name        String     @db.VarChar(150)
-  email       String     @unique @db.VarChar(100) // Added @unique for lookups
-  telephone   String?    @db.VarChar(20)
-  clientType  ClientType
-  status      Int        @default(1) // 1=active, 2=inactive, 3=suspended
-  createdAt   DateTime   @default(now())
-  
-  // Relations
-  sentShipments     Shipment[] @relation("SentShipments")
-  receivedShipments Shipment[] @relation("ReceivedShipments")
-  invoices          Invoice[]
-  receivedMessages  AdminMessage[]
-}
-
-model Invoice {
-  id            Int       @id @default(autoincrement())
-  transactionID String    @unique @db.VarChar(250)
-  amount        Decimal   @db.Decimal(10, 2)
-  paymentMethod String
-  payerRole     ClientType @default(SENDER) // Track who is responsible
-  invoiceStatus InvoiceStatus @default(UNPAID)
-  
-  // The Client linked here is the one who PAID
-  clientId      Int
-  client        Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  
-  shipment      Shipment? 
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-}
-
-model Shipment {
-  id             Int         @id @default(autoincrement())
-  shipmentID     String      @unique @db.VarChar(50)
-  weight         Float
-  packageType    PackageType
-  courierType    CourierType
-  packageImage   String?     @db.VarChar(255) // Increased to 255 for Cloudinary URLs
-  dropLocation   String      @db.VarChar(150)
-  pickupLocation String      @db.VarChar(150)
-  arrival        DateTime
-  
-  // Relations
-  senderId       Int
-  sender         Client      @relation("SentShipments", fields: [senderId], references: [id], onDelete: Cascade)
-  receiverId     Int
-  receiver       Client      @relation("ReceivedShipments", fields: [receiverId], references: [id], onDelete: Cascade)
-  
-  invoiceId      Int         @unique
-  invoice        Invoice     @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
-
-  trackingHistory TrackingHistory[]
-
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
-
-  @@index([senderId])
-  @@index([receiverId])
-  @@index([createdAt])
-}
-
-model TrackingHistory {
-  id            Int         @id  @default(autoincrement())
-  status        ShipmentStatus   @default(PICKED_UP)
-  location      String      @db.VarChar(150)
-  notes         String      @db.Text
-
-  // Who performed the update?
-  updatedById   Int
-  updatedBy     User        @relation(fields: [updatedById], references: [id])
-
-  // Link to Shipment
-  shipmentId    Int
-  shipment      Shipment    @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
-  
-  createdAt     DateTime    @default(now())
-
-  @@index([shipmentId])
-  @@index([updatedById])
-  @@index([createdAt])
-}
-
-model AdminMessage {
-  id             Int        @id @default(autoincrement())
-  subject        String     @db.VarChar(200)
-  body           String     @db.Text
-  recipientId    Int
-  recipient      Client     @relation(fields: [recipientId], references: [id], onDelete: Cascade)
-  adminId        Int
-  admin          User       @relation(fields: [adminId], references: [id], onDelete: Cascade)
-  createdAt      DateTime   @default(now())
-
-  attachmentsUrls AdminMessageAttachment[]
-
-  @@index([recipientId])
-  @@index([adminId])
-}
-
-model AdminMessageAttachment {
-  id             Int        @id @default(autoincrement())
-  url            String     @db.Text
-  fileType       EmailAttachmentType
-  fileName       String?
-  adminMessageId Int
-  adminMessage   AdminMessage @relation(fields: [adminMessageId], references: [id], onDelete: Cascade)
-  createdAt      DateTime   @default(now())
-
-  @@index([adminMessageId])
-}
-
-model ClientEnquiryMessage {
-  id             Int                     @id @default(autoincrement())
-  subject        String                  @db.VarChar(200)
-  body           String                  @db.Text
-  senderEmail    String                  @db.VarChar(200)
-  senderName     String                  @db.VarChar(200)
-  messageStatus  Int                     @default(1) // 1=unread, 2=read, 3=replied
-  packageHeight  String?
-  packageWeight  String?
-  createdAt      DateTime                @default(now())
-  
-  replies        RepliedEnquiryMessage[]
-
-  @@index([messageStatus])
-  @@index([senderEmail])
-}
-
-model RepliedEnquiryMessage {
-  id                     Int                  @id @default(autoincrement())
-  body                   String               @db.Text
-  clientEnquiryMessageId Int
-  enquiry                ClientEnquiryMessage @relation(fields: [clientEnquiryMessageId], references: [id], onDelete: Cascade)
-  
-  // Track who replied
-  adminId                Int
-  admin                  User                 @relation(fields: [adminId], references: [id])
-  
-  createdAt              DateTime             @default(now())
-
-  @@index([clientEnquiryMessageId])
-  @@index([adminId])
 }
