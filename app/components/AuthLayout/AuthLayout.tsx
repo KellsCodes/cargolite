@@ -11,7 +11,7 @@ interface AuthLayoutProps {
 }
 
 export default async function AuthLayout({ children }: AuthLayoutProps) {
-    await getRequiredSession()
+    const userSession = await getRequiredSession()
 
-    return <Layout children={children} />
+    return <Layout children={children} userSession={userSession} />
 }
