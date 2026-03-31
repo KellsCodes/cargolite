@@ -1,5 +1,5 @@
 import AddShipmentBtn from "../components/AddShipment";
-import AuthLayout from "../components/AuthLayout";
+import AuthLayout from "../components/AuthLayout/AuthLayout";
 import TransactionsTable from "./TransactionsTable";
 
 export default function Customers() {

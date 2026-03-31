@@ -1,5 +1,5 @@
 import { ArrowDown, OctagonAlert, PackageCheck, Plus, Upload } from "lucide-react";
-import AuthLayout from "../components/AuthLayout";
+import AuthLayout from "../components/AuthLayout/AuthLayout";
 import { statCardData } from "./statCardData";
 import StatCard from "./StatCards";
 import { data } from "./dummyData";

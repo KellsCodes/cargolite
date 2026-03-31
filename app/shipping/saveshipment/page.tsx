@@ -1,5 +1,5 @@
 import Link from "next/link";
-import AuthLayout from "../../components/AuthLayout";
+import AuthLayout from "../../components/AuthLayout/AuthLayout";
 import { ChevronLeft } from "lucide-react";
 import SaveShipmentForm from "./form";
 

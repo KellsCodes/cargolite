@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import AuthLayout from "../components/AuthLayout";
+import AuthLayout from "../components/AuthLayout/AuthLayout";
 import TrackData from "../track-parcel/TrackDetails";
 import TrackingParcel from "../components/TrackParcel";
 import { ShipmentData } from "../types/shipment";

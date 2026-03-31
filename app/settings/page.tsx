@@ -1,4 +1,4 @@
-import AuthLayout from "../components/AuthLayout"
+import AuthLayout from "../components/AuthLayout/AuthLayout"
 import Settings from "./Settings";
 
 export default function AccountSettingsPage() {

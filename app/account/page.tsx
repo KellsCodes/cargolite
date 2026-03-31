@@ -1,4 +1,4 @@
-import AuthLayout from "../components/AuthLayout";
+import AuthLayout from "../components/AuthLayout/AuthLayout";
 import Profile from "./Profile";
 import { User } from "lucide-react";
 

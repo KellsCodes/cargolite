@@ -1,4 +1,4 @@
-import AuthLayout from "../components/AuthLayout";
+import AuthLayout from "../components/AuthLayout/AuthLayout";
 import AdminSupportContent from "./AdminSupportContent";
 import { LifeBuoy, Plus } from "lucide-react";
 // import SupportContent from "./SupportContent";

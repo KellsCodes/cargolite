@@ -49,6 +49,7 @@
     "react-toastify": "^11.0.5",
     "recharts": "2.15.4",
     "resend": "^6.9.1",
+    "server-only": "^0.0.1",
     "sharp": "^0.34.5",
     "slick-carousel": "^1.8.1",
     "tailwind-merge": "^3.4.0",

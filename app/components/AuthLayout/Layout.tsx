@@ -1,20 +1,7 @@
-import React, { ReactNode } from "react";
-import { BellIcon, Search, TextAlignStart } from "lucide-react";
-import { MobileAuthMenu, Sidebar } from "./Sidebar";
-import { auth } from "@/services/auth.service";
-import { redirect } from "next/navigation";
+import { BellIcon, Search } from "lucide-react";
+import { MobileBottomAuthMenu, MobileNav, Sidebar } from "../Sidebar";
 
-interface AuthLayoutProps {
-    children: ReactNode;
-}
-
-export default async function AuthLayout({ children }: AuthLayoutProps) {
-    const session = await auth()
-
-    if (!session) {
-        redirect("/login")
-    }
-
+export default function Layout({ children }: {children: React.ReactNode}) {
     return (
         <div className="h-screen flex flex-col md:flex-row bg-white relative overflow-x-hidden">
             <Sidebar />
@@ -30,9 +17,9 @@ export default async function AuthLayout({ children }: AuthLayoutProps) {
                         />
                     </div>
 
-                    <button className="md:hidden">
-                        <TextAlignStart className="text-black/70" />
-                    </button>
+                    <div className="md:hidden">
+                        <MobileNav />
+                    </div>
 
                     {/* Notification */}
                     <div className="flex items-center gap-x-6">
@@ -59,7 +46,7 @@ export default async function AuthLayout({ children }: AuthLayoutProps) {
             <div className="hidden md:block absolute bottom-0 left-0 right-0 h-12 bg-white" />
 
             {/* Mobile menu */}
-            <MobileAuthMenu />
+            <MobileBottomAuthMenu />
         </div>
     )
 }
