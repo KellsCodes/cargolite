@@ -181,3 +181,12 @@ export const getSingleReply = async (id: number) => {
   }
   return reply;
 };
+
+export const getUnreadMessagesCount = async () => {
+  const count = await prisma.clientEnquiryMessage.count({
+    where: {
+      messageStatus: 1,
+    },
+  });
+  return count;
+};
