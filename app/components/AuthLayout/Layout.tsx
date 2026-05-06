@@ -1,8 +1,9 @@
 "use client"
 import { BellIcon, Search } from "lucide-react";
 import { MobileBottomAuthMenu, MobileNav, Sidebar } from "../Sidebar";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 
 export default function Layout({ children, userSession }: { children: React.ReactNode, userSession: any }) {
     const [notification, setNotification] = useState<number | null>(null)
@@ -38,10 +39,12 @@ export default function Layout({ children, userSession }: { children: React.Reac
                     {/* Notification */}
                     <div className="flex items-center gap-x-6">
                         <div className="w-8 h-8 border border-black/10 rounded-full relative flex items-center justify-center cursor-pointer hover:bg-black/5 transition-colors">
-                            <BellIcon className="w-4 text-black/70" />
+                            <Link href="/messages">
+                                <BellIcon className="w-4 text-black/70" />
+                            </Link>
                             {
                                 notification && notification > 0 ?
-                                    <span className="absolute -top-2 right-0 text-xs bg-white rounded-full text-red-500 p-[3px]">{notification > 100 ? `99+`: notification}</span>
+                                    <span className="absolute -top-2 right-0 text-xs bg-white rounded-full text-red-500 p-[3px]">{notification > 100 ? `99+` : notification}</span>
                                     :
                                     <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border border-white" />
                             }
@@ -50,14 +53,20 @@ export default function Layout({ children, userSession }: { children: React.Reac
                         {/* Welcome Message */}
                         <div className="pl-6 border-l-2 border-black/5 hidden md:flex flex-col justify-center h-10">
                             <p className="text-[10px] uppercase font-bold text-black/40 tracking-widest leading-none">Account</p>
-                            <p className="text-sm font-semibold text-black/80">Hello, {userSession?.user?.name?.split(" ")[0]}</p>
+                            <p className="text-sm font-semibold text-black/80">Hello, {userSession?.name?.split(" ")[0]}</p>
                         </div>
                     </div>
                 </nav>
 
 
                 <main className="hidden md:block p-0 flex-1 min-w-0 bg-[#F4F6F8]/40">
-                    {children}
+                    {React.Children.map(children, child => {
+                        // Check if the child is a valid React element AND NOT a string (like a div/span)
+                        if (React.isValidElement(child) && typeof child.type !== 'string') {
+                            return React.cloneElement(child, { userSession } as any);
+                        }
+                        return child;
+                    })}
                 </main>
 
             </div>

@@ -8,13 +8,23 @@ import RevenueDisplay from "./revenueSummary/RevenueDisplay";
 import LiveTrackingSimulate from "./liveTrackingDisplay/LiveTrackingSimulate";
 import AddShipmentBtn from "../components/AddShipment";
 
-export default function DashBoard() {
+interface UserSession {
+  email: string;
+  name: string;
+  id: string;
+}
+
+interface ChildProps {
+  userSession: UserSession;
+}
+
+export default function DashBoard({ userSession }: ChildProps) {
     return (
         <AuthLayout>
             <div className="p-6">
                 <div className="flex items-center justify-between">
                     <div className="flex flex-col justify-center text-sm gap-y-1 h-12">
-                        <p className="text-xs opacity-60">Hello Joshua Gueye</p>
+                        <p className="text-xs opacity-60">Hello {userSession?.name}</p>
                         <p className="font-medium">Good Morning!</p>
                     </div>
                     <AddShipmentBtn />

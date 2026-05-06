@@ -7,5 +7,9 @@ export async function getRequiredSession() {
   if (!session) {
     redirect("/");
   }
-  return session;
+  return {
+    email: session.user.email,
+    name: session.user.name,
+    id: session.user.id,
+  };
 }
