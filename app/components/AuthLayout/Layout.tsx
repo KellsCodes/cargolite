@@ -2,8 +2,8 @@
 import { BellIcon, Search } from "lucide-react";
 import { MobileBottomAuthMenu, MobileNav, Sidebar } from "../Sidebar";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Link from "next/link";
+import api from "@/lib/axios";
 
 export default function Layout({ children, userSession }: { children: React.ReactNode, userSession: any }) {
     const [notification, setNotification] = useState<number | null>(null)
@@ -11,7 +11,7 @@ export default function Layout({ children, userSession }: { children: React.Reac
     useEffect(() => {
         // Fetch notifications for the user
         const fetchNotifications = async () => {
-            const response = await axios.get(`/api/contact-us/unread`);
+            const response = await api.get(`/contact-us/unread`);
             setNotification(response.data.count);
         };
 
