@@ -21,6 +21,7 @@ import React, { useEffect } from "react";
 import ShipmentChart from "./ShipmentChart";
 import api from "@/lib/axios";
 import { toast } from "react-toastify";
+import { ShipmentStatus } from "@/generated/prisma/enums";
 
 export interface ShipmentData {
     date: string;
@@ -40,8 +41,9 @@ const defaultShipmentData: ShipmentData[] = [
 
 export default function ShipmentAnalytics() {
     // Separate states for the actual values
-    const [from, setFrom] = React.useState(addMonths(new Date(), -1))
-    const [to, setTo] = React.useState((new Date()))
+    const [from, setFrom] = React.useState(addMonths(new Date(), -5)) // previous 6 months
+    const [to, setTo] = React.useState((new Date())) // current month
+    const [status, setStatus] = React.useState("all")
 
     // Separate states for the "Display" month of each calendar
     const [fromDisplay, setFromDisplay] = React.useState(from)
@@ -49,20 +51,25 @@ export default function ShipmentAnalytics() {
 
     const [shipmentAnalytics, setShipmentAnalytics] = React.useState<(ShipmentData[])>(defaultShipmentData)
 
+    const fetchShipmentAnalyticsData = async () => {
+        const params: Record<string, string> = {};
+        if (from) params.start = format(from, "yyyy-MM-dd");
+        if (to) params.end = format(to, "yyyy-MM-dd");
+        if (status && status !== "all") params.status = status;
+
+        const response = await api.get(`/dashboard-stat/shipment`, { params });
+        if (response.status === 200) {
+            setShipmentAnalytics(() => response.data.map((item: ShipmentData) => ({
+                date: `${item.year}-${String(item.month).padStart(2, "0")}-01`,
+                count: item.count
+            })));
+        } else {
+            toast.error("Failed to fetch shipment analytics data");
+        }
+    };
     useEffect(() => {
-        const fetchShipmentAnalyticsData = async () => {
-            const response = await api.get(`/dashboard-stat/shipment`);
-            if (response.status === 200) {
-                setShipmentAnalytics(() => response.data.map((item: ShipmentData) => ({
-                    date: `${item.year}-${String(item.month).padStart(2, "0")}-01`,
-                    count: item.count
-                })));
-            } else {
-                toast.error("Failed to fetch shipment analytics data");
-            }
-        };
         fetchShipmentAnalyticsData();
-    }, [])
+    }, [status])
     return (
         <div className="p-6">
             <div className="flex items-center justify-between mb-6">
@@ -136,17 +143,39 @@ export default function ShipmentAnalytics() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent onCloseAutoFocus={(e) => e.preventDefault()}>
                             <DropdownMenuGroup>
-                                <DropdownMenuItem>Total delivery</DropdownMenuItem>
-                                <DropdownMenuItem>In Transit</DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => setStatus("all")}
+                                    className={status === "all" ? "bg-accent font-medium" : ""}
+                                >
+                                    All Shipments
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => setStatus(ShipmentStatus.DELIVERED)}
+                                    className={status === ShipmentStatus.DELIVERED ? "bg-accent font-medium" : ""}
+                                >
+                                    Total delivery
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => setStatus(ShipmentStatus.IN_TRANSIT)}
+                                    className={status === ShipmentStatus.IN_TRANSIT ? "bg-accent font-medium" : ""}
+                                >
+                                    In Transit
+                                </DropdownMenuItem>
                             </DropdownMenuGroup>
                             <DropdownMenuGroup>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem>Cancelled</DropdownMenuItem>
-                                <DropdownMenuItem>Returned</DropdownMenuItem>
-                            </DropdownMenuGroup>
-                            <DropdownMenuGroup>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>Revenue</DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => setStatus(ShipmentStatus.CANCELLED)}
+                                    className={status === ShipmentStatus.CANCELLED ? "bg-accent font-medium" : ""}
+                                >
+                                    Cancelled
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => setStatus(ShipmentStatus.RETURNED)}
+                                    className={status === ShipmentStatus.RETURNED ? "bg-accent font-medium" : ""}
+                                >
+                                    Returned
+                                </DropdownMenuItem>
                             </DropdownMenuGroup>
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -154,7 +183,7 @@ export default function ShipmentAnalytics() {
 
                 </div>
             </div>
-            {/* <ShipmentChart /> */}
+
             <ShipmentChart data={shipmentAnalytics} />
         </div>
     )
