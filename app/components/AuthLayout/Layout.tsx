@@ -18,7 +18,7 @@ export default function Layout({ children, userSession }: { children: React.Reac
         fetchNotifications();
     }, [])
     return (
-        <div className="h-screen flex flex-col md:flex-row bg-white relative overflow-x-hidden">
+        <div className="h-screen flex flex-col md:flex-row bg-white relative overflow-hidden">
             <Sidebar />
             <div className="flex-1 flex flex-col min-w-0">
                 <nav className="h-16 shrink-0 border-b-3 border-b-black/3 flex items-center justify-between px-4 md:px-6 bg-white">
@@ -59,7 +59,7 @@ export default function Layout({ children, userSession }: { children: React.Reac
                 </nav>
 
 
-                <main className="hidden md:block p-0 flex-1 min-w-0 bg-[#F4F6F8]/40">
+                <main className="p-0 flex-1 min-w-0 bg-[#F4F6F8]/40">
                     {React.Children.map(children, child => {
                         // Check if the child is a valid React element AND NOT a string (like a div/span)
                         if (React.isValidElement(child) && typeof child.type !== 'string') {
@@ -71,7 +71,9 @@ export default function Layout({ children, userSession }: { children: React.Reac
 
             </div>
 
-            <div className="hidden md:block absolute bottom-0 left-0 right-0 h-12 bg-white" />
+            <div className="hidden md:block absolute bottom-0 left-20 2xl:left-64 right-0 h-12 bg-white border-t border-t-2 border-t-black/8">
+
+            </div>
 
             {/* Mobile menu */}
             <MobileBottomAuthMenu />
