@@ -12,24 +12,57 @@ import {
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { format, addMonths } from "date-fns"
+import { format, addMonths, startOfMonth } from "date-fns"
 import { CalendarIcon } from "lucide-react"
-import React from "react";
+import React, { useEffect } from "react";
 import ShipmentChart from "./ShipmentChart";
+import api from "@/lib/axios";
+import { toast } from "react-toastify";
+
+export interface ShipmentData {
+    date: string;
+    count: number;
+    month: number;
+    year: number;
+}
+
+const defaultShipmentData: ShipmentData[] = [
+    {
+        date: format(startOfMonth(new Date()), "yyyy-MM-dd"),
+        count: 0,
+        month: new Date().getMonth() + 1,
+        year: new Date().getFullYear()
+    },
+];
 
 export default function ShipmentAnalytics() {
-    // 1. Separate states for the actual values
+    // Separate states for the actual values
     const [from, setFrom] = React.useState(addMonths(new Date(), -1))
     const [to, setTo] = React.useState((new Date()))
 
-    // 2. Separate states for the "Display" month of each calendar
+    // Separate states for the "Display" month of each calendar
     const [fromDisplay, setFromDisplay] = React.useState(from)
     const [toDisplay, setToDisplay] = React.useState(to)
 
+    const [shipmentAnalytics, setShipmentAnalytics] = React.useState<(ShipmentData[])>(defaultShipmentData)
+
+    useEffect(() => {
+        const fetchShipmentAnalyticsData = async () => {
+            const response = await api.get(`/dashboard-stat/shipment`);
+            if (response.status === 200) {
+                setShipmentAnalytics(() => response.data.map((item: ShipmentData) => ({
+                    date: `${item.year}-${String(item.month).padStart(2, "0")}-01`,
+                    count: item.count
+                })));
+            } else {
+                toast.error("Failed to fetch shipment analytics data");
+            }
+        };
+        fetchShipmentAnalyticsData();
+    }, [])
     return (
         <div className="p-6">
             <div className="flex items-center justify-between mb-6">
@@ -37,7 +70,7 @@ export default function ShipmentAnalytics() {
                     <span className="border-main-primary/30 bg-main-primary/3 p-1 h-8 w-9 rounded flex items-center justify-center">
                         <ChartNoAxesColumnIncreasing className="w-4 stroke-3 text-blue-600" />
                     </span>
-                    <span>
+                    <span className="text-sm md:text-medium end">
                         Shipment Analytics
                     </span>
                 </h1>
@@ -47,8 +80,10 @@ export default function ShipmentAnalytics() {
                         <Popover>
                             <PopoverTrigger asChild>
                                 <Button variant="outline" className="justify-start text-left">
-                                    <CalendarIcon className="mr-2 h-4 w-4" />
-                                    {format(from, "MMM yyyy")} - {format(to, "MMM yyyy")}
+                                    <CalendarIcon className="xl:mr-2 h-4 w-4" />
+                                    <span className="hidden xl:inline-block">
+                                        {format(from, "MMM yyyy")} - {format(to, "MMM yyyy")}
+                                    </span>
                                     <ChevronUp className="rotate-180 w-4" />
                                 </Button>
                             </PopoverTrigger>
@@ -101,7 +136,6 @@ export default function ShipmentAnalytics() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent onCloseAutoFocus={(e) => e.preventDefault()}>
                             <DropdownMenuGroup>
-                                <DropdownMenuLabel>Chart filter</DropdownMenuLabel>
                                 <DropdownMenuItem>Total delivery</DropdownMenuItem>
                                 <DropdownMenuItem>In Transit</DropdownMenuItem>
                             </DropdownMenuGroup>
@@ -120,7 +154,8 @@ export default function ShipmentAnalytics() {
 
                 </div>
             </div>
-            <ShipmentChart />
+            {/* <ShipmentChart /> */}
+            <ShipmentChart data={shipmentAnalytics} />
         </div>
     )
 }
