@@ -34,7 +34,7 @@ export default function StatOverview() {
     fetchOverviewStat();
   }, [])
   return (
-    <div className="grid grid-cols-2 2xl:grid-cols-4 gap-x-5 gap-y-5 2xl:gap-y-0 mt-5">
+    <div className="grid grid-cols-2 xl:grid-cols-4 gap-x-5 gap-y-5 2xl:gap-y-0 mt-5">
       {statCardData.map((item, i) => {
         const cardStat = overviewStat[item.id as keyof typeof overviewStat]
         return (
