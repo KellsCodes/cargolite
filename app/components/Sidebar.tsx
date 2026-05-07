@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LogoText from "./LogoText";
 import { authMenu } from "@/lib/authMenu";
-import { X, LogOut, TextAlignStart} from "lucide-react";
+import { X, LogOut, TextAlignStart } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -13,20 +13,25 @@ import { AnimatePresence, motion } from "framer-motion";
 export function Sidebar() {
     const pathname = usePathname();
     return (
-        <aside className="hidden md:block md:w-64 shrink-0 border-r-3 border-r-black/3">
+        <aside className="hidden md:block w-20 lg:w-64 shrink-0 border-r-3 border-r-black/3">
             <div className="h-16 border-b-3 border-b-black/3 flex items-center pl-7">
-                <Link href="/dashboard">
+                <Link href="/dashboard" className="hidden lg:block">
                     <LogoText />
                 </Link>
+                <Link href="/dashboard" className="lg:hidden font-bold text-chart-5">
+                    CA
+                </Link>
             </div>
-            <div className="h-[90%] flex flex-col justify-between">
+            <div className="h-[80%] flex flex-col justify-between">
                 <div className="flex flex-col gap-y-0 p-5 px-0 overflow-y-auto">
                     {
                         authMenu.map((item, i) => (
                             <button key={i} className={`border-l-3 ${!pathname.startsWith(item.link) ? "border-l-white text-black/70" : "border-l-main-primary/70 text-main-primary"}`}>
                                 <Link href={item.link} className={`flex items-center gap-x-2 h-13 pl-6 text-sm hover:text-chart-5/90 ${pathname.startsWith(item.link) && "bg-main-primary/2"} transition-all duration-300 ease-in-out`}>
                                     {item.icon}
-                                    {item.name}
+                                    <span className="hidden lg:block">
+                                        {item.name}
+                                    </span>
                                 </Link>
                             </button>
                         ))
@@ -35,7 +40,9 @@ export function Sidebar() {
                 <div className="pl-0">
                     <button onClick={() => signOut({ callbackUrl: "/" })} className="cursor-pointer border-l-3 border-l-white w-full flex items-center gap-x-2 h-13 pl-6 text-sm hover:text-chart-5/90 transition-all duration-300 ease-in-out">
                         <LogOut className="w-5" />
-                        Log Out
+                        <span className="hidden lg:block">
+                            Log Out
+                        </span>
                     </button>
 
                 </div>
