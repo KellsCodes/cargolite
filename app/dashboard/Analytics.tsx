@@ -44,14 +44,20 @@ export default function ShipmentAnalytics() {
     const [from, setFrom] = React.useState(addMonths(new Date(), -5)) // previous 6 months
     const [to, setTo] = React.useState((new Date())) // current month
     const [status, setStatus] = React.useState("all")
-
-    // Separate states for the "Display" month of each calendar
-    const [fromDisplay, setFromDisplay] = React.useState(from)
-    const [toDisplay, setToDisplay] = React.useState(to)
+    const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
 
     const [shipmentAnalytics, setShipmentAnalytics] = React.useState<(ShipmentData[])>(defaultShipmentData)
 
     const fetchShipmentAnalyticsData = async () => {
+        if (format(from, "yyyy-MM") > format(to, "yyyy-MM")) {
+            toast.error("Start date must be before end date");
+            return;
+        }
+        if (format(from, "yyyy-MM") > format(new Date(), "yyyy-MM") ||
+            format(to, "yyyy-MM") > format(new Date(), "yyyy-MM")) {
+            toast.error("Date cannot be in the future");
+            return;
+        }
         const params: Record<string, string> = {};
         if (from) params.start = format(from, "yyyy-MM-dd");
         if (to) params.end = format(to, "yyyy-MM-dd");
@@ -84,7 +90,7 @@ export default function ShipmentAnalytics() {
 
                 <div className="flex items-center gap-2">
                     <div className="grid gap-2">
-                        <Popover>
+                        <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
                             <PopoverTrigger asChild>
                                 <Button variant="outline" className="justify-start text-left">
                                     <CalendarIcon className="xl:mr-2 h-4 w-4" />
@@ -102,13 +108,13 @@ export default function ShipmentAnalytics() {
                                     <span className="text-xs font-semibold text-muted-foreground px-3">FROM</span>
                                     <Calendar
                                         mode="single"
-                                        month={fromDisplay}
+                                        month={from}
                                         onMonthChange={(newMonth) => {
-                                            setFromDisplay(newMonth)
+                                            // setFromDisplay(newMonth)
                                             setFrom(newMonth)
                                         }}
                                         captionLayout="dropdown"
-                                        fromYear={2024}
+                                        fromYear={2020}
                                         toYear={new Date().getFullYear()}
                                     />
                                 </div>
@@ -121,15 +127,28 @@ export default function ShipmentAnalytics() {
                                     <span className="text-xs font-semibold text-muted-foreground px-3">TO</span>
                                     <Calendar
                                         mode="single"
-                                        month={toDisplay}
+                                        month={to}
                                         onMonthChange={(newMonth) => {
-                                            setToDisplay(newMonth)
+                                            // setToDisplay(newMonth)
                                             setTo(newMonth)
                                         }}
                                         captionLayout="dropdown"
-                                        fromYear={2024}
+                                        fromYear={2020}
                                         toYear={new Date().getFullYear()}
                                     />
+                                </div>
+
+                                <div className="mt-2 pt-2 border-t flex justify-end">
+                                    <Button
+                                        size="sm"
+                                        className="w-full mx-auto text-[13px] bg-main-primary hover:bg-main-primary/90 h-10 transition-colors duration-200 ease-in-out"
+                                        onClick={() => {
+                                            fetchShipmentAnalyticsData();
+                                            setIsPopoverOpen(false);
+                                        }}
+                                    >
+                                        Apply Filters
+                                    </Button>
                                 </div>
                             </PopoverContent>
                         </Popover>
