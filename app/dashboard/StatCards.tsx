@@ -27,12 +27,12 @@ export default function StatCard({ item, data }: StatCardProps) {
             <div className="flex items-start justify-between mb-4">
                 <div className="space-y-1">
                     <div className="flex items-center gap-x-1.5">
-                        <span className="text-[13px] font-semibold text-slate-500 tracking-tight uppercase">
+                        <span className="text-[10px] 2xl:text-[13px] font-semibold text-slate-500 tracking-tight uppercase">
                             {item.name}
                         </span>
-                        <OctagonAlert className="w-3.5 h-3.5 text-slate-300 hover:text-slate-400 transition-colors cursor-help" />
+                        <OctagonAlert className="hidden md:inline-block w-3.5 h-3.5 text-slate-300 hover:text-slate-400 transition-colors cursor-help" />
                     </div>
-                    <h3 className="text-2xl font-bold text-slate-900 tracking-tight">
+                    <h3 className="text-md 2xl:text-2xl font-bold text-slate-900 tracking-tight">
                         {data.previousMonth.toLocaleString()}
                     </h3>
                 </div>
