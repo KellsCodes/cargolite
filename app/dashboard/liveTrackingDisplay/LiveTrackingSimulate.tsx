@@ -1,9 +1,11 @@
+import { addMonths, format } from "date-fns";
 import { ArrowRight, MapPin } from "lucide-react";
+import Link from "next/link";
 
 export default function LiveTrackingSimulate() {
     return (
         <div className="w-full h-full p-5 rounded-md relative">
-            <p className="font-medium text-md">Live Tracking Delivery</p>
+            <p className="font-medium text-sm xl:text-md">Live Tracking Delivery</p>
             <div className="my-3">
                 <img src="/tracker.png" alt="tracking_img" loading="lazy" className="rounded" />
             </div>
@@ -11,7 +13,7 @@ export default function LiveTrackingSimulate() {
             <div className="flex items-center justify-between my-5">
                 <div className="space-y-1">
                     <p className="text-xs opacity-60 font-medium">TrackingID</p>
-                    <p className="font-medium text-sm">AWP1234567890</p>
+                    <p className="font-medium text-sm">AWP-1234567890</p>
                 </div>
                 <button className="text-xs h-10 w-22 bg-gray-100/50 rounded-md">
                     On the way
@@ -33,7 +35,7 @@ export default function LiveTrackingSimulate() {
                     </div>
                     <div>
                         <p className="font-medium">Shipping Date</p>
-                        <p className="opacity-50">09/07/2025 - 10:30AM</p>
+                        <p className="opacity-50">{format(new Date(), "dd/MM/yyyy - hh:mma").toUpperCase()}</p>
                     </div>
                 </div>
 
@@ -52,17 +54,20 @@ export default function LiveTrackingSimulate() {
                     </div>
                     <div>
                         <p className="font-medium">Estimated Time Arrival</p>
-                        <p className="opacity-50">09/08/2025 - 08:30AM</p>
+                        <p className="opacity-50">{format(addMonths(new Date(), 1), "dd/MM/yyyy - hh:mma").toUpperCase()}</p>
                     </div>
                 </div>
             </div>
 
 
-            <div className="absolute bottom-6 left-0 right-0 px-5">
-                <button className="h-10 w-full bg-white border rounded-sm text-sm font-medium cursor-pointer hover:opacity-50 transition-all duration-300 ease-in-out">
+            <div className="mt-5 xl:mt-0 xl:absolute bottom-6 left-0 right-0 xl:px-5">
+                <Link
+                    href="/tracking"
+                    className="flex items-center justify-center h-10 w-full bg-white border border-slate-200 rounded-sm text-sm font-medium cursor-pointer hover:opacity-70 transition-all duration-300 ease-in-out"
+                >
                     View details
-                    <ArrowRight className="w-4 inline-block ml-2" />
-                </button>
+                    <ArrowRight className="w-4 ml-2" />
+                </Link>
             </div>
         </div>
     )
