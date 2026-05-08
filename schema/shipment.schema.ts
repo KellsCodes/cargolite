@@ -12,7 +12,7 @@ export const CreateShipmentSchema = z.object({
   // Shipment Details
   weight: z.number().positive("Weight must be greater than 0"),
   packageType: z.enum(["STANDARD", "FRAGILE", "PERISHABLE", "HAZARDOUS"]),
-  packageCount: z.number().positive("Package count must be greater than 0."),
+  packageCount: z.coerce.number().positive("Package count must be greater than 0."),
   courierType: z.enum(["SHIP", "AIRPLANE", "BUS"]),
   packageImage: z.string().url().optional().nullable(),
   dropLocation: z.string().min(5),
