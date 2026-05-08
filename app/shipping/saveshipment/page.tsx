@@ -6,7 +6,7 @@ import SaveShipmentForm from "./form";
 export default function saveShipment() {
     return (
         <AuthLayout>
-            <div className="space-y-6 overflow-hidden">
+            <div className="space-y-6 overflow-hidden p-6">
                 <div>
                     <h1 className="font-semibold">Add New Shipping</h1>
                     <div className="flex items-center gap-x-[2px] text-xs opacity-50">
@@ -17,7 +17,7 @@ export default function saveShipment() {
 
                 </div>
 
-                <div className="h-[74vh] bg-white rounded-lg py-5">
+                <div className="h-[74vh] bg-white rounded-lg py-5i">
                         <SaveShipmentForm />
                     {/* <div className="h-full flex-1 flex flex-col overflow-y-auto">
                     </div> */}
