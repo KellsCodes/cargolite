@@ -1,11 +1,16 @@
 "use client"
 import { useState, useRef } from "react"
-import { UploadCloud, FileText, X } from "lucide-react"
+import { UploadCloud, FileText, X, Form } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Ship, Plane, Bus } from "lucide-react"
 import { format } from "date-fns"
+import { toast } from "react-toastify"
+import axios from "axios"
+import api from "@/lib/axios"
+import { is } from "date-fns/locale"
+import { AnimateSpin } from "@/app/components/AnimateSpin"
 
 interface ShipmentFormData {
     senderName: string;
@@ -24,11 +29,32 @@ interface ShipmentFormData {
     paymentMethod: string;
     payerRole: string;
     packageImage: File | null;
+    packageCount: number;
 }
 
+const fieldLabels: Record<string, string> = {
+    senderName: "Sender's Name",
+    receiverName: "Receiver's Name",
+    senderEmail: "Sender's Email",
+    receiverEmail: "Receiver's Email",
+    senderPhone: "Sender's Phone Number",
+    receiverPhone: "Receiver's Phone Number",
+    weight: "Package Weight",
+    packageType: "Package Type",
+    courierType: "Courier Service",
+    pickupLocation: "Pickup Address",
+    dropLocation: "Destination Address",
+    arrival: "Estimated Arrival Date",
+    amount: "Shipping Amount",
+    payerRole: "Payment Responsibility",
+    packageImage: "Package Image",
+    paymentMethod: "Payment Method",
+    packageCount: "Package Count",
+};
+
 export default function SaveShipmentForm() {
-    const [isDragging, setIsDragging] = useState(false)
-    const fileInputRef = useRef<HTMLInputElement>(null)
+    const [isDragging, setIsDragging] = useState<Boolean>(false)
+    const [isSubmitting, setIsSubmitting] = useState<Boolean>(false)
 
     const [formData, setFormData] = useState<ShipmentFormData>({
         senderName: "",
@@ -37,29 +63,72 @@ export default function SaveShipmentForm() {
         receiverEmail: "",
         senderPhone: "",
         receiverPhone: "",
+        pickupLocation: "",
+        dropLocation: "",
         weight: 0,
         packageType: "",
+        arrival: null as unknown as Date,
         courierType: "",
-        dropLocation: "",
-        pickupLocation: "",
-        arrival: new Date(),
+        packageImage: null,
         amount: 0,
-        paymentMethod: "",
         payerRole: "",
-        packageImage: null
+        paymentMethod: "",
+        packageCount: 1,
     })
 
-    const handleFile = (files: FileList | null) => {
-        const uploadedFile = files?.[0]
-        if (uploadedFile && uploadedFile.type.startsWith("image/")) {
-            // setFile(uploadedFile)
-            setFormData({ ...formData, packageImage: uploadedFile })
-        }
-    }
 
-    const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log(formData)
+        if (isSubmitting) {
+            toast.error("Please hold on, a request is ongoing.");
+            return;
+        }
+
+        const entries = Object.entries(formData)
+        const missingField = entries.find(([key, value]) => !value);
+
+        if (missingField?.length) {
+            toast.error(`Please fill in the ${fieldLabels[missingField[0]]} field.`);
+            return
+        }
+        setIsSubmitting(true)
+        try {
+            const payload = new FormData()
+            entries.forEach(([key, value]) => {
+                if (value instanceof Date) {
+                    payload.append(key, format(value, "yyyy-MM-dd"))
+                }
+                else if (value instanceof File) {
+                    payload.append(key, value);
+                }
+                else {
+                    // Append everything else (strings, numbers) as strings
+                    payload.append(key, String(value));
+                }
+            })
+
+            const response = await api.post("/shipment", payload)
+            if (response.status === 200 || response.status === 201) {
+                toast.success("Shipment created successfully!");
+            }
+
+        } catch (error) {
+            let errorMessage = "An unexpected error occurred";
+
+            // Check if it's an Axios error (if using Axios)
+            if (axios.isAxiosError(error)) {
+                errorMessage = error.response?.data?.message || error.message;
+            }
+            // Check if it's a standard JavaScript Error
+            else if (error instanceof Error) {
+                errorMessage = error.message;
+            }
+
+            toast.error(errorMessage.slice(0, 80));
+
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     return (
@@ -127,7 +196,7 @@ export default function SaveShipmentForm() {
                                         onChange={(e) => setFormData({ ...formData, senderPhone: e.target.value })}
                                         name="senderPhone" value={formData.senderPhone} type="tel"
                                         className="w-full px-4 h-11 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-                                        placeholder="+234..."
+                                        placeholder="Enter sender phone number"
                                     />
                                 </div>
 
@@ -137,7 +206,7 @@ export default function SaveShipmentForm() {
                                         onChange={(e) => setFormData({ ...formData, receiverPhone: e.target.value })}
                                         name="receiverPhone" value={formData.receiverPhone} type="tel"
                                         className="w-full px-4 h-11 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-                                        placeholder="+234..."
+                                        placeholder="Enter receiver phone number"
                                     />
                                 </div>
                             </div>
@@ -192,10 +261,10 @@ export default function SaveShipmentForm() {
                                         className="w-full px-4 h-11 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white"
                                     >
                                         <option value="" disabled hidden>Select type...</option>
-                                        <option value="standard">Standard</option>
-                                        <option value="fragile">Fragile</option>
-                                        <option value="perishable">Perishable</option>
-                                        <option value="hazardous">Hazardous</option>
+                                        <option value="STANDARD">Standard</option>
+                                        <option value="FRAGILE">Fragile</option>
+                                        <option value="PERISHABLE">Perishable</option>
+                                        <option value="HAZARDOUS">Hazardous</option>
                                     </select>
                                 </div>
 
@@ -209,7 +278,7 @@ export default function SaveShipmentForm() {
                                 </div>
 
                                 <div className="space-y-1.5">
-                                    <label className="text-[13px] font-medium text-slate-700">Courier Service</label>
+                                    <label className="text-[13px] font-medium text-slate-700">Courier Service Type</label>
                                     <select
                                         name="courierType" value={formData.courierType}
                                         onChange={e => setFormData({ ...formData, courierType: e.target.value })}
@@ -238,10 +307,10 @@ export default function SaveShipmentForm() {
                                     }}
                                     // Dynamic Styling
                                     className={`relative border-2 p-6 rounded-xl transition-all group ${formData.packageImage
-                                            ? "border-dotted border-green-500 bg-green-50/40"
-                                            : isDragging
-                                                ? "border-solid border-blue-500 bg-blue-50/50"
-                                                : "border-dashed border-slate-200 hover:bg-slate-50"
+                                        ? "border-dotted border-green-500 bg-green-50/40"
+                                        : isDragging
+                                            ? "border-solid border-blue-500 bg-blue-50/50"
+                                            : "border-dashed border-slate-200 hover:bg-slate-50"
                                         }`}
                                 >
                                     <input
@@ -303,19 +372,45 @@ export default function SaveShipmentForm() {
                                         <option value="RECEIVER">Receiver</option>
                                     </select>
                                 </div>
+
+                                <div className="space-y-1.5">
+                                    <label className="text-[13px] font-medium text-slate-700">Select payment option</label>
+                                    <select
+                                        name="paymentMethod" value={formData.paymentMethod}
+                                        onChange={e => setFormData({ ...formData, paymentMethod: e.target.value })}
+                                        className="w-full px-4 h-11 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white"
+                                    >
+                                        <option value="" disabled hidden>Select one...</option>
+                                        <option value="TRANSFER">Transfer</option>
+                                        <option value="POS">POS</option>
+                                    </select>
+                                </div>
+                                <div className="space-y-1.5">
+                                    <label className="text-[13px] font-medium text-slate-700">Package Count</label>
+                                    <input
+                                        onChange={(e) => {
+                                            const val = parseFloat(e.target.value);
+                                            setFormData({ ...formData, packageCount: isNaN(val) ? 0 : val });
+                                        }}
+                                        name="packageCount" value={formData.packageCount} type="number" min={1} step="any"
+                                        className="w-full px-4 h-11 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                                        placeholder="0.00"
+                                    />
+                                </div>
                             </div>
                         </section>
                     </div>
                 </div>
 
                 {/* Sticky Footer Actions, the style errors are intentional to remove the look */}
-                <div className="max-w-5xl mx-auto w-full bg-whitee p-8i rounded-xl borderr border-slate-200 shadow-smk flex justify-end gap-3">
+                <div className="max-w-5xl mx-auto w-full bg-whitee py-4 px-6 lg:px-10 xl:p-0 rounded-xl borderr border-slate-200 shadow-smk flex justify-end gap-3">
                     <button
                         type="submit"
-                        className="px-10 h-11 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-all active:scale-95"
+                        className={`px-10 h-11 text-sm font-medium text-white ${isSubmitting ? "bg-gray-300 cursor-not-allowed " : "bg-main-primary hover:bg-main-primary/70 cursor-pointer"} rounded-lg shadow-sm transition-all active:scale-95`}
                     >
-                        Create Shipment
+                        {isSubmitting ? <AnimateSpin /> : "Create Shipment"}
                     </button>
+
                 </div>
 
             </form>
