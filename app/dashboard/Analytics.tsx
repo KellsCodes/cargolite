@@ -115,7 +115,8 @@ export default function ShipmentAnalytics() {
                                         }}
                                         captionLayout="dropdown"
                                         fromYear={2020}
-                                        toYear={new Date().getFullYear()}
+                                        toMonth={new Date()}
+                                        disabled={(date) => date > new Date()}
                                     />
                                 </div>
                                 <div className="h-[1px] w-full bg-main-primary/10 my-2 " />
@@ -134,7 +135,8 @@ export default function ShipmentAnalytics() {
                                         }}
                                         captionLayout="dropdown"
                                         fromYear={2020}
-                                        toYear={new Date().getFullYear()}
+                                        toMonth={new Date()}
+                                        disabled={(date) => date > new Date()}
                                     />
                                 </div>
 

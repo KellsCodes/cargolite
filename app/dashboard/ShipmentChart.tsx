@@ -133,7 +133,7 @@ export default function ShipmentChart({ data }: { data: ShipmentData[] }) {
                                                 <div className="flex items-center gap-1">
                                                     {/* This creates a small dot that stays left-aligned */}
                                                     <div className="h-2 w-2 rounded-full bg-blue-600" />
-                                                    <span className="text-muted-foreground">{name}</span>
+                                                    <span className="text-muted-foreground">Total Shipments</span>
                                                 </div>
                                                 <span className="font-bold tabular-nums">
                                                     {value}
