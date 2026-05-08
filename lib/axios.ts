@@ -2,18 +2,19 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: "/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 // Interceptor for Error Handling
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Centralized error mapping
+    // Check if error.response exists before accessing data
     const message =
-      error.response?.data?.error || "An unexpected error occurred";
+      error.response?.data?.error ||
+      error.response?.data?.message ||
+      error.message ||
+      "An unexpected error occurred";
+
     return Promise.reject(new Error(message));
   }
 );
