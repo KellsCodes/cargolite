@@ -192,8 +192,11 @@ export const trackShipment = async (shipmentID: string) => {
     where: { shipmentID },
     include: {
       trackingHistory: { orderBy: { createdAt: "desc" } },
-      sender: { select: { name: true } },
-      receiver: { select: { name: true } },
+      sender: { select: { name: true, email: true, telephone: true } },
+      receiver: { select: { name: true, email: true, telephone: true } },
+      invoice: {
+        select: { amount: true, payerRole: true, paymentMethod: true },
+      },
     },
   });
 };
