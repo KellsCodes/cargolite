@@ -15,18 +15,49 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { MoreHorizontalIcon } from "lucide-react"
-import { shippingData } from "./mockdata"
 import { cn } from "@/lib/utils"
+import { Shipment } from "./types"
+import { format } from "date-fns"
+import { ShipmentStatus } from "@/generated/prisma/enums"
+import { useRouter } from "next/navigation" 
+import Link from "next/link"
 
 const statusStyles: Record<string, string> = {
-    "Delivered": "bg-green-100 text-green-700 border-green-200",
-    "In Transit": "bg-blue-100 text-blue-700 border-blue-200",
-    "Pending": "bg-amber-100 text-amber-700 border-amber-200",
-    "Picked Up": "bg-purple-100 text-purple-700 border-purple-200",
-    "Cancelled": "bg-red-100 text-red-700 border-red-200",
+    // Critical / Negative
+    [ShipmentStatus.CANCELLED]: "bg-red-50 text-red-700 border-red-200",
+    [ShipmentStatus.RETURNED]: "bg-rose-50 text-rose-700 border-rose-200",
+
+    // Warning / Waiting
+    [ShipmentStatus.DELAYED]: "bg-amber-50 text-amber-700 border-amber-200",
+
+    // In Progress
+    [ShipmentStatus.IN_TRANSIT]: "bg-blue-100 text-blue-700 border-blue-200",
+
+    // Logistics Steps (Differentiated)
+    [ShipmentStatus.PICKED_UP]: "bg-purple-100 text-purple-700 border-purple-200",
+    [ShipmentStatus.WAREHOUSE_ARRIVED]: "bg-slate-100 text-slate-700 border-slate-300",
+    [ShipmentStatus.OUT_FOR_DELIVERY]: "bg-purple-50 text-purple-700 border-purple-200",
+
+    // Completed
+    [ShipmentStatus.DELIVERED]: "bg-emerald-50 text-emerald-700 border-emerald-200",
 };
 
-export function DataTable() {
+const formatStatus = (status: string): string => {
+    if (!status) return "";
+
+    if (status.includes("_")) {
+        return status
+            .split("_")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(" ");
+    }
+
+    return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
+};
+
+
+export function DataTable({ data = [] }: { data?: Shipment[] }) {
+    const router = useRouter();
     return (
         <Table>
             <TableHeader>
@@ -34,28 +65,38 @@ export function DataTable() {
                     <TableHead>Shipping ID</TableHead>
                     <TableHead>Customer Name</TableHead>
                     <TableHead>Date</TableHead>
-                    <TableHead>Pickup Location</TableHead>
-                    <TableHead>Drop Location</TableHead>
+                    <TableHead>Origin</TableHead>
+                    <TableHead>Destination</TableHead>
                     <TableHead>Amount</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {shippingData.map((shipment) => (
+                {data.map((shipment) => (
+                    // {/* {shippingData.map((shipment) => ( */}
                     <TableRow key={shipment.id}>
-                        <TableCell className="font-medium">{shipment.tracking}</TableCell>
-                        <TableCell>{shipment.customer}</TableCell>
-                        <TableCell>{shipment.date}</TableCell>
-                        <TableCell>{shipment.pickup}</TableCell>
-                        <TableCell>{shipment.drop}</TableCell>
-                        <TableCell>{shipment.amount}</TableCell>
+                        <TableCell className="font-medium text-blue-700">
+                            <Link href={`/tracking?${shipment.shipmentID}`}>
+                                {shipment.shipmentID}
+                            </Link>
+                        </TableCell>
+                        <TableCell className="max-w-[200px] truncate">{shipment.clientName}</TableCell>
+                        <TableCell>{format(new Date(shipment.createdAt), "LLL dd, yyyy")}</TableCell>
+                        <TableCell className="max-w-[200px] truncate">{shipment.dropLocation}</TableCell>
+                        <TableCell className="max-w-[200px] truncate">{shipment.pickupLocation}</TableCell>
+                        <TableCell>
+                            {Number(shipment.amount).toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "USD"
+                            })}
+                        </TableCell>
                         <TableCell>
                             <span className={cn(
                                 "px-2.5 py-0.5 rounded-full text-xs font-medium border",
-                                statusStyles[shipment.status] || "bg-gray-100 text-gray-700"
+                                statusStyles[shipment.trackingHistory[0].status] || "bg-gray-100 text-gray-700"
                             )}>
-                                {shipment.status}
+                                {formatStatus(shipment.trackingHistory[0].status)}
                             </span>
                         </TableCell>
                         <TableCell className="text-right">
@@ -67,10 +108,16 @@ export function DataTable() {
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                                    <DropdownMenuItem>Duplicate</DropdownMenuItem>
+                                    <DropdownMenuItem
+                                        onClick={() => {
+                                            if (ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status) return
+                                            // navigate to update page
+                                            router.push(`/shipping/updateshipment/${shipment.shipmentID}`)
+                                        }}
+                                        className={`${ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status && "cursor-not-allowed"}`}>Edit</DropdownMenuItem>
+                                    {/* <DropdownMenuItem>Duplicate</DropdownMenuItem> */}
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem variant="destructive">
+                                    <DropdownMenuItem variant="destructive" className={`${ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status && "cursor-not-allowed"}`}>
                                         Delete
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
