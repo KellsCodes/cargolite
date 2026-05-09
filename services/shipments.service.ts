@@ -108,6 +108,12 @@ export const updateShipmentRecord = async (id: number, data: any) => {
           telephone: data.senderPhone,
         },
       },
+      receiver: {
+        update: {
+          name: data.receiverName,
+          telephone: data.receiverPhone,
+        }
+      }
     },
     include: {
       invoice: true,
