@@ -135,7 +135,7 @@ export default function SaveShipmentForm() {
         <div className="h-full flex-1 flex flex-col bg-slate-50/50">
             <form onSubmit={handleSubmitForm} className="h-full flex-1 flex flex-col">
                 {/* Scrollable Form Content */}
-                <div className="flex-1 overflow-y-auto p-6 lg:p-10">
+                <div className="flex-1 overflow-y-auto px-0 py-6 lg:p-10">
                     <div className="max-w-5xl mx-auto space-y-8 bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
 
                         {/* Section 1: Contact Information */}
@@ -403,7 +403,7 @@ export default function SaveShipmentForm() {
                 </div>
 
                 {/* Sticky Footer Actions, the style errors are intentional to remove the look */}
-                <div className="max-w-5xl mx-auto w-full bg-whitee py-4 px-6 lg:px-10 xl:p-0 rounded-xl borderr border-slate-200 shadow-smk flex justify-end gap-3">
+                <div className="max-w-5xl mx-auto w-full bg-whitee py-4 px-0 lg:px-10 xl:px-10 2xl:px-0 rounded-xl borderr border-slate-200 shadow-smk flex justify-end gap-3">
                     <button
                         type="submit"
                         className={`px-10 h-11 text-sm font-medium text-white ${isSubmitting ? "bg-gray-300 cursor-not-allowed " : "bg-main-primary hover:bg-main-primary/70 cursor-pointer"} rounded-lg shadow-sm transition-all active:scale-95`}
