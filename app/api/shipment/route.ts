@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { CreateShipmentSchema } from "@/schema/shipment.schema";
 import {
+  deleteShipment,
   getAllShipments,
   processNewShipment,
 } from "@/services/shipments.service";
@@ -81,6 +82,37 @@ export async function GET(req: Request) {
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to fetch shipments" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: Request) {
+  const user = await getUserSession();
+  if (!user) return authError();
+
+  try {
+    const formData = await req.formData();
+    const shipmentID = formData.get("id");
+    if (!shipmentID) {
+      return NextResponse.json(
+        { error: "Shipment ID is required" },
+        { status: 400 }
+      );
+    }
+
+    const result = await deleteShipment(Number(shipmentID));
+    return NextResponse.json(result);
+  } catch (error: any) {
+    if (error.message === "Cannot delete a processed shipment.") {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 400 }
+      );
+    }
+    console.log(error)
+    return NextResponse.json(
+      { error: "Failed to delete shipment" },
       { status: 500 }
     );
   }

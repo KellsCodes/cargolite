@@ -112,8 +112,8 @@ export const updateShipmentRecord = async (id: number, data: any) => {
         update: {
           name: data.receiverName,
           telephone: data.receiverPhone,
-        }
-      }
+        },
+      },
     },
     include: {
       invoice: true,
@@ -204,5 +204,29 @@ export const trackShipment = async (shipmentID: string) => {
         select: { amount: true, payerRole: true, paymentMethod: true },
       },
     },
+  });
+};
+
+export const deleteShipment = async (id: number) => {
+  if (!id) throw new Error("Shipment ID is required for deletion.");
+  const getShipmentStatus: any = await prisma.shipment.findUnique({
+    where: { id },
+    select: {
+      trackingHistory: {
+        orderBy: { createdAt: "desc" },
+        take: 1,
+        select: { status: true },
+      },
+    },
+  });
+
+  const currentStatus = getShipmentStatus?.trackingHistory[0]?.status;
+
+  if (!currentStatus || currentStatus !== ShipmentStatus.PICKED_UP) {
+    throw new Error("Cannot delete a processed shipment.");
+  }
+
+  return await prisma.shipment.delete({
+    where: { id },
   });
 };
