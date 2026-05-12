@@ -41,3 +41,13 @@ export interface Shipment {
   receiverId: number;
   invoiceId: number;
 }
+
+export interface APIResponse {
+    data: Shipment[];
+    meta: {
+        currentPage: number;
+        pageLength: number;
+        totalItems: number;
+        totalPages: number;
+    }
+}
