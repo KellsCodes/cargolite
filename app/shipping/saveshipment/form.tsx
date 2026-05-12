@@ -221,17 +221,17 @@ export default function SaveShipmentForm() {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-1.5">
-                                    <label className="text-[13px] font-medium text-slate-700">Pickup Location</label>
+                                    <label className="text-[13px] font-medium text-slate-700">Origin</label>
                                     <input
-                                        onChange={(e) => setFormData({ ...formData, pickupLocation: e.target.value })}
-                                        name="pickupLocation" value={formData.pickupLocation} type="text"
+                                        onChange={(e) => setFormData({ ...formData, dropLocation: e.target.value })}
+                                        name="dropLocation" value={formData.dropLocation} type="text"
                                         className="w-full px-4 h-11 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                                         placeholder="Address or Terminal"
                                     />
                                 </div>
 
                                 <div className="space-y-1.5">
-                                    <label className="text-[13px] font-medium text-slate-700">Drop Location</label>
+                                    <label className="text-[13px] font-medium text-slate-700">Destination</label>
                                     <input
                                         onChange={(e) => setFormData({ ...formData, dropLocation: e.target.value })}
                                         name="dropLocation" value={formData.dropLocation} type="text"
@@ -245,9 +245,9 @@ export default function SaveShipmentForm() {
                                     <input
                                         onChange={(e) => {
                                             const val = parseFloat(e.target.value);
-                                            setFormData({ ...formData, weight: isNaN(val) ? 0 : val });
+                                            setFormData({ ...formData, weight: val });
                                         }}
-                                        name="weight" value={formData.weight} type="number" min={1} step="any"
+                                        name="weight" value={formData.weight} type="number" min={0} step="any"
                                         className="w-full px-4 h-11 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                                         placeholder="0.00"
                                     />
@@ -351,9 +351,9 @@ export default function SaveShipmentForm() {
                                         <input
                                             onChange={(e) => {
                                                 const val = parseFloat(e.target.value);
-                                                setFormData({ ...formData, amount: isNaN(val) ? 0 : val });
+                                                setFormData({ ...formData, amount: val });
                                             }}
-                                            name="amount" value={formData.amount} type="number" min={1} step="any"
+                                            name="amount" value={formData.amount} type="number" min={0} step="any"
                                             className="w-full pl-8 pr-4 h-11 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                                             placeholder="0.00"
                                         />
@@ -390,9 +390,9 @@ export default function SaveShipmentForm() {
                                     <input
                                         onChange={(e) => {
                                             const val = parseFloat(e.target.value);
-                                            setFormData({ ...formData, packageCount: isNaN(val) ? 0 : val });
+                                            setFormData({ ...formData, packageCount: val });
                                         }}
-                                        name="packageCount" value={formData.packageCount} type="number" min={1} step="any"
+                                        name="packageCount" value={formData.packageCount} type="number" min={0} step="any"
                                         className="w-full px-4 h-11 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                                         placeholder="0.00"
                                     />

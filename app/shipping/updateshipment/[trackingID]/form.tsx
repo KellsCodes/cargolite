@@ -275,7 +275,7 @@ export default function UpdateShipmentForm({ trackingID }: { trackingID: string 
                                             setFormData({ ...formData, pickupLocation: e.target.value })
                                             setUpdateData({ ...updateData, [e.target.name]: e.target.value })
                                         }}
-                                        name="dropLocation" value={formData.pickupLocation} type="text"
+                                        name="pickupLocation" value={formData.pickupLocation} type="text"
                                         className="w-full px-4 h-11 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                                         placeholder="Address or Terminal"
                                     />
@@ -288,7 +288,7 @@ export default function UpdateShipmentForm({ trackingID }: { trackingID: string 
                                             setFormData({ ...formData, dropLocation: e.target.value })
                                             setUpdateData({ ...updateData, [e.target.name]: e.target.value })
                                         }}
-                                        name="pickupLocation" value={formData.dropLocation} type="text"
+                                        name="dropLocation" value={formData.dropLocation} type="text"
                                         className="w-full px-4 h-11 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                                         placeholder="Destination Address"
                                     />
@@ -299,10 +299,10 @@ export default function UpdateShipmentForm({ trackingID }: { trackingID: string 
                                     <input
                                         onChange={(e) => {
                                             const val = parseFloat(e.target.value);
-                                            setFormData({ ...formData, weight: isNaN(val) ? 0 : val });
+                                            setFormData({ ...formData, weight: val });
                                             setUpdateData({ ...updateData, [e.target.name]: e.target.value })
                                         }}
-                                        name="weight" value={formData.weight} type="number" min={1} step="any"
+                                        name="weight" value={formData.weight} type="number" min={0} step="any"
                                         className="w-full px-4 h-11 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                                         placeholder="0.00"
                                     />
@@ -419,10 +419,10 @@ export default function UpdateShipmentForm({ trackingID }: { trackingID: string 
                                         <input
                                             onChange={(e) => {
                                                 const val = parseFloat(e.target.value);
-                                                setFormData({ ...formData, amount: isNaN(val) ? 0 : val });
-                                                setUpdateData({ ...updateData, amount: isNaN(val) ? 0 : val })
+                                                setFormData({ ...formData, amount:  val });
+                                                setUpdateData({ ...updateData, amount: val })
                                             }}
-                                            name="amount" value={formData.amount} type="number" min={1} step="any"
+                                            name="amount" value={formData.amount} type="number" min={0} step="any"
                                             className="w-full pl-8 pr-4 h-11 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                                             placeholder="0.00"
                                         />
@@ -465,10 +465,10 @@ export default function UpdateShipmentForm({ trackingID }: { trackingID: string 
                                     <input
                                         onChange={(e) => {
                                             const val = parseFloat(e.target.value);
-                                            setFormData({ ...formData, packageCount: isNaN(val) ? 0 : val });
-                                            setUpdateData({ ...updateData, [e.target.name]: isNaN(val) ? 0 : val })
+                                            setFormData({ ...formData, packageCount: val });
+                                            setUpdateData({ ...updateData, [e.target.name]: val })
                                         }}
-                                        name="packageCount" value={formData.packageCount} type="number" min={1} step="any"
+                                        name="packageCount" value={formData.packageCount} type="number" min={1}
                                         className="w-full px-4 h-11 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                                         placeholder="0.00"
                                     />
