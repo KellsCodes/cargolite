@@ -19,7 +19,7 @@ interface RevenueData {
 }
 
 export default function RevenueDisplay() {
-    const [from, setFrom] = React.useState(addMonths(new Date(), -6)) // revenue for the pastt 6 months
+    const [from, setFrom] = React.useState(addMonths(new Date(), -5)) // revenue for the past 6 months
     const [to, setTo] = React.useState((new Date()))
     const [revenueData, setRevenueData] = React.useState<RevenueData>({
         monthlyBreakdown: [],
@@ -150,7 +150,10 @@ export default function RevenueDisplay() {
                         <div key={i} className="flex items-center gap-x-3">
                             <p className="text-xs w-17">{data.label}</p>
                             <div className="w-full h-6 bg-gray-100 rounded-full relative">
-                                <div className={`${i === 0 ? "bg-blue-500" : "bg-gray-300"} h-full w-[${data.percentOfTotal}%] rounded-full`} />
+                                <div
+                                    className={`${i === 0 ? "bg-blue-500" : "bg-gray-300"} h-full rounded-full`}
+                                    style={{ width: `${data.percentOfTotal}%` }}
+                                />
                                 <div className="absolute text-xs flex items-center justify-between top-0 left-0 bottom-0 right-0 p-2 px-3">
                                     <span className={`${i === 0 && data.percentOfTotal > 10 ? "text-white" : "text-black/60"}`}>{data.monthlyRevenue.toLocaleString("en-US", {
                                         style: "currency",
