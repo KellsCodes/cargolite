@@ -7,6 +7,8 @@ export interface PaginatedResult<T> {
     totalPages: number;
     currentPage: number;
     pageLength: number;
+    from: number;
+    to: number;
   };
 }
 
@@ -24,7 +26,6 @@ export const paginate = async <T>(
   const limit = Math.max(1, options.limit || 10);
   const skip = (page - 1) * limit;
 
-  // Run count and findMany in parallel
   const [items, totalItems] = await Promise.all([
     model.findMany({
       skip,
@@ -36,6 +37,10 @@ export const paginate = async <T>(
     model.count({ where: options.where }),
   ]);
 
+  // Calculate the "Showing X to Y" ranges
+  const from = totalItems === 0 ? 0 : skip + 1;
+  const to = Math.min(skip + limit, totalItems);
+
   return {
     data: items,
     meta: {
@@ -43,6 +48,8 @@ export const paginate = async <T>(
       totalPages: Math.ceil(totalItems / limit),
       currentPage: page,
       pageLength: items.length,
+      from,
+      to,
     },
   };
 };
