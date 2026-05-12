@@ -43,7 +43,7 @@ const fieldLabels: Record<string, string> = {
     packageType: "Package Type",
     courierType: "Courier Service",
     pickupLocation: "Pickup Address",
-    dropLocation: "Destination Address",
+    dropLocation: "Item Source Address",
     arrival: "Estimated Arrival Date",
     amount: "Shipping Amount",
     payerRole: "Payment Responsibility",
@@ -67,7 +67,7 @@ export default function SaveShipmentForm() {
         dropLocation: "",
         weight: 0,
         packageType: "",
-        arrival: null as unknown as Date,
+        arrival: new Date(),
         courierType: "",
         packageImage: null,
         amount: 0,
@@ -233,8 +233,8 @@ export default function SaveShipmentForm() {
                                 <div className="space-y-1.5">
                                     <label className="text-[13px] font-medium text-slate-700">Destination</label>
                                     <input
-                                        onChange={(e) => setFormData({ ...formData, dropLocation: e.target.value })}
-                                        name="dropLocation" value={formData.dropLocation} type="text"
+                                        onChange={(e) => setFormData({ ...formData, pickupLocation: e.target.value })}
+                                        name="pickupLocation" value={formData.pickupLocation} type="text"
                                         className="w-full px-4 h-11 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                                         placeholder="Destination Address"
                                     />
