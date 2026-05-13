@@ -43,11 +43,13 @@ export interface Shipment {
 }
 
 export interface APIResponse {
-    data: Shipment[];
-    meta: {
-        currentPage: number;
-        pageLength: number;
-        totalItems: number;
-        totalPages: number;
-    }
+  data: Shipment[];
+  meta: {
+    currentPage: number;
+    pageLength: number;
+    totalItems: number;
+    totalPages: number;
+    from: number;
+    to: number;
+  };
 }
