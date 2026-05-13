@@ -8,15 +8,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination"
 import { ChartNoAxesColumnIncreasing, ChevronLeft, Search, Settings2 } from "lucide-react";
 import { DataTable } from "./DataTable";
 import { useEffect, useState } from "react";
@@ -28,22 +19,15 @@ import { generatePaginationLinks } from "@/lib/paginationUtils";
 import { ShipmentStatus } from "@/generated/prisma/enums";
 import CustomPagination from "../components/CustomPagination";
 
-interface Params {
-    search: string;
-    page: number;
-    limit: number;
-    status: string;
-}
 
 export default function ShippingTable() {
     const [isLoading, setIsloading] = useState<boolean>(false)
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const router = useRouter()
-    const limit = 2
+    const limit = 1
     const [localSearch, setLocalSearch] = useState<string>(searchParams.get("search") || "");
     const [shipments, setShipments] = useState<APIResponse | null>(null)
-    console.log(shipments)
 
     const handleFetchShipments = async () => {
         if (isLoading) return

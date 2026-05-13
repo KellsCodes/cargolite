@@ -25,6 +25,8 @@ import { useState } from "react"
 import api from "@/lib/axios"
 import { toast } from "react-toastify"
 import { AnimateSpin } from "../components/AnimateSpin"
+import { ActionModal } from "../components/ActionModal"
+import { UpdateStatusForm } from "./UpdateStatusForm"
 
 const statusStyles: Record<string, string> = {
     // Critical / Negative
@@ -69,6 +71,12 @@ interface DataTableProps {
 export function DataTable({ data = [], setShipments, isLoading }: DataTableProps) {
     const router = useRouter();
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [selectedShipment, setSelectedShipment] = useState<ShipmentStatus | null>(null);
+    const [selectedShipmentId, setSelectedShipmentId] = useState<number | null>(null);
+    const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+
+
     const handleDeleteItem = async (id: number) => {
         if (isDeleting) return;
         setIsDeleting(true);
@@ -97,125 +105,186 @@ export function DataTable({ data = [], setShipments, isLoading }: DataTableProps
             setIsDeleting(false);
         }
     };
+
+    const handleStatusSubmission = async (formValues: any) => {
+        try {
+            const formData = { ...formValues }
+            formData["shipmentId"] = Number(selectedShipmentId);
+            setIsUpdatingStatus(true)
+            const response = await api.post(`/shipment/tracking`, formData);
+            if (response.status === 200 || response.status === 201) {
+                setShipments((prev) => {
+                    if (!prev) return prev;
+
+                    return {
+                        ...prev,
+                        data: prev.data.map((item) => {
+                            if (item.id !== selectedShipmentId) return item;
+
+                            // Clone the history array safely
+                            const updatedHistory = [...(item.trackingHistory || [])];
+
+                            if (updatedHistory.length > 0) {
+                                // Update only the status property of the first item
+                                updatedHistory[0] = {
+                                    ...updatedHistory[0],
+                                    status: formValues.status,
+                                };
+                            }
+
+                            // Return the updated shipment item
+                            return {
+                                ...item,
+                                trackingHistory: updatedHistory,
+                            };
+                        }),
+                    };
+                });
+                toast.success("Shipment operational lifecycle tracking updated successfully.");
+                setIsModalOpen(false);
+            }
+        } catch (error) {
+            toast.error("An error updating routing matrix history. Please try again.");
+        } finally {
+            setIsUpdatingStatus(false)
+        }
+    };
     return (
-        <Table>
-            <TableHeader>
-                <TableRow>
-                    <TableHead>Shipping ID</TableHead>
-                    <TableHead>Customer Name</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Origin</TableHead>
-                    <TableHead>Destination</TableHead>
-                    <TableHead>Amount</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-            </TableHeader>
-
-            <TableBody>
-                {!isLoading && !data.length ? <TableRow>
-                    <TableCell colSpan={8} className="h-64 text-center">
-                        <div className="flex flex-col items-center justify-center gap-2">
-                            <span className="text-sm text-muted-foreground">No Record found.</span>
-                        </div>
-                    </TableCell>
-                </TableRow> : isLoading ? (
+        <>
+            <Table>
+                <TableHeader>
                     <TableRow>
-                        <TableCell colSpan={8} className="h-64 text-center">
-                            <div className="flex flex-col items-center justify-center gap-2">
-                                <AnimateSpin />
-                                <span className="text-sm text-muted-foreground">Loading shipments...</span>
-                            </div>
-                        </TableCell>
+                        <TableHead>Shipping ID</TableHead>
+                        <TableHead>Customer Name</TableHead>
+                        <TableHead>Date</TableHead>
+                        <TableHead>Origin</TableHead>
+                        <TableHead>Destination</TableHead>
+                        <TableHead>Amount</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
-                ) : (
-                    data.map((shipment) => (
-                        // {/* {shippingData.map((shipment) => ( */}
-                        <TableRow key={shipment.id}>
-                            <TableCell className="font-medium text-blue-700">
-                                <Link href={`/tracking?${shipment.shipmentID}`}>
-                                    {shipment.shipmentID}
-                                </Link>
-                            </TableCell>
-                            <TableCell className="max-w-[200px] truncate">{shipment.clientName}</TableCell>
-                            <TableCell>{format(new Date(shipment.createdAt), "LLL dd, yyyy")}</TableCell>
-                            <TableCell className="max-w-[200px] truncate">{shipment.dropLocation}</TableCell>
-                            <TableCell className="max-w-[200px] truncate">{shipment.pickupLocation}</TableCell>
-                            <TableCell>
-                                {Number(shipment.amount).toLocaleString("en-US", {
-                                    style: "currency",
-                                    currency: "USD"
-                                })}
-                            </TableCell>
-                            <TableCell>
-                                <span className={cn(
-                                    "px-2.5 py-0.5 rounded-full text-xs font-medium border",
-                                    statusStyles[shipment.trackingHistory[0].status] || "bg-gray-100 text-gray-700"
-                                )}>
-                                    {formatStatus(shipment.trackingHistory[0].status)}
-                                </span>
-                            </TableCell>
-                            <TableCell className="text-right">
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <Button variant="ghost" size="icon" className="size-8">
-                                            <MoreHorizontalIcon />
-                                            <span className="sr-only">Open menu</span>
-                                        </Button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="end">
-                                        <DropdownMenuItem
-                                            onClick={() => {
-                                                if (ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status) return
-                                                // navigate to invoice page
-                                                // router.push(`/shipping/updateshipment/${shipment.shipmentID}`)
-                                            }}
-                                            className={`${ShipmentStatus.CANCELLED === shipment.trackingHistory[0].status && "cursor-not-allowed"}`}>Invoice</DropdownMenuItem>
-                                        {/* <DropdownMenuItem>Duplicate</DropdownMenuItem> */}
-                                        <DropdownMenuSeparator />
-                                        {/* UPDATE STATUS */}
-                                        <DropdownMenuItem
-                                            onClick={() => {
-                                                if (ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status) return
-                                                // navigate to update page
-                                                router.push(`/shipping/updateshipment/${shipment.shipmentID}`)
-                                            }}
-                                            className={
-                                                `${([ShipmentStatus.CANCELLED, ShipmentStatus.DELIVERED, ShipmentStatus.RETURNED] as ShipmentStatus[]).includes(shipment.trackingHistory[0].status)
-                                                && "cursor-not-allowed"}`
-                                            }>
-                                            Update Status
-                                        </DropdownMenuItem>
-                                        {/* EDIT SHIPMENT */}
-                                        <DropdownMenuItem
-                                            onClick={() => {
-                                                if (ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status) return
-                                                // navigate to update page
-                                                router.push(`/shipping/updateshipment/${shipment.shipmentID}`)
-                                            }}
-                                            className={`${ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status && "cursor-not-allowed"}`}>
-                                            Edit
-                                        </DropdownMenuItem>
+                </TableHeader>
 
-                                        {/* <DropdownMenuItem>Duplicate</DropdownMenuItem> */}
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem
-                                            variant="destructive"
-                                            className={`${ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status && "cursor-not-allowed"}`}
-                                            onClick={() => {
-                                                if (ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status) return
-                                                handleDeleteItem(shipment.id)
-                                            }}
-                                        >
-                                            Delete
-                                        </DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
+                <TableBody>
+                    {isLoading ? (
+                        <TableRow>
+                            <TableCell colSpan={8} className="h-64 text-center">
+                                <div className="flex flex-col items-center justify-center gap-2">
+                                    <AnimateSpin />
+                                    <span className="text-sm text-muted-foreground">Loading shipments...</span>
+                                </div>
                             </TableCell>
                         </TableRow>
-                    ))
-                )}
-            </TableBody>
-        </Table>
+                    ) : (
+                        data.map((shipment) => (
+                            // {/* {shippingData.map((shipment) => ( */}
+                            <TableRow key={shipment.id}>
+                                <TableCell className="font-medium text-blue-700">
+                                    <Link href={`/tracking?${shipment.shipmentID}`}>
+                                        {shipment.shipmentID}
+                                    </Link>
+                                </TableCell>
+                                <TableCell className="max-w-[200px] truncate">{shipment.clientName}</TableCell>
+                                <TableCell>{format(new Date(shipment.createdAt), "LLL dd, yyyy")}</TableCell>
+                                <TableCell className="max-w-[200px] truncate">{shipment.dropLocation}</TableCell>
+                                <TableCell className="max-w-[200px] truncate">{shipment.pickupLocation}</TableCell>
+                                <TableCell>
+                                    {Number(shipment.amount).toLocaleString("en-US", {
+                                        style: "currency",
+                                        currency: "USD"
+                                    })}
+                                </TableCell>
+                                <TableCell>
+                                    <span className={cn(
+                                        "px-2.5 py-0.5 rounded-full text-xs font-medium border",
+                                        statusStyles[shipment.trackingHistory[0].status] || "bg-gray-100 text-gray-700"
+                                    )}>
+                                        {formatStatus(shipment.trackingHistory[0].status)}
+                                    </span>
+                                </TableCell>
+                                <TableCell className="text-right">
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button variant="ghost" size="icon" className="size-8">
+                                                <MoreHorizontalIcon />
+                                                <span className="sr-only">Open menu</span>
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                            <DropdownMenuItem
+                                                onClick={() => {
+                                                    if (ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status) return
+                                                    // navigate to invoice page
+                                                    // router.push(`/shipping/updateshipment/${shipment.shipmentID}`)
+                                                }}
+                                                className={`${ShipmentStatus.CANCELLED === shipment.trackingHistory[0].status && "cursor-not-allowed"}`}>Invoice</DropdownMenuItem>
+                                            {/* <DropdownMenuItem>Duplicate</DropdownMenuItem> */}
+                                            <DropdownMenuSeparator />
+
+                                            {/* UPDATE STATUS */}
+                                            <DropdownMenuItem
+                                                onClick={() => {
+                                                    if (([ShipmentStatus.CANCELLED, ShipmentStatus.DELIVERED, ShipmentStatus.RETURNED] as ShipmentStatus[]).includes(shipment.trackingHistory[0].status)) return
+                                                    // navigate to update page
+                                                    // router.push(`/shipping/updateshipment/${shipment.shipmentID}`)
+                                                    setSelectedShipment(shipment.trackingHistory[0].status);
+                                                    setSelectedShipmentId(shipment.id)
+                                                    setIsModalOpen(true);
+                                                }}
+                                                className={
+                                                    `${([ShipmentStatus.CANCELLED, ShipmentStatus.DELIVERED, ShipmentStatus.RETURNED] as ShipmentStatus[]).includes(shipment.trackingHistory[0].status)
+                                                    && "cursor-not-allowed"}`
+                                                }>
+                                                Update Status
+                                            </DropdownMenuItem>
+
+                                            {/* EDIT SHIPMENT */}
+                                            <DropdownMenuItem
+                                                onClick={() => {
+                                                    if (ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status) return
+                                                    // navigate to update page
+                                                    router.push(`/shipping/updateshipment/${shipment.shipmentID}`)
+                                                }}
+                                                className={`${ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status && "cursor-not-allowed"}`}>
+                                                Edit
+                                            </DropdownMenuItem>
+
+                                            {/* <DropdownMenuItem>Duplicate</DropdownMenuItem> */}
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuItem
+                                                variant="destructive"
+                                                className={`${ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status && "cursor-not-allowed"}`}
+                                                onClick={() => {
+                                                    if (ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status) return
+                                                    handleDeleteItem(shipment.id)
+                                                }}
+                                            >
+                                                Delete
+                                            </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    )}
+                </TableBody>
+            </Table>
+
+            {/* MODAL */}
+            {isModalOpen && (
+                <ActionModal
+                    title="Update Shipment Status"
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    isLocked={isUpdatingStatus}
+                >
+                    <UpdateStatusForm
+                        currentStatus={selectedShipment || undefined}
+                        onSubmit={handleStatusSubmission}
+                        onCancel={() => setIsModalOpen(false)}
+                    />
+                </ActionModal>
+            )}
+        </>
     )
 }
