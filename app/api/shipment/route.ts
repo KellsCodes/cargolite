@@ -80,6 +80,7 @@ export async function GET(req: Request) {
     const result = await getAllShipments(page, limit, search, status);
     return NextResponse.json(result);
   } catch (error) {
+    console.log("we ", error)
     return NextResponse.json(
       { error: "Failed to fetch shipments" },
       { status: 500 }

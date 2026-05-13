@@ -136,43 +136,52 @@ export const getAllShipments = async (
   status?: ShipmentStatus
 ) => {
   // Build the search filter
+  // Find the LATEST tracking history entry for EVERY shipment
+  const allLatestTracking = await prisma.trackingHistory.findMany({
+    distinct: ["shipmentId"],
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: {
+      shipmentId: true,
+      status: true,
+    },
+  });
+
+  // Filter those results in memory to get IDs where the LATEST status matches
+  const shipmentIds = allLatestTracking
+    .filter((history) => history.status === status)
+    .map((history) => history.shipmentId);
+
+  // Build the where clause using these specific IDs
   const where: any = {
     AND: [
-      // Search Filter with client name or shipmentID
       search
         ? {
             OR: [
-              { shipmentID: { contains: search } }, // Search the shipmentID AWP
-              { sender: { name: { contains: search } } }, // Search Sender Name
-              { receiver: { name: { contains: search } } }, // Search Reciever Name
+              { shipmentID: { contains: search, } },
+              { sender: { name: { contains: search, } } },
+              { receiver: { name: { contains: search, } } },
             ],
           }
         : {},
-      status
-        ? {
-            trackingHistory: {
-              some: { status },
-            },
-          }
-        : {},
+      // Only include shipments that are CURRENTLY in this status
+      status ? { id: { in: shipmentIds } } : {},
     ],
   };
 
   const result = await paginate<any>(prisma.shipment, {
     page,
     limit,
-    where, // Search filter is passed here
+    where,
     include: {
       sender: { select: { name: true } },
       receiver: { select: { name: true } },
       invoice: { select: { amount: true, payerRole: true } },
       trackingHistory: {
         orderBy: { createdAt: "desc" },
-        take: 1, // Get only the latest tracking status
-        select: {
-          status: true,
-          id: true,
-        },
+        take: 1,
+        select: { status: true, id: true },
       },
     },
   });
