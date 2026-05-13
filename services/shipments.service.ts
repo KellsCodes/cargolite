@@ -2,7 +2,6 @@ import { paginate } from "@/app/api/utils/pagination.utils";
 import { ShipmentStatus } from "@/generated/prisma/enums";
 import prisma from "@/lib/prisma";
 import { randomInt } from "crypto";
-// import { trackingHistory } from "./tracking";
 
 export const processNewShipment = async (data: any, adminID: number) => {
   return await prisma.$transaction(async (tx) => {
