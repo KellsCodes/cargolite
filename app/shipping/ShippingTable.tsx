@@ -26,6 +26,7 @@ import api from "@/lib/axios";
 import { APIResponse, Shipment } from "./types";
 import { generatePaginationLinks } from "@/lib/paginationUtils";
 import { ShipmentStatus } from "@/generated/prisma/enums";
+import CustomPagination from "../components/CustomPagination";
 
 interface Params {
     search: string;
@@ -199,16 +200,12 @@ export default function ShippingTable() {
                         Showing {shipments?.meta.from} to {shipments?.meta.to} of {shipments?.meta.totalItems} entries
                     </p>
                     <div className="flex gap-x-2">
-                        <Pagination>
-                            <PaginationContent>
-                                <PaginationItem><PaginationPrevious href="#" /></PaginationItem>
-                                <PaginationItem><PaginationLink href="#">1</PaginationLink></PaginationItem>
-                                <PaginationItem><PaginationLink href="/?page=2" isActive>2</PaginationLink></PaginationItem>
-                                <PaginationItem><PaginationLink href="#">3</PaginationLink></PaginationItem>
-                                <PaginationItem><PaginationEllipsis /></PaginationItem>
-                                <PaginationItem><PaginationNext href="#" /></PaginationItem>
-                            </PaginationContent>
-                        </Pagination>
+                        <CustomPagination
+                            currentPage={shipments?.meta.currentPage}
+                            totalPages={shipments?.meta.totalPages}
+                            pathname={pathname}
+                            searchParams={searchParams}
+                        />
                     </div>
                 </div> : null
             }

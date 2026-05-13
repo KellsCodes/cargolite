@@ -173,13 +173,30 @@ export function DataTable({ data = [], setShipments, isLoading }: DataTableProps
                                             className={`${ShipmentStatus.CANCELLED === shipment.trackingHistory[0].status && "cursor-not-allowed"}`}>Invoice</DropdownMenuItem>
                                         {/* <DropdownMenuItem>Duplicate</DropdownMenuItem> */}
                                         <DropdownMenuSeparator />
+                                        {/* UPDATE STATUS */}
                                         <DropdownMenuItem
                                             onClick={() => {
                                                 if (ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status) return
                                                 // navigate to update page
                                                 router.push(`/shipping/updateshipment/${shipment.shipmentID}`)
                                             }}
-                                            className={`${ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status && "cursor-not-allowed"}`}>Edit</DropdownMenuItem>
+                                            className={
+                                                `${([ShipmentStatus.CANCELLED, ShipmentStatus.DELIVERED, ShipmentStatus.RETURNED] as ShipmentStatus[]).includes(shipment.trackingHistory[0].status)
+                                                && "cursor-not-allowed"}`
+                                            }>
+                                            Update Status
+                                        </DropdownMenuItem>
+                                        {/* EDIT SHIPMENT */}
+                                        <DropdownMenuItem
+                                            onClick={() => {
+                                                if (ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status) return
+                                                // navigate to update page
+                                                router.push(`/shipping/updateshipment/${shipment.shipmentID}`)
+                                            }}
+                                            className={`${ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status && "cursor-not-allowed"}`}>
+                                            Edit
+                                        </DropdownMenuItem>
+
                                         {/* <DropdownMenuItem>Duplicate</DropdownMenuItem> */}
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem
