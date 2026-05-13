@@ -166,12 +166,20 @@ export function DataTable({ data = [], setShipments, isLoading }: DataTableProps
                 </TableHeader>
 
                 <TableBody>
-                    {isLoading ? (
+                    {!isLoading && !data.length ? (
+                        <TableRow>
+                            <TableCell colSpan={8} className="h-64 text-center">
+                                <div className="flex flex-col items-center justify-center gap-2">
+                                    <span className="text-sm">No Record found.</span>
+                                </div>
+                            </TableCell>
+                        </TableRow>
+                    ) : isLoading ? (
                         <TableRow>
                             <TableCell colSpan={8} className="h-64 text-center">
                                 <div className="flex flex-col items-center justify-center gap-2">
                                     <AnimateSpin />
-                                    <span className="text-sm text-muted-foreground">Loading shipments...</span>
+                                    <span className="text-sm">Loading shipments...</span>
                                 </div>
                             </TableCell>
                         </TableRow>

@@ -25,7 +25,7 @@ export default function ShippingTable() {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const router = useRouter()
-    const limit = 1
+    const limit = 10
     const [localSearch, setLocalSearch] = useState<string>(searchParams.get("search") || "");
     const [shipments, setShipments] = useState<APIResponse | null>(null)
 
@@ -73,9 +73,13 @@ export default function ShippingTable() {
     const handleStatusChange = (status: string) => {
         if (isLoading) return
         const newSearchParams = new URLSearchParams(searchParams.toString());
-        newSearchParams.set("status", status.toLowerCase());
+        if (status === "all-shipments") {
+            newSearchParams.delete("status");
+        } else {
+            newSearchParams.set("status", status.toLowerCase());
+        }
         newSearchParams.set("page", "1"); // Reset to first page when status changes
-        newSearchParams.delete("search")
+        newSearchParams.delete("search"); // Clear search when applying a new filter
         router.push(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
     }
 
@@ -132,6 +136,9 @@ export default function ShippingTable() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent onCloseAutoFocus={(e) => e.preventDefault()}>
                             <DropdownMenuGroup>
+                                <DropdownMenuItem onSelect={() => handleStatusChange("all-shipments")}>
+                                    All Shipments
+                                </DropdownMenuItem>
                                 <DropdownMenuItem onSelect={() => handleStatusChange(ShipmentStatus.PICKED_UP)}>
                                     Picked up
                                 </DropdownMenuItem>
