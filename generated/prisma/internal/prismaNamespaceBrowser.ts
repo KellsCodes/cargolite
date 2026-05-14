@@ -172,7 +172,8 @@ export const InvoiceScalarFieldEnum = {
   updatedAt: 'updatedAt',
   clientId: 'clientId',
   payerRole: 'payerRole',
-  invoiceStatus: 'invoiceStatus'
+  invoiceStatus: 'invoiceStatus',
+  shipmentId: 'shipmentId'
 } as const
 
 export type InvoiceScalarFieldEnum = (typeof InvoiceScalarFieldEnum)[keyof typeof InvoiceScalarFieldEnum]
@@ -190,7 +191,6 @@ export const ShipmentScalarFieldEnum = {
   arrival: 'arrival',
   senderId: 'senderId',
   receiverId: 'receiverId',
-  invoiceId: 'invoiceId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   packageCount: 'packageCount'

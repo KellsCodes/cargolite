@@ -90,8 +90,11 @@ model Client {
   createdAt         DateTime       @default(now())
   receivedMessages  AdminMessage[]
   invoices          Invoice[]
-  receivedShipments Shipment[]     @relation("ReceivedShipments")
-  sentShipments     Shipment[]     @relation("SentShipments")
+  sentShipmentId    Int?           @unique
+  sentShipments     Shipment?      @relation("SentShipments", fields: [sentShipmentId], references: [id], onDelete: Cascade)
+
+  receivedShipmentId Int?         @unique
+  receivedShipments Shipment?      @relation("ReceivedShipments", fields: [receivedShipmentId], references: [id], onDelete: Cascade)
 }
 
 model Invoice {
@@ -105,7 +108,8 @@ model Invoice {
   payerRole     ClientType    @default(SENDER)
   invoiceStatus InvoiceStatus @default(UNPAID)
   client        Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  shipment      Shipment?
+  shipmentId    Int           @unique
+  shipment      Shipment      @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
 
   @@index([clientId], map: "Invoice_clientId_fkey")
 }
@@ -122,13 +126,12 @@ model Shipment {
   arrival         DateTime
   senderId        Int
   receiverId      Int
-  invoiceId       Int               @unique
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   packageCount    Int               @default(1)
-  invoice         Invoice           @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
-  receiver        Client            @relation("ReceivedShipments", fields: [receiverId], references: [id], onDelete: Cascade)
-  sender          Client            @relation("SentShipments", fields: [senderId], references: [id], onDelete: Cascade)
+  invoice         Invoice?
+  receiver        Client?            @relation("ReceivedShipments")
+  sender          Client?            @relation("SentShipments")
   trackingHistory TrackingHistory[]
 
   @@index([senderId])
