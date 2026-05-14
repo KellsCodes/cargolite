@@ -60,6 +60,7 @@ export default function LoginUI() {
                 }
             } else {
                 toast.success("Login successful!")
+                localStorage.removeItem("email")
                 // Manually redirect if you set redirect: false
                 setTimeout(() => {
                     router.push(result?.url || "/dashboard")
