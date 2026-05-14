@@ -41,16 +41,6 @@ export const processNewShipment = async (data: any, adminID: number) => {
     const shipmentID = `AWP${randomInt(1000000000, 9999999999)}`;
 
     // Create Invoice linked to the ACTUAL Payer
-    const invoice = await tx.invoice.create({
-      data: {
-        transactionID,
-        amount: data.amount,
-        paymentMethod: data.paymentMethod,
-        payerRole: data.payerRole, // e.g., "RECEIVER"
-        clientId: payerId, // Points to either sender.id or receiver.id
-      },
-    });
-
     // Create Shipment
     return await tx.shipment.create({
       data: {
@@ -63,8 +53,17 @@ export const processNewShipment = async (data: any, adminID: number) => {
         arrival: new Date(data.arrival),
         senderId: sender.id,
         receiverId: receiver.id,
-        invoiceId: invoice.id,
+        // invoiceId: invoice.id,
         packageImage: data.packageImage || null,
+        invoice: {
+          create: {
+            transactionID,
+            amount: data.amount,
+            paymentMethod: data.paymentMethod,
+            payerRole: data.payerRole,
+            clientId: payerId,
+          },
+        },
         trackingHistory: {
           create: {
             status: "PICKED_UP",
@@ -158,9 +157,9 @@ export const getAllShipments = async (
       search
         ? {
             OR: [
-              { shipmentID: { contains: search, } },
-              { sender: { name: { contains: search, } } },
-              { receiver: { name: { contains: search, } } },
+              { shipmentID: { contains: search } },
+              { sender: { name: { contains: search } } },
+              { receiver: { name: { contains: search } } },
             ],
           }
         : {},
