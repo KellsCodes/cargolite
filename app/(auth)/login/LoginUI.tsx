@@ -1,10 +1,11 @@
 "use client"
 import { Auth } from "@/lib/api/auth";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Mail, Lock, ArrowRight, Loader2, ShieldCheck, Eye, EyeClosed } from "lucide-react";
 import Link from "next/link";
 import React, { useState, useEffect, FormEvent } from "react";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 // TypeScript interface for our spark particles
 interface Particle {
@@ -23,6 +24,7 @@ export default function LoginUI() {
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [showPassword, setShowPassword] = useState<boolean>(false)
+    const router = useRouter()
 
     useEffect(() => {
         setMounted(true);
@@ -47,12 +49,20 @@ export default function LoginUI() {
         try {
             const result = await Auth.login(email, password)
             if (result?.error) {
-                toast.error(result.error === "CredentialsSignin" ? "Invalid email or password" : result.error)
+                if (result?.code === "USER_NOT_VERIFIED") {
+                    toast.error("User is not yet verified.")
+                    localStorage.setItem("email", email)
+                    setTimeout(() => {
+                        router.push("/user-verification")
+                    }, 1000)
+                } else {
+                    toast.error(result.code === "INVALID_CREDENTIALS" ? "Invalid email or password" : result.error)
+                }
             } else {
                 toast.success("Login successful!")
                 // Manually redirect if you set redirect: false
                 setTimeout(() => {
-                    window.location.href = result?.url || "/dashboard";
+                    router.push(result?.url || "/dashboard")
                 }, 1000)
             }
 
@@ -119,16 +129,16 @@ export default function LoginUI() {
                 transition={{ duration: 0.8 }}
                 className="relative z-20 w-[95%] md:[90%] max-w-[420px] p-5 md:p-8 rounded-3xl border border-black/5 bg-white/70 backdrop-blur-3xl shadow-2xl shadow-black/10"
             >
-                <div className="flex flex-col items-center space-y-10">
+                <div className="flex flex-col items-center space-y-10 mt-4">
                     {/* Brand Branding */}
                     <div className="flex flex-col items-center gap-y-4">
-                        <motion.div
+                        {/* <motion.div
                             whileHover={{ rotate: 12, scale: 1.1 }}
                             // Text color is now primary dark color
                             className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-[#034460] border border-black/10 shadow-sm"
                         >
                             <ShieldCheck size={36} />
-                        </motion.div>
+                        </motion.div> */}
                         <div className="text-center">
                             <Link href={"/"}>
                                 <h1 className="font-black text-4xl tracking-tighter text-[#034460] uppercase leading-none">
