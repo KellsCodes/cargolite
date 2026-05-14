@@ -1,8 +1,12 @@
 "use client"
-import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Lock, ArrowRight, Loader2, ShieldCheck, User, Phone, Globe } from "lucide-react";
+import api from "@/lib/axios";
+import { validatePassword } from "@/lib/passwordValidator";
+import { motion } from "framer-motion";
+import { Mail, Lock, ArrowRight, Loader2, ShieldCheck, User, Phone, Globe, EyeClosed, Eye } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState, useEffect, FormEvent } from "react";
+import { toast } from "react-toastify";
 
 interface Particle {
     id: number;
@@ -17,6 +21,23 @@ export default function SignupUI() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [particles, setParticles] = useState<Particle[]>([]);
     const [mounted, setMounted] = useState(false);
+    const [formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        phone: "",
+        region: ""
+    });
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const router = useRouter()
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+        setErrors(prev => ({ ...prev, [name]: "" })); // Clear error on change
+    }
 
     useEffect(() => {
         setMounted(true);
@@ -31,14 +52,69 @@ export default function SignupUI() {
         setParticles(generated);
     }, []);
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setIsLoading(true);
-        setTimeout(() => setIsLoading(false), 2000);
+    const validateForm = () => {
+        const newErrors: { [key: string]: string } = {};
+        if (!formData.firstName || formData.firstName.trim().length <= 3) newErrors.firstName = "First name must be at least 3 characters long";
+        if (!formData.lastName || formData.lastName.trim().length <= 3) newErrors.lastName = "Last name must be at least 3 characters long";
+        if (!formData.email || formData.email.trim().length <= 3) newErrors.email = "Email must be at least 3 characters long";
+        if (!validatePassword(formData.password)) newErrors.password = "Min 8 characters: 1 upper, 1 lower, 1 digit, 1 special, no spaces.";
+        if (!formData.phone || formData.phone.trim().length <= 5) newErrors.phone = "Phone number must be at least 5 characters long";
+        if (!formData.region) newErrors.region = "Country is missing.";
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
 
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!validateForm()) return;
+
+        setIsLoading(true);
+        try {
+            const response = await api.post("/auth/register", formData);
+            if (response.status === 200 || response.status === 201) {
+                toast.success("Account created successfully! Please check your email.");
+                localStorage.setItem("email", formData.email)
+                setTimeout(() => {
+                    router.push("/user-verification")
+                }, 2000)
+            } else {
+                toast.info("Please check your email for verification instructions.");
+            }
+
+        } catch (error: any) {
+            console.error("Submission Error:", error);
+            // Handle non-5xx errors rewritten as instances of Error by interceptor
+            if (error.details) {
+                toast.error(error?.message || "Server error. Please try again later.");
+                Object.keys(error.details).forEach((field) => {
+                    const fieldErrors = error.details[field];
+                    if (Array.isArray(fieldErrors)) {
+                        fieldErrors.forEach((errMsg: string) => {
+                            setErrors(prev => ({ ...prev, [field]: errMsg }))
+                        });
+                    }
+                });
+                return;
+            }
+
+            // Handle raw 5xx Axios errors passed through by your interceptor
+            const status = error.response?.status;
+            if (status >= 500) {
+                toast.error("Server error. Please try again later.");
+                return;
+            }
+
+            // Fallback for network disconnects or unexpected errors
+            toast.error("An error occurred. Please try again");
+
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+
     return (
-        <div className="relative h-screen w-screen overflow-hidden bg-white flex items-center justify-center selection:bg-chart-5/50">
+        <div className="relative h-full w-screen overflow-hidden bg-white flex items-center justify-center selection:bg-chart-5/50">
 
             {/* --- Animated Sparks (Bubbles) --- */}
             {/* {mounted && (
@@ -88,17 +164,17 @@ export default function SignupUI() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="relative z-20 w-[95%] md:[90%] max-w-[420px] p-5 md:p-8 rounded-3xl border border-black/5 bg-white/70 backdrop-blur-3xl shadow-2xl shadow-black/10 my-10 overflow-y-auto max-h-[95vh]"
+                className="relative z-20 w-[95%] md:[w-90%] max-w-[420px] p-5 md:p-8 rounded-3xl border border-black/5 bg-white/70 backdrop-blur-3xl shadow-2xl shadow-black/10 my-10 overflow-y-auto"
             >
                 <div className="flex flex-col items-center space-y-8">
                     {/* Brand Branding */}
-                    <div className="flex flex-col items-center gap-y-4">
-                        <motion.div
+                    <div className="flex flex-col items-center gap-y-4 mt-4">
+                        {/* <motion.div
                             whileHover={{ rotate: 12, scale: 1.1 }}
                             className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-[#034460] border border-black/10 shadow-sm"
                         >
                             <ShieldCheck size={36} />
-                        </motion.div>
+                        </motion.div> */}
                         <div className="text-center">
                             <Link href="/">
                                 <h1 className="font-black text-3xl tracking-tighter text-[#034460] uppercase leading-none">
@@ -113,27 +189,33 @@ export default function SignupUI() {
 
                     <form className="w-full space-y-5" onSubmit={handleSubmit}>
                         {/* Name Fields Row */}
-                        <div className="grid md:grid-cols-2 gap-4">
+                        <div className="grid md:grid-cols-1 gap-4">
                             <div className="space-y-1">
                                 <label className="text-[10px] font-bold text-black/50 uppercase tracking-widest ml-1">First Name</label>
                                 <div className="relative group">
                                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-black/30 group-focus-within:text-[#034460] transition-colors" />
                                     <input
                                         type="text"
-                                        placeholder="John"
+                                        placeholder="Your first name"
                                         className="w-full bg-black/5 border border-black/10 p-3 pl-11 rounded-xl outline-none focus:border-[#034460]/40 focus:bg-white text-[#034460] text-sm transition-all"
                                         required
+                                        onChange={handleChange}
+                                        name="firstName"
                                     />
                                 </div>
+                                {errors.firstName && (<p className="text-red-500 text-xs">{errors.firstName}</p>)}
                             </div>
                             <div className="space-y-1">
                                 <label className="text-[10px] font-bold text-black/50 uppercase tracking-widest ml-1">Last Name</label>
                                 <input
                                     type="text"
-                                    placeholder="Doe"
+                                    placeholder="Your last name"
                                     className="w-full bg-black/5 border border-black/10 p-3 px-4 rounded-xl outline-none focus:border-[#034460]/40 focus:bg-white text-[#034460] text-sm transition-all"
                                     required
+                                    onChange={handleChange}
+                                    name="lastName"
                                 />
+                                {errors.lastName && (<p className="text-red-500 text-xs">{errors.lastName}</p>)}
                             </div>
                         </div>
 
@@ -144,15 +226,18 @@ export default function SignupUI() {
                                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-black/30 group-focus-within:text-[#034460] transition-colors" />
                                 <input
                                     type="email"
-                                    placeholder="name@company.com"
+                                    placeholder="name@email.com"
                                     className="w-full bg-black/5 border border-black/10 p-3 pl-11 rounded-xl outline-none focus:border-[#034460]/40 focus:bg-white text-[#034460] text-sm transition-all"
                                     required
+                                    onChange={handleChange}
+                                    name="email"
                                 />
                             </div>
+                            {errors.email && (<p className="text-red-500 text-xs">{errors.email}</p>)}
                         </div>
 
                         {/* Contact & Country Row */}
-                        <div className="grid md:grid-cols-2 gap-4">
+                        <div className="grid md:grid-cols-1 gap-4">
                             <div className="space-y-1">
                                 <label className="text-[10px] font-bold text-black/50 uppercase tracking-widest ml-1">Phone Number</label>
                                 <div className="relative group">
@@ -162,20 +247,28 @@ export default function SignupUI() {
                                         placeholder="+1..."
                                         className="w-full bg-black/5 border border-black/10 p-3 pl-11 rounded-xl outline-none focus:border-[#034460]/40 focus:bg-white text-[#034460] text-sm transition-all"
                                         required
+                                        onChange={handleChange}
+                                        name="phone"
                                     />
                                 </div>
+                                {errors.phone && (<p className="text-red-500 text-xs">{errors.phone}</p>)}
                             </div>
                             <div className="space-y-1">
                                 <label className="text-[10px] font-bold text-black/50 uppercase tracking-widest ml-1">Region</label>
                                 <div className="relative group">
                                     <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-black/30 group-focus-within:text-[#034460] transition-colors" />
-                                    <select className="w-full bg-black/5 border border-black/10 p-3 pl-11 rounded-xl outline-none focus:border-[#034460]/40 focus:bg-white text-[#034460] text-sm transition-all appearance-none cursor-pointer">
-                                        <option>United Kingdom</option>
-                                        <option>United States</option>
-                                        <option>Germany</option>
-                                        <option>Singapore</option>
+                                    <select
+                                        onChange={(e) => setFormData((prev) => ({ ...prev, region: e.target.value }))}
+                                        name="region"
+                                        className="w-full bg-black/5 border border-black/10 p-3 pl-11 rounded-xl outline-none focus:border-[#034460]/40 focus:bg-white text-[#034460] text-sm transition-all appearance-none cursor-pointer">
+                                        <option value="" disabled selected>Select Country</option>
+                                        <option value="UK">United Kingdom</option>
+                                        <option value="US">United States</option>
+                                        <option value="Germany">Germany</option>
+                                        <option value="Singapore">Singapore</option>
                                     </select>
                                 </div>
+                                {errors.region && (<p className="text-red-500 text-xs">{errors.region}</p>)}
                             </div>
                         </div>
 
@@ -184,13 +277,21 @@ export default function SignupUI() {
                             <label className="text-[10px] font-bold text-black/50 uppercase tracking-widest ml-1">Create Password</label>
                             <div className="relative group">
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-black/30 group-focus-within:text-[#034460] transition-colors" />
+                                {showPassword ?
+                                    <EyeClosed onClick={() => setShowPassword(false)} className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-black/30 group-focus-within:text-[#034460] transition-colors" />
+                                    :
+                                    <Eye onClick={() => setShowPassword(true)} className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-black/30 group-focus-within:text-[#034460] transition-colors" />
+                                }
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     placeholder="••••••••"
                                     className="w-full bg-black/5 border border-black/10 p-3 pl-11 rounded-xl outline-none focus:border-[#034460]/40 focus:bg-white text-[#034460] text-sm transition-all"
                                     required
+                                    onChange={handleChange}
+                                    name="password"
                                 />
                             </div>
+                            {errors.password && (<p className="text-red-500 text-xs">{errors.password}</p>)}
                         </div>
 
                         {/* Signup Button */}
