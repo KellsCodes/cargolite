@@ -8,21 +8,85 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination"
 import { ChevronLeft, Receipt, Search, Settings2 } from "lucide-react";
 import { DataTable } from "./DataTable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import api from "@/lib/axios";
+import { toast } from "react-toastify";
+import { APIResponse } from "./types";
+import CustomPagination from "../components/CustomPagination";
+import { handleNextPrevPagination } from "@/lib/paginationUtils";
+import { InvoiceStatus } from "@/generated/prisma/enums";
 
 
 export default function TransactionsTable() {
+    const [isLoading, setIsloading] = useState<boolean>(false)
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const router = useRouter()
+    const limit = 2
+    const [localSearch, setLocalSearch] = useState<string>(searchParams.get("search") || "");
+    const [transactions, setTransactions] = useState<APIResponse | null>(null)
+
+    const handleFetchTransactions = async () => {
+        if (isLoading) return
+        setIsloading(true)
+
+        const currentPage = searchParams.get("page") || 1;
+        const currentSearch = searchParams.get("search") || "";
+        const currentStatus = searchParams.get("status")?.toUpperCase() || "";
+        try {
+            const response = await api.get(`/transaction?page=${currentPage}&search=${currentSearch}&invoiceStatus=${currentStatus}&limit=${limit}`);
+            if (response.status === 200) {
+                console.log(response.data);
+                setTransactions(response.data);
+            } else {
+                toast.error("Failed to fetch transactions. Please try again.")
+            }
+
+        } catch (error) {
+            toast.error("Failed to fetch transactions. Please try again.")
+            console.error(error)
+        } finally {
+            setIsloading(false)
+        }
+    }
+
+    const handleStatusChange = (status: string) => {
+        if (isLoading) return
+        const newSearchParams = new URLSearchParams(searchParams.toString());
+        if (status === "all-invoice") {
+            newSearchParams.delete("status");
+        } else {
+            newSearchParams.set("status", status.toLowerCase());
+        }
+        newSearchParams.set("page", "1"); // Reset to first page when status changes
+        newSearchParams.delete("search"); // Clear search when applying a new filter
+        router.push(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            const params = new URLSearchParams(searchParams.toString());
+
+            if (localSearch) {
+                params.set("search", localSearch);
+            } else {
+                params.delete("search");
+            }
+
+            // delete filter key when running the first search
+            params.delete("status");
+
+            params.set("page", "1"); // Always reset to page 1 on new search
+            router.push(`${pathname}?${params.toString()}`);
+        }
+    };
+
+    useEffect(() => {
+        handleFetchTransactions()
+    }, [searchParams.toString()])
 
     return (
         <div className="h-full bg-white rounded-lg relative p-0 flex flex-col">
@@ -31,15 +95,20 @@ export default function TransactionsTable() {
                     <span className="border-main-primary/30 bg-main-primary/3 p-1 h-8 w-9 rounded flex items-center justify-center">
                         <Receipt className="w-4 stroke-3 text-blue-600" />
                     </span>
-                    <span>
+                    <span className="hidden md:inline-block text-sm">
                         Transaction History
                     </span>
                 </h1>
 
                 <div className="flex items-center gap-x-2">
-                    <div className="h-10 w-[250px] border rounded-md flex items-center gap-x-2 px-2">
+                    <div className="hidden sm:flex items-center gap-x-2 h-10 w-[250px] border rounded-md px-2">
                         <Search className="w-5 opacity-30" />
-                        <input type="text" className="h-full w-full focus:outline-none focus:ring-0 text-xs text-black/60" placeholder="Search something here" />
+                        <input
+                            onChange={e => setLocalSearch(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            type="text"
+                            className="h-full w-full focus:outline-none focus:ring-0 text-xs text-black/60" placeholder="Search something here"
+                        />
                     </div>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -51,26 +120,70 @@ export default function TransactionsTable() {
                         <DropdownMenuContent onCloseAutoFocus={(e) => e.preventDefault()}>
                             <DropdownMenuGroup>
                                 {/* <DropdownMenuLabel>Chart filter</DropdownMenuLabel> */}
-                                <DropdownMenuItem>Total delivery</DropdownMenuItem>
-                                <DropdownMenuItem>In Transit</DropdownMenuItem>
+                                <DropdownMenuItem onSelect={() => handleStatusChange("all-invoice")}>
+                                    All Invoice
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onSelect={() => handleStatusChange(InvoiceStatus.PAID)}>
+                                    Paid
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onSelect={() => handleStatusChange(InvoiceStatus.UNPAID)}>
+                                    Unpaid
+                                </DropdownMenuItem>
                             </DropdownMenuGroup>
                             <DropdownMenuGroup>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem>Cancelled</DropdownMenuItem>
-                                <DropdownMenuItem>Returned</DropdownMenuItem>
-                            </DropdownMenuGroup>
-                            <DropdownMenuGroup>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>Revenue</DropdownMenuItem>
+                                <DropdownMenuItem onSelect={() => handleStatusChange(InvoiceStatus.OVERDUE)}>
+                                    Overdue
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onSelect={() => handleStatusChange(InvoiceStatus.REFUND)}>
+                                    Refund
+                                </DropdownMenuItem>
                             </DropdownMenuGroup>
                         </DropdownMenuContent>
                     </DropdownMenu>
 
                     <div className="flex items-center gap-x-1">
-                        <button className="h-9 w-9 flex items-center justify-center p-1 border rounded-sm hover:bg-gray-100">
+                        <button
+                            onClick={() => {
+                                handleNextPrevPagination({
+                                    direction: "prev",
+                                    isLoading,
+                                    meta: {
+                                        currentPage: Number(transactions?.meta.currentPage),
+                                        pageLength: Number(transactions?.meta.pageLength),
+                                        totalItems: Number(transactions?.meta.totalItems),
+                                        totalPages: Number(transactions?.meta.totalPages),
+                                        from: Number(transactions?.meta.from),
+                                        to: Number(transactions?.meta.to),
+                                    },
+                                    pathname,
+                                    searchParams,
+                                    router,
+                                })
+                            }}
+                            className="h-9 w-9 flex items-center justify-center p-1 border rounded-sm hover:bg-gray-100"
+                        >
                             <ChevronLeft className="w-4 h-4" />
                         </button>
-                        <button className="h-9 w-9 flex items-center justify-center p-1 border rounded-sm  hover:bg-gray-100">
+                        <button
+                            onClick={() => {
+                                handleNextPrevPagination({
+                                    direction: "next",
+                                    isLoading,
+                                    meta: {
+                                        currentPage: Number(transactions?.meta.currentPage),
+                                        pageLength: Number(transactions?.meta.pageLength),
+                                        totalItems: Number(transactions?.meta.totalItems),
+                                        totalPages: Number(transactions?.meta.totalPages),
+                                        from: Number(transactions?.meta.from),
+                                        to: Number(transactions?.meta.to),
+                                    },
+                                    pathname,
+                                    searchParams,
+                                    router,
+                                })
+                            }}
+                            className="h-9 w-9 flex items-center justify-center p-1 border rounded-sm  hover:bg-gray-100">
                             <ChevronLeft className="w-4 h-4 rotate-180" />
                         </button>
                     </div>
@@ -79,40 +192,27 @@ export default function TransactionsTable() {
 
             <div className="mt-4 flex-1 overflow-hidden flex flex-col">
                 <div className="flex-1 overflow-y-auto">
-                    <DataTable />
+                    {/* <DataTable /> */}
+                    <DataTable data={transactions?.data ?? []} setTransactions={setTransactions} isLoading={isLoading} />
                 </div>
             </div>
 
-            <div className="mt-auto h-14 border-t flex items-center justify-between bg-white flex-shrink-0 px-7">
-                <p className="text-xs text-black/60">Showing 1 to 20 of 100 entries</p>
-                <div className="flex gap-x-2">
-                    {/* Your Pagination Buttons Here */}
-                    <Pagination>
-                        <PaginationContent>
-                            <PaginationItem>
-                                <PaginationPrevious href="#" />
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationLink href="#">1</PaginationLink>
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationLink href="#" isActive>
-                                    2
-                                </PaginationLink>
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationLink href="#">3</PaginationLink>
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationEllipsis />
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationNext href="#" />
-                            </PaginationItem>
-                        </PaginationContent>
-                    </Pagination>
-                </div>
-            </div>
-        </div>
+            {
+                transactions?.data.length ?
+                    <div className="mt-auto min-h-[3.5rem] py-3 border-t flex flex-col sm:flex-row items-center justify-center sm:justify-between bg-white flex-shrink-0 px-3 sm:px-7 gap-y-2">
+                        <p className="text-xs text-black/60">
+                            Showing {transactions?.meta.from} to {transactions?.meta.to} of {transactions?.meta.totalItems} entries
+                        </p>
+                        <div className="flex gap-x-2">
+                            <CustomPagination
+                                currentPage={transactions?.meta.currentPage}
+                                totalPages={transactions?.meta.totalPages}
+                                pathname={pathname}
+                                searchParams={searchParams}
+                            />
+                        </div>
+                    </div> : null
+            }
+        </div >
     )
 }

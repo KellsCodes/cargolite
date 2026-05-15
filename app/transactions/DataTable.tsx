@@ -17,22 +17,33 @@ import {
 import { MoreHorizontalIcon } from "lucide-react"
 import { paymentMockData } from "./mockdata"
 import { cn } from "@/lib/utils"
+import { APIResponse, InvoicePayload } from "./types"
+import { format } from "date-fns"
+import { InvoiceStatus } from "@/generated/prisma/enums"
+import { AnimateSpin } from "../components/AnimateSpin"
 
 const statusStyles: Record<string, string> = {
     // Active: Matches "Delivered" (Green) - Positive/Healthy state
-    "Paid": "bg-green-100 text-green-700 border-green-200",
+    [InvoiceStatus.PAID]: "bg-green-100 text-green-700 border-green-200",
 
     // Inactive: Matches "Pending" (Amber) - Dormant/Needs attention
-    "Unpaid": "bg-amber-100 text-amber-700 border-amber-200",
+    [InvoiceStatus.UNPAID]: "bg-amber-100 text-amber-700 border-amber-200",
 
     // Suspended: Matches "Cancelled" (Red) - Blocked/Action required
-    "Refunded": "bg-red-100 text-red-700 border-red-200",
+    [InvoiceStatus.REFUND]: "bg-red-100 text-red-700 border-red-200",
 
     // Flagged: Matches "Picked Up" (Purple) - Special case/Warning
-    "Overdue": "bg-purple-100 text-purple-700 border-purple-200",
+    [InvoiceStatus.OVERDUE]: "bg-purple-100 text-purple-700 border-purple-200",
 };
 
-export function DataTable() {
+
+interface DataTableProps {
+    data: InvoicePayload[];
+    setTransactions: React.Dispatch<React.SetStateAction<APIResponse | null>>;
+    isLoading?: boolean;
+}
+
+export function DataTable({ data = [], setTransactions, isLoading }: DataTableProps) {
     return (
         <Table>
             <TableHeader>
@@ -49,42 +60,65 @@ export function DataTable() {
             </TableHeader>
 
             <TableBody>
-                {paymentMockData.map((transaction) => (
-                    <TableRow key={transaction.id}>
-                        <TableCell className="font-medium">{transaction.id}</TableCell>
-                        <TableCell>{transaction.client}</TableCell>
-                        <TableCell>{transaction.shipmentId}</TableCell>
-                        <TableCell>{transaction.date}</TableCell>
-                        <TableCell>{transaction.amount}</TableCell>
-                        <TableCell>{transaction.method || "Bank Transfer"}</TableCell>
-                        <TableCell>
-                            <span className={cn(
-                                "px-2.5 py-0.5 rounded-full text-xs font-medium border",
-                                statusStyles[transaction.status] || "bg-gray-100 text-gray-700"
-                            )}>
-                                {transaction.status}
-                            </span>
-                        </TableCell>
-                        <TableCell className="text-right">
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" size="icon" className="size-8">
-                                        <MoreHorizontalIcon />
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                    <DropdownMenuItem>Generate Invoice</DropdownMenuItem>
-                                    <DropdownMenuItem>Send Reminder</DropdownMenuItem>
-                                    <DropdownMenuItem>Mark as Paid</DropdownMenuItem>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem variant="destructive">
-                                        Delete
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
+                {!isLoading && !data.length ? (
+                    <TableRow>
+                        <TableCell colSpan={8} className="h-64 text-center">
+                            <div className="flex flex-col items-center justify-center gap-2">
+                                <span className="text-sm">No record found.</span>
+                            </div>
                         </TableCell>
                     </TableRow>
-                ))}
+                ) : isLoading ? (
+                    <TableRow>
+                        <TableCell colSpan={8} className="h-64 text-center">
+                            <div className="flex flex-col items-center justify-center gap-2">
+                                <AnimateSpin />
+                                <span className="text-sm">Loading invoice...</span>
+                            </div>
+                        </TableCell>
+                    </TableRow>
+                ) : (
+                    data.map((transaction) => (
+                        <TableRow key={transaction.id}>
+                            <TableCell className="font-medium">{transaction.transactionID}</TableCell>
+                            <TableCell className="max-w-[200px] truncate">{transaction.client.name}</TableCell>
+                            <TableCell>{transaction.shipment.shipmentID}</TableCell>
+                            <TableCell>{format(new Date(transaction.createdAt), "LLL dd, yyyy")}</TableCell>
+                            <TableCell>{Number(transaction.amount).toLocaleString("en-us", {
+                                style: "currency",
+                                currency: "USD"
+                            })}</TableCell>
+                            <TableCell>{transaction.paymentMethod}</TableCell>
+                            <TableCell>
+                                <span className={cn(
+                                    "px-2.5 py-0.5 rounded-full text-xs font-medium border",
+                                    statusStyles[transaction.invoiceStatus] || "bg-gray-100 text-gray-700"
+                                )}>
+                                    {transaction.invoiceStatus}
+                                </span>
+                            </TableCell>
+
+                            {/* DROP DOWN MENU */}
+                            <TableCell className="text-right">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" size="icon" className="size-8">
+                                            <MoreHorizontalIcon />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end">
+                                        <DropdownMenuItem>Generate Invoice</DropdownMenuItem>
+                                        <DropdownMenuItem>Send Reminder</DropdownMenuItem>
+                                        <DropdownMenuItem>Mark as Paid</DropdownMenuItem>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem variant="destructive" className="cursor-not-allowed">
+                                            Delete
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </TableCell>
+                        </TableRow>
+                    )))}
             </TableBody>
         </Table>
     )
