@@ -97,6 +97,11 @@ export default function SignupUI() {
                 return;
             }
 
+            if (error?.message === "Email already exists") {
+                toast.error(error?.message);
+                return
+            }
+
             // Handle raw 5xx Axios errors passed through by your interceptor
             const status = error.response?.status;
             if (status >= 500) {
@@ -258,15 +263,17 @@ export default function SignupUI() {
                                 <div className="relative group">
                                     <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-black/30 group-focus-within:text-[#034460] transition-colors" />
                                     <select
+                                        value={formData.region || ""}
                                         onChange={(e) => setFormData((prev) => ({ ...prev, region: e.target.value }))}
                                         name="region"
                                         className="w-full bg-black/5 border border-black/10 p-3 pl-11 rounded-xl outline-none focus:border-[#034460]/40 focus:bg-white text-[#034460] text-sm transition-all appearance-none cursor-pointer">
-                                        <option value="" disabled selected>Select Country</option>
+                                        <option value="" disabled hidden>Select Country</option>
                                         <option value="UK">United Kingdom</option>
                                         <option value="US">United States</option>
                                         <option value="Germany">Germany</option>
                                         <option value="Singapore">Singapore</option>
                                     </select>
+
                                 </div>
                                 {errors.region && (<p className="text-red-500 text-xs">{errors.region}</p>)}
                             </div>

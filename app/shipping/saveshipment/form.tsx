@@ -1,15 +1,9 @@
 "use client"
 import { useState, useRef } from "react"
-import { UploadCloud, FileText, X, Form } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Ship, Plane, Bus } from "lucide-react"
 import { format } from "date-fns"
 import { toast } from "react-toastify"
 import axios from "axios"
 import api from "@/lib/axios"
-import { is } from "date-fns/locale"
 import { AnimateSpin } from "@/app/components/AnimateSpin"
 
 interface ShipmentFormData {
@@ -85,7 +79,7 @@ export default function SaveShipmentForm() {
         }
 
         const entries = Object.entries(formData)
-        const missingField = entries.find(([key, value]) => !value);
+        const missingField = entries.filter(([key]) => key !== "packageImage").find(([key, value]) => !value);
 
         if (missingField?.length) {
             toast.error(`Please fill in the ${fieldLabels[missingField[0]]} field.`);

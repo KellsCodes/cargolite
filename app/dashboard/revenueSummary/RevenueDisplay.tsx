@@ -62,8 +62,6 @@ export default function RevenueDisplay() {
         fetchRevenueAnalyticsData();
     }, [])
 
-    console.log(revenueData)
-
     return (
         <div className="flex flex-col h-full relative">
             <div className="flex items-center justify-between">

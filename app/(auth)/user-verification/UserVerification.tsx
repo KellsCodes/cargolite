@@ -80,7 +80,7 @@ export default function EmailOtpVerificationPage() {
             });
 
             if (response.status === 200 || response.status === 201) {
-                toast.success("Account verified successfully!");
+                toast.success("Account verification successful!");
                 router.push('/login')
             }
         } catch (error: any) {

@@ -170,7 +170,7 @@ export function DataTable({ data = [], setShipments, isLoading }: DataTableProps
                         <TableRow>
                             <TableCell colSpan={8} className="h-64 text-center">
                                 <div className="flex flex-col items-center justify-center gap-2">
-                                    <span className="text-sm">No Record found.</span>
+                                    <span className="text-sm">No record found.</span>
                                 </div>
                             </TableCell>
                         </TableRow>

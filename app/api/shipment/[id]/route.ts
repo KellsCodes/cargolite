@@ -56,9 +56,12 @@ export async function PATCH(
     return NextResponse.json(updated);
   } catch (error: any) {
     // Record Not Found (P2025)
-    if (error.code === "P2025") {
+    if (
+      error.code === "P2025" ||
+      error?.message === "Target shipment record not found"
+    ) {
       return NextResponse.json(
-        { error: "Shipment not found." },
+        { error: "Target shipment record not found" },
         { status: 404 }
       );
     }

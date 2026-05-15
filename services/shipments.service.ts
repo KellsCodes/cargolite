@@ -1,15 +1,13 @@
 import { paginate } from "@/app/api/utils/pagination.utils";
 import { ShipmentStatus } from "@/generated/prisma/enums";
 import prisma from "@/lib/prisma";
-import { randomInt } from "crypto";
+import { randomInt, randomBytes } from "crypto";
 
 export const processNewShipment = async (data: any, adminID: number) => {
   return await prisma.$transaction(async (tx) => {
     // Upsert Sender & Receiver (Same as before)
-    const sender = await tx.client.upsert({
-      where: { email: data.senderEmail },
-      update: { telephone: data.senderPhone }, // Update phone if it changed
-      create: {
+    const sender = await tx.client.create({
+      data: {
         name: data.senderName,
         email: data.senderEmail,
         telephone: data.senderPhone,
@@ -17,10 +15,8 @@ export const processNewShipment = async (data: any, adminID: number) => {
       },
     });
 
-    const receiver = await tx.client.upsert({
-      where: { email: data.receiverEmail },
-      update: { telephone: data.receiverPhone },
-      create: {
+    const receiver = await tx.client.create({
+      data: {
         name: data.receiverName,
         email: data.receiverEmail,
         telephone: data.receiverPhone,
@@ -33,11 +29,9 @@ export const processNewShipment = async (data: any, adminID: number) => {
     const payerId = data.payerRole === "RECEIVER" ? receiver.id : sender.id;
 
     // Generate IDs (INV... and AWP...)
-    const year = new Date().getFullYear();
-    const count = await tx.invoice.count();
-    const transactionID = `INV-${year}-${(count + 1)
-      .toString()
-      .padStart(3, "0")}`;
+    // const year = new Date().getFullYear();
+    const uniqueCluster = randomBytes(3).toString("hex").toUpperCase();
+    const transactionID = `INV-${new Date().getFullYear()}-${uniqueCluster}`;
     const shipmentID = `AWP${randomInt(1000000000, 9999999999)}`;
 
     // Create Invoice linked to the ACTUAL Payer
@@ -45,15 +39,18 @@ export const processNewShipment = async (data: any, adminID: number) => {
     return await tx.shipment.create({
       data: {
         shipmentID,
-        weight: data.weight,
+        weight: Number(data.weight),
         packageType: data.packageType,
         courierType: data.courierType,
         dropLocation: data.dropLocation,
         pickupLocation: data.pickupLocation,
         arrival: new Date(data.arrival),
-        senderId: sender.id,
-        receiverId: receiver.id,
-        // invoiceId: invoice.id,
+        sender: {
+          connect: { id: sender.id },
+        },
+        receiver: {
+          connect: { id: receiver.id },
+        },
         packageImage: data.packageImage || null,
         invoice: {
           create: {
@@ -68,56 +65,91 @@ export const processNewShipment = async (data: any, adminID: number) => {
           create: {
             status: "PICKED_UP",
             location: data.pickupLocation,
-            notes: "Shipment record created and picked up.",
+            notes: "Shipment record created and item picked up.",
             updatedById: adminID,
           },
         },
       },
-      include: { invoice: true, sender: true, receiver: true },
+      include: {
+        invoice: true,
+        sender: true,
+        receiver: true,
+        trackingHistory: true,
+      },
     });
   });
 };
 
 export const updateShipmentRecord = async (id: number, data: any) => {
-  return await prisma.shipment.update({
-    where: { id },
-    data: {
-      // Partial Update of Shipment fields
-      weight: data.weight,
-      packageType: data.packageType,
-      courierType: data.courierType,
-      dropLocation: data.dropLocation,
-      pickupLocation: data.pickupLocation,
-      arrival: data.arrival ? new Date(data.arrival) : undefined,
-      packageImage: data.packageImage,
+  return await prisma.$transaction(async (tx) => {
+    // Fetch the existing sender/receiver IDs for this specific shipment record
+    const currentShipment = await tx.shipment.findUnique({
+      where: { id },
+      select: {
+        sender: { select: { id: true } },
+        receiver: { select: { id: true } },
+      },
+    });
 
-      // Nested Update for the Invoice (if amount or method changed)
-      invoice: {
-        update: {
-          amount: data.amount,
-          paymentMethod: data.paymentMethod,
-        },
-      },
+    if (!currentShipment) {
+      throw new Error("Target shipment record not found");
+    }
 
-      // Nested Update for Client details (if needed)
-      sender: {
-        update: {
-          name: data.senderName,
-          telephone: data.senderPhone,
+    // Resolve the targeted client ID based on the updated payer role
+    let targetPayerId = undefined;
+    if (data.payerRole) {
+      targetPayerId =
+        data.payerRole === "RECEIVER"
+          ? currentShipment.receiver?.id
+          : currentShipment.sender?.id;
+    }
+
+    // Execute the compound atomic shipment and nested child updates
+    return await tx.shipment.update({
+      where: { id },
+      data: {
+        weight: data.weight ? Number(data.weight) : undefined,
+        packageType: data.packageType,
+        courierType: data.courierType,
+        dropLocation: data.dropLocation,
+        pickupLocation: data.pickupLocation,
+        arrival: data.arrival ? new Date(data.arrival) : undefined,
+        packageImage: data.packageImage,
+
+        // nested update for the shipment's invoice
+        invoice: {
+          update: {
+            amount: data.amount,
+            paymentMethod: data.paymentMethod,
+            payerRole: data.payerRole,
+            clientId: targetPayerId,
+          },
+        },
+
+        // Update the bound sender record
+        sender: {
+          update: {
+            name: data.senderName,
+            telephone: data.senderPhone,
+            email: data.senderEmail,
+          },
+        },
+
+        // Update the bound receiver record
+        receiver: {
+          update: {
+            name: data.receiverName,
+            telephone: data.receiverPhone,
+            email: data.receiverEmail,
+          },
         },
       },
-      receiver: {
-        update: {
-          name: data.receiverName,
-          telephone: data.receiverPhone,
-        },
+      include: {
+        invoice: true,
+        sender: true,
+        receiver: true,
       },
-    },
-    include: {
-      invoice: true,
-      sender: true,
-      receiver: true,
-    },
+    });
   });
 };
 
