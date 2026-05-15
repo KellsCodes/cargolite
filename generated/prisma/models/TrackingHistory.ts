@@ -203,7 +203,7 @@ export type TrackingHistoryGroupByOutputType = {
   id: number
   status: $Enums.ShipmentStatus
   location: string
-  notes: string
+  notes: string | null
   updatedById: number
   shipmentId: number
   createdAt: Date
@@ -236,7 +236,7 @@ export type TrackingHistoryWhereInput = {
   id?: Prisma.IntFilter<"TrackingHistory"> | number
   status?: Prisma.EnumShipmentStatusFilter<"TrackingHistory"> | $Enums.ShipmentStatus
   location?: Prisma.StringFilter<"TrackingHistory"> | string
-  notes?: Prisma.StringFilter<"TrackingHistory"> | string
+  notes?: Prisma.StringNullableFilter<"TrackingHistory"> | string | null
   updatedById?: Prisma.IntFilter<"TrackingHistory"> | number
   shipmentId?: Prisma.IntFilter<"TrackingHistory"> | number
   createdAt?: Prisma.DateTimeFilter<"TrackingHistory"> | Date | string
@@ -248,7 +248,7 @@ export type TrackingHistoryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   status?: Prisma.SortOrder
   location?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   shipmentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -264,7 +264,7 @@ export type TrackingHistoryWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TrackingHistoryWhereInput | Prisma.TrackingHistoryWhereInput[]
   status?: Prisma.EnumShipmentStatusFilter<"TrackingHistory"> | $Enums.ShipmentStatus
   location?: Prisma.StringFilter<"TrackingHistory"> | string
-  notes?: Prisma.StringFilter<"TrackingHistory"> | string
+  notes?: Prisma.StringNullableFilter<"TrackingHistory"> | string | null
   updatedById?: Prisma.IntFilter<"TrackingHistory"> | number
   shipmentId?: Prisma.IntFilter<"TrackingHistory"> | number
   createdAt?: Prisma.DateTimeFilter<"TrackingHistory"> | Date | string
@@ -276,7 +276,7 @@ export type TrackingHistoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   status?: Prisma.SortOrder
   location?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   shipmentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -294,7 +294,7 @@ export type TrackingHistoryScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"TrackingHistory"> | number
   status?: Prisma.EnumShipmentStatusWithAggregatesFilter<"TrackingHistory"> | $Enums.ShipmentStatus
   location?: Prisma.StringWithAggregatesFilter<"TrackingHistory"> | string
-  notes?: Prisma.StringWithAggregatesFilter<"TrackingHistory"> | string
+  notes?: Prisma.StringNullableWithAggregatesFilter<"TrackingHistory"> | string | null
   updatedById?: Prisma.IntWithAggregatesFilter<"TrackingHistory"> | number
   shipmentId?: Prisma.IntWithAggregatesFilter<"TrackingHistory"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TrackingHistory"> | Date | string
@@ -303,7 +303,7 @@ export type TrackingHistoryScalarWhereWithAggregatesInput = {
 export type TrackingHistoryCreateInput = {
   status?: $Enums.ShipmentStatus
   location: string
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   shipment: Prisma.ShipmentCreateNestedOneWithoutTrackingHistoryInput
   updatedBy: Prisma.UserCreateNestedOneWithoutTrackingUpdatesInput
@@ -313,7 +313,7 @@ export type TrackingHistoryUncheckedCreateInput = {
   id?: number
   status?: $Enums.ShipmentStatus
   location: string
-  notes: string
+  notes?: string | null
   updatedById: number
   shipmentId: number
   createdAt?: Date | string
@@ -322,7 +322,7 @@ export type TrackingHistoryUncheckedCreateInput = {
 export type TrackingHistoryUpdateInput = {
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shipment?: Prisma.ShipmentUpdateOneRequiredWithoutTrackingHistoryNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutTrackingUpdatesNestedInput
@@ -332,7 +332,7 @@ export type TrackingHistoryUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.IntFieldUpdateOperationsInput | number
   shipmentId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -342,7 +342,7 @@ export type TrackingHistoryCreateManyInput = {
   id?: number
   status?: $Enums.ShipmentStatus
   location: string
-  notes: string
+  notes?: string | null
   updatedById: number
   shipmentId: number
   createdAt?: Date | string
@@ -351,7 +351,7 @@ export type TrackingHistoryCreateManyInput = {
 export type TrackingHistoryUpdateManyMutationInput = {
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -359,7 +359,7 @@ export type TrackingHistoryUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.IntFieldUpdateOperationsInput | number
   shipmentId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -514,7 +514,7 @@ export type EnumShipmentStatusFieldUpdateOperationsInput = {
 export type TrackingHistoryCreateWithoutUpdatedByInput = {
   status?: $Enums.ShipmentStatus
   location: string
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   shipment: Prisma.ShipmentCreateNestedOneWithoutTrackingHistoryInput
 }
@@ -523,7 +523,7 @@ export type TrackingHistoryUncheckedCreateWithoutUpdatedByInput = {
   id?: number
   status?: $Enums.ShipmentStatus
   location: string
-  notes: string
+  notes?: string | null
   shipmentId: number
   createdAt?: Date | string
 }
@@ -561,7 +561,7 @@ export type TrackingHistoryScalarWhereInput = {
   id?: Prisma.IntFilter<"TrackingHistory"> | number
   status?: Prisma.EnumShipmentStatusFilter<"TrackingHistory"> | $Enums.ShipmentStatus
   location?: Prisma.StringFilter<"TrackingHistory"> | string
-  notes?: Prisma.StringFilter<"TrackingHistory"> | string
+  notes?: Prisma.StringNullableFilter<"TrackingHistory"> | string | null
   updatedById?: Prisma.IntFilter<"TrackingHistory"> | number
   shipmentId?: Prisma.IntFilter<"TrackingHistory"> | number
   createdAt?: Prisma.DateTimeFilter<"TrackingHistory"> | Date | string
@@ -570,7 +570,7 @@ export type TrackingHistoryScalarWhereInput = {
 export type TrackingHistoryCreateWithoutShipmentInput = {
   status?: $Enums.ShipmentStatus
   location: string
-  notes: string
+  notes?: string | null
   createdAt?: Date | string
   updatedBy: Prisma.UserCreateNestedOneWithoutTrackingUpdatesInput
 }
@@ -579,7 +579,7 @@ export type TrackingHistoryUncheckedCreateWithoutShipmentInput = {
   id?: number
   status?: $Enums.ShipmentStatus
   location: string
-  notes: string
+  notes?: string | null
   updatedById: number
   createdAt?: Date | string
 }
@@ -614,7 +614,7 @@ export type TrackingHistoryCreateManyUpdatedByInput = {
   id?: number
   status?: $Enums.ShipmentStatus
   location: string
-  notes: string
+  notes?: string | null
   shipmentId: number
   createdAt?: Date | string
 }
@@ -622,7 +622,7 @@ export type TrackingHistoryCreateManyUpdatedByInput = {
 export type TrackingHistoryUpdateWithoutUpdatedByInput = {
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shipment?: Prisma.ShipmentUpdateOneRequiredWithoutTrackingHistoryNestedInput
 }
@@ -631,7 +631,7 @@ export type TrackingHistoryUncheckedUpdateWithoutUpdatedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shipmentId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -640,7 +640,7 @@ export type TrackingHistoryUncheckedUpdateManyWithoutUpdatedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shipmentId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -649,7 +649,7 @@ export type TrackingHistoryCreateManyShipmentInput = {
   id?: number
   status?: $Enums.ShipmentStatus
   location: string
-  notes: string
+  notes?: string | null
   updatedById: number
   createdAt?: Date | string
 }
@@ -657,7 +657,7 @@ export type TrackingHistoryCreateManyShipmentInput = {
 export type TrackingHistoryUpdateWithoutShipmentInput = {
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutTrackingUpdatesNestedInput
 }
@@ -666,7 +666,7 @@ export type TrackingHistoryUncheckedUpdateWithoutShipmentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -675,7 +675,7 @@ export type TrackingHistoryUncheckedUpdateManyWithoutShipmentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumShipmentStatusFieldUpdateOperationsInput | $Enums.ShipmentStatus
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -722,7 +722,7 @@ export type $TrackingHistoryPayload<ExtArgs extends runtime.Types.Extensions.Int
     id: number
     status: $Enums.ShipmentStatus
     location: string
-    notes: string
+    notes: string | null
     updatedById: number
     shipmentId: number
     createdAt: Date

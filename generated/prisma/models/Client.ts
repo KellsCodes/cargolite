@@ -29,11 +29,15 @@ export type AggregateClient = {
 export type ClientAvgAggregateOutputType = {
   id: number | null
   status: number | null
+  sentShipmentId: number | null
+  receivedShipmentId: number | null
 }
 
 export type ClientSumAggregateOutputType = {
   id: number | null
   status: number | null
+  sentShipmentId: number | null
+  receivedShipmentId: number | null
 }
 
 export type ClientMinAggregateOutputType = {
@@ -44,6 +48,8 @@ export type ClientMinAggregateOutputType = {
   clientType: $Enums.ClientType | null
   status: number | null
   createdAt: Date | null
+  sentShipmentId: number | null
+  receivedShipmentId: number | null
 }
 
 export type ClientMaxAggregateOutputType = {
@@ -54,6 +60,8 @@ export type ClientMaxAggregateOutputType = {
   clientType: $Enums.ClientType | null
   status: number | null
   createdAt: Date | null
+  sentShipmentId: number | null
+  receivedShipmentId: number | null
 }
 
 export type ClientCountAggregateOutputType = {
@@ -64,6 +72,8 @@ export type ClientCountAggregateOutputType = {
   clientType: number
   status: number
   createdAt: number
+  sentShipmentId: number
+  receivedShipmentId: number
   _all: number
 }
 
@@ -71,11 +81,15 @@ export type ClientCountAggregateOutputType = {
 export type ClientAvgAggregateInputType = {
   id?: true
   status?: true
+  sentShipmentId?: true
+  receivedShipmentId?: true
 }
 
 export type ClientSumAggregateInputType = {
   id?: true
   status?: true
+  sentShipmentId?: true
+  receivedShipmentId?: true
 }
 
 export type ClientMinAggregateInputType = {
@@ -86,6 +100,8 @@ export type ClientMinAggregateInputType = {
   clientType?: true
   status?: true
   createdAt?: true
+  sentShipmentId?: true
+  receivedShipmentId?: true
 }
 
 export type ClientMaxAggregateInputType = {
@@ -96,6 +112,8 @@ export type ClientMaxAggregateInputType = {
   clientType?: true
   status?: true
   createdAt?: true
+  sentShipmentId?: true
+  receivedShipmentId?: true
 }
 
 export type ClientCountAggregateInputType = {
@@ -106,6 +124,8 @@ export type ClientCountAggregateInputType = {
   clientType?: true
   status?: true
   createdAt?: true
+  sentShipmentId?: true
+  receivedShipmentId?: true
   _all?: true
 }
 
@@ -203,6 +223,8 @@ export type ClientGroupByOutputType = {
   clientType: $Enums.ClientType
   status: number
   createdAt: Date
+  sentShipmentId: number | null
+  receivedShipmentId: number | null
   _count: ClientCountAggregateOutputType | null
   _avg: ClientAvgAggregateOutputType | null
   _sum: ClientSumAggregateOutputType | null
@@ -236,10 +258,12 @@ export type ClientWhereInput = {
   clientType?: Prisma.EnumClientTypeFilter<"Client"> | $Enums.ClientType
   status?: Prisma.IntFilter<"Client"> | number
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
+  sentShipmentId?: Prisma.IntNullableFilter<"Client"> | number | null
+  receivedShipmentId?: Prisma.IntNullableFilter<"Client"> | number | null
   receivedMessages?: Prisma.AdminMessageListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
-  receivedShipments?: Prisma.ShipmentListRelationFilter
-  sentShipments?: Prisma.ShipmentListRelationFilter
+  sentShipments?: Prisma.XOR<Prisma.ShipmentNullableScalarRelationFilter, Prisma.ShipmentWhereInput> | null
+  receivedShipments?: Prisma.XOR<Prisma.ShipmentNullableScalarRelationFilter, Prisma.ShipmentWhereInput> | null
 }
 
 export type ClientOrderByWithRelationInput = {
@@ -250,29 +274,33 @@ export type ClientOrderByWithRelationInput = {
   clientType?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  sentShipmentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  receivedShipmentId?: Prisma.SortOrderInput | Prisma.SortOrder
   receivedMessages?: Prisma.AdminMessageOrderByRelationAggregateInput
   invoices?: Prisma.InvoiceOrderByRelationAggregateInput
-  receivedShipments?: Prisma.ShipmentOrderByRelationAggregateInput
-  sentShipments?: Prisma.ShipmentOrderByRelationAggregateInput
+  sentShipments?: Prisma.ShipmentOrderByWithRelationInput
+  receivedShipments?: Prisma.ShipmentOrderByWithRelationInput
   _relevance?: Prisma.ClientOrderByRelevanceInput
 }
 
 export type ClientWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  email?: string
+  sentShipmentId?: number
+  receivedShipmentId?: number
   AND?: Prisma.ClientWhereInput | Prisma.ClientWhereInput[]
   OR?: Prisma.ClientWhereInput[]
   NOT?: Prisma.ClientWhereInput | Prisma.ClientWhereInput[]
   name?: Prisma.StringFilter<"Client"> | string
+  email?: Prisma.StringFilter<"Client"> | string
   telephone?: Prisma.StringNullableFilter<"Client"> | string | null
   clientType?: Prisma.EnumClientTypeFilter<"Client"> | $Enums.ClientType
   status?: Prisma.IntFilter<"Client"> | number
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   receivedMessages?: Prisma.AdminMessageListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
-  receivedShipments?: Prisma.ShipmentListRelationFilter
-  sentShipments?: Prisma.ShipmentListRelationFilter
-}, "id" | "email">
+  sentShipments?: Prisma.XOR<Prisma.ShipmentNullableScalarRelationFilter, Prisma.ShipmentWhereInput> | null
+  receivedShipments?: Prisma.XOR<Prisma.ShipmentNullableScalarRelationFilter, Prisma.ShipmentWhereInput> | null
+}, "id" | "sentShipmentId" | "receivedShipmentId">
 
 export type ClientOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -282,6 +310,8 @@ export type ClientOrderByWithAggregationInput = {
   clientType?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  sentShipmentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  receivedShipmentId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ClientCountOrderByAggregateInput
   _avg?: Prisma.ClientAvgOrderByAggregateInput
   _max?: Prisma.ClientMaxOrderByAggregateInput
@@ -300,6 +330,8 @@ export type ClientScalarWhereWithAggregatesInput = {
   clientType?: Prisma.EnumClientTypeWithAggregatesFilter<"Client"> | $Enums.ClientType
   status?: Prisma.IntWithAggregatesFilter<"Client"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Client"> | Date | string
+  sentShipmentId?: Prisma.IntNullableWithAggregatesFilter<"Client"> | number | null
+  receivedShipmentId?: Prisma.IntNullableWithAggregatesFilter<"Client"> | number | null
 }
 
 export type ClientCreateInput = {
@@ -311,8 +343,8 @@ export type ClientCreateInput = {
   createdAt?: Date | string
   receivedMessages?: Prisma.AdminMessageCreateNestedManyWithoutRecipientInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutClientInput
-  receivedShipments?: Prisma.ShipmentCreateNestedManyWithoutReceiverInput
-  sentShipments?: Prisma.ShipmentCreateNestedManyWithoutSenderInput
+  sentShipments?: Prisma.ShipmentCreateNestedOneWithoutSenderInput
+  receivedShipments?: Prisma.ShipmentCreateNestedOneWithoutReceiverInput
 }
 
 export type ClientUncheckedCreateInput = {
@@ -323,10 +355,10 @@ export type ClientUncheckedCreateInput = {
   clientType: $Enums.ClientType
   status?: number
   createdAt?: Date | string
+  sentShipmentId?: number | null
+  receivedShipmentId?: number | null
   receivedMessages?: Prisma.AdminMessageUncheckedCreateNestedManyWithoutRecipientInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutClientInput
-  receivedShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutReceiverInput
-  sentShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type ClientUpdateInput = {
@@ -338,8 +370,8 @@ export type ClientUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   receivedMessages?: Prisma.AdminMessageUpdateManyWithoutRecipientNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutClientNestedInput
-  receivedShipments?: Prisma.ShipmentUpdateManyWithoutReceiverNestedInput
-  sentShipments?: Prisma.ShipmentUpdateManyWithoutSenderNestedInput
+  sentShipments?: Prisma.ShipmentUpdateOneWithoutSenderNestedInput
+  receivedShipments?: Prisma.ShipmentUpdateOneWithoutReceiverNestedInput
 }
 
 export type ClientUncheckedUpdateInput = {
@@ -350,10 +382,10 @@ export type ClientUncheckedUpdateInput = {
   clientType?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
   status?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentShipmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  receivedShipmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   receivedMessages?: Prisma.AdminMessageUncheckedUpdateManyWithoutRecipientNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutClientNestedInput
-  receivedShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutReceiverNestedInput
-  sentShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type ClientCreateManyInput = {
@@ -364,6 +396,8 @@ export type ClientCreateManyInput = {
   clientType: $Enums.ClientType
   status?: number
   createdAt?: Date | string
+  sentShipmentId?: number | null
+  receivedShipmentId?: number | null
 }
 
 export type ClientUpdateManyMutationInput = {
@@ -383,6 +417,8 @@ export type ClientUncheckedUpdateManyInput = {
   clientType?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
   status?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentShipmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  receivedShipmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type ClientOrderByRelevanceInput = {
@@ -399,11 +435,15 @@ export type ClientCountOrderByAggregateInput = {
   clientType?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  sentShipmentId?: Prisma.SortOrder
+  receivedShipmentId?: Prisma.SortOrder
 }
 
 export type ClientAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  sentShipmentId?: Prisma.SortOrder
+  receivedShipmentId?: Prisma.SortOrder
 }
 
 export type ClientMaxOrderByAggregateInput = {
@@ -414,6 +454,8 @@ export type ClientMaxOrderByAggregateInput = {
   clientType?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  sentShipmentId?: Prisma.SortOrder
+  receivedShipmentId?: Prisma.SortOrder
 }
 
 export type ClientMinOrderByAggregateInput = {
@@ -424,16 +466,25 @@ export type ClientMinOrderByAggregateInput = {
   clientType?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  sentShipmentId?: Prisma.SortOrder
+  receivedShipmentId?: Prisma.SortOrder
 }
 
 export type ClientSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  sentShipmentId?: Prisma.SortOrder
+  receivedShipmentId?: Prisma.SortOrder
 }
 
 export type ClientScalarRelationFilter = {
   is?: Prisma.ClientWhereInput
   isNot?: Prisma.ClientWhereInput
+}
+
+export type ClientNullableScalarRelationFilter = {
+  is?: Prisma.ClientWhereInput | null
+  isNot?: Prisma.ClientWhereInput | null
 }
 
 export type EnumClientTypeFieldUpdateOperationsInput = {
@@ -466,18 +517,54 @@ export type ClientCreateNestedOneWithoutSentShipmentsInput = {
   connect?: Prisma.ClientWhereUniqueInput
 }
 
-export type ClientUpdateOneRequiredWithoutReceivedShipmentsNestedInput = {
+export type ClientUncheckedCreateNestedOneWithoutReceivedShipmentsInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutReceivedShipmentsInput, Prisma.ClientUncheckedCreateWithoutReceivedShipmentsInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutReceivedShipmentsInput
+  connect?: Prisma.ClientWhereUniqueInput
+}
+
+export type ClientUncheckedCreateNestedOneWithoutSentShipmentsInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutSentShipmentsInput, Prisma.ClientUncheckedCreateWithoutSentShipmentsInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutSentShipmentsInput
+  connect?: Prisma.ClientWhereUniqueInput
+}
+
+export type ClientUpdateOneWithoutReceivedShipmentsNestedInput = {
   create?: Prisma.XOR<Prisma.ClientCreateWithoutReceivedShipmentsInput, Prisma.ClientUncheckedCreateWithoutReceivedShipmentsInput>
   connectOrCreate?: Prisma.ClientCreateOrConnectWithoutReceivedShipmentsInput
   upsert?: Prisma.ClientUpsertWithoutReceivedShipmentsInput
+  disconnect?: Prisma.ClientWhereInput | boolean
+  delete?: Prisma.ClientWhereInput | boolean
   connect?: Prisma.ClientWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutReceivedShipmentsInput, Prisma.ClientUpdateWithoutReceivedShipmentsInput>, Prisma.ClientUncheckedUpdateWithoutReceivedShipmentsInput>
 }
 
-export type ClientUpdateOneRequiredWithoutSentShipmentsNestedInput = {
+export type ClientUpdateOneWithoutSentShipmentsNestedInput = {
   create?: Prisma.XOR<Prisma.ClientCreateWithoutSentShipmentsInput, Prisma.ClientUncheckedCreateWithoutSentShipmentsInput>
   connectOrCreate?: Prisma.ClientCreateOrConnectWithoutSentShipmentsInput
   upsert?: Prisma.ClientUpsertWithoutSentShipmentsInput
+  disconnect?: Prisma.ClientWhereInput | boolean
+  delete?: Prisma.ClientWhereInput | boolean
+  connect?: Prisma.ClientWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutSentShipmentsInput, Prisma.ClientUpdateWithoutSentShipmentsInput>, Prisma.ClientUncheckedUpdateWithoutSentShipmentsInput>
+}
+
+export type ClientUncheckedUpdateOneWithoutReceivedShipmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutReceivedShipmentsInput, Prisma.ClientUncheckedCreateWithoutReceivedShipmentsInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutReceivedShipmentsInput
+  upsert?: Prisma.ClientUpsertWithoutReceivedShipmentsInput
+  disconnect?: Prisma.ClientWhereInput | boolean
+  delete?: Prisma.ClientWhereInput | boolean
+  connect?: Prisma.ClientWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutReceivedShipmentsInput, Prisma.ClientUpdateWithoutReceivedShipmentsInput>, Prisma.ClientUncheckedUpdateWithoutReceivedShipmentsInput>
+}
+
+export type ClientUncheckedUpdateOneWithoutSentShipmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutSentShipmentsInput, Prisma.ClientUncheckedCreateWithoutSentShipmentsInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutSentShipmentsInput
+  upsert?: Prisma.ClientUpsertWithoutSentShipmentsInput
+  disconnect?: Prisma.ClientWhereInput | boolean
+  delete?: Prisma.ClientWhereInput | boolean
   connect?: Prisma.ClientWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutSentShipmentsInput, Prisma.ClientUpdateWithoutSentShipmentsInput>, Prisma.ClientUncheckedUpdateWithoutSentShipmentsInput>
 }
@@ -504,8 +591,8 @@ export type ClientCreateWithoutInvoicesInput = {
   status?: number
   createdAt?: Date | string
   receivedMessages?: Prisma.AdminMessageCreateNestedManyWithoutRecipientInput
-  receivedShipments?: Prisma.ShipmentCreateNestedManyWithoutReceiverInput
-  sentShipments?: Prisma.ShipmentCreateNestedManyWithoutSenderInput
+  sentShipments?: Prisma.ShipmentCreateNestedOneWithoutSenderInput
+  receivedShipments?: Prisma.ShipmentCreateNestedOneWithoutReceiverInput
 }
 
 export type ClientUncheckedCreateWithoutInvoicesInput = {
@@ -516,9 +603,9 @@ export type ClientUncheckedCreateWithoutInvoicesInput = {
   clientType: $Enums.ClientType
   status?: number
   createdAt?: Date | string
+  sentShipmentId?: number | null
+  receivedShipmentId?: number | null
   receivedMessages?: Prisma.AdminMessageUncheckedCreateNestedManyWithoutRecipientInput
-  receivedShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutReceiverInput
-  sentShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type ClientCreateOrConnectWithoutInvoicesInput = {
@@ -545,8 +632,8 @@ export type ClientUpdateWithoutInvoicesInput = {
   status?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   receivedMessages?: Prisma.AdminMessageUpdateManyWithoutRecipientNestedInput
-  receivedShipments?: Prisma.ShipmentUpdateManyWithoutReceiverNestedInput
-  sentShipments?: Prisma.ShipmentUpdateManyWithoutSenderNestedInput
+  sentShipments?: Prisma.ShipmentUpdateOneWithoutSenderNestedInput
+  receivedShipments?: Prisma.ShipmentUpdateOneWithoutReceiverNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutInvoicesInput = {
@@ -557,9 +644,9 @@ export type ClientUncheckedUpdateWithoutInvoicesInput = {
   clientType?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
   status?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentShipmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  receivedShipmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   receivedMessages?: Prisma.AdminMessageUncheckedUpdateManyWithoutRecipientNestedInput
-  receivedShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutReceiverNestedInput
-  sentShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type ClientCreateWithoutReceivedShipmentsInput = {
@@ -571,7 +658,7 @@ export type ClientCreateWithoutReceivedShipmentsInput = {
   createdAt?: Date | string
   receivedMessages?: Prisma.AdminMessageCreateNestedManyWithoutRecipientInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutClientInput
-  sentShipments?: Prisma.ShipmentCreateNestedManyWithoutSenderInput
+  sentShipments?: Prisma.ShipmentCreateNestedOneWithoutSenderInput
 }
 
 export type ClientUncheckedCreateWithoutReceivedShipmentsInput = {
@@ -582,9 +669,9 @@ export type ClientUncheckedCreateWithoutReceivedShipmentsInput = {
   clientType: $Enums.ClientType
   status?: number
   createdAt?: Date | string
+  sentShipmentId?: number | null
   receivedMessages?: Prisma.AdminMessageUncheckedCreateNestedManyWithoutRecipientInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutClientInput
-  sentShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type ClientCreateOrConnectWithoutReceivedShipmentsInput = {
@@ -601,7 +688,7 @@ export type ClientCreateWithoutSentShipmentsInput = {
   createdAt?: Date | string
   receivedMessages?: Prisma.AdminMessageCreateNestedManyWithoutRecipientInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutClientInput
-  receivedShipments?: Prisma.ShipmentCreateNestedManyWithoutReceiverInput
+  receivedShipments?: Prisma.ShipmentCreateNestedOneWithoutReceiverInput
 }
 
 export type ClientUncheckedCreateWithoutSentShipmentsInput = {
@@ -612,9 +699,9 @@ export type ClientUncheckedCreateWithoutSentShipmentsInput = {
   clientType: $Enums.ClientType
   status?: number
   createdAt?: Date | string
+  receivedShipmentId?: number | null
   receivedMessages?: Prisma.AdminMessageUncheckedCreateNestedManyWithoutRecipientInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutClientInput
-  receivedShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutReceiverInput
 }
 
 export type ClientCreateOrConnectWithoutSentShipmentsInput = {
@@ -642,7 +729,7 @@ export type ClientUpdateWithoutReceivedShipmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   receivedMessages?: Prisma.AdminMessageUpdateManyWithoutRecipientNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutClientNestedInput
-  sentShipments?: Prisma.ShipmentUpdateManyWithoutSenderNestedInput
+  sentShipments?: Prisma.ShipmentUpdateOneWithoutSenderNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutReceivedShipmentsInput = {
@@ -653,9 +740,9 @@ export type ClientUncheckedUpdateWithoutReceivedShipmentsInput = {
   clientType?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
   status?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentShipmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   receivedMessages?: Prisma.AdminMessageUncheckedUpdateManyWithoutRecipientNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutClientNestedInput
-  sentShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type ClientUpsertWithoutSentShipmentsInput = {
@@ -678,7 +765,7 @@ export type ClientUpdateWithoutSentShipmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   receivedMessages?: Prisma.AdminMessageUpdateManyWithoutRecipientNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutClientNestedInput
-  receivedShipments?: Prisma.ShipmentUpdateManyWithoutReceiverNestedInput
+  receivedShipments?: Prisma.ShipmentUpdateOneWithoutReceiverNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutSentShipmentsInput = {
@@ -689,9 +776,9 @@ export type ClientUncheckedUpdateWithoutSentShipmentsInput = {
   clientType?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
   status?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  receivedShipmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   receivedMessages?: Prisma.AdminMessageUncheckedUpdateManyWithoutRecipientNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutClientNestedInput
-  receivedShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutReceiverNestedInput
 }
 
 export type ClientCreateWithoutReceivedMessagesInput = {
@@ -702,8 +789,8 @@ export type ClientCreateWithoutReceivedMessagesInput = {
   status?: number
   createdAt?: Date | string
   invoices?: Prisma.InvoiceCreateNestedManyWithoutClientInput
-  receivedShipments?: Prisma.ShipmentCreateNestedManyWithoutReceiverInput
-  sentShipments?: Prisma.ShipmentCreateNestedManyWithoutSenderInput
+  sentShipments?: Prisma.ShipmentCreateNestedOneWithoutSenderInput
+  receivedShipments?: Prisma.ShipmentCreateNestedOneWithoutReceiverInput
 }
 
 export type ClientUncheckedCreateWithoutReceivedMessagesInput = {
@@ -714,9 +801,9 @@ export type ClientUncheckedCreateWithoutReceivedMessagesInput = {
   clientType: $Enums.ClientType
   status?: number
   createdAt?: Date | string
+  sentShipmentId?: number | null
+  receivedShipmentId?: number | null
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutClientInput
-  receivedShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutReceiverInput
-  sentShipments?: Prisma.ShipmentUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type ClientCreateOrConnectWithoutReceivedMessagesInput = {
@@ -743,8 +830,8 @@ export type ClientUpdateWithoutReceivedMessagesInput = {
   status?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoices?: Prisma.InvoiceUpdateManyWithoutClientNestedInput
-  receivedShipments?: Prisma.ShipmentUpdateManyWithoutReceiverNestedInput
-  sentShipments?: Prisma.ShipmentUpdateManyWithoutSenderNestedInput
+  sentShipments?: Prisma.ShipmentUpdateOneWithoutSenderNestedInput
+  receivedShipments?: Prisma.ShipmentUpdateOneWithoutReceiverNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutReceivedMessagesInput = {
@@ -755,9 +842,9 @@ export type ClientUncheckedUpdateWithoutReceivedMessagesInput = {
   clientType?: Prisma.EnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType
   status?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentShipmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  receivedShipmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutClientNestedInput
-  receivedShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutReceiverNestedInput
-  sentShipments?: Prisma.ShipmentUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 
@@ -768,15 +855,11 @@ export type ClientUncheckedUpdateWithoutReceivedMessagesInput = {
 export type ClientCountOutputType = {
   receivedMessages: number
   invoices: number
-  receivedShipments: number
-  sentShipments: number
 }
 
 export type ClientCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   receivedMessages?: boolean | ClientCountOutputTypeCountReceivedMessagesArgs
   invoices?: boolean | ClientCountOutputTypeCountInvoicesArgs
-  receivedShipments?: boolean | ClientCountOutputTypeCountReceivedShipmentsArgs
-  sentShipments?: boolean | ClientCountOutputTypeCountSentShipmentsArgs
 }
 
 /**
@@ -803,20 +886,6 @@ export type ClientCountOutputTypeCountInvoicesArgs<ExtArgs extends runtime.Types
   where?: Prisma.InvoiceWhereInput
 }
 
-/**
- * ClientCountOutputType without action
- */
-export type ClientCountOutputTypeCountReceivedShipmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ShipmentWhereInput
-}
-
-/**
- * ClientCountOutputType without action
- */
-export type ClientCountOutputTypeCountSentShipmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ShipmentWhereInput
-}
-
 
 export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -826,10 +895,12 @@ export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   clientType?: boolean
   status?: boolean
   createdAt?: boolean
+  sentShipmentId?: boolean
+  receivedShipmentId?: boolean
   receivedMessages?: boolean | Prisma.Client$receivedMessagesArgs<ExtArgs>
   invoices?: boolean | Prisma.Client$invoicesArgs<ExtArgs>
-  receivedShipments?: boolean | Prisma.Client$receivedShipmentsArgs<ExtArgs>
   sentShipments?: boolean | Prisma.Client$sentShipmentsArgs<ExtArgs>
+  receivedShipments?: boolean | Prisma.Client$receivedShipmentsArgs<ExtArgs>
   _count?: boolean | Prisma.ClientCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["client"]>
 
@@ -843,14 +914,16 @@ export type ClientSelectScalar = {
   clientType?: boolean
   status?: boolean
   createdAt?: boolean
+  sentShipmentId?: boolean
+  receivedShipmentId?: boolean
 }
 
-export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "telephone" | "clientType" | "status" | "createdAt", ExtArgs["result"]["client"]>
+export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "telephone" | "clientType" | "status" | "createdAt" | "sentShipmentId" | "receivedShipmentId", ExtArgs["result"]["client"]>
 export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   receivedMessages?: boolean | Prisma.Client$receivedMessagesArgs<ExtArgs>
   invoices?: boolean | Prisma.Client$invoicesArgs<ExtArgs>
-  receivedShipments?: boolean | Prisma.Client$receivedShipmentsArgs<ExtArgs>
   sentShipments?: boolean | Prisma.Client$sentShipmentsArgs<ExtArgs>
+  receivedShipments?: boolean | Prisma.Client$receivedShipmentsArgs<ExtArgs>
   _count?: boolean | Prisma.ClientCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -859,8 +932,8 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   objects: {
     receivedMessages: Prisma.$AdminMessagePayload<ExtArgs>[]
     invoices: Prisma.$InvoicePayload<ExtArgs>[]
-    receivedShipments: Prisma.$ShipmentPayload<ExtArgs>[]
-    sentShipments: Prisma.$ShipmentPayload<ExtArgs>[]
+    sentShipments: Prisma.$ShipmentPayload<ExtArgs> | null
+    receivedShipments: Prisma.$ShipmentPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -870,6 +943,8 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     clientType: $Enums.ClientType
     status: number
     createdAt: Date
+    sentShipmentId: number | null
+    receivedShipmentId: number | null
   }, ExtArgs["result"]["client"]>
   composites: {}
 }
@@ -1212,8 +1287,8 @@ export interface Prisma__ClientClient<T, Null = never, ExtArgs extends runtime.T
   readonly [Symbol.toStringTag]: "PrismaPromise"
   receivedMessages<T extends Prisma.Client$receivedMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$receivedMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdminMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   invoices<T extends Prisma.Client$invoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  receivedShipments<T extends Prisma.Client$receivedShipmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$receivedShipmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShipmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  sentShipments<T extends Prisma.Client$sentShipmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$sentShipmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ShipmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sentShipments<T extends Prisma.Client$sentShipmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$sentShipmentsArgs<ExtArgs>>): Prisma.Prisma__ShipmentClient<runtime.Types.Result.GetResult<Prisma.$ShipmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  receivedShipments<T extends Prisma.Client$receivedShipmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$receivedShipmentsArgs<ExtArgs>>): Prisma.Prisma__ShipmentClient<runtime.Types.Result.GetResult<Prisma.$ShipmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1250,6 +1325,8 @@ export interface ClientFieldRefs {
   readonly clientType: Prisma.FieldRef<"Client", 'ClientType'>
   readonly status: Prisma.FieldRef<"Client", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Client", 'DateTime'>
+  readonly sentShipmentId: Prisma.FieldRef<"Client", 'Int'>
+  readonly receivedShipmentId: Prisma.FieldRef<"Client", 'Int'>
 }
     
 
@@ -1641,30 +1718,6 @@ export type Client$invoicesArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * Client.receivedShipments
- */
-export type Client$receivedShipmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Shipment
-   */
-  select?: Prisma.ShipmentSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Shipment
-   */
-  omit?: Prisma.ShipmentOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ShipmentInclude<ExtArgs> | null
-  where?: Prisma.ShipmentWhereInput
-  orderBy?: Prisma.ShipmentOrderByWithRelationInput | Prisma.ShipmentOrderByWithRelationInput[]
-  cursor?: Prisma.ShipmentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ShipmentScalarFieldEnum | Prisma.ShipmentScalarFieldEnum[]
-}
-
-/**
  * Client.sentShipments
  */
 export type Client$sentShipmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1681,11 +1734,25 @@ export type Client$sentShipmentsArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   include?: Prisma.ShipmentInclude<ExtArgs> | null
   where?: Prisma.ShipmentWhereInput
-  orderBy?: Prisma.ShipmentOrderByWithRelationInput | Prisma.ShipmentOrderByWithRelationInput[]
-  cursor?: Prisma.ShipmentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ShipmentScalarFieldEnum | Prisma.ShipmentScalarFieldEnum[]
+}
+
+/**
+ * Client.receivedShipments
+ */
+export type Client$receivedShipmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Shipment
+   */
+  select?: Prisma.ShipmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Shipment
+   */
+  omit?: Prisma.ShipmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ShipmentInclude<ExtArgs> | null
+  where?: Prisma.ShipmentWhereInput
 }
 
 /**

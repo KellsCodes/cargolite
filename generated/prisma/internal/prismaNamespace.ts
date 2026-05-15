@@ -1388,7 +1388,9 @@ export const ClientScalarFieldEnum = {
   telephone: 'telephone',
   clientType: 'clientType',
   status: 'status',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  sentShipmentId: 'sentShipmentId',
+  receivedShipmentId: 'receivedShipmentId'
 } as const
 
 export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
@@ -1420,8 +1422,6 @@ export const ShipmentScalarFieldEnum = {
   dropLocation: 'dropLocation',
   pickupLocation: 'pickupLocation',
   arrival: 'arrival',
-  senderId: 'senderId',
-  receiverId: 'receiverId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   packageCount: 'packageCount'

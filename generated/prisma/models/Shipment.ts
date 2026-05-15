@@ -29,16 +29,12 @@ export type AggregateShipment = {
 export type ShipmentAvgAggregateOutputType = {
   id: number | null
   weight: number | null
-  senderId: number | null
-  receiverId: number | null
   packageCount: number | null
 }
 
 export type ShipmentSumAggregateOutputType = {
   id: number | null
   weight: number | null
-  senderId: number | null
-  receiverId: number | null
   packageCount: number | null
 }
 
@@ -52,8 +48,6 @@ export type ShipmentMinAggregateOutputType = {
   dropLocation: string | null
   pickupLocation: string | null
   arrival: Date | null
-  senderId: number | null
-  receiverId: number | null
   createdAt: Date | null
   updatedAt: Date | null
   packageCount: number | null
@@ -69,8 +63,6 @@ export type ShipmentMaxAggregateOutputType = {
   dropLocation: string | null
   pickupLocation: string | null
   arrival: Date | null
-  senderId: number | null
-  receiverId: number | null
   createdAt: Date | null
   updatedAt: Date | null
   packageCount: number | null
@@ -86,8 +78,6 @@ export type ShipmentCountAggregateOutputType = {
   dropLocation: number
   pickupLocation: number
   arrival: number
-  senderId: number
-  receiverId: number
   createdAt: number
   updatedAt: number
   packageCount: number
@@ -98,16 +88,12 @@ export type ShipmentCountAggregateOutputType = {
 export type ShipmentAvgAggregateInputType = {
   id?: true
   weight?: true
-  senderId?: true
-  receiverId?: true
   packageCount?: true
 }
 
 export type ShipmentSumAggregateInputType = {
   id?: true
   weight?: true
-  senderId?: true
-  receiverId?: true
   packageCount?: true
 }
 
@@ -121,8 +107,6 @@ export type ShipmentMinAggregateInputType = {
   dropLocation?: true
   pickupLocation?: true
   arrival?: true
-  senderId?: true
-  receiverId?: true
   createdAt?: true
   updatedAt?: true
   packageCount?: true
@@ -138,8 +122,6 @@ export type ShipmentMaxAggregateInputType = {
   dropLocation?: true
   pickupLocation?: true
   arrival?: true
-  senderId?: true
-  receiverId?: true
   createdAt?: true
   updatedAt?: true
   packageCount?: true
@@ -155,8 +137,6 @@ export type ShipmentCountAggregateInputType = {
   dropLocation?: true
   pickupLocation?: true
   arrival?: true
-  senderId?: true
-  receiverId?: true
   createdAt?: true
   updatedAt?: true
   packageCount?: true
@@ -259,8 +239,6 @@ export type ShipmentGroupByOutputType = {
   dropLocation: string
   pickupLocation: string
   arrival: Date
-  senderId: number
-  receiverId: number
   createdAt: Date
   updatedAt: Date
   packageCount: number
@@ -299,14 +277,12 @@ export type ShipmentWhereInput = {
   dropLocation?: Prisma.StringFilter<"Shipment"> | string
   pickupLocation?: Prisma.StringFilter<"Shipment"> | string
   arrival?: Prisma.DateTimeFilter<"Shipment"> | Date | string
-  senderId?: Prisma.IntFilter<"Shipment"> | number
-  receiverId?: Prisma.IntFilter<"Shipment"> | number
   createdAt?: Prisma.DateTimeFilter<"Shipment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Shipment"> | Date | string
   packageCount?: Prisma.IntFilter<"Shipment"> | number
   invoice?: Prisma.XOR<Prisma.InvoiceNullableScalarRelationFilter, Prisma.InvoiceWhereInput> | null
-  receiver?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
-  sender?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
+  receiver?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
+  sender?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
   trackingHistory?: Prisma.TrackingHistoryListRelationFilter
 }
 
@@ -320,8 +296,6 @@ export type ShipmentOrderByWithRelationInput = {
   dropLocation?: Prisma.SortOrder
   pickupLocation?: Prisma.SortOrder
   arrival?: Prisma.SortOrder
-  senderId?: Prisma.SortOrder
-  receiverId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   packageCount?: Prisma.SortOrder
@@ -345,14 +319,12 @@ export type ShipmentWhereUniqueInput = Prisma.AtLeast<{
   dropLocation?: Prisma.StringFilter<"Shipment"> | string
   pickupLocation?: Prisma.StringFilter<"Shipment"> | string
   arrival?: Prisma.DateTimeFilter<"Shipment"> | Date | string
-  senderId?: Prisma.IntFilter<"Shipment"> | number
-  receiverId?: Prisma.IntFilter<"Shipment"> | number
   createdAt?: Prisma.DateTimeFilter<"Shipment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Shipment"> | Date | string
   packageCount?: Prisma.IntFilter<"Shipment"> | number
   invoice?: Prisma.XOR<Prisma.InvoiceNullableScalarRelationFilter, Prisma.InvoiceWhereInput> | null
-  receiver?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
-  sender?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
+  receiver?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
+  sender?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
   trackingHistory?: Prisma.TrackingHistoryListRelationFilter
 }, "id" | "shipmentID">
 
@@ -366,8 +338,6 @@ export type ShipmentOrderByWithAggregationInput = {
   dropLocation?: Prisma.SortOrder
   pickupLocation?: Prisma.SortOrder
   arrival?: Prisma.SortOrder
-  senderId?: Prisma.SortOrder
-  receiverId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   packageCount?: Prisma.SortOrder
@@ -391,8 +361,6 @@ export type ShipmentScalarWhereWithAggregatesInput = {
   dropLocation?: Prisma.StringWithAggregatesFilter<"Shipment"> | string
   pickupLocation?: Prisma.StringWithAggregatesFilter<"Shipment"> | string
   arrival?: Prisma.DateTimeWithAggregatesFilter<"Shipment"> | Date | string
-  senderId?: Prisma.IntWithAggregatesFilter<"Shipment"> | number
-  receiverId?: Prisma.IntWithAggregatesFilter<"Shipment"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Shipment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Shipment"> | Date | string
   packageCount?: Prisma.IntWithAggregatesFilter<"Shipment"> | number
@@ -411,8 +379,8 @@ export type ShipmentCreateInput = {
   updatedAt?: Date | string
   packageCount?: number
   invoice?: Prisma.InvoiceCreateNestedOneWithoutShipmentInput
-  receiver: Prisma.ClientCreateNestedOneWithoutReceivedShipmentsInput
-  sender: Prisma.ClientCreateNestedOneWithoutSentShipmentsInput
+  receiver?: Prisma.ClientCreateNestedOneWithoutReceivedShipmentsInput
+  sender?: Prisma.ClientCreateNestedOneWithoutSentShipmentsInput
   trackingHistory?: Prisma.TrackingHistoryCreateNestedManyWithoutShipmentInput
 }
 
@@ -426,12 +394,12 @@ export type ShipmentUncheckedCreateInput = {
   dropLocation: string
   pickupLocation: string
   arrival: Date | string
-  senderId: number
-  receiverId: number
   createdAt?: Date | string
   updatedAt?: Date | string
   packageCount?: number
   invoice?: Prisma.InvoiceUncheckedCreateNestedOneWithoutShipmentInput
+  receiver?: Prisma.ClientUncheckedCreateNestedOneWithoutReceivedShipmentsInput
+  sender?: Prisma.ClientUncheckedCreateNestedOneWithoutSentShipmentsInput
   trackingHistory?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutShipmentInput
 }
 
@@ -448,8 +416,8 @@ export type ShipmentUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   invoice?: Prisma.InvoiceUpdateOneWithoutShipmentNestedInput
-  receiver?: Prisma.ClientUpdateOneRequiredWithoutReceivedShipmentsNestedInput
-  sender?: Prisma.ClientUpdateOneRequiredWithoutSentShipmentsNestedInput
+  receiver?: Prisma.ClientUpdateOneWithoutReceivedShipmentsNestedInput
+  sender?: Prisma.ClientUpdateOneWithoutSentShipmentsNestedInput
   trackingHistory?: Prisma.TrackingHistoryUpdateManyWithoutShipmentNestedInput
 }
 
@@ -463,12 +431,12 @@ export type ShipmentUncheckedUpdateInput = {
   dropLocation?: Prisma.StringFieldUpdateOperationsInput | string
   pickupLocation?: Prisma.StringFieldUpdateOperationsInput | string
   arrival?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  senderId?: Prisma.IntFieldUpdateOperationsInput | number
-  receiverId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   invoice?: Prisma.InvoiceUncheckedUpdateOneWithoutShipmentNestedInput
+  receiver?: Prisma.ClientUncheckedUpdateOneWithoutReceivedShipmentsNestedInput
+  sender?: Prisma.ClientUncheckedUpdateOneWithoutSentShipmentsNestedInput
   trackingHistory?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutShipmentNestedInput
 }
 
@@ -482,8 +450,6 @@ export type ShipmentCreateManyInput = {
   dropLocation: string
   pickupLocation: string
   arrival: Date | string
-  senderId: number
-  receiverId: number
   createdAt?: Date | string
   updatedAt?: Date | string
   packageCount?: number
@@ -513,21 +479,14 @@ export type ShipmentUncheckedUpdateManyInput = {
   dropLocation?: Prisma.StringFieldUpdateOperationsInput | string
   pickupLocation?: Prisma.StringFieldUpdateOperationsInput | string
   arrival?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  senderId?: Prisma.IntFieldUpdateOperationsInput | number
-  receiverId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
-export type ShipmentListRelationFilter = {
-  every?: Prisma.ShipmentWhereInput
-  some?: Prisma.ShipmentWhereInput
-  none?: Prisma.ShipmentWhereInput
-}
-
-export type ShipmentOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type ShipmentNullableScalarRelationFilter = {
+  is?: Prisma.ShipmentWhereInput | null
+  isNot?: Prisma.ShipmentWhereInput | null
 }
 
 export type ShipmentScalarRelationFilter = {
@@ -551,8 +510,6 @@ export type ShipmentCountOrderByAggregateInput = {
   dropLocation?: Prisma.SortOrder
   pickupLocation?: Prisma.SortOrder
   arrival?: Prisma.SortOrder
-  senderId?: Prisma.SortOrder
-  receiverId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   packageCount?: Prisma.SortOrder
@@ -561,8 +518,6 @@ export type ShipmentCountOrderByAggregateInput = {
 export type ShipmentAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   weight?: Prisma.SortOrder
-  senderId?: Prisma.SortOrder
-  receiverId?: Prisma.SortOrder
   packageCount?: Prisma.SortOrder
 }
 
@@ -576,8 +531,6 @@ export type ShipmentMaxOrderByAggregateInput = {
   dropLocation?: Prisma.SortOrder
   pickupLocation?: Prisma.SortOrder
   arrival?: Prisma.SortOrder
-  senderId?: Prisma.SortOrder
-  receiverId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   packageCount?: Prisma.SortOrder
@@ -593,8 +546,6 @@ export type ShipmentMinOrderByAggregateInput = {
   dropLocation?: Prisma.SortOrder
   pickupLocation?: Prisma.SortOrder
   arrival?: Prisma.SortOrder
-  senderId?: Prisma.SortOrder
-  receiverId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   packageCount?: Prisma.SortOrder
@@ -603,93 +554,39 @@ export type ShipmentMinOrderByAggregateInput = {
 export type ShipmentSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   weight?: Prisma.SortOrder
-  senderId?: Prisma.SortOrder
-  receiverId?: Prisma.SortOrder
   packageCount?: Prisma.SortOrder
 }
 
-export type ShipmentCreateNestedManyWithoutReceiverInput = {
-  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutReceiverInput, Prisma.ShipmentUncheckedCreateWithoutReceiverInput> | Prisma.ShipmentCreateWithoutReceiverInput[] | Prisma.ShipmentUncheckedCreateWithoutReceiverInput[]
-  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutReceiverInput | Prisma.ShipmentCreateOrConnectWithoutReceiverInput[]
-  createMany?: Prisma.ShipmentCreateManyReceiverInputEnvelope
-  connect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
+export type ShipmentCreateNestedOneWithoutSenderInput = {
+  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutSenderInput, Prisma.ShipmentUncheckedCreateWithoutSenderInput>
+  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutSenderInput
+  connect?: Prisma.ShipmentWhereUniqueInput
 }
 
-export type ShipmentCreateNestedManyWithoutSenderInput = {
-  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutSenderInput, Prisma.ShipmentUncheckedCreateWithoutSenderInput> | Prisma.ShipmentCreateWithoutSenderInput[] | Prisma.ShipmentUncheckedCreateWithoutSenderInput[]
-  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutSenderInput | Prisma.ShipmentCreateOrConnectWithoutSenderInput[]
-  createMany?: Prisma.ShipmentCreateManySenderInputEnvelope
-  connect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
+export type ShipmentCreateNestedOneWithoutReceiverInput = {
+  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutReceiverInput, Prisma.ShipmentUncheckedCreateWithoutReceiverInput>
+  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutReceiverInput
+  connect?: Prisma.ShipmentWhereUniqueInput
 }
 
-export type ShipmentUncheckedCreateNestedManyWithoutReceiverInput = {
-  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutReceiverInput, Prisma.ShipmentUncheckedCreateWithoutReceiverInput> | Prisma.ShipmentCreateWithoutReceiverInput[] | Prisma.ShipmentUncheckedCreateWithoutReceiverInput[]
-  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutReceiverInput | Prisma.ShipmentCreateOrConnectWithoutReceiverInput[]
-  createMany?: Prisma.ShipmentCreateManyReceiverInputEnvelope
-  connect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
+export type ShipmentUpdateOneWithoutSenderNestedInput = {
+  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutSenderInput, Prisma.ShipmentUncheckedCreateWithoutSenderInput>
+  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutSenderInput
+  upsert?: Prisma.ShipmentUpsertWithoutSenderInput
+  disconnect?: Prisma.ShipmentWhereInput | boolean
+  delete?: Prisma.ShipmentWhereInput | boolean
+  connect?: Prisma.ShipmentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ShipmentUpdateToOneWithWhereWithoutSenderInput, Prisma.ShipmentUpdateWithoutSenderInput>, Prisma.ShipmentUncheckedUpdateWithoutSenderInput>
 }
 
-export type ShipmentUncheckedCreateNestedManyWithoutSenderInput = {
-  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutSenderInput, Prisma.ShipmentUncheckedCreateWithoutSenderInput> | Prisma.ShipmentCreateWithoutSenderInput[] | Prisma.ShipmentUncheckedCreateWithoutSenderInput[]
-  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutSenderInput | Prisma.ShipmentCreateOrConnectWithoutSenderInput[]
-  createMany?: Prisma.ShipmentCreateManySenderInputEnvelope
-  connect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-}
-
-export type ShipmentUpdateManyWithoutReceiverNestedInput = {
-  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutReceiverInput, Prisma.ShipmentUncheckedCreateWithoutReceiverInput> | Prisma.ShipmentCreateWithoutReceiverInput[] | Prisma.ShipmentUncheckedCreateWithoutReceiverInput[]
-  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutReceiverInput | Prisma.ShipmentCreateOrConnectWithoutReceiverInput[]
-  upsert?: Prisma.ShipmentUpsertWithWhereUniqueWithoutReceiverInput | Prisma.ShipmentUpsertWithWhereUniqueWithoutReceiverInput[]
-  createMany?: Prisma.ShipmentCreateManyReceiverInputEnvelope
-  set?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  disconnect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  delete?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  connect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  update?: Prisma.ShipmentUpdateWithWhereUniqueWithoutReceiverInput | Prisma.ShipmentUpdateWithWhereUniqueWithoutReceiverInput[]
-  updateMany?: Prisma.ShipmentUpdateManyWithWhereWithoutReceiverInput | Prisma.ShipmentUpdateManyWithWhereWithoutReceiverInput[]
-  deleteMany?: Prisma.ShipmentScalarWhereInput | Prisma.ShipmentScalarWhereInput[]
-}
-
-export type ShipmentUpdateManyWithoutSenderNestedInput = {
-  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutSenderInput, Prisma.ShipmentUncheckedCreateWithoutSenderInput> | Prisma.ShipmentCreateWithoutSenderInput[] | Prisma.ShipmentUncheckedCreateWithoutSenderInput[]
-  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutSenderInput | Prisma.ShipmentCreateOrConnectWithoutSenderInput[]
-  upsert?: Prisma.ShipmentUpsertWithWhereUniqueWithoutSenderInput | Prisma.ShipmentUpsertWithWhereUniqueWithoutSenderInput[]
-  createMany?: Prisma.ShipmentCreateManySenderInputEnvelope
-  set?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  disconnect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  delete?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  connect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  update?: Prisma.ShipmentUpdateWithWhereUniqueWithoutSenderInput | Prisma.ShipmentUpdateWithWhereUniqueWithoutSenderInput[]
-  updateMany?: Prisma.ShipmentUpdateManyWithWhereWithoutSenderInput | Prisma.ShipmentUpdateManyWithWhereWithoutSenderInput[]
-  deleteMany?: Prisma.ShipmentScalarWhereInput | Prisma.ShipmentScalarWhereInput[]
-}
-
-export type ShipmentUncheckedUpdateManyWithoutReceiverNestedInput = {
-  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutReceiverInput, Prisma.ShipmentUncheckedCreateWithoutReceiverInput> | Prisma.ShipmentCreateWithoutReceiverInput[] | Prisma.ShipmentUncheckedCreateWithoutReceiverInput[]
-  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutReceiverInput | Prisma.ShipmentCreateOrConnectWithoutReceiverInput[]
-  upsert?: Prisma.ShipmentUpsertWithWhereUniqueWithoutReceiverInput | Prisma.ShipmentUpsertWithWhereUniqueWithoutReceiverInput[]
-  createMany?: Prisma.ShipmentCreateManyReceiverInputEnvelope
-  set?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  disconnect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  delete?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  connect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  update?: Prisma.ShipmentUpdateWithWhereUniqueWithoutReceiverInput | Prisma.ShipmentUpdateWithWhereUniqueWithoutReceiverInput[]
-  updateMany?: Prisma.ShipmentUpdateManyWithWhereWithoutReceiverInput | Prisma.ShipmentUpdateManyWithWhereWithoutReceiverInput[]
-  deleteMany?: Prisma.ShipmentScalarWhereInput | Prisma.ShipmentScalarWhereInput[]
-}
-
-export type ShipmentUncheckedUpdateManyWithoutSenderNestedInput = {
-  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutSenderInput, Prisma.ShipmentUncheckedCreateWithoutSenderInput> | Prisma.ShipmentCreateWithoutSenderInput[] | Prisma.ShipmentUncheckedCreateWithoutSenderInput[]
-  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutSenderInput | Prisma.ShipmentCreateOrConnectWithoutSenderInput[]
-  upsert?: Prisma.ShipmentUpsertWithWhereUniqueWithoutSenderInput | Prisma.ShipmentUpsertWithWhereUniqueWithoutSenderInput[]
-  createMany?: Prisma.ShipmentCreateManySenderInputEnvelope
-  set?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  disconnect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  delete?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  connect?: Prisma.ShipmentWhereUniqueInput | Prisma.ShipmentWhereUniqueInput[]
-  update?: Prisma.ShipmentUpdateWithWhereUniqueWithoutSenderInput | Prisma.ShipmentUpdateWithWhereUniqueWithoutSenderInput[]
-  updateMany?: Prisma.ShipmentUpdateManyWithWhereWithoutSenderInput | Prisma.ShipmentUpdateManyWithWhereWithoutSenderInput[]
-  deleteMany?: Prisma.ShipmentScalarWhereInput | Prisma.ShipmentScalarWhereInput[]
+export type ShipmentUpdateOneWithoutReceiverNestedInput = {
+  create?: Prisma.XOR<Prisma.ShipmentCreateWithoutReceiverInput, Prisma.ShipmentUncheckedCreateWithoutReceiverInput>
+  connectOrCreate?: Prisma.ShipmentCreateOrConnectWithoutReceiverInput
+  upsert?: Prisma.ShipmentUpsertWithoutReceiverInput
+  disconnect?: Prisma.ShipmentWhereInput | boolean
+  delete?: Prisma.ShipmentWhereInput | boolean
+  connect?: Prisma.ShipmentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ShipmentUpdateToOneWithWhereWithoutReceiverInput, Prisma.ShipmentUpdateWithoutReceiverInput>, Prisma.ShipmentUncheckedUpdateWithoutReceiverInput>
 }
 
 export type ShipmentCreateNestedOneWithoutInvoiceInput = {
@@ -736,51 +633,6 @@ export type ShipmentUpdateOneRequiredWithoutTrackingHistoryNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ShipmentUpdateToOneWithWhereWithoutTrackingHistoryInput, Prisma.ShipmentUpdateWithoutTrackingHistoryInput>, Prisma.ShipmentUncheckedUpdateWithoutTrackingHistoryInput>
 }
 
-export type ShipmentCreateWithoutReceiverInput = {
-  shipmentID: string
-  weight: number
-  packageType: $Enums.PackageType
-  courierType: $Enums.CourierType
-  packageImage?: string | null
-  dropLocation: string
-  pickupLocation: string
-  arrival: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  packageCount?: number
-  invoice?: Prisma.InvoiceCreateNestedOneWithoutShipmentInput
-  sender: Prisma.ClientCreateNestedOneWithoutSentShipmentsInput
-  trackingHistory?: Prisma.TrackingHistoryCreateNestedManyWithoutShipmentInput
-}
-
-export type ShipmentUncheckedCreateWithoutReceiverInput = {
-  id?: number
-  shipmentID: string
-  weight: number
-  packageType: $Enums.PackageType
-  courierType: $Enums.CourierType
-  packageImage?: string | null
-  dropLocation: string
-  pickupLocation: string
-  arrival: Date | string
-  senderId: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  packageCount?: number
-  invoice?: Prisma.InvoiceUncheckedCreateNestedOneWithoutShipmentInput
-  trackingHistory?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutShipmentInput
-}
-
-export type ShipmentCreateOrConnectWithoutReceiverInput = {
-  where: Prisma.ShipmentWhereUniqueInput
-  create: Prisma.XOR<Prisma.ShipmentCreateWithoutReceiverInput, Prisma.ShipmentUncheckedCreateWithoutReceiverInput>
-}
-
-export type ShipmentCreateManyReceiverInputEnvelope = {
-  data: Prisma.ShipmentCreateManyReceiverInput | Prisma.ShipmentCreateManyReceiverInput[]
-  skipDuplicates?: boolean
-}
-
 export type ShipmentCreateWithoutSenderInput = {
   shipmentID: string
   weight: number
@@ -794,7 +646,7 @@ export type ShipmentCreateWithoutSenderInput = {
   updatedAt?: Date | string
   packageCount?: number
   invoice?: Prisma.InvoiceCreateNestedOneWithoutShipmentInput
-  receiver: Prisma.ClientCreateNestedOneWithoutReceivedShipmentsInput
+  receiver?: Prisma.ClientCreateNestedOneWithoutReceivedShipmentsInput
   trackingHistory?: Prisma.TrackingHistoryCreateNestedManyWithoutShipmentInput
 }
 
@@ -808,11 +660,11 @@ export type ShipmentUncheckedCreateWithoutSenderInput = {
   dropLocation: string
   pickupLocation: string
   arrival: Date | string
-  receiverId: number
   createdAt?: Date | string
   updatedAt?: Date | string
   packageCount?: number
   invoice?: Prisma.InvoiceUncheckedCreateNestedOneWithoutShipmentInput
+  receiver?: Prisma.ClientUncheckedCreateNestedOneWithoutReceivedShipmentsInput
   trackingHistory?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutShipmentInput
 }
 
@@ -821,61 +673,136 @@ export type ShipmentCreateOrConnectWithoutSenderInput = {
   create: Prisma.XOR<Prisma.ShipmentCreateWithoutSenderInput, Prisma.ShipmentUncheckedCreateWithoutSenderInput>
 }
 
-export type ShipmentCreateManySenderInputEnvelope = {
-  data: Prisma.ShipmentCreateManySenderInput | Prisma.ShipmentCreateManySenderInput[]
-  skipDuplicates?: boolean
+export type ShipmentCreateWithoutReceiverInput = {
+  shipmentID: string
+  weight: number
+  packageType: $Enums.PackageType
+  courierType: $Enums.CourierType
+  packageImage?: string | null
+  dropLocation: string
+  pickupLocation: string
+  arrival: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  packageCount?: number
+  invoice?: Prisma.InvoiceCreateNestedOneWithoutShipmentInput
+  sender?: Prisma.ClientCreateNestedOneWithoutSentShipmentsInput
+  trackingHistory?: Prisma.TrackingHistoryCreateNestedManyWithoutShipmentInput
 }
 
-export type ShipmentUpsertWithWhereUniqueWithoutReceiverInput = {
+export type ShipmentUncheckedCreateWithoutReceiverInput = {
+  id?: number
+  shipmentID: string
+  weight: number
+  packageType: $Enums.PackageType
+  courierType: $Enums.CourierType
+  packageImage?: string | null
+  dropLocation: string
+  pickupLocation: string
+  arrival: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  packageCount?: number
+  invoice?: Prisma.InvoiceUncheckedCreateNestedOneWithoutShipmentInput
+  sender?: Prisma.ClientUncheckedCreateNestedOneWithoutSentShipmentsInput
+  trackingHistory?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutShipmentInput
+}
+
+export type ShipmentCreateOrConnectWithoutReceiverInput = {
   where: Prisma.ShipmentWhereUniqueInput
-  update: Prisma.XOR<Prisma.ShipmentUpdateWithoutReceiverInput, Prisma.ShipmentUncheckedUpdateWithoutReceiverInput>
   create: Prisma.XOR<Prisma.ShipmentCreateWithoutReceiverInput, Prisma.ShipmentUncheckedCreateWithoutReceiverInput>
 }
 
-export type ShipmentUpdateWithWhereUniqueWithoutReceiverInput = {
-  where: Prisma.ShipmentWhereUniqueInput
-  data: Prisma.XOR<Prisma.ShipmentUpdateWithoutReceiverInput, Prisma.ShipmentUncheckedUpdateWithoutReceiverInput>
-}
-
-export type ShipmentUpdateManyWithWhereWithoutReceiverInput = {
-  where: Prisma.ShipmentScalarWhereInput
-  data: Prisma.XOR<Prisma.ShipmentUpdateManyMutationInput, Prisma.ShipmentUncheckedUpdateManyWithoutReceiverInput>
-}
-
-export type ShipmentScalarWhereInput = {
-  AND?: Prisma.ShipmentScalarWhereInput | Prisma.ShipmentScalarWhereInput[]
-  OR?: Prisma.ShipmentScalarWhereInput[]
-  NOT?: Prisma.ShipmentScalarWhereInput | Prisma.ShipmentScalarWhereInput[]
-  id?: Prisma.IntFilter<"Shipment"> | number
-  shipmentID?: Prisma.StringFilter<"Shipment"> | string
-  weight?: Prisma.FloatFilter<"Shipment"> | number
-  packageType?: Prisma.EnumPackageTypeFilter<"Shipment"> | $Enums.PackageType
-  courierType?: Prisma.EnumCourierTypeFilter<"Shipment"> | $Enums.CourierType
-  packageImage?: Prisma.StringNullableFilter<"Shipment"> | string | null
-  dropLocation?: Prisma.StringFilter<"Shipment"> | string
-  pickupLocation?: Prisma.StringFilter<"Shipment"> | string
-  arrival?: Prisma.DateTimeFilter<"Shipment"> | Date | string
-  senderId?: Prisma.IntFilter<"Shipment"> | number
-  receiverId?: Prisma.IntFilter<"Shipment"> | number
-  createdAt?: Prisma.DateTimeFilter<"Shipment"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Shipment"> | Date | string
-  packageCount?: Prisma.IntFilter<"Shipment"> | number
-}
-
-export type ShipmentUpsertWithWhereUniqueWithoutSenderInput = {
-  where: Prisma.ShipmentWhereUniqueInput
+export type ShipmentUpsertWithoutSenderInput = {
   update: Prisma.XOR<Prisma.ShipmentUpdateWithoutSenderInput, Prisma.ShipmentUncheckedUpdateWithoutSenderInput>
   create: Prisma.XOR<Prisma.ShipmentCreateWithoutSenderInput, Prisma.ShipmentUncheckedCreateWithoutSenderInput>
+  where?: Prisma.ShipmentWhereInput
 }
 
-export type ShipmentUpdateWithWhereUniqueWithoutSenderInput = {
-  where: Prisma.ShipmentWhereUniqueInput
+export type ShipmentUpdateToOneWithWhereWithoutSenderInput = {
+  where?: Prisma.ShipmentWhereInput
   data: Prisma.XOR<Prisma.ShipmentUpdateWithoutSenderInput, Prisma.ShipmentUncheckedUpdateWithoutSenderInput>
 }
 
-export type ShipmentUpdateManyWithWhereWithoutSenderInput = {
-  where: Prisma.ShipmentScalarWhereInput
-  data: Prisma.XOR<Prisma.ShipmentUpdateManyMutationInput, Prisma.ShipmentUncheckedUpdateManyWithoutSenderInput>
+export type ShipmentUpdateWithoutSenderInput = {
+  shipmentID?: Prisma.StringFieldUpdateOperationsInput | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  packageType?: Prisma.EnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType
+  courierType?: Prisma.EnumCourierTypeFieldUpdateOperationsInput | $Enums.CourierType
+  packageImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  pickupLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  arrival?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  packageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  invoice?: Prisma.InvoiceUpdateOneWithoutShipmentNestedInput
+  receiver?: Prisma.ClientUpdateOneWithoutReceivedShipmentsNestedInput
+  trackingHistory?: Prisma.TrackingHistoryUpdateManyWithoutShipmentNestedInput
+}
+
+export type ShipmentUncheckedUpdateWithoutSenderInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  shipmentID?: Prisma.StringFieldUpdateOperationsInput | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  packageType?: Prisma.EnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType
+  courierType?: Prisma.EnumCourierTypeFieldUpdateOperationsInput | $Enums.CourierType
+  packageImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  pickupLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  arrival?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  packageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  invoice?: Prisma.InvoiceUncheckedUpdateOneWithoutShipmentNestedInput
+  receiver?: Prisma.ClientUncheckedUpdateOneWithoutReceivedShipmentsNestedInput
+  trackingHistory?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutShipmentNestedInput
+}
+
+export type ShipmentUpsertWithoutReceiverInput = {
+  update: Prisma.XOR<Prisma.ShipmentUpdateWithoutReceiverInput, Prisma.ShipmentUncheckedUpdateWithoutReceiverInput>
+  create: Prisma.XOR<Prisma.ShipmentCreateWithoutReceiverInput, Prisma.ShipmentUncheckedCreateWithoutReceiverInput>
+  where?: Prisma.ShipmentWhereInput
+}
+
+export type ShipmentUpdateToOneWithWhereWithoutReceiverInput = {
+  where?: Prisma.ShipmentWhereInput
+  data: Prisma.XOR<Prisma.ShipmentUpdateWithoutReceiverInput, Prisma.ShipmentUncheckedUpdateWithoutReceiverInput>
+}
+
+export type ShipmentUpdateWithoutReceiverInput = {
+  shipmentID?: Prisma.StringFieldUpdateOperationsInput | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  packageType?: Prisma.EnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType
+  courierType?: Prisma.EnumCourierTypeFieldUpdateOperationsInput | $Enums.CourierType
+  packageImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  pickupLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  arrival?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  packageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  invoice?: Prisma.InvoiceUpdateOneWithoutShipmentNestedInput
+  sender?: Prisma.ClientUpdateOneWithoutSentShipmentsNestedInput
+  trackingHistory?: Prisma.TrackingHistoryUpdateManyWithoutShipmentNestedInput
+}
+
+export type ShipmentUncheckedUpdateWithoutReceiverInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  shipmentID?: Prisma.StringFieldUpdateOperationsInput | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  packageType?: Prisma.EnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType
+  courierType?: Prisma.EnumCourierTypeFieldUpdateOperationsInput | $Enums.CourierType
+  packageImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dropLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  pickupLocation?: Prisma.StringFieldUpdateOperationsInput | string
+  arrival?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  packageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  invoice?: Prisma.InvoiceUncheckedUpdateOneWithoutShipmentNestedInput
+  sender?: Prisma.ClientUncheckedUpdateOneWithoutSentShipmentsNestedInput
+  trackingHistory?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutShipmentNestedInput
 }
 
 export type ShipmentCreateWithoutInvoiceInput = {
@@ -890,8 +817,8 @@ export type ShipmentCreateWithoutInvoiceInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   packageCount?: number
-  receiver: Prisma.ClientCreateNestedOneWithoutReceivedShipmentsInput
-  sender: Prisma.ClientCreateNestedOneWithoutSentShipmentsInput
+  receiver?: Prisma.ClientCreateNestedOneWithoutReceivedShipmentsInput
+  sender?: Prisma.ClientCreateNestedOneWithoutSentShipmentsInput
   trackingHistory?: Prisma.TrackingHistoryCreateNestedManyWithoutShipmentInput
 }
 
@@ -905,11 +832,11 @@ export type ShipmentUncheckedCreateWithoutInvoiceInput = {
   dropLocation: string
   pickupLocation: string
   arrival: Date | string
-  senderId: number
-  receiverId: number
   createdAt?: Date | string
   updatedAt?: Date | string
   packageCount?: number
+  receiver?: Prisma.ClientUncheckedCreateNestedOneWithoutReceivedShipmentsInput
+  sender?: Prisma.ClientUncheckedCreateNestedOneWithoutSentShipmentsInput
   trackingHistory?: Prisma.TrackingHistoryUncheckedCreateNestedManyWithoutShipmentInput
 }
 
@@ -941,8 +868,8 @@ export type ShipmentUpdateWithoutInvoiceInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
-  receiver?: Prisma.ClientUpdateOneRequiredWithoutReceivedShipmentsNestedInput
-  sender?: Prisma.ClientUpdateOneRequiredWithoutSentShipmentsNestedInput
+  receiver?: Prisma.ClientUpdateOneWithoutReceivedShipmentsNestedInput
+  sender?: Prisma.ClientUpdateOneWithoutSentShipmentsNestedInput
   trackingHistory?: Prisma.TrackingHistoryUpdateManyWithoutShipmentNestedInput
 }
 
@@ -956,11 +883,11 @@ export type ShipmentUncheckedUpdateWithoutInvoiceInput = {
   dropLocation?: Prisma.StringFieldUpdateOperationsInput | string
   pickupLocation?: Prisma.StringFieldUpdateOperationsInput | string
   arrival?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  senderId?: Prisma.IntFieldUpdateOperationsInput | number
-  receiverId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  receiver?: Prisma.ClientUncheckedUpdateOneWithoutReceivedShipmentsNestedInput
+  sender?: Prisma.ClientUncheckedUpdateOneWithoutSentShipmentsNestedInput
   trackingHistory?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutShipmentNestedInput
 }
 
@@ -977,8 +904,8 @@ export type ShipmentCreateWithoutTrackingHistoryInput = {
   updatedAt?: Date | string
   packageCount?: number
   invoice?: Prisma.InvoiceCreateNestedOneWithoutShipmentInput
-  receiver: Prisma.ClientCreateNestedOneWithoutReceivedShipmentsInput
-  sender: Prisma.ClientCreateNestedOneWithoutSentShipmentsInput
+  receiver?: Prisma.ClientCreateNestedOneWithoutReceivedShipmentsInput
+  sender?: Prisma.ClientCreateNestedOneWithoutSentShipmentsInput
 }
 
 export type ShipmentUncheckedCreateWithoutTrackingHistoryInput = {
@@ -991,12 +918,12 @@ export type ShipmentUncheckedCreateWithoutTrackingHistoryInput = {
   dropLocation: string
   pickupLocation: string
   arrival: Date | string
-  senderId: number
-  receiverId: number
   createdAt?: Date | string
   updatedAt?: Date | string
   packageCount?: number
   invoice?: Prisma.InvoiceUncheckedCreateNestedOneWithoutShipmentInput
+  receiver?: Prisma.ClientUncheckedCreateNestedOneWithoutReceivedShipmentsInput
+  sender?: Prisma.ClientUncheckedCreateNestedOneWithoutSentShipmentsInput
 }
 
 export type ShipmentCreateOrConnectWithoutTrackingHistoryInput = {
@@ -1028,8 +955,8 @@ export type ShipmentUpdateWithoutTrackingHistoryInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   invoice?: Prisma.InvoiceUpdateOneWithoutShipmentNestedInput
-  receiver?: Prisma.ClientUpdateOneRequiredWithoutReceivedShipmentsNestedInput
-  sender?: Prisma.ClientUpdateOneRequiredWithoutSentShipmentsNestedInput
+  receiver?: Prisma.ClientUpdateOneWithoutReceivedShipmentsNestedInput
+  sender?: Prisma.ClientUpdateOneWithoutSentShipmentsNestedInput
 }
 
 export type ShipmentUncheckedUpdateWithoutTrackingHistoryInput = {
@@ -1042,146 +969,12 @@ export type ShipmentUncheckedUpdateWithoutTrackingHistoryInput = {
   dropLocation?: Prisma.StringFieldUpdateOperationsInput | string
   pickupLocation?: Prisma.StringFieldUpdateOperationsInput | string
   arrival?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  senderId?: Prisma.IntFieldUpdateOperationsInput | number
-  receiverId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   packageCount?: Prisma.IntFieldUpdateOperationsInput | number
   invoice?: Prisma.InvoiceUncheckedUpdateOneWithoutShipmentNestedInput
-}
-
-export type ShipmentCreateManyReceiverInput = {
-  id?: number
-  shipmentID: string
-  weight: number
-  packageType: $Enums.PackageType
-  courierType: $Enums.CourierType
-  packageImage?: string | null
-  dropLocation: string
-  pickupLocation: string
-  arrival: Date | string
-  senderId: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  packageCount?: number
-}
-
-export type ShipmentCreateManySenderInput = {
-  id?: number
-  shipmentID: string
-  weight: number
-  packageType: $Enums.PackageType
-  courierType: $Enums.CourierType
-  packageImage?: string | null
-  dropLocation: string
-  pickupLocation: string
-  arrival: Date | string
-  receiverId: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  packageCount?: number
-}
-
-export type ShipmentUpdateWithoutReceiverInput = {
-  shipmentID?: Prisma.StringFieldUpdateOperationsInput | string
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
-  packageType?: Prisma.EnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType
-  courierType?: Prisma.EnumCourierTypeFieldUpdateOperationsInput | $Enums.CourierType
-  packageImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dropLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  pickupLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  arrival?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  packageCount?: Prisma.IntFieldUpdateOperationsInput | number
-  invoice?: Prisma.InvoiceUpdateOneWithoutShipmentNestedInput
-  sender?: Prisma.ClientUpdateOneRequiredWithoutSentShipmentsNestedInput
-  trackingHistory?: Prisma.TrackingHistoryUpdateManyWithoutShipmentNestedInput
-}
-
-export type ShipmentUncheckedUpdateWithoutReceiverInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  shipmentID?: Prisma.StringFieldUpdateOperationsInput | string
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
-  packageType?: Prisma.EnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType
-  courierType?: Prisma.EnumCourierTypeFieldUpdateOperationsInput | $Enums.CourierType
-  packageImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dropLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  pickupLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  arrival?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  senderId?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  packageCount?: Prisma.IntFieldUpdateOperationsInput | number
-  invoice?: Prisma.InvoiceUncheckedUpdateOneWithoutShipmentNestedInput
-  trackingHistory?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutShipmentNestedInput
-}
-
-export type ShipmentUncheckedUpdateManyWithoutReceiverInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  shipmentID?: Prisma.StringFieldUpdateOperationsInput | string
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
-  packageType?: Prisma.EnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType
-  courierType?: Prisma.EnumCourierTypeFieldUpdateOperationsInput | $Enums.CourierType
-  packageImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dropLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  pickupLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  arrival?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  senderId?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  packageCount?: Prisma.IntFieldUpdateOperationsInput | number
-}
-
-export type ShipmentUpdateWithoutSenderInput = {
-  shipmentID?: Prisma.StringFieldUpdateOperationsInput | string
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
-  packageType?: Prisma.EnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType
-  courierType?: Prisma.EnumCourierTypeFieldUpdateOperationsInput | $Enums.CourierType
-  packageImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dropLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  pickupLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  arrival?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  packageCount?: Prisma.IntFieldUpdateOperationsInput | number
-  invoice?: Prisma.InvoiceUpdateOneWithoutShipmentNestedInput
-  receiver?: Prisma.ClientUpdateOneRequiredWithoutReceivedShipmentsNestedInput
-  trackingHistory?: Prisma.TrackingHistoryUpdateManyWithoutShipmentNestedInput
-}
-
-export type ShipmentUncheckedUpdateWithoutSenderInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  shipmentID?: Prisma.StringFieldUpdateOperationsInput | string
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
-  packageType?: Prisma.EnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType
-  courierType?: Prisma.EnumCourierTypeFieldUpdateOperationsInput | $Enums.CourierType
-  packageImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dropLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  pickupLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  arrival?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiverId?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  packageCount?: Prisma.IntFieldUpdateOperationsInput | number
-  invoice?: Prisma.InvoiceUncheckedUpdateOneWithoutShipmentNestedInput
-  trackingHistory?: Prisma.TrackingHistoryUncheckedUpdateManyWithoutShipmentNestedInput
-}
-
-export type ShipmentUncheckedUpdateManyWithoutSenderInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  shipmentID?: Prisma.StringFieldUpdateOperationsInput | string
-  weight?: Prisma.FloatFieldUpdateOperationsInput | number
-  packageType?: Prisma.EnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType
-  courierType?: Prisma.EnumCourierTypeFieldUpdateOperationsInput | $Enums.CourierType
-  packageImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dropLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  pickupLocation?: Prisma.StringFieldUpdateOperationsInput | string
-  arrival?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receiverId?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  packageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  receiver?: Prisma.ClientUncheckedUpdateOneWithoutReceivedShipmentsNestedInput
+  sender?: Prisma.ClientUncheckedUpdateOneWithoutSentShipmentsNestedInput
 }
 
 
@@ -1225,14 +1018,12 @@ export type ShipmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   dropLocation?: boolean
   pickupLocation?: boolean
   arrival?: boolean
-  senderId?: boolean
-  receiverId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   packageCount?: boolean
   invoice?: boolean | Prisma.Shipment$invoiceArgs<ExtArgs>
-  receiver?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
-  sender?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  receiver?: boolean | Prisma.Shipment$receiverArgs<ExtArgs>
+  sender?: boolean | Prisma.Shipment$senderArgs<ExtArgs>
   trackingHistory?: boolean | Prisma.Shipment$trackingHistoryArgs<ExtArgs>
   _count?: boolean | Prisma.ShipmentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["shipment"]>
@@ -1249,18 +1040,16 @@ export type ShipmentSelectScalar = {
   dropLocation?: boolean
   pickupLocation?: boolean
   arrival?: boolean
-  senderId?: boolean
-  receiverId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   packageCount?: boolean
 }
 
-export type ShipmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "shipmentID" | "weight" | "packageType" | "courierType" | "packageImage" | "dropLocation" | "pickupLocation" | "arrival" | "senderId" | "receiverId" | "createdAt" | "updatedAt" | "packageCount", ExtArgs["result"]["shipment"]>
+export type ShipmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "shipmentID" | "weight" | "packageType" | "courierType" | "packageImage" | "dropLocation" | "pickupLocation" | "arrival" | "createdAt" | "updatedAt" | "packageCount", ExtArgs["result"]["shipment"]>
 export type ShipmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   invoice?: boolean | Prisma.Shipment$invoiceArgs<ExtArgs>
-  receiver?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
-  sender?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  receiver?: boolean | Prisma.Shipment$receiverArgs<ExtArgs>
+  sender?: boolean | Prisma.Shipment$senderArgs<ExtArgs>
   trackingHistory?: boolean | Prisma.Shipment$trackingHistoryArgs<ExtArgs>
   _count?: boolean | Prisma.ShipmentCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1269,8 +1058,8 @@ export type $ShipmentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Shipment"
   objects: {
     invoice: Prisma.$InvoicePayload<ExtArgs> | null
-    receiver: Prisma.$ClientPayload<ExtArgs>
-    sender: Prisma.$ClientPayload<ExtArgs>
+    receiver: Prisma.$ClientPayload<ExtArgs> | null
+    sender: Prisma.$ClientPayload<ExtArgs> | null
     trackingHistory: Prisma.$TrackingHistoryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1283,8 +1072,6 @@ export type $ShipmentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     dropLocation: string
     pickupLocation: string
     arrival: Date
-    senderId: number
-    receiverId: number
     createdAt: Date
     updatedAt: Date
     packageCount: number
@@ -1629,8 +1416,8 @@ readonly fields: ShipmentFieldRefs;
 export interface Prisma__ShipmentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   invoice<T extends Prisma.Shipment$invoiceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shipment$invoiceArgs<ExtArgs>>): Prisma.Prisma__InvoiceClient<runtime.Types.Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  receiver<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  sender<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  receiver<T extends Prisma.Shipment$receiverArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shipment$receiverArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  sender<T extends Prisma.Shipment$senderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shipment$senderArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   trackingHistory<T extends Prisma.Shipment$trackingHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Shipment$trackingHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrackingHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1670,8 +1457,6 @@ export interface ShipmentFieldRefs {
   readonly dropLocation: Prisma.FieldRef<"Shipment", 'String'>
   readonly pickupLocation: Prisma.FieldRef<"Shipment", 'String'>
   readonly arrival: Prisma.FieldRef<"Shipment", 'DateTime'>
-  readonly senderId: Prisma.FieldRef<"Shipment", 'Int'>
-  readonly receiverId: Prisma.FieldRef<"Shipment", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Shipment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Shipment", 'DateTime'>
   readonly packageCount: Prisma.FieldRef<"Shipment", 'Int'>
@@ -2034,6 +1819,44 @@ export type Shipment$invoiceArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   include?: Prisma.InvoiceInclude<ExtArgs> | null
   where?: Prisma.InvoiceWhereInput
+}
+
+/**
+ * Shipment.receiver
+ */
+export type Shipment$receiverArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Client
+   */
+  select?: Prisma.ClientSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Client
+   */
+  omit?: Prisma.ClientOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClientInclude<ExtArgs> | null
+  where?: Prisma.ClientWhereInput
+}
+
+/**
+ * Shipment.sender
+ */
+export type Shipment$senderArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Client
+   */
+  select?: Prisma.ClientSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Client
+   */
+  omit?: Prisma.ClientOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClientInclude<ExtArgs> | null
+  where?: Prisma.ClientWhereInput
 }
 
 /**
