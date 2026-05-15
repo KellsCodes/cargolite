@@ -25,7 +25,7 @@ export default function TransactionsTable() {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const router = useRouter()
-    const limit = 2
+    const limit = 10
     const [localSearch, setLocalSearch] = useState<string>(searchParams.get("search") || "");
     const [transactions, setTransactions] = useState<APIResponse | null>(null)
 

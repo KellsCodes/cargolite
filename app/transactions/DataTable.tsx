@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -15,12 +17,15 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { MoreHorizontalIcon } from "lucide-react"
-import { paymentMockData } from "./mockdata"
 import { cn } from "@/lib/utils"
 import { APIResponse, InvoicePayload } from "./types"
 import { format } from "date-fns"
 import { InvoiceStatus } from "@/generated/prisma/enums"
 import { AnimateSpin } from "../components/AnimateSpin"
+import { useState } from "react"
+import api from "@/lib/axios"
+import { toast } from "react-toastify"
+import { handleDownloadInvoice } from "@/lib/api/invoice"
 
 const statusStyles: Record<string, string> = {
     // Active: Matches "Delivered" (Green) - Positive/Healthy state
@@ -44,6 +49,8 @@ interface DataTableProps {
 }
 
 export function DataTable({ data = [], setTransactions, isLoading }: DataTableProps) {
+    const [isDownloading, setIsDownloading] = useState(false)
+
     return (
         <Table>
             <TableHeader>
@@ -107,7 +114,9 @@ export function DataTable({ data = [], setTransactions, isLoading }: DataTablePr
                                         </Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
-                                        <DropdownMenuItem>Generate Invoice</DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => handleDownloadInvoice(transaction.id, isDownloading, setIsDownloading)}>
+                                            Download Invoice
+                                        </DropdownMenuItem>
                                         <DropdownMenuItem>Send Reminder</DropdownMenuItem>
                                         <DropdownMenuItem>Mark as Paid</DropdownMenuItem>
                                         <DropdownMenuSeparator />
