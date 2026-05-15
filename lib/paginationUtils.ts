@@ -1,3 +1,5 @@
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+
 export const getPaginationRange = (currentPage: number, totalPages: number) => {
   const range: (number | "ellipsis")[] = [];
 
@@ -42,4 +44,49 @@ export const generatePaginationLinks = (
   const params = new URLSearchParams(searchParams);
   params.set("page", pageNumber.toString());
   return `${pathname}?${params.toString()}`;
+};
+
+interface PaginationFields {
+  meta?: {
+    currentPage: number;
+    pageLength: number;
+    totalItems: number;
+    totalPages: number;
+    from: number;
+    to: number;
+  };
+  direction: "next" | "prev";
+  isLoading: boolean;
+  pathname: string;
+  searchParams: URLSearchParams;
+  router: AppRouterInstance;
+}
+
+export const handleNextPrevPagination = ({
+  direction,
+  isLoading,
+  meta,
+  pathname,
+  searchParams,
+  router,
+}: PaginationFields) => {
+  if (isLoading) return;
+  if (
+    direction === "next" &&
+    (meta?.currentPage ?? 0) >= (meta?.totalPages ?? 0)
+  )
+    return;
+  if (direction === "prev" && (meta?.currentPage ?? 0) <= 1) return;
+  let pageNumber;
+  if (direction === "next") {
+    pageNumber = (meta?.currentPage ?? 1) + 1;
+  } else {
+    pageNumber = (meta?.currentPage ?? 1) - 1;
+  }
+  const paginationLink = generatePaginationLinks(
+    pageNumber,
+    pathname,
+    searchParams
+  );
+  router.push(paginationLink, { scroll: false });
 };
