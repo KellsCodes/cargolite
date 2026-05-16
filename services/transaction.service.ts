@@ -54,6 +54,7 @@ export const getAllTransactions = async (
           pickupLocation: true,
           dropLocation: true,
           id: true,
+          arrival: true,
         },
       },
     };
