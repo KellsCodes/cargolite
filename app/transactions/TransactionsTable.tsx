@@ -39,7 +39,6 @@ export default function TransactionsTable() {
         try {
             const response = await api.get(`/transaction?page=${currentPage}&search=${currentSearch}&invoiceStatus=${currentStatus}&limit=${limit}`);
             if (response.status === 200) {
-                console.log(response.data);
                 setTransactions(response.data);
             } else {
                 toast.error("Failed to fetch transactions. Please try again.")
@@ -136,7 +135,7 @@ export default function TransactionsTable() {
                                     Overdue
                                 </DropdownMenuItem>
                                 <DropdownMenuItem onSelect={() => handleStatusChange(InvoiceStatus.REFUND)}>
-                                    Refund
+                                    Refunded
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
                         </DropdownMenuContent>
