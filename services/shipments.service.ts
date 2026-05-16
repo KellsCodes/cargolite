@@ -207,7 +207,7 @@ export const getAllShipments = async (
     include: {
       sender: { select: { name: true } },
       receiver: { select: { name: true } },
-      invoice: { select: { amount: true, payerRole: true } },
+      invoice: { select: { id: true, amount: true, payerRole: true } },
       trackingHistory: {
         orderBy: { createdAt: "desc" },
         take: 1,
