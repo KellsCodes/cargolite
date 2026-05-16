@@ -27,6 +27,7 @@ import { toast } from "react-toastify"
 import { AnimateSpin } from "../components/AnimateSpin"
 import { ActionModal } from "../components/ActionModal"
 import { UpdateStatusForm } from "./UpdateStatusForm"
+import { handleDownloadInvoice } from "@/lib/api/invoice"
 
 const statusStyles: Record<string, string> = {
     // Critical / Negative
@@ -75,6 +76,7 @@ export function DataTable({ data = [], setShipments, isLoading }: DataTableProps
     const [selectedShipment, setSelectedShipment] = useState<ShipmentStatus | null>(null);
     const [selectedShipmentId, setSelectedShipmentId] = useState<number | null>(null);
     const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+    const [isDownloading, setIsDownloading] = useState(false)
 
 
     const handleDeleteItem = async (id: number) => {
@@ -221,9 +223,9 @@ export function DataTable({ data = [], setShipments, isLoading }: DataTableProps
                                         <DropdownMenuContent align="end">
                                             <DropdownMenuItem
                                                 onClick={() => {
-                                                    if (ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status) return
-                                                    // navigate to invoice page
-                                                    // router.push(`/shipping/updateshipment/${shipment.shipmentID}`)
+                                                    // if (ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status) return
+                                                    // Download invoice 
+                                                    handleDownloadInvoice(shipment.invoice.id, isDownloading, setIsDownloading)
                                                 }}
                                                 className={`${ShipmentStatus.CANCELLED === shipment.trackingHistory[0].status && "cursor-not-allowed"}`}>Invoice</DropdownMenuItem>
                                             {/* <DropdownMenuItem>Duplicate</DropdownMenuItem> */}
@@ -286,11 +288,13 @@ export function DataTable({ data = [], setShipments, isLoading }: DataTableProps
                     onClose={() => setIsModalOpen(false)}
                     isLocked={isUpdatingStatus}
                 >
-                    <UpdateStatusForm
-                        currentStatus={selectedShipment || undefined}
-                        onSubmit={handleStatusSubmission}
-                        onCancel={() => setIsModalOpen(false)}
-                    />
+                    <div className="px-6 pb-6 pt-2">
+                        <UpdateStatusForm
+                            currentStatus={selectedShipment || undefined}
+                            onSubmit={handleStatusSubmission}
+                            onCancel={() => setIsModalOpen(false)}
+                        />
+                    </div>
                 </ActionModal>
             )}
         </>

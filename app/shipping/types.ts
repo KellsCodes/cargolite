@@ -12,6 +12,7 @@ export interface TrackingHistory {
 export interface ShipmentInvoice {
   amount: string;
   payerRole: "SENDER" | "RECEIVER";
+  id: number
 }
 
 export interface ShipmentPerson {
@@ -37,8 +38,6 @@ export interface Shipment {
   receiver: ShipmentPerson;
   invoice: ShipmentInvoice;
   trackingHistory: TrackingHistory[];
-  senderId: number;
-  receiverId: number;
   invoiceId: number;
 }
 
