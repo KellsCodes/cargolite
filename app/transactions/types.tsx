@@ -29,6 +29,7 @@ interface ShipmentInfo {
     shipmentID: string;
     pickupLocation: string;
     dropLocation: string;
+    arrival: string
 }
 
 
