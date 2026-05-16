@@ -48,7 +48,7 @@ export function ActionModal({
                 </DialogHeader>
 
                 {/* Content Injector */}
-                <div className="px-6 pb-6 pt-2">{children}</div>
+                <div className="p-0">{children}</div>
             </DialogContent>
         </Dialog>
     );
