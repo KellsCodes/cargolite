@@ -54,7 +54,7 @@ export default function StatCard({ item, data }: StatCardProps) {
                         {data.percentage}%
                     </span>
                     <p className="text-[11px] text-slate-400 font-medium">
-                        <span className="text-slate-600">{(data.currentMonth - data.previousMonth).toLocaleString()}</span> vs last month
+                        <span className="text-slate-600">{(data.currentMonth - data.previousMonth).toLocaleString()}</span> vs last month {data.previousMonth.toLocaleString()}
                     </p>
                 </div>
             </div>
