@@ -191,7 +191,7 @@ export default function TrackData({ data }: { data: ShipmentData | null }) {
                             <h3 className="font-bold text-slate-800 text-sm uppercase tracking-wider">Timeline</h3>
                         </div>
                         <div className="p-8 space-y-10">
-                            {/* DROP LOCATION (The Goal) */}
+                            {/* PICKUP LOCATION (The Goal) */}
                             {data?.pickupLocation && (
                                 <TimelineStep
                                     title={isDelivered ? "DELIVERED" : "Final Destination"}
@@ -213,7 +213,7 @@ export default function TrackData({ data }: { data: ShipmentData | null }) {
                                 />
                             )}
 
-                            {/* PICKUP LOCATION (The Start) */}
+                            {/* DROP LOCATION (The Start) */}
                             <TimelineStep
                                 title="PICKED UP"
                                 location={data?.dropLocation}
@@ -243,7 +243,7 @@ function TimelineStep({ title, location, time, date, isActive, isCompleted, isLa
                     isCompleted ? 'bg-emerald-500 border-emerald-500' : 'bg-white border-slate-200'
                     }`}>
                     {isCompleted && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
-                    {isActive && <div className="w-2 h-2 rounded-full bg-white animate-pulse" />}
+                    {isActive && <div className={`${isCompleted && "absolute left-[11px] top-8 bottom-0"} w-2 h-2 rounded-full bg-white animate-pulse`} />}
                 </div>
             </div>
             <div className="pb-2">

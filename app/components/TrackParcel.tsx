@@ -3,10 +3,12 @@
 import { TrackingAPI } from "@/lib/api/tracking";
 import { Info, Search } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AnimateSpin } from "./AnimateSpin";
 import { ShipmentData } from "../types/shipment";
+import { useSearchParams } from "next/navigation";
+import axios from "axios";
 
 export default function TrackingParcel({
     setData
@@ -15,29 +17,59 @@ export default function TrackingParcel({
 }) {
     const [loading, setLoading] = useState<boolean>(false)
     const [trackingError, setTrackError] = useState<string | null>(null)
-    const [tracking_number, setTrackingNumber] = useState<string>("")
+    const searchParams = useSearchParams()
+    const [tracking_number, setTrackingNumber] = useState<string>(searchParams.keys().next().value || "")
 
-    const handleFetchPackage = async () => {
+    // Accept trackingNumber and signal as arguments
+    const handleFetchPackage = async (trackingNum: string, signal: AbortSignal) => {
+        if (loading) return
         setLoading(true)
         setTrackError("")
-        if (!tracking_number) {
+
+        if (!trackingNum) {
             setLoading(false)
             toast.error("Missing Tracking Number.")
             return
         }
+
         try {
-            const { data } = await TrackingAPI.trackPackage(tracking_number)
-            // console.log(data)
-            // setPackageData(data)
+            const { data } = await TrackingAPI.trackPackage(trackingNum, { signal })
             setData(data)
         } catch (error: any) {
-            console.log(error)
+            if (
+                axios.isCancel(error) ||
+                error.name === 'AbortError' ||
+                error.name === 'CanceledError' ||
+                error.message === 'canceled' ||
+                error.code === 'ERR_CANCELED'
+            ) return
+
+            console.error(error)
             toast.error(error.message || "An error occurred. Please try again.")
             setTrackError(error.message || "An error occurred. Please try again.")
         } finally {
-            setLoading(false)
+            if (!signal || !signal.aborted) {
+                setLoading(false)
+            }
         }
     }
+
+
+    useEffect(() => {
+        const controller = new AbortController()
+        const { signal } = controller
+
+        if (tracking_number) {
+            handleFetchPackage(tracking_number, signal)
+        }
+
+        return () => {
+            controller.abort()
+        }
+    }, [])
+
+
+
     return (
         <div
             className="relative w-full rounded-[2.5rem] overflow-hidden bg-slate-900 px-6 py-20 flex flex-col items-center text-center shadow-2xl shadow-blue-900/20"
@@ -83,7 +115,7 @@ export default function TrackingParcel({
                             </div>
                             <button
                                 disabled={loading}
-                                onClick={handleFetchPackage}
+                                onClick={() => handleFetchPackage(tracking_number, new AbortController().signal)}
                                 className="h-14 w-full md:w-44 bg-white hover:bg-blue-50 text-slate-900 rounded-xl font-bold text-sm transition-all shadow-lg active:scale-95 cursor-pointer"
                             >
                                 {loading ? (
