@@ -23,7 +23,6 @@ export async function GET(req: Request) {
     const result = await getClientsByRole(role, page, limit, search, status);
     return NextResponse.json(result);
   } catch (error) {
-    // console.log(error);
     return NextResponse.json(
       { error: "Failed to fetch clients" },
       { status: 500 }
@@ -43,7 +42,6 @@ export async function PATCH(req: Request) {
     const result = await clientSuspensionAndActivation(clientId, status);
     return NextResponse.json(result);
   } catch (error: any) {
-    // console.log(error);
     if (error.message === "CLIENT_NOT_FOUND") {
       return NextResponse.json({ error: "Client not found" }, { status: 404 });
     }
