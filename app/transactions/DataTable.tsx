@@ -57,7 +57,7 @@ export function DataTable({ data = [], setTransactions, isLoading }: DataTablePr
     const [invoiceData, setInvoiceData] = useState<InvoicePayload | null>(null)
 
     const handleUpdateInvoiceStatus = async (id: number, status: InvoiceStatus) => {
-        if (isUpdatingStatus || InvoiceStatus.PAID || InvoiceStatus.REFUND) return
+        if (isUpdatingStatus) return
 
         setIsUpdatingStatus(true)
         try {
