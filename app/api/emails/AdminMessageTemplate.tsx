@@ -47,12 +47,12 @@ export const AdminMessageEmail = ({ body, subject, senderName }: AdminMessageEma
                             {body}
                         </Text>
 
-                        <Section className="mt-[32px] mb-[16px]">
+                        <Section className="mt-[15px] mb-[16px]">
                             <Text className="text-[#333] text-[15px] leading-[24px] m-0">
                                 Best regards,
                             </Text>
                             <Text className="text-primary font-bold text-[16px] m-0">
-                                {senderName}
+                                The Operations Team
                             </Text>
                             <Text className="text-[#8898aa] text-[13px] m-0 italic">
                                 Administrative Officer, Cargolite
