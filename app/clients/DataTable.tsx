@@ -169,15 +169,18 @@ export function DataTable({ data, setClients, isLoading }: DataTableProps) {
                                             }}>
                                                 View History
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem
-                                                onClick={() => {
-                                                    setIsModalOpen(true)
-                                                    setClientData(client)
-                                                }
-                                                }
-                                            >
-                                                Message
-                                            </DropdownMenuItem>
+                                            {/* Send message to only inactive clients */}
+                                            {client.status === 2 && (
+                                                <DropdownMenuItem
+                                                    onClick={() => {
+                                                        setIsModalOpen(true)
+                                                        setClientData(client)
+                                                    }
+                                                    }
+                                                >
+                                                    Message
+                                                </DropdownMenuItem>
+                                            )}
 
                                             <DropdownMenuItem
                                                 onSelect={(e) => e.preventDefault()}
