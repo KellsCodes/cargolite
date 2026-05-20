@@ -95,7 +95,7 @@ export function DataTable({ data = [], setTransactions, isLoading }: DataTablePr
             await api.post("/admin", formData)
 
         } catch (error) {
-
+            // error already sent on the child component
         }
     }
     const onClose = () => {
