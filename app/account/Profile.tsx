@@ -2,7 +2,7 @@ import { Camera, Edit3, MapPin, Mail, Phone, Briefcase } from "lucide-react";
 
 export default function Profile() {
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 pb-18 xl:pb-0">
             {/* Top Identity Card */}
             <div className="relative overflow-hidden bg-white border border-slate-200 rounded-2xl shadow-sm">
                 <div className="h-24 bg-gradient-to-r from-main-primary to-main-primary/80" /> {/* Decorative Banner */}

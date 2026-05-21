@@ -6,7 +6,7 @@ export default function ProfilePage() {
     return (
         <AuthLayout>
             <div className="h-[91vh] overflow-y-auto w-full">
-                <div className="max-w-5xl mx-auto space-y-8 pb-0 h-full">
+                <div className="max-w-5xl mx-auto space-y-8 pb-0 h-full px-4 xl:px-0 mt-5">
                     {/* Refined Header */}
                     <div className="flex items-center justify-between">
                         <div className="space-y-1">

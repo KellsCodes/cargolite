@@ -1,17 +1,19 @@
+"use client"
+
 import { UserRound, ShieldCheck, Camera } from "lucide-react";
 
 export default function Settings() {
     return (
-        <div className="max-w-5xl mx-auto bg-white p-8 lg:p-12">
+        <div className="max-w-5xl mx-auto bg-white p-8 lg:p-12 h-screen flex flex-col">
             {/* Header */}
-            <div className="flex items-center justify-between border-b pb-6 mb-10">
+            <div className="flex items-center justify-between border-b pb-6 mb-10 shrink-0">
                 <div className="flex items-center gap-x-3">
                     <div className="bg-blue-50 p-2 rounded-lg">
                         <UserRound className="w-5 h-5 text-blue-600" />
                     </div>
                     <div>
                         <h1 className="text-xl font-semibold text-slate-900">Account Settings</h1>
-                        <p className="text-sm text-slate-500">Manage your profile and security preferences</p>
+                        <p className="hidden md:inline-block text-sm text-slate-500">Manage your profile and security preferences</p>
                     </div>
                 </div>
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-medium transition-all">
@@ -19,12 +21,13 @@ export default function Settings() {
                 </button>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            {/* Content Area - Added structural height constraints for vertical scrolling */}
+            <div className="grid grid-cols-1 xl:grid-cols-12 gap-16 overflow-y-auto md:max-h-[calc(100vh-240px)] pr-2 pb-46 xl:pb-0">
                 {/* Profile Section */}
-                <div className="lg:col-span-7 space-y-8">
+                <div className="xl:col-span-7 space-y-8">
                     <div>
                         <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-6">Profile Information</h2>
-                        
+
                         {/* Avatar Upload */}
                         <div className="flex items-center gap-x-6 mb-8 group">
                             <div className="relative w-24 h-24">
@@ -49,10 +52,10 @@ export default function Settings() {
                             ].map((field) => (
                                 <div key={field.label} className="flex flex-col gap-y-1.5">
                                     <label className="text-sm font-medium text-slate-700">{field.label}</label>
-                                    <input 
-                                        type={field.type} 
-                                        className="h-11 w-full rounded-lg border border-slate-200 bg-slate-50/30 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" 
-                                        placeholder={field.placeholder} 
+                                    <input
+                                        type={field.type}
+                                        className="h-11 w-full rounded-lg border border-slate-200 bg-slate-50/30 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                                        placeholder={field.placeholder}
                                     />
                                 </div>
                             ))}
@@ -61,8 +64,8 @@ export default function Settings() {
                 </div>
 
                 {/* Security Section */}
-                <div className="lg:col-span-5">
-                    <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+                <div className="xl:col-span-5">
+                    <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 sticky top-0">
                         <div className="flex items-center gap-x-2 mb-6">
                             <ShieldCheck className="w-5 h-5 text-slate-400" />
                             <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-400">Security</h2>
@@ -76,10 +79,10 @@ export default function Settings() {
                             ].map((field) => (
                                 <div key={field.label} className="flex flex-col gap-y-1.5">
                                     <label className="text-sm font-medium text-slate-700">{field.label}</label>
-                                    <input 
-                                        type="password" 
-                                        className="h-11 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" 
-                                        placeholder="••••••••••••" 
+                                    <input
+                                        type="password"
+                                        className="h-11 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                                        placeholder="••••••••••••"
                                     />
                                 </div>
                             ))}
@@ -91,5 +94,6 @@ export default function Settings() {
                 </div>
             </div>
         </div>
+
     );
 }
