@@ -1,5 +1,9 @@
 import { authError, getUserSession } from "@/lib/authUtils";
-import { deleteEnquiry, getMessage, updateEnquiry } from "@/services/enquiry.service";
+import {
+  deleteEnquiry,
+  getMessage,
+  updateEnquiry,
+} from "@/services/enquiry.service";
 import { NextResponse } from "next/server";
 
 export async function PATCH(
@@ -14,7 +18,12 @@ export async function PATCH(
       return NextResponse.json("Invalid request data", { status: 400 });
     }
     const { messageStatus } = await request.json();
-    if (messageStatus !== 1 && messageStatus !== 2 && messageStatus !== 3) {
+    if (
+      messageStatus !== 1 &&
+      messageStatus !== 2 &&
+      messageStatus !== 3 &&
+      messageStatus !== 4
+    ) {
       return NextResponse.json("Invalid message status", { status: 400 });
     }
     const res = await updateEnquiry(Number(id), messageStatus);
@@ -54,16 +63,25 @@ export async function DELETE(
       return NextResponse.json("Invalid request data", { status: 400 });
     }
     await deleteEnquiry(Number(id));
-    return NextResponse.json({message: "Message deleted successfully."}, { status: 200 });
+    return NextResponse.json(
+      { message: "Message deleted successfully." },
+      { status: 200 }
+    );
   } catch (error: any) {
     if (error.code === "P2025") {
-      return NextResponse.json({ error: "Message Deletion failed. Message not found." }, { status: 404 });
+      return NextResponse.json(
+        { error: "Message Deletion failed. Message not found." },
+        { status: 404 }
+      );
     }
     return NextResponse.json("Internal server error", { status: 500 });
   }
 }
 
-export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   const { id } = await params;
   if (!id) {
     return NextResponse.json("Invalid request data", { status: 400 });
@@ -73,7 +91,10 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
     return NextResponse.json(message, { status: 200 });
   } catch (error: any) {
     if (error.message === "MESSAGE_NOT_FOUND") {
-      return NextResponse.json({ error: "Message not found." }, { status: 404 });
+      return NextResponse.json(
+        { error: "Message not found." },
+        { status: 404 }
+      );
     }
     return NextResponse.json("Internal server error", { status: 500 });
   }

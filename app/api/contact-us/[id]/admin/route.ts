@@ -76,8 +76,7 @@ export async function GET(
 
   try {
     const id = parseInt((await params).id);
-    console.log("Fetching reply with ID:", id);
-
+    
     if (isNaN(id)) {
       return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
     }
