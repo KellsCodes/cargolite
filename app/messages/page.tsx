@@ -1,6 +1,6 @@
 import AddShipmentBtn from "../components/AddShipment";
 import AuthLayout from "../components/AuthLayout/AuthLayout";
-import MessageTable from "./ClientsTable";
+import MessageTable from "./MessagesTable";
 
 export default function Customers() {
     return (
