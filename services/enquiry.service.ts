@@ -100,7 +100,19 @@ export const getAllEnquiries = async (
 
   // Add message status filter
   if (messageStatus) {
-    where.AND.push({ messageStatus: { equals: messageStatus } });
+    if (messageStatus === 4) {
+      where.AND.push({
+        id: { in: [] },
+      });
+    } else {
+      where.AND.push({
+        messageStatus: { equals: messageStatus },
+      });
+    }
+  } else {
+    where.AND.push({
+      messageStatus: { not: 4 },
+    });
   }
 
   const result = await paginate<any>(prisma.clientEnquiryMessage, {
@@ -170,16 +182,23 @@ export const deleteReply = async (id: number) => {
 };
 
 export const getSingleReply = async (id: number) => {
-  const reply = await prisma.repliedEnquiryMessage.findUnique({
+  const enquiry = await prisma.clientEnquiryMessage.findUnique({
     where: { id },
     include: {
-      enquiry: true,
+      replies: {
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 1,
+      },
     },
   });
-  if (!reply) {
-    throw new Error("REPLY_NOT_FOUND");
+
+  if (!enquiry) {
+    throw new Error("ENQUIRY_NOT_FOUND");
   }
-  return reply;
+
+  return enquiry;
 };
 
 export const getUnreadMessagesCount = async () => {
