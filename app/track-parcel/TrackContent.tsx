@@ -17,31 +17,33 @@ export default function TrackParcel() {
     const [data, setData] = useState<ShipmentData | null>(null)
 
     return (
-        <Layout>
-            <div className="bg-white pt-20 pb-10">
-                <div className="w-[72vw] mx-auto">
-                    <TrackingParcel setData={setData} />
+        <>
+            <div className="w-[95vw] 2xl:w-[72vw] mx-auto">
+                <div className="bg-white pt-10 pb-10">
+                    <div className="w-full mx-auto">
+                        <TrackingParcel setData={setData} />
+                    </div>
                 </div>
+
+                {/* RESULTS SECTION: TRACKING DATA */}
+                {data ?
+                    <div className="w-full mx-auto mt-5 mb-0 z-0 relative">
+                        <TrackData data={data} />
+                    </div> : null
+                }
             </div>
 
-            {/* RESULTS SECTION: TRACKING DATA */}
-            {data ?
-                <div className="w-[72vw] mx-auto mt-5 mb-0 z-0 relative">
-                    <TrackData data={data} />
-                </div> : null
-            }
-
             {/* INFO SECTION: GLOBAL SERVICE */}
-            <section className="w-[72vw] mx-auto pb-24 pt-5 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <section className="w-[95vw] 2xl:w-[72vw] mx-auto pb-12 2xl:pb-24 pt-5 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                 <div className="space-y-8">
                     <div className="space-y-4">
-                        <span className="inline-block px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-widest rounded-md border border-blue-100">
+                        <span className="inline-block px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-widest rounded-md border-0 border-blue-100">
                             Enterprise Logistics
                         </span>
-                        <h2 className="text-4xl font-bold tracking-tight text-slate-900 leading-tight">
+                        <h2 className="text-xl lg:text-2xl 2xl:text-4xl font-bold tracking-tight text-slate-900 leading-tight">
                             The world's leading shipping service provider
                         </h2>
-                        <p className="text-md text-slate-500 leading-relaxed">
+                        <p className="text-sm lg:text-md text-slate-500 leading-relaxed">
                             Our global network combines proprietary technology with reliable physical infrastructure to provide the visibility required to scale your business.
                         </p>
                     </div>
@@ -62,7 +64,7 @@ export default function TrackParcel() {
 
                     <div className="flex items-center gap-x-6 pt-4">
                         <Link href="/contact-us">
-                            <button className="bg-slate-900 hover:bg-slate-800 text-white h-12 px-8 rounded-lg text-sm font-semibold transition-all">
+                            <button className="bg-main-primary hover:bg-main-primary/80 text-white h-12 px-8 rounded-lg text-sm font-semibold transition-all">
                                 Contact us
                             </button>
                         </Link>
@@ -74,20 +76,20 @@ export default function TrackParcel() {
                     </div>
                 </div>
 
-                <div className="relative justify-self-end">
+                <div className="relative justify-self-end-none">
                     <img src="/img-info.png" alt="Shipping Logistics" className="rounded-2xl shadow-xl w-full max-w-[500px] object-cover" />
                 </div>
             </section>
 
             {/* 4. FAQ SECTION */}
-            <section className="w-[72vw] mx-auto py-24 border-t border-slate-100">
+            <section className="w-[95vw] 2xl:w-[72vw] mx-auto py-10 2xl:py-24 border-t border-slate-100">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
                     <div className="space-y-8">
-                        <h2 className="text-4xl font-bold tracking-tight text-slate-900">Frequently Asked Questions</h2>
+                        <h2 className="text-xl 2xl:text-4xl font-bold tracking-tight text-slate-900">Frequently Asked Questions</h2>
                         <div className="grid grid-cols-2 gap-4">
                             <img src="/faq1.png" alt="FAQ" className="col-span-2 rounded-xl border border-slate-100 w-full" />
-                            <img src="/faq2.png" alt="FAQ" className="rounded-xl border border-slate-100 h-40 w-full object-cover" />
-                            <img src="/faq3.png" alt="FAQ" className="rounded-xl border border-slate-100 h-40 w-full object-cover" />
+                            <img src="/faq2.png" alt="FAQ" className="rounded-xl border border-slate-100 h-60 2xl:h-80 w-full object-cover" />
+                            <img src="/faq3.png" alt="FAQ" className="rounded-xl border border-slate-100 h-60 2xl:h-80 w-full object-cover" />
                         </div>
                     </div>
 
@@ -108,7 +110,7 @@ export default function TrackParcel() {
                     </div>
                 </div>
             </section>
-        </Layout>
+        </>
     );
 }
 
@@ -128,7 +130,7 @@ function FeatureItem({ icon, title, desc }: { icon: any, title: string, desc: st
 
 function FAQItem({ value, question, answer }: { value: string, question: string, answer: string }) {
     return (
-        <AccordionItem value={value} className="border border-slate-200 bg-white rounded-2xl px-6 data-[state=open]:border-blue-300 transition-all shadow-sm">
+        <AccordionItem value={value} className="border border-slate-200 bg-white rounded-2xl px-6 data-[state=open]:border-chart-5/40 transition-all shadow-sm">
             <AccordionTrigger className="text-left font-bold text-slate-900 hover:no-underline hover:text-blue-600">
                 {question}
             </AccordionTrigger>

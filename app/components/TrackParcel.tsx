@@ -72,7 +72,7 @@ export default function TrackingParcel({
 
     return (
         <div
-            className="relative w-full rounded-[2.5rem] overflow-hidden bg-slate-900 px-6 py-20 flex flex-col items-center text-center shadow-2xl shadow-blue-900/20"
+            className="relative w-full rounded-2xl 2xl:rounded-[2.5rem] overflow-hidden bg-slate-900 px-6 py-10 2xl:py-20 flex flex-col items-center text-center shadow-2xl shadow-main-primary/6"
             style={{
                 backgroundImage: `linear-gradient(to bottom, rgba(3, 68, 96, 0.8), rgba(3, 68, 96, 0.95)), url(/banner.png)`,
                 backgroundSize: 'cover',
@@ -89,10 +89,10 @@ export default function TrackingParcel({
                         <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
                         Live Carrier Sync
                     </span>
-                    <h1 className="text-4xl lg:text-5xl font-black text-white tracking-tight">
+                    <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-white tracking-tight">
                         Track Your Shipment
                     </h1>
-                    <p className="text-blue-100/70 text-lg lg:text-xl font-medium leading-relaxed">
+                    <p className="text-blue-100/70 text-sm md:text:lg lg:text-xl font-medium leading-relaxed">
                         Get real-time updates on your package location, estimated delivery, and current status instantly.
                     </p>
                 </div>
@@ -143,7 +143,7 @@ export default function TrackingParcel({
                             </p>
                         ) : (
                             <div className="flex items-center justify-center gap-2 text-rose-300 text-xs font-bold animate-in fade-in slide-in-from-top-2 duration-300">
-                                <div className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                                <div className="hidden md:inline-block w-1.5 h-1.5 rounded-full bg-rose-500" />
                                 Tracking ID not recognized. Please allow 24 hours for system sync.
                             </div>
                         )}

@@ -115,7 +115,7 @@ export default function TrackData({ data }: { data: ShipmentData | null }) {
                         </div>
 
                         {/* Progress */}
-                        <div className="space-y-4 max-w-xl">
+                        <div className="space-y-4">
                             <div className="flex items-center justify-between">
                                 <span className="text-xs font-bold text-white uppercase tracking-widest opacity-60">Progress</span>
                                 <span className="text-2xl font-black text-white">{currentStatus ? getProgress(currentStatus as ShipmentStatus) : 0}%</span>
@@ -135,7 +135,7 @@ export default function TrackData({ data }: { data: ShipmentData | null }) {
                     {/* Right: Parcel Image Preview */}
                     <div className="lg:col-span-4 flex justify-center lg:justify-end">
                         <div className="relative group">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
                             <div className="relative w-64 h-64 bg-slate-800 rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl">
                                 {data?.packageImage ?
                                     <img src={data?.packageImage} alt="Parcel" className="w-full object-contain opacity-80 group-hover:scale-110 transition-transform duration-700" />
