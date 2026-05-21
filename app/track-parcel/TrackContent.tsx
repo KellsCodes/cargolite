@@ -17,7 +17,7 @@ export default function TrackParcel() {
     const [data, setData] = useState<ShipmentData | null>(null)
 
     return (
-        <>
+        <Layout>
             <div className="w-[95vw] 2xl:w-[72vw] mx-auto">
                 <div className="bg-white pt-10 pb-10">
                     <div className="w-full mx-auto">
@@ -110,7 +110,7 @@ export default function TrackParcel() {
                     </div>
                 </div>
             </section>
-        </>
+        </Layout>
     );
 }
 
