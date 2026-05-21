@@ -90,6 +90,7 @@ export default function MessageTable() {
 
             // delete filter key when running the first search
             params.delete("status");
+            params.delete("message-status");
 
             params.set("page", "1"); // Always reset to page 1 on new search
             router.push(`${pathname}?${params.toString()}`);
