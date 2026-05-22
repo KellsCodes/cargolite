@@ -16,8 +16,10 @@ export const ProfileSchema = z.object({
     .regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone format")
     .optional()
     .nullable(),
-  // We handle profileImage separately usually, but you can include the URL string here
   profileImage: z.string().url().optional().nullable(),
 });
 
+export const UpdateProfileSchema = ProfileSchema.partial();
+
 export type ProfileInput = z.infer<typeof ProfileSchema>;
+export type UpdateProfileInput = z.infer<typeof UpdateProfileSchema>; // All fields are now optional
