@@ -1,24 +1,43 @@
 "use client"
 
 import { ProfileAPI } from "@/lib/api/profile";
-import { UserRound, ShieldCheck, Camera, Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { UserRound, ShieldCheck, Camera, Loader2, Eye, EyeOff, RefreshCw } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { UserProfileDataUpdate, UserProfileResponse } from "../types/profile";
 import { toast } from "react-toastify";
 import { AnimateSpin } from "../components/AnimateSpin";
+import { validatePassword } from "@/lib/passwordValidator";
+import { motion } from "framer-motion";
+import api from "@/lib/axios";
+import { OtpType } from "@/generated/prisma/enums";
 
 export default function Settings() {
     const [profileData, setProfileData] = useState<UserProfileResponse | null>(null)
     const [isLoading, setIsLoading] = useState(false)
     const [updatedData, setUpdatedData] = useState<UserProfileDataUpdate | null>(null)
     const [isUpdating, setIsUpdating] = useState(false)
+    const [passwordData, setPasswordData] = useState({
+        newPassword: "",
+        confirmNewPassword: ""
+    })
+    const [isShowPassword, setIsShowPassword] = useState({
+        newPassword: false,
+        confirmNewPassword: false
+    })
+    type PasswordFieldName = keyof typeof isShowPassword
+
+    const [isRequestingOTP, setIsRequestingOTP] = useState(false)
+    const [resendCountdown, setResendCountdown] = useState(0);
+    const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
+    const [otpRequested, setOtpRequested] = useState(false);
+    const inputRefs = useRef<HTMLInputElement[]>([]);
+    const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
 
     const handleGetProfile = async () => {
         if (isLoading) return
         setIsLoading(true)
         try {
             const res = await ProfileAPI.getUserProfile()
-            console.log(res.data)
             setProfileData(res.data)
         } catch (error) {
             toast.error("Error fetching user profile")
@@ -78,6 +97,121 @@ export default function Settings() {
             setIsUpdating(false)
         }
     }
+
+    const handleRequestOTP = async () => {
+        if (isRequestingOTP) {
+            toast.error("Please hold on, a request is ongoing.");
+            return;
+        }
+        if (resendCountdown > 0) {
+            toast.error("Please check your email inbox or spams for an OTP.");
+            return;
+        }
+
+        // Validate password strength before sending OTP request
+        if (!validatePassword(passwordData.newPassword)) {
+            toast.error("Min 8 characters: 1 upper, 1 lower, 1 digit, 1 special, no spaces.");
+            return;
+        }
+
+        if (passwordData.newPassword !== passwordData.confirmNewPassword) {
+            toast.error("Please ensure your passwords match and meet the minimum length requirement.");
+            return;
+        }
+
+        setIsRequestingOTP(true)
+        try {
+            await api.post("/auth/forgotPassword", { email: profileData?.user.email });
+            setResendCountdown(60);
+            toast.success("OTP was sent to your email.")
+            const otp = new Array(6).fill("")
+            setOtp(otp)
+            setOtpRequested(true)
+        } catch (error) {
+            console.error(error)
+            toast.error("Error sending OTP")
+        } finally {
+            setIsRequestingOTP(false)
+        }
+    }
+
+    const handleOTPChange = (element: HTMLInputElement, index: number) => {
+        const value = element.value.replace(/[^0-9]/g, "");
+        if (!value) return;
+
+        const newOtp = [...otp];
+        newOtp[index] = value.substring(value.length - 1);
+        setOtp(newOtp);
+
+        if (value && index < 5 && inputRefs.current[index + 1]) {
+            inputRefs.current[index + 1].focus();
+        }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+        if (e.key === "Backspace") {
+            e.preventDefault();
+            const newOtp = [...otp];
+
+            if (otp[index]) {
+                newOtp[index] = "";
+            } else if (index > 0) {
+                newOtp[index - 1] = "";
+                if (inputRefs.current[index - 1]) {
+                    inputRefs.current[index - 1].focus();
+                }
+            }
+            setOtp(newOtp);
+        }
+    };
+
+    const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        const pastedData = e.clipboardData.getData("text").trim().replace(/[^0-9]/g, "");
+
+        if (pastedData.length >= 6) {
+            const pasteArray = pastedData.split("").slice(0, 6);
+            setOtp(pasteArray);
+            inputRefs.current[5]?.focus();
+        }
+    };
+
+    const handleChangePassword = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const fullOtpString = otp.join("");
+        if (fullOtpString.length < 6) return;
+
+        setIsUpdatingPassword(true);
+        try {
+            await api.post("/auth/resetPassword", {
+                newPassword: passwordData.newPassword,
+                code: fullOtpString,
+                otpType: OtpType.PASSWORD_RESET
+            });
+            toast.success("Password updated successfully!");
+            setTimeout(() => {
+                setPasswordData({
+                    newPassword: "",
+                    confirmNewPassword: ""
+                })
+                setOtpRequested(false)
+                setResendCountdown(0);
+                const otp = new Array(6).fill("")
+                setOtp(otp)
+            }, 3000)
+        } catch (error: any) {
+            console.error("Verification Error:", error);
+            toast.error(error.message || "Invalid validation token. Please try again.");
+        } finally {
+            setIsUpdatingPassword(false);
+        }
+    };
+
+    useEffect(() => {
+        if (resendCountdown <= 0) return;
+        const timer = setTimeout(() => setResendCountdown(resendCountdown - 1), 1000);
+        return () => clearTimeout(timer);
+    }, [resendCountdown]);
 
     useEffect(() => {
         handleGetProfile()
@@ -223,22 +357,107 @@ export default function Settings() {
 
                             <div className="space-y-5">
                                 {[
-                                    { label: "Current Password" },
-                                    { label: "New Password" },
-                                    { label: "Confirm New Password" },
-                                ].map((field) => (
-                                    <div key={field.label} className="flex flex-col gap-y-1.5">
-                                        <label className="text-sm font-medium text-slate-700">{field.label}</label>
-                                        <input
-                                            type="password"
-                                            className="h-11 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm focus:outline-none focus:ring-1 focus:ring-main-primary/20 focus:border-main-primary transition-all"
-                                            placeholder="••••••••••••"
-                                        />
-                                    </div>
-                                ))}
-                                <button className="w-full mt-2 text-sm text-blue-600 font-medium hover:text-blue-700 underlinee underline-offset-4 cursor-pointer">
-                                    Change Password
-                                </button>
+                                    { label: "New Password", name: "newPassword" as PasswordFieldName, value: passwordData.newPassword },
+                                    { label: "Confirm New Password", name: "confirmNewPassword" as PasswordFieldName, value: passwordData.confirmNewPassword },
+                                ].map((field) => {
+                                    // Check if this specific field is currently toggled to visible
+                                    const isVisible = isShowPassword[field.name];
+
+                                    // Pick the right icon component dynamically
+                                    const IconComponent = isVisible ? EyeOff : Eye;
+
+                                    return (
+                                        <div key={field.label} className="flex flex-col gap-y-1.5">
+                                            <label className="text-sm font-medium text-slate-700">{field.label}</label>
+
+                                            <div className="relative w-full">
+                                                <input
+                                                    name={field.name}
+                                                    value={field.value}
+                                                    onChange={(e) => {
+                                                        setPasswordData({ ...passwordData, [field.name]: e.target.value });
+                                                    }}
+                                                    // Dynamically changes from "password" to "text"
+                                                    type={isVisible ? "text" : "password"}
+                                                    className="h-11 w-full rounded-lg border border-slate-200 bg-white pl-4 pr-10 text-xs focus:outline-none focus:ring-1 focus:ring-main-primary/20 focus:border-main-primary transition-all"
+                                                    placeholder="••••••••••••"
+                                                />
+
+                                                <IconComponent
+                                                    onClick={() => {
+                                                        // Toggles the specific field name boolean directly
+                                                        setIsShowPassword(prev => ({ ...prev, [field.name]: !prev[field.name] }));
+                                                    }}
+                                                    className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 opacity-50 cursor-pointer hover:opacity-80 transition-opacity"
+                                                />
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+
+                                {/* OTP INPUT */}
+                                {otpRequested && (
+                                    <>
+                                        <div className="flex justify-between items-center gap-2" onPaste={handlePaste}>
+                                            {otp.map((digit, index) => (
+                                                <input
+                                                    key={index}
+                                                    ref={(el) => { if (el) inputRefs.current[index] = el; }}
+                                                    type="text"
+                                                    inputMode="numeric"
+                                                    pattern="[0-9]*"
+                                                    maxLength={1}
+                                                    value={digit}
+                                                    onChange={(e) => handleOTPChange(e.target, index)}
+                                                    onKeyDown={(e) => handleKeyDown(e, index)}
+                                                    className="h-12 md:h-16 xl:h-12 w-1/2 text-center text-xl font-black bg-black/5 border border-main-primary/10 rounded-xl outline-none transition-all text-[#034460] focus:bg-white focus:border-[#034460] focus:ring-4 focus:ring-main-primary/5 shadow-sm"
+                                                />
+                                            ))}
+                                        </div>
+
+                                        <div>
+                                            <motion.button
+                                                type="submit"
+                                                whileHover={otp.join("").length === 6 && !isUpdatingPassword ? { scale: 1.01, backgroundColor: "#ffb732" } : {}}
+                                                whileTap={otp.join("").length === 6 && !isUpdatingPassword ? { scale: 0.99 } : {}}
+                                                disabled={otp.join("").length < 6 || isUpdatingPassword}
+                                                onClick={handleChangePassword}
+                                                className="h-12 w-full bg-[#ffa800] text-[#034460] font-black uppercase tracking-widest text-xs rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg shadow-[#ffa800]/10 disabled:opacity-40 disabled:cursor-not-allowed"
+                                            >
+                                                {isUpdatingPassword ? (
+                                                    <Loader2 className="w-5 h-5 animate-spin" />
+                                                ) : (
+                                                    <>
+                                                        <ShieldCheck className="w-4 h-4" />
+                                                        Change Password
+                                                    </>
+                                                )}
+                                            </motion.button>
+                                        </div>
+                                    </>
+                                )}
+
+
+                                <div className="text-center">
+                                    {resendCountdown > 0 ? (
+                                        <p className="text-[11px] text-black/40 font-medium">
+                                            Resend secure code in <span className="font-bold text-[#034460]">{resendCountdown}s</span>
+                                        </p>
+                                    ) : (
+                                        <button
+                                            type="button"
+                                            onClick={handleRequestOTP}
+                                            className="w-full mt-2 text-sm text-blue-600 font-medium hover:text-blue-700 underline underline-offset-4 cursor-pointer flex items-center justify-center gap-x-2"
+                                        >
+                                            <RefreshCw
+                                                className={`w-3 h-3 ${isRequestingOTP ? "animate-spin" : ""}`}
+                                            />
+
+                                            {otpRequested ? "Request New OTP" : isRequestingOTP ? "Requesting OTP..." : "Request OTP"}
+                                        </button>
+                                    )}
+
+                                </div>
                             </div>
                         </div>
                     </div>
