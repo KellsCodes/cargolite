@@ -1,5 +1,5 @@
 import { authError, getUserSession } from "@/lib/authUtils";
-import { ProfileSchema } from "@/schema/profileSchema";
+import { ProfileSchema, UpdateProfileSchema } from "@/schema/profileSchema";
 import { processImage } from "@/services/image.service";
 import { getUserProfile, updateUserProfile } from "@/services/profile";
 import { NextResponse } from "next/server";
@@ -36,7 +36,7 @@ export const PATCH = async (req: Request) => {
         rawData[key] = value;
       }
     });
-    const validatedData = ProfileSchema.safeParse(rawData);
+    const validatedData = UpdateProfileSchema.safeParse(rawData);
     const { data, error, success } = validatedData;
     if (!success) {
       return new Response(
