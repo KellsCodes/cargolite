@@ -16,24 +16,27 @@ export default function ProjectsSlider() {
         pauseOnHover: false,
         responsive: [
             {
-                breakpoint: 1024,
+                // Large Desktop / Normal Desktop (screens below 1280px down to 1024px)
+                breakpoint: 1280,
                 settings: {
-                    slidesToShow: 4,
+                    slidesToShow: 3,
                     slidesToScroll: 1,
                 }
             },
             {
-                breakpoint: 768,
+                // Tablets / Small Desktops (screens below 1024px down to 768px)
+                breakpoint: 1024,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 1,
                 }
             },
             {
-                breakpoint: 420,
+                // Mobile Landscape & Portrait (screens below 768px)
+                breakpoint: 768,
                 settings: {
                     slidesToShow: 1,
-                    slidesToScroll: 1
+                    slidesToScroll: 1,
                 }
             }
         ]

@@ -47,7 +47,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="w-[95vw] 2xl:w-[72vw] mx-auto py-16 space-y-12">
+        <div className="w-[95vw] 2xl:w-[72vw] mx-auto lg:py-16 space-y-12">
           <div className="text-center space-y-6 lg:max-w-xl mx-auto">
             <div>
               {/* <h2 className="font-bold text-xl text-chart-5/70 font-heading">CARGOLITE</h2> */}
@@ -106,7 +106,7 @@ export default function Home() {
 
         {/* Customers Review */}
         <div
-          className="mt-0 mb-14 w-full h-[800px] bg-[#034460] relative"
+          className="mt-0 lg:mb-14 w-full py-10 lg:py-0 lg:h-[800px] bg-main-primary relative"
           style={{
 
             backgroundImage: 'url("/ship.png")',
@@ -120,7 +120,7 @@ export default function Home() {
               clipPath: 'polygon(365px 0, 100% 0, 100% 100%, 0 100%)',
             }}
           />
-          <div className="w-[72vw] mx-auto relative z-10 flex flex-col justify-center h-full">
+          <div className="w-[95vw] 2xl:w-[72vw] mx-auto relative z-10 flex flex-col justify-center h-full">
             <div className="flex flex-col gap-y-4">
               <div className="w-full flex items-center gap-x-3">
                 <h3 className="font-bold text-chart-5/90 text-lg">CARGOLITE</h3>
@@ -142,12 +142,12 @@ export default function Home() {
         </div>
 
         {/* What we have done  */}
-        <div className="h-[85vh] bg-white w-full relative">
+        <div className="xl:h-[85vh] py-10 bg-white w-full relative">
           <div
             className="absolute top-[38%] left-0 bottom-0 w-[52%] bg-[#FFE799]"
             style={{ clipPath: 'polygon(0 0, calc(100% - 250px) 0, 100% 100%, 0 100%)' }}
           />
-          <div className="w-[72vw] mx-auto h-full relative z-10 flex flex-col justify-center gap-y-6">
+          <div className="w-[95vw] 2xl:w-[72vw] mx-auto h-full relative z-10 flex flex-col justify-center gap-y-6">
             <h2 className="text-3xl font-bold">What We Have Done</h2>
             <p className="text-md text-black/50">These are some the projects we've completed with our amazing partners</p>
             <div>
@@ -158,7 +158,7 @@ export default function Home() {
 
         {/* Delivery Count */}
         <div
-          className="w-full h-[80vh] bg-[#034460]"
+          className="w-full lg:h-[80vh] bg-[#034460] py-5"
           style={{
 
             backgroundImage: 'url("/container.png")',
@@ -166,9 +166,9 @@ export default function Home() {
             backgroundPosition: 'center'
           }}
         >
-          <div className="w-[72vw] mx-auto h-full flex flex-col justify-center space-y-10">
-            <h3 className="font-medium text-4xl text-chart-5 w-md mx-auto text-center">World’s Leading Company For Over 10 Years.</h3>
-            <p className="text-white text-md w-2xl mx-auto text-center">A big opportunity for your business growth. Delivering Results for Industry Leaders. We are proud of our work for and have worked hard.</p>
+          <div className="w-[95vw] 2xl:w-[72vw] mx-auto h-full flex flex-col justify-center space-y-10">
+            <h3 className="font-medium text-2xl lg:text-4xl text-chart-5 lg:w-md mx-auto text-center">World’s Leading Company For Over 10 Years.</h3>
+            <p className="text-white text-md lg:w-2xl mx-auto text-center">A big opportunity for your business growth. Delivering Results for Industry Leaders. We are proud of our work for and have worked hard.</p>
 
             {/* Items */}
             <StatsGrid />
