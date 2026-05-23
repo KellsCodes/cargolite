@@ -54,38 +54,45 @@ export default function ReviewSlider() {
         infinite: true,
         autoplay: true,
         autoplaySpeed: 3000,
-        slidesToShow: 3,
         slidesToScroll: 1,
         arrows: false,
         pauseOnHover: false,
+
+        // Baseline setting for the largest screens (TV / Ultra-wide > 1280px)
+        slidesToShow: 3,
+
         responsive: [
             {
-                breakpoint: 1024,
+                // Large Desktop / Normal Desktop (screens below 1280px down to 1024px)
+                breakpoint: 1280,
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 1,
                 }
             },
             {
-                breakpoint: 768,
+                // Tablets / Small Desktops (screens below 1024px down to 768px)
+                breakpoint: 1024,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 1,
                 }
             },
             {
-                breakpoint: 420,
+                // Mobile Landscape & Portrait (screens below 768px)
+                breakpoint: 768,
                 settings: {
                     slidesToShow: 1,
-                    slidesToScroll: 1
+                    slidesToScroll: 1,
                 }
             }
         ]
-    }
+    };
+
 
     return (
         <>
-            <Slider ref={sliderRef} {...settings} className="-mx-3">
+            <Slider ref={sliderRef} {...settings} className="-mx-3 bg-[#fff]">
                 {[...USER_REVIEWS, ...USER_REVIEWS].map((review, i) => (
                     <ReviewCard review={review} key={i} />
                 ))}
