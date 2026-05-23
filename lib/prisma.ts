@@ -2,10 +2,10 @@ import { PrismaClient } from "../generated/prisma/client";
 import "dotenv/config";
 
 const prismaClientSingleton = () => {
+  // Pass ONLY native logging to prevent constructor crashes
   return new PrismaClient({
     log: ["error", "warn"],
-    accelerateUrl: "",
-  } as any); // Cast as any ensures the compiler doesn't stop the Vercel build
+  } as any); // Type-casting bypasses the missing paid extension checks
 };
 
 declare const globalThis: {
