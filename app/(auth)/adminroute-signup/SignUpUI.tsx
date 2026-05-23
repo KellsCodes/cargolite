@@ -326,9 +326,9 @@ export default function SignupUI() {
                 </div>
             </motion.div>
 
-            <div className="absolute bottom-6 text-[9px] uppercase tracking-[0.6em] text-black/40 font-semibold">
+            {/* <div className="absolute bottom-6 text-[9px] uppercase tracking-[0.6em] text-black/40 font-semibold">
                 Authorized Logistics Portal © 2026
-            </div>
+            </div> */}
         </div>
     );
 }
