@@ -2,8 +2,8 @@
 import Image from "next/image";
 import Layout from "./components/Layout";
 import { HeroSection } from "./components/HeroSection";
-import { OFFERS, USER_REVIEWS } from "@/lib/offer";
-import { Check, Star } from "lucide-react";
+import { OFFERS } from "@/lib/offer";
+import { Check } from "lucide-react";
 import ReviewSlider from "./components/ReviewSlider";
 import ProjectsSlider from "./components/ProjectsSlider";
 import StatsGrid from "./components/CounterCards";
