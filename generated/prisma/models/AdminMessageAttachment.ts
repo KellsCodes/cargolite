@@ -203,7 +203,7 @@ export type AdminMessageAttachmentGroupByOutputType = {
   _max: AdminMessageAttachmentMaxAggregateOutputType | null
 }
 
-type GetAdminMessageAttachmentGroupByPayload<T extends AdminMessageAttachmentGroupByArgs> = Prisma.PrismaPromise<
+export type GetAdminMessageAttachmentGroupByPayload<T extends AdminMessageAttachmentGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<AdminMessageAttachmentGroupByOutputType, T['by']> &
       {
@@ -1135,6 +1135,11 @@ export type AdminMessageAttachmentFindManyArgs<ExtArgs extends runtime.Types.Ext
    * Skip the first `n` AdminMessageAttachments.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of AdminMessageAttachments.
+   */
   distinct?: Prisma.AdminMessageAttachmentScalarFieldEnum | Prisma.AdminMessageAttachmentScalarFieldEnum[]
 }
 

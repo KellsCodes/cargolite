@@ -214,7 +214,7 @@ export type TrackingHistoryGroupByOutputType = {
   _max: TrackingHistoryMaxAggregateOutputType | null
 }
 
-type GetTrackingHistoryGroupByPayload<T extends TrackingHistoryGroupByArgs> = Prisma.PrismaPromise<
+export type GetTrackingHistoryGroupByPayload<T extends TrackingHistoryGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<TrackingHistoryGroupByOutputType, T['by']> &
       {
@@ -1300,6 +1300,11 @@ export type TrackingHistoryFindManyArgs<ExtArgs extends runtime.Types.Extensions
    * Skip the first `n` TrackingHistories.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of TrackingHistories.
+   */
   distinct?: Prisma.TrackingHistoryScalarFieldEnum | Prisma.TrackingHistoryScalarFieldEnum[]
 }
 

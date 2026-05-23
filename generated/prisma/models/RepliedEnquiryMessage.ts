@@ -200,7 +200,7 @@ export type RepliedEnquiryMessageGroupByOutputType = {
   _max: RepliedEnquiryMessageMaxAggregateOutputType | null
 }
 
-type GetRepliedEnquiryMessageGroupByPayload<T extends RepliedEnquiryMessageGroupByArgs> = Prisma.PrismaPromise<
+export type GetRepliedEnquiryMessageGroupByPayload<T extends RepliedEnquiryMessageGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<RepliedEnquiryMessageGroupByOutputType, T['by']> &
       {
@@ -1218,6 +1218,11 @@ export type RepliedEnquiryMessageFindManyArgs<ExtArgs extends runtime.Types.Exte
    * Skip the first `n` RepliedEnquiryMessages.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of RepliedEnquiryMessages.
+   */
   distinct?: Prisma.RepliedEnquiryMessageScalarFieldEnum | Prisma.RepliedEnquiryMessageScalarFieldEnum[]
 }
 
