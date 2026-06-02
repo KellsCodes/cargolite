@@ -163,10 +163,10 @@ export default function UpdateShipmentForm({ trackingID }: { trackingID: string 
 
     return (
         <div className="h-full flex-1 flex flex-col bg-slate-50/50">
-            <form onSubmit={handleSubmitForm} className="h-full flex-1 flex flex-col">
+            <form onSubmit={handleSubmitForm} className="h-full flex-1 flex flex-col pb-20 md:pb-0">
                 {/* Scrollable Form Content */}
-                <div className="flex-1 overflow-y-auto px-0 py-6 lg:p-10">
-                    <div className="max-w-5xl mx-auto space-y-8 bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
+                <div className="flex-1 overflow-y-auto px-0 md:py-6 lg:p-10">
+                    <div className="w-full lg:max-w-5xl mx-auto space-y-8 bg-white p-4 lg:p-8 rounded-xl border border-slate-200 shadow-sm">
 
                         {/* Section 1: Contact Information */}
                         <section>
@@ -419,7 +419,7 @@ export default function UpdateShipmentForm({ trackingID }: { trackingID: string 
                                         <input
                                             onChange={(e) => {
                                                 const val = parseFloat(e.target.value);
-                                                setFormData({ ...formData, amount:  val });
+                                                setFormData({ ...formData, amount: val });
                                                 setUpdateData({ ...updateData, amount: val })
                                             }}
                                             name="amount" value={formData.amount} type="number" min={0} step="any"

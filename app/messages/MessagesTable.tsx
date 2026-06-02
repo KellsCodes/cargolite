@@ -190,7 +190,8 @@ export default function MessageTable() {
                                     router,
                                 })
                             }}
-                            className="h-9 w-9 flex items-center justify-center p-1 border rounded-sm hover:bg-gray-100"
+                            className="h-9 w-9 flex items-center justify-center p-1 border rounded-sm hover:bg-gray-100 transition-colors disabled:opacity-50"
+                            disabled={isLoading}
                         >
                             <ChevronLeft className="w-4 h-4" />
                         </button>
@@ -212,11 +213,23 @@ export default function MessageTable() {
                                     router,
                                 })
                             }}
-                            className="h-9 w-9 flex items-center justify-center p-1 border rounded-sm  hover:bg-gray-100"
+                            className="h-9 w-9 flex items-center justify-center p-1 border rounded-sm hover:bg-gray-100 transition-colors disabled:opacity-50"
+                            disabled={isLoading}
                         >
                             <ChevronLeft className="w-4 h-4 rotate-180" />
                         </button>
                     </div>
+                    {/* Email Button for sending email from Admin to users not on the list */}
+                    <button
+                        onClick={() => {
+                            router.push("/messages/compose")
+                        }}
+                        className="cursor-pointer inline-flex items-center justify-center gap-x-2 h-9 px-4 rounded-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 transition-all shadow-sm hover:shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 disabled:pointer-events-none w-full sm:w-auto"
+                    >
+                        <Mail className="w-4 h-4" />
+                        <span className="hidden lg:inline">Send Email</span>
+                    </button>
+
                 </div>
             </div>
 

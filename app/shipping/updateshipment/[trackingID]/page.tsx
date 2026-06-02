@@ -12,7 +12,7 @@ export default async function saveShipment({ params }: PageProps) {
     const { trackingID } = await params;
     return (
         <AuthLayout>
-            <div className="space-y-6 overflow-hidden p-6">
+            <div className="space-y-6 overflow-hidden p-4 md:p-6">
                 <div>
                     <h1 className="font-semibold">Add New Shipping</h1>
                     <div className="flex items-center gap-x-[2px] text-xs opacity-50">
