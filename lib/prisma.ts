@@ -2,6 +2,11 @@ import { PrismaClient } from "../generated/prisma/client";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import "dotenv/config";
 
+// THIS IS POLYFILL TO RESOLVE SERIALIZATION ERROR
+(BigInt.prototype as any).toJSON = function () {
+  return this.toString();
+};
+
 const prismaClientSingleton = () => {
   const connectionString = process.env.DATABASE_URL;
 
@@ -11,6 +16,8 @@ const prismaClientSingleton = () => {
 
   // Use the native URL parser to securely extract the cloud credentials
   const dbUrl = new URL(connectionString);
+  const isLocal =
+    dbUrl.hostname === "localhost" || dbUrl.hostname === "127.0.0.1";
 
   const adapter = new PrismaMariaDb({
     host: dbUrl.hostname,
@@ -18,9 +25,7 @@ const prismaClientSingleton = () => {
     user: dbUrl.username,
     password: decodeURIComponent(dbUrl.password),
     database: dbUrl.pathname.replace("/", ""),
-    ssl: {
-      rejectUnauthorized: false, // For self-signed certificates, set to false. Adjust as needed for production.
-    }//dbUrl.searchParams.get("sslmode") === "require",
+    ssl: isLocal ? undefined : { rejectUnauthorized: false }, //dbUrl.searchParams.get("sslmode") === "require",
   });
 
   return new PrismaClient({ adapter });
