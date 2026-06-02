@@ -77,7 +77,7 @@ export default function LoginUI() {
 
     return (
         // Changed main background to white
-        <div className="relative h-screen w-screen overflow-hidden bg-white flex items-center justify-center selection:bg-[#ffa800]/50">
+        <div className="relative h-[calc(100vh-50px)] lg:h-screen lg:w-screen overflow-hidden bg-white flex items-center justify-center selection:bg-[#ffa800]/50 overscroll-none">
             {/* --- Animated Sparks (Bubbles) --- */}
             {/* {mounted && (
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -142,7 +142,7 @@ export default function LoginUI() {
                         </motion.div> */}
                         <div className="text-center">
                             <Link href={"/"}>
-                                <h1 className="font-black text-4xl tracking-tighter text-[#034460] uppercase leading-none">
+                                <h1 className="font-black text-2xl lg:text-3xl tracking-tighter text-[#034460] uppercase leading-none">
                                     Cargo<span className="text-[#ffa800]">lite</span>
                                 </h1>
                             </Link>
@@ -205,17 +205,17 @@ export default function LoginUI() {
                         </motion.button>
                     </form>
 
-                    <div className="pt-6 border-t border-black/5 w-full text-center">
+                    {/* <div className="pt-6 border-t border-black/5 w-full text-center">
                         <p className="text-xs text-black/40 font-medium">
                             New partner? <Link href="/#register" className="text-[#034460] font-bold hover:underline underline-offset-4 decoration-2">Request Access</Link>
                         </p>
-                    </div>
+                    </div> */}
                 </div>
             </motion.div>
 
-            <div className="absolute bottom-8 text-[9px] uppercase tracking-[0.6em] text-black/40 font-semibold select-none">
+            {/* <div className="absolute bottom-8 text-[9px] uppercase tracking-[0.6em] text-black/40 font-semibold select-none">
                 © 2026 Cargolite Systems • Secure Node 01
-            </div>
+            </div> */}
         </div>
     );
 }

@@ -61,7 +61,7 @@ export function MobileBottomAuthMenu() {
                 {
                     [...authMenu.slice(0, 3), authMenu[7]].map((item, i) => (
                         <button key={i} className={`${!pathname.startsWith(item.link) ? "text-black/70" : "text-main-primary"}`}>
-                            <Link href={item.link} className={`flex flex-col gap-y-1 items-center text-xs hover:text-chart-5/90 transition-all duration-300 ease-in-out`}>
+                            <Link href={item.link} className={`flex flex-col gap-y-1 items-center text-xs font-bold hover:text-chart-5/90 transition-all duration-300 ease-in-out`}>
                                 {item.icon}
                                 {item.name}
                             </Link>
@@ -117,9 +117,9 @@ export function MobileSlideMenu({ showMenu, setShowMenu, pathname, authMenu }: a
                         animate={{ x: 0 }}       // 
                         exit={{ x: "-100%" }}    // Slides back to the left
                         transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                        className="fixed left-0 top-0 h-screen w-[90%] sm:w-[50%] bg-white z-[80] shadow-2xl p-6 flex flex-col md:hidden"
+                        className="fixed left-0 top-0 h-[calc(100vh-50px)] w-[85%] sm:w-[50%] bg-white z-[80] shadow-2xl p-6 flex flex-col md:hidden"
                     >
-                        <div className="flex items-center justify-between mb-8">
+                        <div className="flex items-center justify-between mb-5">
                             <LogoText />
                             <button onClick={() => setShowMenu(false)} className="p-2 cursor-pointer">
                                 <MotionX
@@ -141,7 +141,7 @@ export function MobileSlideMenu({ showMenu, setShowMenu, pathname, authMenu }: a
                                     key={i}
                                     href={item.link}
                                     onClick={() => setShowMenu(false)}
-                                    className={`flex items-center gap-x-3 p-4 rounded-xl text-sm font-bold transition-all ${pathname.startsWith(item.link)
+                                    className={`flex items-center gap-x-3 p-3 rounded-xl text-xs font-bold transition-all ${pathname.startsWith(item.link)
                                         ? "bg-main-primary/5 text-main-primary"
                                         : "text-black/60 hover:bg-black/5"
                                         }`}

@@ -22,7 +22,7 @@ export default function StatCard({ item, data }: StatCardProps) {
     const isNegative = data.percentage <= 0;
 
     return (
-        <div className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+        <div className="bg-white rounded-2xl p-3 lg:p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
             {/* Top Row: Icon & Name */}
             <div className="flex items-start justify-between mb-4">
                 <div className="space-y-1">
@@ -54,7 +54,7 @@ export default function StatCard({ item, data }: StatCardProps) {
                         {data.percentage}%
                     </span>
                     <p className="text-[11px] text-slate-400 font-medium">
-                        <span className="text-slate-600">{(data.currentMonth - data.previousMonth).toLocaleString()}</span> vs last month {data.previousMonth.toLocaleString()}
+                        <span className="text-slate-600">{(data.currentMonth).toLocaleString()}</span> vs last month ({data.previousMonth.toLocaleString()})
                     </p>
                 </div>
             </div>

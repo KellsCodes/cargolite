@@ -18,7 +18,7 @@ export default function Layout({ children, userSession }: { children: React.Reac
         fetchNotifications();
     }, [])
     return (
-        <div className="h-screen flex flex-col md:flex-row bg-white relative overflow-hidden">
+        <div className="h-[calc(100vh-56px)] lg:h-screen flex flex-col md:flex-row bg-white relative overflow-hidden">
             <Sidebar />
             <div className="flex-1 flex flex-col min-w-0">
                 <nav className="h-16 shrink-0 border-b-3 border-b-black/3 flex items-center justify-between px-4 md:px-6 bg-white">
