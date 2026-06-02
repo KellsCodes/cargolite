@@ -2,7 +2,7 @@
 
 import { USER_REVIEWS } from "@/lib/offer"
 import { MoveLeft, MoveRight, Star } from "lucide-react"
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import Slider from "react-slick"
 
 interface Review {
@@ -49,6 +49,27 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
 
 export default function ReviewSlider() {
     const sliderRef = useRef<Slider | null>(null);
+    const [isMobile, setIsMobile] = useState<boolean | null>(null);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setIsMobile(true);
+            } else {
+                setIsMobile(false);
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+        handleResize();
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    if (isMobile === null) return null;
+
 
     const settings = {
         infinite: true,
@@ -59,7 +80,7 @@ export default function ReviewSlider() {
         pauseOnHover: false,
 
         // Baseline setting for the largest screens (TV / Ultra-wide > 1280px)
-        slidesToShow: 3,
+        slidesToShow: isMobile ? 1 : 3,
 
         responsive: [
             {
@@ -98,15 +119,15 @@ export default function ReviewSlider() {
                 ))}
             </Slider>
             {/* Review Arrow */}
-            <div className="mt-10 flex items-center gap-x-4">
+            <div className="mt-10 flex items-center gap-x-2 lg:gap-x-4">
                 <button
                     onClick={() => sliderRef.current?.slickPrev()}
-                    className="w-14 h-14 border rounded-full bg-white hover:bg-chart-5 transition-all ease-in-out duration-300 cursor-pointer flex items-center justify-center"
+                    className="w-10 h-10 lg:w-14 lg:h-14 border rounded-full bg-white hover:bg-chart-5 transition-all ease-in-out duration-300 cursor-pointer flex items-center justify-center"
                 >
                     <MoveLeft className="w-4 text-[#034460]" />
                 </button>
                 <button
-                    className="w-14 h-14 border rounded-full bg-white hover:bg-chart-5 transition-all ease-in-out duration-300 cursor-pointer flex items-center justify-center"
+                    className="w-10 h-10 lg:w-14 lg:h-14 border rounded-full bg-white hover:bg-chart-5 transition-all ease-in-out duration-300 cursor-pointer flex items-center justify-center"
                     onClick={() => sliderRef.current?.slickNext()}
                 >
                     <MoveRight className="w-4 text-[#034460]" />

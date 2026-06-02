@@ -17,7 +17,7 @@ export default function Home() {
       <Layout>
         <div>
           <HeroSection />
-          <div className="relative pt-16 pb-6">
+          <div className="relative pt-10 lg:pt-16 pb-6">
             <div
               className="absolute inset-0 top-[30%] -z-10"
               style={{
@@ -47,7 +47,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="w-[95vw] 2xl:w-[72vw] mx-auto lg:py-16 space-y-12">
+        <div className="w-[95vw] 2xl:w-[72vw] mx-auto pt-10 lg:py-16 space-y-12">
           <div className="text-center space-y-6 lg:max-w-xl mx-auto">
             <div>
               {/* <h2 className="font-bold text-xl text-chart-5/70 font-heading">CARGOLITE</h2> */}
@@ -106,12 +106,12 @@ export default function Home() {
 
         {/* Customers Review */}
         <div
-          className="mt-0 lg:mb-14 w-full py-10 lg:py-0 lg:h-[800px] bg-main-primary relative"
+          className="mt-0 lg:mb-14 w-full py-10 lg:py-0 lg:h-[800px] bg-main-primary relative loading-lazy"
           style={{
 
             backgroundImage: 'url("/ship.png")',
             backgroundSize: 'cover',
-            backgroundPosition: 'center'
+            backgroundPosition: 'center',
           }}
         >
           <div
@@ -122,8 +122,11 @@ export default function Home() {
           />
           <div className="w-[95vw] 2xl:w-[72vw] mx-auto relative z-10 flex flex-col justify-center h-full">
             <div className="flex flex-col gap-y-4">
-              <div className="w-full flex items-center gap-x-3">
-                <h3 className="font-bold text-chart-5/90 text-lg">CARGOLITE</h3>
+              <div className="w-full flex flex-col md:flex-row md:items-center gap-x-3">
+                <h3 className="font-bold text-lg">
+                  <span className="text-white/90">CARGO</span>
+                  <span className="text-chart-5/90">LITE</span>
+                </h3>
                 <h3 className="font-medium text-white text-lg">What our customers are saying</h3>
               </div>
               <div className="flex items-center justify-between">
@@ -148,7 +151,7 @@ export default function Home() {
             style={{ clipPath: 'polygon(0 0, calc(100% - 250px) 0, 100% 100%, 0 100%)' }}
           />
           <div className="w-[95vw] 2xl:w-[72vw] mx-auto h-full relative z-10 flex flex-col justify-center gap-y-6">
-            <h2 className="text-3xl font-bold">What We Have Done</h2>
+            <h2 className="text-2xl lg:text-3xl font-bold">What We Have Done</h2>
             <p className="text-md text-black/50">These are some the projects we've completed with our amazing partners</p>
             <div>
               <ProjectsSlider />
@@ -158,7 +161,7 @@ export default function Home() {
 
         {/* Delivery Count */}
         <div
-          className="w-full lg:h-[80vh] bg-[#034460] py-5"
+          className="w-full lg:h-[80vh] bg-[#034460] pt-10 pb-4 lg:py-5"
           style={{
 
             backgroundImage: 'url("/container.png")',

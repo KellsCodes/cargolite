@@ -1,16 +1,36 @@
 import { PROJECTS } from "@/lib/offer";
 import { MoveLeft, MoveRight } from "lucide-react"
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import Slider from "react-slick"
 
 export default function ProjectsSlider() {
     const sliderRef = useRef<Slider | null>(null);
+    const [isMobile, setIsMobile] = useState<boolean | null>(null);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setIsMobile(true);
+            } else {
+                setIsMobile(false);
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+        handleResize();
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    if (isMobile === null) return null;
 
     const settings = {
         infinite: true,
         autoplay: true,
         autoplaySpeed: 2500,
-        slidesToShow: 4,
+        slidesToShow: isMobile ? 1 : 4,
         slidesToScroll: 1,
         arrows: false,
         pauseOnHover: false,
