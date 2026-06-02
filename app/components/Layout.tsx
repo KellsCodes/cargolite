@@ -130,6 +130,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 
 
+            {/* Mobile Menu */}
             <AnimatePresence>
                 {showMenu && (
                     <>
@@ -139,7 +140,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setShowMenu(false)}
-                            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] md:hidden"
+                            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] md:hidden overflow-hidden touch-none overscroll-none"
                         />
 
                         {/* Slide-out Menu */}
@@ -148,7 +149,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             animate={{ x: 0 }}
                             exit={{ x: "100%" }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="fixed right-0 h-screen w-[300px] bg-white z-[70] shadow-2xl p-8 flex flex-col md:hidden"
+                            className="fixed right-0 h-[calc(100vh-50px)] w-[300px] bg-white z-[70] shadow-2xl p-8 flex flex-col md:hidden overflow-hidden touch-none overscroll-none"
                         >
                             <div className="flex items-center justify-between mb-12">
                                 <span className="font-black text-xl text-[#034460]">CARGO<span className="text-[#ffa800]">LITE</span></span>
@@ -164,7 +165,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 </button>
                             </div>
 
-                            <div className="flex flex-col gap-y-6 text-lg font-semibold text-main-primary">
+                            <div className="flex flex-col gap-y-6 text-md font-semibold text-main-primary">
                                 <Link href="/" onClick={() => setShowMenu(false)} className="hover:text-chart-5 transition-colors">Home</Link>
                                 <Link href="/about" onClick={() => setShowMenu(false)} className="hover:text-chart-5 transition-colors">About Us</Link>
                                 <Link href="/track-parcel" onClick={() => setShowMenu(false)} className="hover:text-chart-5 transition-colors">Track Parcel</Link>
