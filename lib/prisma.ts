@@ -18,7 +18,9 @@ const prismaClientSingleton = () => {
     user: dbUrl.username,
     password: decodeURIComponent(dbUrl.password),
     database: dbUrl.pathname.replace("/", ""),
-    ssl: true //dbUrl.searchParams.get("sslmode") === "require",
+    ssl: {
+      rejectUnauthorized: false, // For self-signed certificates, set to false. Adjust as needed for production.
+    }//dbUrl.searchParams.get("sslmode") === "require",
   });
 
   return new PrismaClient({ adapter });
