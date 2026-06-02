@@ -93,7 +93,7 @@ export default function TrackData({ data }: { data: ShipmentData | null }) {
             </div> */}
 
             {/* 1. HERO TRACKING CARD */}
-            <div className="relative overflow-hidden rounded-[2.5rem] bg-slate-900 p-8 lg:p-12 shadow-2xl">
+            <div className="relative overflow-hidden rounded-[2.5rem] bg-slate-900 p-5 pt-8 lg:p-12 shadow-2xl-0">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-600/40 to-slate-900/95 z-0" />
 
                 <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
@@ -101,10 +101,10 @@ export default function TrackData({ data }: { data: ShipmentData | null }) {
                     <div className="lg:col-span-8 space-y-8">
                         <div className="space-y-2">
                             <div className="flex items-center gap-x-3">
-                                <div className="bg-white/10 p-2.5 rounded-xl backdrop-blur-md">
+                                <div className="bg-white/10 lg:p-2.5 rounded-xl backdrop-blur-md">
                                     <PackageSearch className="w-6 h-6 text-white" />
                                 </div>
-                                <h2 className="text-3xl font-black text-white tracking-tight">{data?.shipmentID}</h2>
+                                <h2 className="text-2xl lg:text-3xl font-black text-white tracking-tight">{data?.shipmentID}</h2>
                             </div>
                             <div className="flex items-center gap-x-3">
                                 <span className={`${color} px-3 py-1 rounded-full text-[10px] font-black border border-emerald-500/30 uppercase tracking-tighter`}>
@@ -125,7 +125,7 @@ export default function TrackData({ data }: { data: ShipmentData | null }) {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 lg:gap-4">
                             <HeroStat label="Origin" value={data?.dropLocation} icon={<MapPin className="text-blue-300" />} />
                             <HeroStat label="Current" value={data?.trackingHistory[0].location} icon={<Truck className="text-emerald-300" />} />
                             <HeroStat label="Destination" value={data?.pickupLocation} icon={<Flag className="text-rose-300" />} />
@@ -152,7 +152,7 @@ export default function TrackData({ data }: { data: ShipmentData | null }) {
             </div>
 
             {/* 2. MAIN CONTENT GRID */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8">
                 <div className="lg:col-span-8 space-y-8">
                     {/* Map */}
                     <div className="bg-white border border-slate-200 rounded-[2.5rem] shadow-sm overflow-hidden h-[500px]">
@@ -164,7 +164,7 @@ export default function TrackData({ data }: { data: ShipmentData | null }) {
                     </div>
 
                     {/* Party Details */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-4">
                         <PartyCard type="Sender" name={data?.sender.name} location={data?.dropLocation} />
                         <PartyCard type="Receiver" name={data?.receiver.name} location={data?.pickupLocation} />
                     </div>
@@ -239,7 +239,7 @@ function TimelineStep({ title, location, time, date, isActive, isCompleted, isLa
                 {isActive && (
                     <div className="absolute inset-0 rounded-full bg-blue-400 animate-ping opacity-25" />
                 )}
-                <div className={`relative w-6 h-6 rounded-full flex items-center justify-center border-2 ${isActive ? 'bg-blue-600 border-blue-600 shadow-lg shadow-blue-200' :
+                <div className={`relative w-6 h-6 rounded-full flex items-center justify-center border-2 ${isActive ? 'bg-blue-600 border-blue-600 shadow-lg0 shadow-blue-200' :
                     isCompleted ? 'bg-emerald-500 border-emerald-500' : 'bg-white border-slate-200'
                     }`}>
                     {isCompleted && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}

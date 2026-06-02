@@ -72,7 +72,7 @@ export default function TrackingParcel({
 
     return (
         <div
-            className="relative w-full rounded-2xl 2xl:rounded-[2.5rem] overflow-hidden bg-slate-900 px-6 py-10 2xl:py-20 flex flex-col items-center text-center shadow-2xl shadow-main-primary/6"
+            className="relative w-full rounded-2xl 2xl:rounded-[2.5rem] overflow-hidden bg-slate-900 px-4 lg:px-6 py-6 lg:py-10 2xl:py-20 flex flex-col items-center text-center shadow-2xl shadow-main-primary/6"
             style={{
                 backgroundImage: `linear-gradient(to bottom, rgba(3, 68, 96, 0.8), rgba(3, 68, 96, 0.95)), url(/banner.png)`,
                 backgroundSize: 'cover',
@@ -89,10 +89,10 @@ export default function TrackingParcel({
                         <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
                         Live Carrier Sync
                     </span>
-                    <h1 className="text-2xl md:text-4xl lg:text-5xl font-black text-white tracking-tight">
+                    <h1 className="text-xl md:text-4xl lg:text-5xl font-black text-white tracking-tight">
                         Track Your Shipment
                     </h1>
-                    <p className="text-blue-100/70 text-sm md:text:lg lg:text-xl font-medium leading-relaxed">
+                    <p className="text-blue-100/70 text-xs md:text:lg lg:text-xl font-medium leading-relaxed">
                         Get real-time updates on your package location, estimated delivery, and current status instantly.
                     </p>
                 </div>
@@ -104,12 +104,12 @@ export default function TrackingParcel({
 
                         <div className="relative flex flex-col md:flex-row items-center gap-3 p-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-inner">
                             <div className="relative flex-1 w-full">
-                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300/50" />
+                                <Search className="absolute left-1 lg:left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300/50" />
                                 <input
                                     type="text"
                                     value={tracking_number}
                                     onChange={e => setTrackingNumber(e.target.value)}
-                                    className="h-14 w-full bg-transparent pl-12 pr-4 text-white placeholder:text-blue-100/40 focus:outline-none font-medium text-base"
+                                    className="h-14 w-full bg-transparent pl-7 lg:pl-12 pr-4 text-white placeholder:text-blue-100/40 focus:outline-none font-medium text-base"
                                     placeholder="Enter tracking ID (e.g., AWP8484923256)"
                                 />
                             </div>

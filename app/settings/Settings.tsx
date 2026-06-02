@@ -218,7 +218,7 @@ export default function Settings() {
     }, [])
 
     return (
-        <div className="max-w-5xl mx-auto bg-white p-8 lg:p-12 h-screen flex flex-col">
+        <div className="w-full lg:max-w-5xl mx-auto bg-white p-5 lg:p-12 h-screen flex flex-col">
             {/* Header */}
             <div className="flex items-center justify-between border-b pb-6 mb-10 shrink-0">
                 <div className="flex items-center gap-x-3">
@@ -226,12 +226,12 @@ export default function Settings() {
                         <UserRound className="w-5 h-5 text-blue-600" />
                     </div>
                     <div>
-                        <h1 className="text-xl font-semibold text-slate-900">Account Settings</h1>
+                        <h1 className="text-xs lg:text-xl font-semibold text-slate-900">Account Settings</h1>
                         <p className="hidden md:inline-block text-sm text-slate-500">Manage your profile and security preferences</p>
                     </div>
                 </div>
                 <button
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-medium transition-all"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-3 lg:px-5 py-2 rounded lg:rounded-lg text-xs lg:text-sm font-medium transition-all"
                     onClick={handleSaveChanges}
                 >
                     Save Changes
@@ -247,7 +247,7 @@ export default function Settings() {
                     </div>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 xl:grid-cols-12 gap-16 overflow-y-auto md:max-h-[calc(100vh-240px)] pr-2 pb-46 xl:pb-0">
+                <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 lg:gap-16 overflow-y-auto md:max-h-[calc(100vh-240px)] pr-2 pb-46 xl:pb-0">
                     {/* Profile Section */}
                     <div className="xl:col-span-7 space-y-8">
                         <div>
@@ -255,7 +255,7 @@ export default function Settings() {
 
                             {/* Avatar Upload */}
                             <div className="flex items-center gap-x-6 mb-8 group">
-                                <div className="relative w-24 h-24">
+                                <div className="relative w-30 h-24 lg:w-24 lg:h-24">
                                     <img
                                         src={!profileData?.profileImage ? "/author.png" : typeof profileData.profileImage === "string" ? profileData.profileImage : URL.createObjectURL(profileData.profileImage)}
                                         alt="avatar"
@@ -348,7 +348,7 @@ export default function Settings() {
                     </div>
 
                     {/* Security Section */}
-                    <div className="xl:col-span-5">
+                    <div className="xl:col-span-5 pb-10 lg:pb-0">
                         <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 sticky top-0">
                             <div className="flex items-center gap-x-2 mb-6">
                                 <ShieldCheck className="w-5 h-5 text-slate-400" />
@@ -398,7 +398,7 @@ export default function Settings() {
                                 {/* OTP INPUT */}
                                 {otpRequested && (
                                     <>
-                                        <div className="flex justify-between items-center gap-2" onPaste={handlePaste}>
+                                        <div className="flex justify-between items-center gap-1 lg:gap-2" onPaste={handlePaste}>
                                             {otp.map((digit, index) => (
                                                 <input
                                                     key={index}
@@ -410,7 +410,7 @@ export default function Settings() {
                                                     value={digit}
                                                     onChange={(e) => handleOTPChange(e.target, index)}
                                                     onKeyDown={(e) => handleKeyDown(e, index)}
-                                                    className="h-12 md:h-16 xl:h-12 w-1/2 text-center text-xl font-black bg-black/5 border border-main-primary/10 rounded-xl outline-none transition-all text-[#034460] focus:bg-white focus:border-[#034460] focus:ring-4 focus:ring-main-primary/5 shadow-sm"
+                                                    className="h-9 md:h-16 xl:h-12 w-1/2 text-center lg:text-xl font-black bg-black/5 border border-main-primary/10 rounded lg:rounded-xl outline-none transition-all text-[#034460] focus:bg-white focus:border-[#034460] focus:ring-4 focus:ring-main-primary/5 shadow-sm"
                                                 />
                                             ))}
                                         </div>

@@ -13,11 +13,11 @@ export default function TrackingPage() {
 
             </div>
 
-            <div className="bg-white rounded-[2.5rem] h-[76vh] overflow-hidden py-10">
+            <div className="h-[76vh] overflow-hidden">
                 <div className="flex flex-col h-full">
 
                     {/* The scrollable area */}
-                    <div className="flex-1 overflow-y-auto custom-scroll px-6 space-y-10">
+                    <div className="flex-1 overflow-y-auto custom-scroll space-y-10">
                         <TrackingParcel setData={setData} />
                         {/* RESULTS SECTION: TRACKING DATA */}
                         {data ?
