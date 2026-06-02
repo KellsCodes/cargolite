@@ -156,14 +156,14 @@ export function DataTable({ data = [], setShipments, isLoading }: DataTableProps
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Shipping ID</TableHead>
-                        <TableHead>Customer Name</TableHead>
-                        <TableHead>Date</TableHead>
-                        <TableHead>Origin</TableHead>
-                        <TableHead>Destination</TableHead>
-                        <TableHead>Amount</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
+                        <TableHead className="text-xs lg:text-sm">Shipping ID</TableHead>
+                        <TableHead className="text-xs lg:text-sm">Customer Name</TableHead>
+                        <TableHead className="text-xs lg:text-sm">Date</TableHead>
+                        <TableHead className="text-xs lg:text-sm">Origin</TableHead>
+                        <TableHead className="text-xs lg:text-sm">Destination</TableHead>
+                        <TableHead className="text-xs lg:text-sm">Amount</TableHead>
+                        <TableHead className="text-xs lg:text-sm">Status</TableHead>
+                        <TableHead className="text-xs lg:text-sm text-right">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
 
@@ -189,16 +189,16 @@ export function DataTable({ data = [], setShipments, isLoading }: DataTableProps
                         data.map((shipment) => (
                             // {/* {shippingData.map((shipment) => ( */}
                             <TableRow key={shipment.id}>
-                                <TableCell className="font-medium text-blue-700">
+                                <TableCell className="font-medium text-blue-700 text-xs lg:text-sm">
                                     <Link href={`/tracking?${shipment.shipmentID}`}>
                                         {shipment.shipmentID}
                                     </Link>
                                 </TableCell>
-                                <TableCell className="max-w-[200px] truncate">{shipment.clientName}</TableCell>
-                                <TableCell>{format(new Date(shipment.createdAt), "LLL dd, yyyy")}</TableCell>
-                                <TableCell className="max-w-[200px] truncate">{shipment.dropLocation}</TableCell>
-                                <TableCell className="max-w-[200px] truncate">{shipment.pickupLocation}</TableCell>
-                                <TableCell>
+                                <TableCell className="max-w-[200px] truncate text-xs lg:text-sm">{shipment.clientName}</TableCell>
+                                <TableCell className="text-xs lg:text-sm">{format(new Date(shipment.createdAt), "LLL dd, yyyy")}</TableCell>
+                                <TableCell className="max-w-[200px] truncate text-xs lg:text-sm">{shipment.dropLocation}</TableCell>
+                                <TableCell className="max-w-[200px] truncate text-xs lg:text-sm">{shipment.pickupLocation}</TableCell>
+                                <TableCell className="text-xs lg:text-sm">
                                     {Number(shipment.amount).toLocaleString("en-US", {
                                         style: "currency",
                                         currency: "USD"
@@ -212,7 +212,7 @@ export function DataTable({ data = [], setShipments, isLoading }: DataTableProps
                                         {formatStatus(shipment.trackingHistory[0].status)}
                                     </span>
                                 </TableCell>
-                                <TableCell className="text-right">
+                                <TableCell className="text-right text-xs lg:text-sm">
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
                                             <Button variant="ghost" size="icon" className="size-8">
@@ -227,7 +227,7 @@ export function DataTable({ data = [], setShipments, isLoading }: DataTableProps
                                                     // Download invoice 
                                                     handleDownloadInvoice(shipment.invoice.id, isDownloading, setIsDownloading)
                                                 }}
-                                                className={`${ShipmentStatus.CANCELLED === shipment.trackingHistory[0].status && "cursor-not-allowed"}`}>Invoice</DropdownMenuItem>
+                                                className={`${ShipmentStatus.CANCELLED === shipment.trackingHistory[0].status && "cursor-not-allowed"} text-xs lg:text-sm`}>Invoice</DropdownMenuItem>
                                             {/* <DropdownMenuItem>Duplicate</DropdownMenuItem> */}
                                             <DropdownMenuSeparator />
 
@@ -243,7 +243,7 @@ export function DataTable({ data = [], setShipments, isLoading }: DataTableProps
                                                 }}
                                                 className={
                                                     `${([ShipmentStatus.CANCELLED, ShipmentStatus.DELIVERED, ShipmentStatus.RETURNED] as ShipmentStatus[]).includes(shipment.trackingHistory[0].status)
-                                                    && "cursor-not-allowed"}`
+                                                    && "cursor-not-allowed"} text-xs lg:text-sm`
                                                 }>
                                                 Update Status
                                             </DropdownMenuItem>
@@ -255,7 +255,7 @@ export function DataTable({ data = [], setShipments, isLoading }: DataTableProps
                                                     // navigate to update page
                                                     router.push(`/shipping/updateshipment/${shipment.shipmentID}`)
                                                 }}
-                                                className={`${ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status && "cursor-not-allowed"}`}>
+                                                className={`${ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status && "cursor-not-allowed"} text-xs lg:text-sm`}>
                                                 Edit
                                             </DropdownMenuItem>
 
@@ -263,7 +263,7 @@ export function DataTable({ data = [], setShipments, isLoading }: DataTableProps
                                             <DropdownMenuSeparator />
                                             <DropdownMenuItem
                                                 variant="destructive"
-                                                className={`${ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status && "cursor-not-allowed"}`}
+                                                className={`${ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status && "cursor-not-allowed"} text-xs lg:text-sm`}
                                                 onClick={() => {
                                                     if (ShipmentStatus.PICKED_UP !== shipment.trackingHistory[0].status) return
                                                     handleDeleteItem(shipment.id)

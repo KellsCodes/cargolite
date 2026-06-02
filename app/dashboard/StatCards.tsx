@@ -45,14 +45,15 @@ export default function StatCard({ item, data }: StatCardProps) {
 
             {/* Bottom Row: Performance Indicator */}
             <div className="flex items-center justify-between mt-2">
-                <div className="flex items-center gap-x-2">
-                    <span className={`flex items-center gap-x-0.5 px-2 py-0.5 rounded-full text-[11px] font-bold border ${isNegative
+                <div className="flex flex-col lg:flex-row lg:items-center gap-x-2">
+                    <span className={`inline-flex items-center justify-center gap-x-0.5 px-2 py-0.5 rounded-full text-[11px] font-bold border ${isNegative
                         ? "bg-rose-50 border-rose-100 text-rose-600"
                         : "bg-emerald-50 border-emerald-100 text-emerald-600"
                         }`}>
                         {isNegative ? <ArrowDownRight className="w-3 h-3" /> : <ArrowUpRight className="w-3 h-3" />}
                         {data.percentage}%
                     </span>
+
                     <p className="text-[11px] text-slate-400 font-medium">
                         <span className="text-slate-600">{(data.currentMonth).toLocaleString()}</span> vs last month ({data.previousMonth.toLocaleString()})
                     </p>

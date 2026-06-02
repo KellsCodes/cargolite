@@ -186,7 +186,7 @@ export default function ShippingTable() {
             </div>
 
             {shipments?.data.length ?
-                <div className="mt-auto min-h-[3.5rem] py-3 border-t flex flex-col sm:flex-row items-center justify-center sm:justify-between bg-white flex-shrink-0 px-3 sm:px-7 gap-y-2">
+                <div className="mt-auto min-h-[3.5rem] py-3 pb-21 md:pb-3 border-t flex flex-col sm:flex-row items-center justify-center sm:justify-between bg-white flex-shrink-0 px-3 sm:px-7 gap-y-2">
                     <p className="text-xs text-black/60">
                         Showing {shipments?.meta.from} to {shipments?.meta.to} of {shipments?.meta.totalItems} entries
                     </p>

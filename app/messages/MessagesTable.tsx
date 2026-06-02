@@ -101,7 +101,7 @@ export default function MessageTable() {
         handleGeMessages()
     }, [searchParams.toString(), activeTab])
     return (
-        <div className="h-full bg-white rounded-lg relative p-0 flex flex-col min-w-0">
+        <div className="h-full bg-white rounded-lg relative pb-22 md:p-0  flex flex-col min-w-0">
             <div className="flex items-center justify-between px-5 pt-5">
                 <h1 className="font-medium flex items-center gap-x-2">
                     <span className="border-main-primary/30 bg-main-primary/3 p-1 h-8 w-9 rounded flex items-center justify-center">
@@ -229,7 +229,7 @@ export default function MessageTable() {
                             onClick={() => {
                                 handleGetMessagesWithStatus(tab.id)
                             }}
-                            className={`cursor-pointer relative pb-3 text-sm font-medium transition-colors duration-200 ${activeTab === tab.id ? "text-blue-600" : "text-gray-500 hover:text-gray-900"
+                            className={`cursor-pointer relative pb-3 text-xs lg:text-sm font-medium transition-colors duration-200 ${activeTab === tab.id ? "text-blue-600" : "text-gray-500 hover:text-gray-900"
                                 }`}
                         >
                             {tab.label}

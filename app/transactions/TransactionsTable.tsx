@@ -198,7 +198,7 @@ export default function TransactionsTable() {
 
             {
                 transactions?.data.length ?
-                    <div className="mt-auto min-h-[3.5rem] py-3 border-t flex flex-col sm:flex-row items-center justify-center sm:justify-between bg-white flex-shrink-0 px-3 sm:px-7 gap-y-2">
+                    <div className="mt-auto min-h-[3.5rem] py-3 pb-22 md:pb-0 border-t flex flex-col sm:flex-row items-center justify-center sm:justify-between bg-white flex-shrink-0 px-3 sm:px-7 gap-y-2">
                         <p className="text-xs text-black/60">
                             Showing {transactions?.meta.from} to {transactions?.meta.to} of {transactions?.meta.totalItems} entries
                         </p>

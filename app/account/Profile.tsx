@@ -104,7 +104,7 @@ export default function Profile() {
                     </div>
                 </div>
             ) : (
-                <div className="space-y-6 pb-18 xl:pb-0">
+                <div className="space-y-4 pb-32 xl:pb-0">
                     {/* Top Identity Card */}
                     <div className="relative overflow-hidden bg-white border border-slate-200 rounded-2xl shadow-sm">
                         {/* Decorative Banner */}
@@ -191,7 +191,7 @@ export default function Profile() {
 
 
                     {/* Information Sections */}
-                    <div className="grid grid-cols-1 gap-8">
+                    <div className="grid grid-cols-1 gap-4">
                         {/* Personal Info Card */}
                         <section className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
                             <div className="px-8 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">

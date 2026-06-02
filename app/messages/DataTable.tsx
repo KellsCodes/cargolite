@@ -202,13 +202,13 @@ export function DataTable({ data = [], setMessages, isLoading, activeTab }: Data
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Sender</TableHead>
-                        <TableHead>email</TableHead>
-                        <TableHead>Subject</TableHead>
-                        <TableHead>Message Brief</TableHead>
-                        <TableHead>Date</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
+                        <TableHead className="text-xs md:text-sm">Sender</TableHead>
+                        <TableHead className="text-xs md:text-sm">email</TableHead>
+                        <TableHead className="text-xs md:text-sm">Subject</TableHead>
+                        <TableHead className="text-xs md:text-sm">Message Brief</TableHead>
+                        <TableHead className="text-xs md:text-sm">Date</TableHead>
+                        <TableHead className="text-xs md:text-sm">Status</TableHead>
+                        <TableHead className="text-xs md:text-sm text-right">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
 

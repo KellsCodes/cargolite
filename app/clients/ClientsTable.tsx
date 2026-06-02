@@ -190,7 +190,7 @@ export default function ClientsTable() {
                                 params.set("client-role", tab.id)
                                 router.push(`${pathname}?${params.toString()}`);
                             }}
-                            className={`cursor-pointer relative pb-3 text-sm font-medium transition-colors duration-200 ${activeTab === tab.id ? "text-blue-600" : "text-gray-500 hover:text-gray-900"
+                            className={`cursor-pointer relative pb-3 text-xs lg:text-sm font-medium transition-colors duration-200 ${activeTab === tab.id ? "text-blue-600" : "text-gray-500 hover:text-gray-900"
                                 }`}
                         >
                             {tab.label}

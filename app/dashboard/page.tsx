@@ -17,7 +17,7 @@ export default async function DashBoard() {
                 <div className="p-4 2xl:p-6 overflow-y-auto flex-1">
                     <div className="flex items-center justify-between">
                         <div className="flex flex-col justify-center text-sm gap-y-1 h-12">
-                            <p className="text-xs opacity-60">Hello {userSession?.name}</p>
+                            <p className="text-xs opacity-60">Hello {userSession?.name},</p>
                             <p className="font-medium">
                                 {currentHour < 12 ? "Good Morning!" : currentHour < 18 ? "Good Afternoon!" : "Good Evening!"}
                             </p>
@@ -36,7 +36,7 @@ export default async function DashBoard() {
                             <div className="bg-white rounded-md">
                                 <LiveTrackingSimulate />
                             </div>
-                            <div className="bg-white p-5 rounded-md">
+                            <div className="bg-white p-5 pb-16 lg:p-5 rounded-md">
                                 <RevenueDisplay />
                             </div>
                         </div>

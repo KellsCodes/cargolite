@@ -108,16 +108,16 @@ export function DataTable({ data, setClients, isLoading }: DataTableProps) {
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Client Name</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Phone</TableHead>
-                        <TableHead>Total Shipments</TableHead>
+                        <TableHead className="text-xs lg:text-sm">Client Name</TableHead>
+                        <TableHead className="text-xs lg:text-sm">Email</TableHead>
+                        <TableHead className="text-xs lg:text-sm">Phone</TableHead>
+                        <TableHead className="text-xs lg:text-sm">Total Shipments</TableHead>
                         {/* Helps identify if they are a regular or new customer */}
-                        <TableHead>Last Activity</TableHead>
-                        <TableHead>Location</TableHead>
+                        <TableHead className="text-xs lg:text-sm">Last Activity</TableHead>
+                        <TableHead className="text-xs lg:text-sm">Location</TableHead>
                         {/* Critical for identifying high-value or problematic clients */}
-                        <TableHead>Account Status</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
+                        <TableHead className="text-xs lg:text-sm">Account Status</TableHead>
+                        <TableHead className="text-xs lg:text-sm text-right">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
 
@@ -142,12 +142,12 @@ export function DataTable({ data, setClients, isLoading }: DataTableProps) {
                     ) : (
                         data.map((client) => (
                             <TableRow key={client.id}>
-                                <TableCell className="font-medium">{client.name}</TableCell>
-                                <TableCell>{client.email}</TableCell>
-                                <TableCell>{client.telephone}</TableCell>
-                                <TableCell>{client.shipmentCount}</TableCell>
-                                <TableCell>{client.lastActivity ? format(new Date(client.lastActivity), "LLL dd, yyyy") : "Not Available"}</TableCell>
-                                <TableCell>{client.lastLocation || "Not Available"}</TableCell>
+                                <TableCell className="text-xs lg:text-sm font-medium">{client.name}</TableCell>
+                                <TableCell className="text-xs lg:text-sm">{client.email}</TableCell>
+                                <TableCell className="text-xs lg:text-sm">{client.telephone}</TableCell>
+                                <TableCell className="text-xs lg:text-sm">{client.shipmentCount}</TableCell>
+                                <TableCell className="text-xs lg:text-sm">{client.lastActivity ? format(new Date(client.lastActivity), "LLL dd, yyyy") : "Not Available"}</TableCell>
+                                <TableCell className="text-xs lg:text-sm">{client.lastLocation || "Not Available"}</TableCell>
                                 <TableCell>
                                     <span className={cn(
                                         "px-2.5 py-0.5 rounded-full text-xs font-medium border",
@@ -164,9 +164,12 @@ export function DataTable({ data, setClients, isLoading }: DataTableProps) {
                                             </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end" className="w-40">
-                                            <DropdownMenuItem onClick={() => {
-                                                router.push(`/shipping?search=${client.name.split(" ").join("+")}&page=1`);
-                                            }}>
+                                            <DropdownMenuItem
+                                                onClick={() => {
+                                                    router.push(`/shipping?search=${client.name.split(" ").join("+")}&page=1`);
+                                                }}
+                                                className="text-xs lg:text-sm"
+                                            >
                                                 View History
                                             </DropdownMenuItem>
                                             {/* Send message to only inactive clients */}
@@ -177,6 +180,7 @@ export function DataTable({ data, setClients, isLoading }: DataTableProps) {
                                                         setClientData(client)
                                                     }
                                                     }
+                                                    className="text-xs lg:text-sm"
                                                 >
                                                     Message
                                                 </DropdownMenuItem>
@@ -187,7 +191,7 @@ export function DataTable({ data, setClients, isLoading }: DataTableProps) {
                                                 className="flex items-center justify-between cursor-default"
                                             >
                                                 {/* Text changes dynamically based on current status */}
-                                                <Label htmlFor={`suspend-${client.id}`} className="font-normal cursor-pointer flex-1 py-1">
+                                                <Label htmlFor={`suspend-${client.id}`} className="font-normal cursor-pointer flex-1 py-1 text-xs lg:text-sm">
                                                     {client.status === 3 ? "Suspended" : "Suspend"}
                                                 </Label>
                                                 <Switch
@@ -200,11 +204,12 @@ export function DataTable({ data, setClients, isLoading }: DataTableProps) {
                                                         const nextStatus = client.status === 3 ? 1 : 3;
                                                         handleUpdateClientStatus(client.id, nextStatus);
                                                     }}
+                                                    className="text-xs lg:text-sm"
                                                 />
                                             </DropdownMenuItem>
 
                                             <DropdownMenuSeparator />
-                                            <DropdownMenuItem variant="destructive" className="cursor-not-allowed opacity-50">
+                                            <DropdownMenuItem variant="destructive" className="cursor-not-allowed opacity-50 text-xs lg:text-sm">
                                                 Delete
                                             </DropdownMenuItem>
                                         </DropdownMenuContent>

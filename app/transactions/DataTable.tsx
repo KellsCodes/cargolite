@@ -108,14 +108,14 @@ export function DataTable({ data = [], setTransactions, isLoading }: DataTablePr
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Transaction/Invoice ID</TableHead>
-                        <TableHead>Client Name</TableHead>
-                        <TableHead>Shipment ID</TableHead>
-                        <TableHead>Date Issued</TableHead>
-                        <TableHead>Amount Due</TableHead>
-                        <TableHead>Payment Method</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
+                        <TableHead className="text-xs md:text-sm">Transaction/Invoice ID</TableHead>
+                        <TableHead className="text-xs md:text-sm">Client Name</TableHead>
+                        <TableHead className="text-xs md:text-sm">Shipment ID</TableHead>
+                        <TableHead className="text-xs md:text-sm">Date Issued</TableHead>
+                        <TableHead className="text-xs md:text-sm">Amount Due</TableHead>
+                        <TableHead className="text-xs md:text-sm">Payment Method</TableHead>
+                        <TableHead className="text-xs md:text-sm">Status</TableHead>
+                        <TableHead className="text-xs md:text-sm text-right">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
 
@@ -140,16 +140,16 @@ export function DataTable({ data = [], setTransactions, isLoading }: DataTablePr
                     ) : (
                         data.map((transaction) => (
                             <TableRow key={transaction.id}>
-                                <TableCell className="font-medium">{transaction.transactionID}</TableCell>
-                                <TableCell className="max-w-[200px] truncate">{transaction.client.name}</TableCell>
-                                <TableCell>{transaction.shipment.shipmentID}</TableCell>
-                                <TableCell>{format(new Date(transaction.createdAt), "LLL dd, yyyy")}</TableCell>
-                                <TableCell>{Number(transaction.amount).toLocaleString("en-us", {
+                                <TableCell className="font-medium text-xs md:text-sm">{transaction.transactionID}</TableCell>
+                                <TableCell className="max-w-[200px] truncate text-xs md:text-sm">{transaction.client.name}</TableCell>
+                                <TableCell className="text-xs md:text-sm">{transaction.shipment.shipmentID}</TableCell>
+                                <TableCell className="text-xs md:text-sm">{format(new Date(transaction.createdAt), "LLL dd, yyyy")}</TableCell>
+                                <TableCell className="text-xs md:text-sm">{Number(transaction.amount).toLocaleString("en-us", {
                                     style: "currency",
                                     currency: "USD"
                                 })}</TableCell>
-                                <TableCell>{transaction.paymentMethod}</TableCell>
-                                <TableCell>
+                                <TableCell className="text-xs md:text-sm">{transaction.paymentMethod}</TableCell>
+                                <TableCell className="text-xs md:text-sm">
                                     <span className={cn(
                                         "px-2.5 py-0.5 rounded-full text-xs font-medium border",
                                         statusStyles[transaction.invoiceStatus] || "bg-gray-100 text-gray-700"
@@ -159,7 +159,7 @@ export function DataTable({ data = [], setTransactions, isLoading }: DataTablePr
                                 </TableCell>
 
                                 {/* DROP DOWN MENU */}
-                                <TableCell className="text-right">
+                                <TableCell className="text-right text-xs md:text-sm">
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
                                             <Button variant="ghost" size="icon" className="size-8">
