@@ -33,7 +33,7 @@ export const sendMessageByAdmin = async (data: {
   );
 
   // if response, proceed to save the log
-  if (res.error) {
+  if (!res.messageId) {
     // Delete any uploaded attachments
     await Promise.all(
       emailAttachments.map(async (url) => await deleteCloudImage(url))
