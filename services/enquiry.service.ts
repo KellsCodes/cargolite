@@ -152,7 +152,7 @@ export const adminReplyToEnquiry = async (
     adminName
   );
 
-  if (email.error) throw new Error("EMAIL_SENDING_FAILED");
+  if (!email.messageId) throw new Error("EMAIL_SENDING_FAILED");
 
   // Save Reply & Set Status to Replied (3)
   return await prisma.$transaction(async (tx) => {
