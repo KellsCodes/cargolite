@@ -19,7 +19,7 @@ export const sendOtpEmail = async (to: string, otp: string, type: string) => {
 
     // const { data, error } = await resend.emails.send({
     const { messageId } = await transporter.sendMail({
-      from: "Cargolite <onboarding@resend.dev>", // Replace with your domain once verified
+      from: "Cargolite <support.cargolite@gmail.com>", // Replace with your domain once verified
       to: [to],
       subject: "Verification Code - Cargolite",
       html: emailHtml,
@@ -42,14 +42,15 @@ export const sendAdminMessageByEmail = async (
   subject: string,
   body: string,
   senderName: string,
-  attachmentUrls?: string[]
+  attachmentUrls?: string[],
+  potentialClient?: boolean
 ) => {
   // return await resend.emails.send({
   return await transporter.sendMail({
-    from: "Cargolite <onboarding@resend.dev>", // Replace with your domain once verified
+    from: "Cargolite <support.cargolite@gmail.com>", // Replace with your domain once verified
     to: [to],
     subject,
-    html: await render(AdminMessageEmail({ body, subject, senderName })),
+    html: await render(AdminMessageEmail({ body, subject, senderName, potentialClient })),
     attachments: attachmentUrls?.length
       ? attachmentUrls.map((url) => ({
           path: url,

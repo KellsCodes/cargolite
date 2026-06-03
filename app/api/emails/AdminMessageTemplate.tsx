@@ -7,9 +7,10 @@ interface AdminMessageEmailProps {
     body: string;
     senderName: string;
     subject?: string;
+    potentialClient?: boolean
 }
 
-export const AdminMessageEmail = ({ body, subject, senderName }: AdminMessageEmailProps) => (
+export const AdminMessageEmail = ({ body, subject, senderName, potentialClient = false }: AdminMessageEmailProps) => (
     <Html>
         <Head />
         <Preview>Update from Cargolite Support</Preview>
@@ -44,7 +45,9 @@ export const AdminMessageEmail = ({ body, subject, senderName }: AdminMessageEma
 
                     <Section className="px-[20px]">
                         <Text className="text-[#333] text-[16px] leading-[24px] whitespace-pre-wrap">
-                            {body}
+                            {!potentialClient ? body : (
+                                <div dangerouslySetInnerHTML={{ __html: body }} />
+                            )}
                         </Text>
 
                         <Section className="mt-[15px] mb-[16px]">
@@ -68,7 +71,7 @@ export const AdminMessageEmail = ({ body, subject, senderName }: AdminMessageEma
                             This is a secure communication from your logistics provider.
                         </Text>
                         <Text className="text-[#b7b7b7] text-[11px] leading-[14px] mt-2">
-                            If you have questions, please contact our support team or visit our [Official Portal](https://cargolite.com).
+                            If you have questions, please contact our support team or visit our [Official Portal](https://cargolite.vercel.app).
                         </Text>
                     </Section>
                 </Container>

@@ -62,3 +62,36 @@ export const sendMessageByAdmin = async (data: {
 
   return newMessage;
 };
+
+/****
+ * Admin email sending service for non registered clients
+ */
+export const sendPotentialClientEmail = async (data: {
+  recipientEmail: string;
+  subject: string;
+  body: string;
+  adminId: number;
+  adminName: string;
+  attachmentUrls?: Attachment[];
+}) => {
+  const emailAttachments = data.attachmentUrls?.map((item) => item.url) || [];
+
+  const res = await sendAdminMessageByEmail(
+    data.recipientEmail,
+    data.subject,
+    data.body,
+    data.adminName,
+    emailAttachments,
+    true // potentialClient
+  );
+
+  if (!res.messageId) {
+    // Delete any uploaded attachments
+    await Promise.all(
+      emailAttachments.map(async (url) => await deleteCloudImage(url))
+    );
+    throw new Error("EMAIL_SENDING_FAILED");
+  }
+
+  return { success: true };
+};
