@@ -143,7 +143,7 @@ export default function SendMessageUI() {
                                 setErrors((prev) => ({ ...prev, recipient: "" }));
                             }}
                             placeholder="e.g. recipientemail@email.com"
-                            className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950 px-4 py-3 text-xs lg:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 shadow-inner focus:border-main-primary/60 dark:focus:border-main-primary/70 focus:outline-none focus:ring-2 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/5 transition-all duration-200"
+                            className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 py-3 text-xs lg:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 shadow-inner focus:border-main-primary/60 dark:focus:border-main-primary/70 focus:outline-none focus:ring-2 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/5 transition-all duration-200"
                         />
                         {errors.recipient && (
                             <p className="text-xs text-red-500">{errors.recipient}</p>
@@ -165,7 +165,7 @@ export default function SendMessageUI() {
                                 setErrors((prev) => ({ ...prev, subject: "" }));
                             }}
                             placeholder="e.g. System upgrade notifications and updates"
-                            className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950 px-4 py-3 text-xs lg:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 shadow-inner focus:border-main-primary/60 dark:focus:border-main-primary/70 focus:outline-none focus:ring-2 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/5 transition-all duration-200"
+                            className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 py-3 text-xs lg:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-600 shadow-inner focus:border-main-primary/60 dark:focus:border-main-primary/70 focus:outline-none focus:ring-2 focus:ring-indigo-500/10 dark:focus:ring-indigo-500/5 transition-all duration-200"
                         />
                         {errors.subject && (
                             <p className="text-xs text-red-500">{errors.subject}</p>
@@ -178,7 +178,7 @@ export default function SendMessageUI() {
                             <label htmlFor="body" className="text-xs lg:text-[13px] font-medium text-slate-700 dark:text-slate-300 tracking-wide">
                                 Email Message <span className="text-indigo-500">*</span>
                             </label>
-                            <div className="group border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50/50 dark:bg-slate-950 focus-within:border-main-primary dark:focus-within:border-main-primary focus-within:ring-2 focus-within:ring-main-primary/20 dark:focus-within:ring-indigo-500/5 transition-all duration-200 overflow-hidden shadow-inner">
+                            <div className="group border border-slate-200 dark:border-slate-800 rounded-xl bg-white dark:bg-slate-950 focus-within:border-main-primary dark:focus-within:border-main-primary focus-within:ring-2 focus-within:ring-main-primary/20 dark:focus-within:ring-indigo-500/5 transition-all duration-200 overflow-hidden shadow-inner">
 
                                 {/* Editor Toolbar */}
                                 <div className="flex items-center gap-1 px-3 py-2 bg-white dark:bg-slate-900 border-b border-slate-200/60 dark:border-slate-800/60">
